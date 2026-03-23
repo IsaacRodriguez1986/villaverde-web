@@ -82,7 +82,7 @@ export default function Home() {
       <div className="promo-bar">
         🎉 ¡Nuevos Paquetes 2026! Aparta tu fecha con solo $3,000{" "}
         <a
-          href="https://wa.me/5215517340226?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
+          href="https://wa.me/529995485862?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -106,7 +106,7 @@ export default function Home() {
           <a href="#extras" onClick={() => setMenuOpen(false)}>Extras</a>
           <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
           <a
-            href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
+            href="https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-cta"
@@ -143,7 +143,7 @@ export default function Home() {
               Ver Paquetes ↓
             </a>
             <a
-              href="https://wa.me/5215517340226?text=Hola%2C%20me%20interesa%20informaci%C3%B3n%20sobre%20sus%20paquetes%20para%20evento"
+              href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20informaci%C3%B3n%20sobre%20sus%20paquetes%20para%20evento"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
@@ -268,7 +268,7 @@ export default function Home() {
                 <div className="pkg-cort">🎁 1 cortesía a elegir de nuestra lista exclusiva</div>
               </div>
               <a
-                href="https://wa.me/5215517340226?text=Hola%2C%20me%20interesa%20el%20Paquete%20PREMIUM%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
+                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20PREMIUM%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pkg-btn"
@@ -309,7 +309,7 @@ export default function Home() {
                 <div className="pkg-cort">🎁🎁 2 cortesías a elegir de nuestra lista exclusiva</div>
               </div>
               <a
-                href="https://wa.me/5215517340226?text=Hola%2C%20me%20interesa%20el%20Paquete%20DIAMANTE%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
+                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20DIAMANTE%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pkg-btn"
@@ -355,7 +355,7 @@ export default function Home() {
                 <div className="pkg-cort">🎁 ¡TODAS las cortesías incluidas sin límite!</div>
               </div>
               <a
-                href="https://wa.me/5215517340226?text=Hola%2C%20me%20interesa%20el%20Paquete%20ESMERALDA%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
+                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20ESMERALDA%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pkg-btn"
@@ -460,7 +460,7 @@ export default function Home() {
           </div>
           <div className="gallery-cta reveal">
             <a
-              href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20Sal%C3%B3n%20Villaverde%20para%20conocerlo"
+              href="https://wa.me/529995485862?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20Sal%C3%B3n%20Villaverde%20para%20conocerlo"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -836,7 +836,7 @@ export default function Home() {
             Aparta tu fecha con solo $3,000 de anticipo
           </div>
           <a
-            href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20Sal%C3%B3n%20Villaverde%20para%20conocerlo.%20%C2%BFQu%C3%A9%20horarios%20tienen%20disponibles%3F"
+            href="https://wa.me/529995485862?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20Sal%C3%B3n%20Villaverde%20para%20conocerlo.%20%C2%BFQu%C3%A9%20horarios%20tienen%20disponibles%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-wa-big"
@@ -845,7 +845,7 @@ export default function Home() {
             Agenda tu visita por WhatsApp
           </a>
           <div className="cta-contact">
-            📞 WhatsApp: 5517340226 · 📍 Chalco, Estado de México
+            📞 WhatsApp: 9995485862 · 📍 Chalco, Estado de México
           </div>
         </div>
       </section>
@@ -862,7 +862,7 @@ export default function Home() {
               <br />
               Chalco, Estado de México
               <br />
-              WhatsApp: 5517340226
+              WhatsApp: 9995485862
             </p>
           </div>
           <div className="footer-links">
@@ -877,7 +877,7 @@ export default function Home() {
           <div>
             <h4>Síguenos</h4>
             <div className="footer-social">
-              <a href="https://wa.me/5215517340226" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>
+              <a href="https://wa.me/529995485862" target="_blank" rel="noopener noreferrer" title="WhatsApp">💬</a>
               <a href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" title="Instagram">📷</a>
               <a href="https://www.facebook.com/SalonVillaVerde/" target="_blank" rel="noopener noreferrer" title="Facebook">👤</a>
             </div>
@@ -894,7 +894,7 @@ export default function Home() {
 
       {/* WhatsApp Float */}
       <a
-        href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento"
+        href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento"
         target="_blank"
         rel="noopener noreferrer"
         className="wa-float"
@@ -911,7 +911,7 @@ export default function Home() {
               Aparta con solo $3,000
             </div>
             <a
-              href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
+              href="https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
               target="_blank"
               rel="noopener noreferrer"
               className="sticky-cta-btn"
