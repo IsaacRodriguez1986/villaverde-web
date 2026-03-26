@@ -287,6 +287,21 @@ a{text-decoration:none;color:inherit}
   .testi-nav{display:none}
   .footer{padding-bottom:80px}
 }
+/* Compare Table */
+.compare-table{width:100%;border-collapse:collapse;margin:0 auto;max-width:700px;font-size:15px}
+.compare-table thead th{padding:14px 20px;text-align:left;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--negro)}
+.compare-table thead th:first-child{color:var(--gris-text)}
+.compare-table thead th:nth-child(2){color:var(--verde)}
+.compare-table thead th:nth-child(3){color:var(--gris-text)}
+.compare-table tbody td{padding:14px 20px;border-bottom:1px solid #eee}
+.compare-table tbody td:first-child{font-weight:600;color:var(--negro)}
+.compare-check{color:var(--verde);font-weight:600}
+.compare-x{color:#999}
+@media(max-width:600px){
+  .compare-table{font-size:13px}
+  .compare-table thead th,.compare-table tbody td{padding:10px 12px}
+}
+
 @media(max-width:480px){
   .hero-pills{flex-direction:column;align-items:center}
   .hero-btns{flex-direction:column;align-items:center}
