@@ -1,18 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-  }
-}
-
-function trackLead(source: string) {
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", "Lead", { content_name: source });
-  }
-}
+import { useEffect, useState } from "react";
 
 function WhatsAppIcon({ size = 24 }: { size?: number }) {
   return (
@@ -55,13 +43,6 @@ export default function Home() {
   const [activeMenu, setActiveMenu] = useState("entradas");
   const [currentTesti, setCurrentTesti] = useState(0);
   const [showSticky, setShowSticky] = useState(false);
-  const [showExitPopup, setShowExitPopup] = useState(false);
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastVisible, setToastVisible] = useState(false);
-  const [menuExpanded, setMenuExpanded] = useState(false);
-  const exitShownRef = useRef(false);
 
   useEffect(() => {
     // Scroll reveal
@@ -88,62 +69,10 @@ export default function Home() {
       setCurrentTesti((prev) => (prev + 1) % testimonials.length);
     }, 5000);
 
-    // Scroll depth tracking
-    let tracked25 = false, tracked50 = false, tracked75 = false;
-    const handleScrollDepth = () => {
-      const depth = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      if (depth > 0.25 && !tracked25) { tracked25 = true; window.fbq?.("trackCustom", "ScrollDepth", { depth: "25%" }); }
-      if (depth > 0.50 && !tracked50) { tracked50 = true; window.fbq?.("trackCustom", "ScrollDepth", { depth: "50%" }); }
-      if (depth > 0.75 && !tracked75) { tracked75 = true; window.fbq?.("trackCustom", "ScrollDepth", { depth: "75%" }); }
-    };
-    window.addEventListener("scroll", handleScrollDepth, { passive: true });
-
-    // Section view tracking
-    const trackSections = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          if (id === "paquetes") window.fbq?.("track", "ViewContent", { content_name: "paquetes" });
-          if (id === "contacto") window.fbq?.("track", "InitiateCheckout", { content_name: "contacto" });
-          trackSections.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll("#paquetes, #contacto").forEach((el) => trackSections.observe(el));
-
-    // Live visitors toast
-    const toastInterval = setInterval(() => {
-      setShowToast(true);
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 4000);
-      setTimeout(() => setShowToast(false), 4500);
-    }, 35000);
-    const firstToast = setTimeout(() => {
-      setShowToast(true);
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 4000);
-      setTimeout(() => setShowToast(false), 4500);
-    }, 8000);
-
-    // Exit intent
-    const handleExitIntent = (e: MouseEvent) => {
-      if (e.clientY < 10 && !exitShownRef.current) {
-        exitShownRef.current = true;
-        setShowExitPopup(true);
-        window.fbq?.("trackCustom", "ExitIntent");
-      }
-    };
-    document.addEventListener("mousemove", handleExitIntent);
-
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", handleScroll);
       clearInterval(testiInterval);
-      window.removeEventListener("scroll", handleScrollDepth);
-      trackSections.disconnect();
-      document.removeEventListener("mousemove", handleExitIntent);
-      clearInterval(toastInterval);
-      clearTimeout(firstToast);
     };
   }, []);
 
@@ -151,7 +80,14 @@ export default function Home() {
     <>
       {/* Promo Bar */}
       <div className="promo-bar">
-        Paquetes 2026 disponibles — Aparta tu fecha con $3,000 de anticipo
+        🎉 ¡Nuevos Paquetes 2026! Aparta tu fecha con solo $3,000{" "}
+        <a
+          href="https://wa.me/529995485862?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          APARTAR AHORA →
+        </a>
       </div>
 
       {/* Nav */}
@@ -170,13 +106,12 @@ export default function Home() {
           <a href="#extras" onClick={() => setMenuOpen(false)}>Extras</a>
           <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
           <a
-            href="https://wa.me/529995485862?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20salon"
+            href="https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-cta"
-            onClick={() => trackLead("nav_agendar")}
           >
-            Agenda tu visita
+            Cotizar
           </a>
         </div>
       </nav>
@@ -190,34 +125,32 @@ export default function Home() {
         <div className="hero-video-overlay"></div> */}
         <div className="hero-bg"></div>
         <div className="hero-content">
-          <div className="hero-badge" style={{display:'flex',alignItems:'center',gap:'8px'}}>
-            <span style={{color:'#FFD700'}}>★ 4.8</span> en Google · 127 reseñas
-          </div>
+          <div className="hero-badge">Nuevos Paquetes 2026</div>
           <h1>
-            Tu fiesta desde <strong className="accent-verde">$420 por persona</strong> — todo incluido, sin sorpresas
+            Donde tus <strong className="accent-rosa">sueños</strong> se hacen{" "}
+            <strong className="accent-verde">fiesta</strong>
           </h1>
           <p className="hero-sub">
-            Bodas, XV Años y Graduaciones en Chalco, Estado de México
+            Bodas · XV Años · Graduaciones · Chalco, Edo. de México
           </p>
           <div className="hero-pills">
-            <span className="hero-pill">500+ eventos realizados</span>
-            <span className="hero-pill">10+ años de experiencia</span>
-            <span className="hero-pill">Todo incluido</span>
+            <span className="hero-pill">✓ Todo incluido</span>
+            <span className="hero-pill">✓ Desde $420/persona</span>
+            <span className="hero-pill">✓ Cortesías exclusivas</span>
           </div>
           <div className="hero-btns">
+            <a href="#paquetes" className="btn-primary">
+              Ver Paquetes ↓
+            </a>
             <a
-              href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informacion%20de%20paquetes%20para%20mi%20evento"
+              href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20informaci%C3%B3n%20sobre%20sus%20paquetes%20para%20evento"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
-              onClick={() => trackLead("hero_whatsapp")}
+              className="btn-outline"
             >
-              Agenda tu visita gratis
+              💬 Cotizar por WhatsApp
             </a>
           </div>
-          <p style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.6)',marginTop:'0.5rem'}}>
-            Incluye invitaciones digitales con QR gratis para tu evento
-          </p>
         </div>
         <div className="hero-scroll">Scroll</div>
       </section>
@@ -242,55 +175,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Social proof bar */}
-      <div className="urgency-bar">
-        <div className="urgency-inner">
-          <span className="urgency-text">Los fines de semana se agotan primero — agenda tu visita sin compromiso</span>
-        </div>
-      </div>
-
-      {/* Cómo funciona */}
-      <section className="steps-section reveal">
-        <div className="section-narrow">
-          <h2 className="section-title">Reserva en 4 pasos</h2>
-          <p className="section-sub">Así de fácil es celebrar en Villaverde</p>
-          <div className="steps-grid">
-            <div className="step-item">
-              <div className="step-num">1</div>
-              <div className="step-icon-circle">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </div>
-              <div className="step-title">Agenda tu visita</div>
-              <div className="step-desc">Conoce el salón sin compromiso</div>
-            </div>
-            <div className="step-item">
-              <div className="step-num">2</div>
-              <div className="step-icon-circle">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-              </div>
-              <div className="step-title">Elige tu paquete</div>
-              <div className="step-desc">Premium, Diamante o Esmeralda</div>
-            </div>
-            <div className="step-item">
-              <div className="step-num">3</div>
-              <div className="step-icon-circle">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              </div>
-              <div className="step-title">Aparta con $3,000</div>
-              <div className="step-desc">Asegura tu fecha favorita</div>
-            </div>
-            <div className="step-item">
-              <div className="step-num">4</div>
-              <div className="step-icon-circle">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              </div>
-              <div className="step-title">Disfruta tu fiesta</div>
-              <div className="step-desc">Nosotros nos encargamos de todo</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Eventos */}
       <section className="section reveal">
         <div className="section-narrow">
@@ -308,7 +192,7 @@ export default function Home() {
               />
               <div className="event-overlay">
                 <h3>XV Años</h3>
-                <p>La fiesta que siempre soñaste para tu hija</p>
+                <p>La fiesta que siempre soñaste</p>
                 <span className="ev-btn">Ver paquetes →</span>
               </div>
             </a>
@@ -319,7 +203,7 @@ export default function Home() {
               />
               <div className="event-overlay">
                 <h3>Bodas</h3>
-                <p>Tu día más especial merece el lugar perfecto</p>
+                <p>El día más especial merece el lugar perfecto</p>
                 <span className="ev-btn">Ver paquetes →</span>
               </div>
             </a>
@@ -330,7 +214,7 @@ export default function Home() {
               />
               <div className="event-overlay">
                 <h3>Graduaciones</h3>
-                <p>Celebra tu logro con la fiesta que mereces</p>
+                <p>Celebra tu logro a lo grande</p>
                 <span className="ev-btn">Ver paquetes →</span>
               </div>
             </a>
@@ -347,6 +231,93 @@ export default function Home() {
             soñaste. Sin costos ocultos, sin sorpresas.
           </p>
           <div className="pkg-grid">
+            {/* Premium */}
+            <div className="pkg pkg-premium reveal">
+              <div className="pkg-head">
+                <div className="pkg-icon">✦</div>
+                <div className="pkg-name">Premium</div>
+                <div className="pkg-tag">La mejor relación valor-precio</div>
+              </div>
+              <div className="pkg-prices">
+                <div className="pkg-price-box">
+                  <div className="pkg-price-label">100–149 inv.</div>
+                  <div className="pkg-price-num">$470</div>
+                  <div className="pkg-price-unit">por persona</div>
+                </div>
+                <div className="pkg-price-box">
+                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-num">$420</div>
+                  <div className="pkg-price-unit">por persona</div>
+                </div>
+              </div>
+              <div className="pkg-body">
+                <h4>Incluye</h4>
+                <div className="pkg-feat"><span className="ck">✓</span> 6 horas de evento + recepción y desalojo</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Cena formal completa (entrada + crema + plato fuerte + guarnición)</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Refresco y hielo ilimitado todo el evento</div>
+                <div className="pkg-feat hi"><span className="ck">✓</span> Descorche libre — ¡trae tus bebidas sin cargo!</div>
+                <div className="pkg-feat hi"><span className="ck">✓</span> Botella ¾ por mesa incluida</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Mesas redondas + sillas Tiffany vestidas (colores básicos)</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Meseros con capitán + personal de recepción</div>
+                <div className="pkg-feat"><span className="ck">✓</span> DJ todo el evento + Maestro de Ceremonias</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Iluminación inteligente tipo antro</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Batucada con globos</div>
+                <div className="pkg-feat"><span className="ck">✓</span> 2 camerinos privados (XV/novios + chambelanes)</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Estacionamiento amplio</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Invitación digital animada de regalo</div>
+                <div className="pkg-cort">🎁 1 cortesía a elegir de nuestra lista exclusiva</div>
+              </div>
+              <a
+                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20PREMIUM%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pkg-btn"
+              >
+                Cotizar Premium por WhatsApp
+              </a>
+            </div>
+
+            {/* Diamante */}
+            <div className="pkg pkg-diamante reveal">
+              <div className="pkg-head">
+                <div className="pkg-badge">⭐ Más Popular</div>
+                <div className="pkg-icon">💎</div>
+                <div className="pkg-name">Diamante</div>
+                <div className="pkg-tag">El paquete estrella de Villaverde</div>
+              </div>
+              <div className="pkg-prices">
+                <div className="pkg-price-box">
+                  <div className="pkg-price-label">100–149 inv.</div>
+                  <div className="pkg-price-num">$580</div>
+                  <div className="pkg-price-unit">por persona</div>
+                </div>
+                <div className="pkg-price-box">
+                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-num">$530</div>
+                  <div className="pkg-price-unit">por persona</div>
+                </div>
+              </div>
+              <div className="pkg-body">
+                <h4>Todo lo del Premium más</h4>
+                <div className="pkg-feat hi"><span className="ck">✓</span> 7 horas de evento (1 hora extra)</div>
+                <div className="pkg-feat hi"><span className="ck">✓</span> Grupo versátil en vivo (5 integrantes)</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Cabina profesional para DJ con iluminación</div>
+                <div className="pkg-feat hi"><span className="ck">✓</span> Pantalla gigante LED</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Descargas de CO2 espectaculares</div>
+                <div className="pkg-feat hi"><span className="ck">✓</span> Chilaquiles de madrugada 🌮</div>
+                <div className="pkg-feat"><span className="ck">✓</span> Colores de mantelería a elegir</div>
+                <div className="pkg-cort">🎁🎁 2 cortesías a elegir de nuestra lista exclusiva</div>
+              </div>
+              <a
+                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20DIAMANTE%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pkg-btn"
+              >
+                Cotizar Diamante por WhatsApp
+              </a>
+            </div>
+
             {/* Esmeralda */}
             <div className="pkg pkg-esmeralda reveal">
               <div className="pkg-head">
@@ -388,99 +359,8 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pkg-btn"
-                onClick={() => trackLead("paquete_esmeralda")}
               >
                 Cotizar Esmeralda por WhatsApp
-              </a>
-            </div>
-
-            {/* Diamante */}
-            <div className="pkg pkg-diamante reveal">
-              <div className="pkg-head">
-                <div className="pkg-badge">⭐ Más Popular</div>
-                <div className="pkg-icon">💎</div>
-                <div className="pkg-name">Diamante</div>
-                <div className="pkg-tag">El paquete estrella de Villaverde</div>
-              </div>
-              <div className="pkg-prices">
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$580</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
-                  <div className="pkg-price-num">$530</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-              </div>
-              <div className="pkg-body">
-                <h4>Todo lo del Premium más</h4>
-                <div className="pkg-feat hi"><span className="ck">✓</span> 7 horas de evento (1 hora extra)</div>
-                <div className="pkg-feat hi"><span className="ck">✓</span> Grupo versátil en vivo (5 integrantes)</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Cabina profesional para DJ con iluminación</div>
-                <div className="pkg-feat hi"><span className="ck">✓</span> Pantalla gigante LED</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Descargas de CO2 espectaculares</div>
-                <div className="pkg-feat hi"><span className="ck">✓</span> Chilaquiles de madrugada 🌮</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Colores de mantelería a elegir</div>
-                <div className="pkg-cort">🎁🎁 2 cortesías a elegir de nuestra lista exclusiva</div>
-                <div className="pkg-value">Incluye $27,000 en extras por solo $110 más por persona vs Premium</div>
-              </div>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20DIAMANTE%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pkg-btn"
-                onClick={() => trackLead("paquete_diamante")}
-              >
-                Cotizar Diamante por WhatsApp
-              </a>
-            </div>
-
-            {/* Premium */}
-            <div className="pkg pkg-premium reveal">
-              <div className="pkg-head">
-                <div className="pkg-icon">✦</div>
-                <div className="pkg-name">Premium</div>
-                <div className="pkg-tag">La mejor relación valor-precio</div>
-              </div>
-              <div className="pkg-prices">
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$470</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
-                  <div className="pkg-price-num">$420</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-              </div>
-              <div className="pkg-body">
-                <h4>Incluye</h4>
-                <div className="pkg-feat"><span className="ck">✓</span> 6 horas de evento + recepción y desalojo</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Cena formal 3 tiempos (crema + pasta + plato fuerte con guarnición)</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Refresco y hielo ilimitado todo el evento</div>
-                <div className="pkg-feat hi"><span className="ck">✓</span> Descorche libre — ¡trae tus bebidas sin cargo!</div>
-                <div className="pkg-feat hi"><span className="ck">✓</span> Botella ¾ por mesa incluida</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Mesas redondas + sillas Tiffany vestidas (colores básicos)</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Meseros con capitán + personal de recepción</div>
-                <div className="pkg-feat"><span className="ck">✓</span> DJ todo el evento + Maestro de Ceremonias</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Iluminación inteligente tipo antro</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Batucada con globos</div>
-                <div className="pkg-feat"><span className="ck">✓</span> 2 camerinos privados (XV/novios + chambelanes)</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Estacionamiento amplio</div>
-                <div className="pkg-feat"><span className="ck">✓</span> Invitación digital animada de regalo</div>
-                <div className="pkg-cort">🎁 1 cortesía a elegir de nuestra lista exclusiva</div>
-              </div>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20me%20interesa%20el%20Paquete%20PREMIUM%20para%20mi%20evento.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pkg-btn"
-                onClick={() => trackLead("paquete_premium")}
-              >
-                Cotizar Premium por WhatsApp
               </a>
             </div>
           </div>
@@ -553,28 +433,28 @@ export default function Home() {
             Cada rincón diseñado para que tu evento sea espectacular
           </p>
           <div className="gallery-grid reveal">
-            <div className="gallery-item wide" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1ULTFHFO50ZyblmQpaEcgfHUSWhaM-Oy3")} style={{cursor:"pointer"}}>
+            <div className="gallery-item wide">
               <img src="https://lh3.googleusercontent.com/d/1ULTFHFO50ZyblmQpaEcgfHUSWhaM-Oy3" alt="Fachada Villaverde" />
             </div>
-            <div className="gallery-item" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1BLlyoHkWGhy6I0Hp7ZzG2EVe6yEVHm9B")} style={{cursor:"pointer"}}>
+            <div className="gallery-item">
               <img src="https://lh3.googleusercontent.com/d/1BLlyoHkWGhy6I0Hp7ZzG2EVe6yEVHm9B" alt="Interior salón" />
             </div>
-            <div className="gallery-item tall" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1qE0i254xALH01pZuRA4-41pnoKATtwMC")} style={{cursor:"pointer"}}>
+            <div className="gallery-item tall">
               <img src="https://lh3.googleusercontent.com/d/1qE0i254xALH01pZuRA4-41pnoKATtwMC" alt="Fuente jardines" />
             </div>
-            <div className="gallery-item" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/13Rdtbkgu1ZGpHdiu9t0KS6lG3OjBN0e_")} style={{cursor:"pointer"}}>
+            <div className="gallery-item">
               <img src="https://lh3.googleusercontent.com/d/13Rdtbkgu1ZGpHdiu9t0KS6lG3OjBN0e_" alt="Montaje mesa" />
             </div>
-            <div className="gallery-item" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1JH9OgRsPQf0k70Be-2qP1n8BXwT50lKR")} style={{cursor:"pointer"}}>
+            <div className="gallery-item">
               <img src="https://lh3.googleusercontent.com/d/1JH9OgRsPQf0k70Be-2qP1n8BXwT50lKR" alt="Montaje elegante" />
             </div>
-            <div className="gallery-item wide" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA")} style={{cursor:"pointer"}}>
+            <div className="gallery-item wide">
               <img src="https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA" alt="Salón panorámica" />
             </div>
-            <div className="gallery-item" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/166Xx50pqnhCd4CkMRwb3BKzsfuYICHpp")} style={{cursor:"pointer"}}>
+            <div className="gallery-item">
               <img src="https://lh3.googleusercontent.com/d/166Xx50pqnhCd4CkMRwb3BKzsfuYICHpp" alt="Pista LED" />
             </div>
-            <div className="gallery-item" onClick={() => setLightboxSrc("https://lh3.googleusercontent.com/d/1jRn3R0MimtNoSng13RODuNvFkxty0nhG")} style={{cursor:"pointer"}}>
+            <div className="gallery-item">
               <img src="https://lh3.googleusercontent.com/d/1jRn3R0MimtNoSng13RODuNvFkxty0nhG" alt="Escalera principal" />
             </div>
           </div>
@@ -584,7 +464,6 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
-              onClick={() => trackLead("galeria_visita")}
             >
               ¿Quieres verlo en persona? Agenda tu visita →
             </a>
@@ -622,71 +501,13 @@ export default function Home() {
             <div className="why-card">
               <div className="why-icon">📱</div>
               <h3>Invitación digital gratis</h3>
-              <p>Invitación digital animada con confirmación de asistencia, cuenta regresiva y mapa — valorada en $2,500, incluida GRATIS en todos los paquetes.</p>
+              <p>Animada con cuenta regresiva, mapa de ubicación y confirmación por WhatsApp. Incluida en todos los paquetes.</p>
             </div>
             <div className="why-card">
               <div className="why-icon">💰</div>
               <h3>Sin sorpresas de precio</h3>
               <p>Todo incluido desde el primer momento. Nada de &quot;extras ocultos&quot; que inflan la cuenta al final.</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparación con competencia */}
-      <section className="section bg-crema">
-        <div className="section-narrow">
-          <h2 className="section-title reveal">Compara y decide</h2>
-          <p className="section-sub reveal">
-            Mira lo que incluyen nuestros paquetes vs. otros salones de la zona
-          </p>
-          <div className="reveal" style={{ overflowX: "auto" }}>
-            <table className="compare-table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Villaverde</th>
-                  <th>Otros salones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Descorche libre</td>
-                  <td><span className="compare-check">✓ Incluido</span></td>
-                  <td><span className="compare-x">✗ $5,000–$8,000 extra</span></td>
-                </tr>
-                <tr>
-                  <td>Cortesías a elegir</td>
-                  <td><span className="compare-check">✓ Hasta 12 opciones</span></td>
-                  <td><span className="compare-x">✗ No incluyen</span></td>
-                </tr>
-                <tr>
-                  <td>Invitación digital</td>
-                  <td><span className="compare-check">✓ Gratis</span></td>
-                  <td><span className="compare-x">✗ No ofrecen</span></td>
-                </tr>
-                <tr>
-                  <td>Botella por mesa</td>
-                  <td><span className="compare-check">✓ Incluida</span></td>
-                  <td><span className="compare-x">✗ $150–$200 extra</span></td>
-                </tr>
-                <tr>
-                  <td>Camerinos privados</td>
-                  <td><span className="compare-check">✓ 2 exclusivos</span></td>
-                  <td><span className="compare-x">✗ 0–1</span></td>
-                </tr>
-                <tr>
-                  <td>Precio por persona</td>
-                  <td><span className="compare-check">Desde $420</span></td>
-                  <td><span className="compare-x">Desde $450–$550</span></td>
-                </tr>
-                <tr>
-                  <td>Chilaquiles madrugada</td>
-                  <td><span className="compare-check">✓ En Diamante y Esmeralda</span></td>
-                  <td><span className="compare-x">✗ $4,000+ extra</span></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
@@ -712,197 +533,128 @@ export default function Home() {
             )}
           </div>
 
-          {activeMenu === "entradas" && (() => {
-            const items = ["Coctel de frutas con coco", "Volovanes (2)", "Ensalada de atún", "Flor de calabaza con queso", "Melón al oporto", "Rollos de jamón con ensalada rusa", "Pepino relleno de atún", "Jitomate relleno de atún", "Pimiento relleno de pollo"];
-            return (
+          {activeMenu === "entradas" && (
             <div className="menu-content active">
               <h3>Entradas</h3>
               <div className="menu-items">
-                {(menuExpanded ? items : items.slice(0, 4)).map((item) => (
+                {["Coctel de frutas con coco", "Volovanes (2)", "Ensalada de atún", "Flor de calabaza con queso", "Melón al oporto", "Rollos de jamón con ensalada rusa", "Pepino relleno de atún", "Jitomate relleno de atún", "Pimiento relleno de pollo"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
-              {!menuExpanded && items.length > 4 && (
-                <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                  Ver todas las opciones ({items.length}) ↓
-                </button>
-              )}
             </div>
-            );
-          })()}
+          )}
 
-          {activeMenu === "cremas" && (() => {
-            const items = ["Elote", "Nuez", "Champiñones", "Chile poblano con elote", "Brócoli", "Almendras", "Pimiento morrón", "Zanahoria", "Flor de calabaza", "Cilantro", "Calabaza", "Coliflor", "Espinacas", "Espárragos", "Ejote", "Chícharos"];
-            return (
+          {activeMenu === "cremas" && (
             <div className="menu-content active">
               <h3>Cremas</h3>
               <div className="menu-items">
-                {(menuExpanded ? items : items.slice(0, 4)).map((item) => (
+                {["Elote", "Nuez", "Champiñones", "Chile poblano con elote", "Brócoli", "Almendras", "Pimiento morrón", "Zanahoria", "Flor de calabaza", "Cilantro", "Calabaza", "Coliflor", "Espinacas", "Espárragos", "Ejote", "Chícharos"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
-              {!menuExpanded && items.length > 4 && (
-                <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                  Ver todas las opciones ({items.length}) ↓
-                </button>
-              )}
             </div>
-            );
-          })()}
+          )}
 
-          {activeMenu === "pasta" && (() => {
-            const codito = ["Con crema y jamón", "Con atún", "A la poblana", "A la crema con espinaca", "Con jamón y queso", "A la hawaiana", "Al chipotle", "A la boloñesa", "A la italiana", "Con jamón y gratín"];
-            const espagueti = ["A la italiana", "A la jardinera", "A la hawaiana", "A la poblana", "A la boloñesa", "Con chorizo", "A la francesa", "A la florentina", "A la mantequilla", "Al chipotle", "Al gratín", "A la salsa rosa"];
-            return (
+          {activeMenu === "pasta" && (
             <div className="menu-content active">
               <h3>Pasta y Espagueti</h3>
               <div className="menu-subsection">
                 <h4>Codito</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? codito : codito.slice(0, 4)).map((item) => (
+                  {["Con crema y jamón", "Con atún", "A la poblana", "A la crema con espinaca", "Con jamón y queso", "A la hawaiana", "Al chipotle", "A la boloñesa", "A la italiana", "Con jamón y gratín"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && codito.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({codito.length}) ↓
-                  </button>
-                )}
               </div>
               <div className="menu-subsection">
                 <h4>Espagueti</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? espagueti : espagueti.slice(0, 4)).map((item) => (
+                  {["A la italiana", "A la jardinera", "A la hawaiana", "A la poblana", "A la boloñesa", "Con chorizo", "A la francesa", "A la florentina", "A la mantequilla", "Al chipotle", "Al gratín", "A la salsa rosa"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && espagueti.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({espagueti.length}) ↓
-                  </button>
-                )}
               </div>
             </div>
-            );
-          })()}
+          )}
 
-          {activeMenu === "pollo" && (() => {
-            const polloItems = ["Almendrado", "Al pimiento morrón", "En carnitas", "En crema de chipotle", "En mixiotes con nopales", "En vino blanco", "En achiote", "A la naranja", "En adobo", "A la ciruela", "En crema de nuez", "Enchilado", "En mole poblano", "En mole verde", "En crema de champiñones", "A la jardinera", "A la piña", "A los 3 chiles"];
-            const cordonItems = ["Jamón y queso amarillo", "Huitlacoche c/ queso", "Flor de calabaza c/ queso", "Ensalada rusa", "Calabacitas con cebolla en vino blanco"];
-            return (
+          {activeMenu === "pollo" && (
             <div className="menu-content active">
               <h3>Pollo</h3>
               <div className="menu-items">
-                {(menuExpanded ? polloItems : polloItems.slice(0, 4)).map((item) => (
+                {["Almendrado", "Al pimiento morrón", "En carnitas", "En crema de chipotle", "En mixiotes con nopales", "En vino blanco", "En achiote", "A la naranja", "En adobo", "A la ciruela", "En crema de nuez", "Enchilado", "En mole poblano", "En mole verde", "En crema de champiñones", "A la jardinera", "A la piña", "A los 3 chiles"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
-              {!menuExpanded && polloItems.length > 4 && (
-                <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                  Ver todas las opciones ({polloItems.length}) ↓
-                </button>
-              )}
               <div className="menu-subsection">
                 <h4>Pechugas Cordon Blue rellenas de:</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? cordonItems : cordonItems.slice(0, 4)).map((item) => (
+                  {["Jamón y queso amarillo", "Huitlacoche c/ queso", "Flor de calabaza c/ queso", "Ensalada rusa", "Calabacitas con cebolla en vino blanco"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && cordonItems.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({cordonItems.length}) ↓
-                  </button>
-                )}
                 <p style={{ textAlign: "center", fontSize: "13px", color: "var(--gris-text)", marginTop: "10px" }}>
                   Con baño de crema de: champiñones, chipotle o tres quesos
                 </p>
               </div>
             </div>
-            );
-          })()}
+          )}
 
-          {activeMenu === "cerdo" && (() => {
-            const cerdoItems = ["Carnitas", "Pierna en adobo", "Pierna con champiñones"];
-            const lomoItems = ["Adobo", "Enchilado", "Almendrado", "Crema de chipotle", "Mole poblano", "A la naranja", "A la jardinera", "A la ciruela", "Crema con champiñones", "Envinado", "A la piña", "A los tres chiles"];
-            const tambienItems = ["Chuleta ahumada en chipotle", "Chuleta ahumada en piña"];
-            return (
+          {activeMenu === "cerdo" && (
             <div className="menu-content active">
               <h3>Cerdo</h3>
               <div className="menu-items">
-                {(menuExpanded ? cerdoItems : cerdoItems.slice(0, 4)).map((item) => (
+                {["Carnitas", "Pierna en adobo", "Pierna con champiñones"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
               <div className="menu-subsection">
                 <h4>Lomo en:</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? lomoItems : lomoItems.slice(0, 4)).map((item) => (
+                  {["Adobo", "Enchilado", "Almendrado", "Crema de chipotle", "Mole poblano", "A la naranja", "A la jardinera", "A la ciruela", "Crema con champiñones", "Envinado", "A la piña", "A los tres chiles"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && lomoItems.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({lomoItems.length}) ↓
-                  </button>
-                )}
               </div>
               <div className="menu-subsection">
                 <h4>También disponible:</h4>
                 <div className="menu-items">
-                  {tambienItems.map((item) => (
+                  {["Chuleta ahumada en chipotle", "Chuleta ahumada en piña"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
               </div>
             </div>
-            );
-          })()}
+          )}
 
-          {activeMenu === "guarn" && (() => {
-            const guarnItems = ["Ensalada rusa", "Puré de papa", "Ensalada de zanahoria con piña", "Ensalada de manzana con piña", "Verduras a la mantequilla", "Ensalada de pepino", "Papas a la mantequilla", "Frijoles refritos o charros", "Nopales en escabeche", "Rajas con crema", "Ensalada Waldorf"];
-            const arrozItems = ["Mexicano", "Poblano", "Jardinero", "Blanco", "Risotto español"];
-            const consomeItems = ["Pollo", "Res"];
-            return (
+          {activeMenu === "guarn" && (
             <div className="menu-content active">
               <h3>Guarniciones y Arroz</h3>
               <div className="menu-subsection">
                 <h4>Guarniciones</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? guarnItems : guarnItems.slice(0, 4)).map((item) => (
+                  {["Ensalada rusa", "Puré de papa", "Ensalada de zanahoria con piña", "Ensalada de manzana con piña", "Verduras a la mantequilla", "Ensalada de pepino", "Papas a la mantequilla", "Frijoles refritos o charros", "Nopales en escabeche", "Rajas con crema", "Ensalada Waldorf"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && guarnItems.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({guarnItems.length}) ↓
-                  </button>
-                )}
               </div>
               <div className="menu-subsection">
                 <h4>Arroz</h4>
                 <div className="menu-items">
-                  {(menuExpanded ? arrozItems : arrozItems.slice(0, 4)).map((item) => (
+                  {["Mexicano", "Poblano", "Jardinero", "Blanco", "Risotto español"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
-                {!menuExpanded && arrozItems.length > 4 && (
-                  <button className="menu-expand" onClick={() => setMenuExpanded(true)}>
-                    Ver todas las opciones ({arrozItems.length}) ↓
-                  </button>
-                )}
               </div>
               <div className="menu-subsection">
                 <h4>Consomé</h4>
                 <div className="menu-items">
-                  {consomeItems.map((item) => (
+                  {["Pollo", "Res"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
               </div>
             </div>
-            );
-          })()}
+          )}
         </div>
       </section>
 
@@ -964,18 +716,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonios - Google Reviews */}
+      {/* Testimonios - Carrusel */}
       <section className="section bg-gris">
         <div className="section-narrow">
-          <div className="google-header reveal">
-            <span className="google-logo">
-              <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-            </span>
-            <span style={{ fontSize: "15px", color: "var(--gris-text)" }}>Reseñas</span>
-          </div>
-          <div className="google-rating reveal">
-            <strong>4.8</strong> ★★★★★ · 127 reseñas en Google
-          </div>
+          <h2 className="section-title reveal">
+            Lo que dicen nuestras familias
+          </h2>
           <div className="testi-carousel reveal">
             <button
               className="testi-nav prev"
@@ -1008,12 +754,6 @@ export default function Home() {
                     </div>
                     <div className="testi-author">— {t.author}</div>
                     <div className="testi-event">{t.event}</div>
-                    <div className="google-badge">
-                      <span className="google-logo" style={{ fontSize: "11px" }}>
-                        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-                      </span>
-                      Reseña verificada
-                    </div>
                   </div>
                 </div>
               ))}
@@ -1034,59 +774,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Instagram */}
       <section className="section">
         <div className="section-narrow">
-          <h2 className="section-title reveal">Preguntas frecuentes</h2>
-          <div className="faq-list reveal">
-            {[
-              { q: "¿Puedo llevar mis propias bebidas?", a: "¡Sí! Todos nuestros paquetes incluyen descorche libre. Trae todo el alcohol que quieras sin ningún cargo extra. Solo nosotros proporcionamos los refrescos y hielo que están incluidos." },
-              { q: "¿Cuánto es el anticipo para apartar?", a: "Solo $3,000 MXN para reservar tu fecha. El resto se liquida en pagos cómodos antes del evento. Aceptamos transferencia y efectivo." },
-              { q: "¿Qué pasa si llueve?", a: "Nuestro salón es completamente techado, así que tu evento no se ve afectado. Los jardines son para la recepción y fotos, pero toda la fiesta es en interior." },
-              { q: "¿Tienen estacionamiento?", a: "Sí, contamos con estacionamiento amplio con un cargo de $50 por auto. También hay espacio en las calles aledañas sin costo." },
-              { q: "¿Puedo hacer mi evento en cualquier día?", a: "Sí, manejamos eventos de lunes a domingo. Los viernes y sábados son los más solicitados, así que te recomendamos apartar con anticipación." },
-              { q: "¿Incluyen la decoración?", a: "Incluimos mesas redondas con mantelería, sillas Tiffany vestidas, iluminación inteligente y la decoración base del salón. Decoración temática personalizada es un servicio adicional." },
-              { q: "¿Cuál es la capacidad máxima?", a: "Nuestro salón tiene capacidad para hasta 250 invitados cómodamente. El mínimo es de 100 personas para cualquier paquete." },
-              { q: "¿Qué pasa si se va la luz?", a: "Contamos con planta eléctrica propia que se activa automáticamente. Tu evento no se detiene ni un segundo — la música, las luces y todo el servicio siguen sin interrupción. Es una ventaja que muy pocos salones en la zona ofrecen." },
-            ].map((faq, i) => (
-              <div key={i} className="faq-item">
-                <button className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  <span>{faq.q}</span>
-                  <span className="faq-toggle" style={{ transform: openFaq === i ? "rotate(45deg)" : "none" }}>+</span>
-                </button>
-                <div className={`faq-answer${openFaq === i ? " open" : ""}`}>
-                  {faq.a}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Instagram */}
-      <section className="section bg-gris">
-        <div className="section-narrow">
           <h2 className="section-title reveal">Síguenos en Instagram</h2>
-          <p className="section-sub reveal">Descubre más de nuestros eventos y el detrás de cámaras</p>
-          <div className="insta-grid reveal">
-            {[
-              "https://lh3.googleusercontent.com/d/1ULTFHFO50ZyblmQpaEcgfHUSWhaM-Oy3",
-              "https://lh3.googleusercontent.com/d/1BLlyoHkWGhy6I0Hp7ZzG2EVe6yEVHm9B",
-              "https://lh3.googleusercontent.com/d/1qE0i254xALH01pZuRA4-41pnoKATtwMC",
-              "https://lh3.googleusercontent.com/d/13Rdtbkgu1ZGpHdiu9t0KS6lG3OjBN0e_",
-              "https://lh3.googleusercontent.com/d/1JH9OgRsPQf0k70Be-2qP1n8BXwT50lKR",
-              "https://lh3.googleusercontent.com/d/166Xx50pqnhCd4CkMRwb3BKzsfuYICHpp",
-            ].map((src, i) => (
-              <a key={i} href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" className="insta-item">
-                <img src={src} alt={`Villaverde Instagram ${i + 1}`} />
-              </a>
-            ))}
-          </div>
-          <div style={{ textAlign: "center" }} className="reveal">
-            <a href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" className="insta-btn">
-              Ver más en @salon.villaverde →
+          <p className="section-sub reveal">
+            <a
+              href="https://www.instagram.com/salon.villaverde/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--rosa)", fontWeight: 700 }}
+            >
+              @salon.villaverde
             </a>
-          </div>
+          </p>
         </div>
       </section>
 
@@ -1124,25 +825,24 @@ export default function Home() {
       <section className="cta-final" id="contacto">
         <div className="inner">
           <h2>
-            En 6 meses esta va a ser
+            ¿Lista para la fiesta
             <br />
-            tu fiesta
+            de tus sueños?
           </h2>
           <p className="cta-sub">
-            Imagina a tus invitados disfrutando aquí. El primer paso es conocerlo.
+            Agenda tu visita sin compromiso. Las fotos no le hacen justicia.
           </p>
           <div className="cta-anticipo">
-            Solo $3,000 separan a tu familia de la fiesta perfecta
+            Aparta tu fecha con solo $3,000 de anticipo
           </div>
           <a
             href="https://wa.me/529995485862?text=Hola%2C%20quiero%20agendar%20una%20visita%20al%20Sal%C3%B3n%20Villaverde%20para%20conocerlo.%20%C2%BFQu%C3%A9%20horarios%20tienen%20disponibles%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-wa-big"
-            onClick={() => trackLead("cta_final_visita")}
           >
             <WhatsAppIcon size={24} />
-            Quiero conocer el salón
+            Agenda tu visita por WhatsApp
           </a>
           <div className="cta-contact">
             📞 WhatsApp: 9995485862 · 📍 Chalco, Estado de México
@@ -1198,41 +898,9 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         className="wa-float"
-        onClick={() => trackLead("wa_float")}
       >
         <WhatsAppIcon size={34} />
       </a>
-
-      {/* Lightbox */}
-      {lightboxSrc && (
-        <div className="lightbox-overlay" onClick={() => setLightboxSrc(null)}>
-          <button className="lightbox-close" onClick={() => setLightboxSrc(null)}>&#x2715;</button>
-          <img src={lightboxSrc} alt="Galería Villaverde" className="lightbox-img" onClick={(e) => e.stopPropagation()} />
-        </div>
-      )}
-
-      {/* Exit Intent Popup */}
-      {showExitPopup && (
-        <div className="exit-overlay" onClick={() => setShowExitPopup(false)}>
-          <div className="exit-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="exit-close" onClick={() => setShowExitPopup(false)}>&#x2715;</button>
-            <h3>Antes de irte</h3>
-            <p>Te mandamos los paquetes completos y fechas disponibles por WhatsApp. Sin compromiso.</p>
-            <a
-              href="https://wa.me/529995485862?text=Hola%2C%20vi%20su%20p%C3%A1gina%20y%20me%20interesan%20los%20precios%20y%20fechas%20disponibles"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="exit-cta"
-              onClick={() => { trackLead("exit_popup"); setShowExitPopup(false); }}
-            >
-              Envíame los precios por WhatsApp
-            </a>
-            <span className="exit-dismiss" onClick={() => setShowExitPopup(false)}>No gracias, solo estaba viendo</span>
-          </div>
-        </div>
-      )}
-
-      {/* Live visitors toast removed - fake social proof hurts trust */}
 
       {/* Sticky CTA Móvil */}
       {showSticky && (
@@ -1247,7 +915,6 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               className="sticky-cta-btn"
-              onClick={() => trackLead("sticky_cotizar")}
             >
               <WhatsAppIcon size={18} />
               Cotizar
