@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eventus Pro 1.0 — Salón de Fiestas Villaverde</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 :root{--rosa:#F0157A;--rosa-light:#FF4D9E;--rosa-dark:#C0105F;--rosa-glow:rgba(240,21,122,0.15);--verde:#00E676;--verde-dark:#00C853;--negro:#090909;--blanco:#FFFFFF;--gold:#C9A84C;--font-display:Georgia,serif;--font-body:system-ui,-apple-system,sans-serif}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--font-body);background:var(--negro);color:#fff;min-height:100vh;overflow-x:hidden}
@@ -171,6 +173,57 @@ select.fi{-webkit-appearance:none;appearance:none;cursor:pointer;background-imag
 .aeb{font-size:8px;font-weight:700;padding:1px 6px;border-radius:20px}.aeb.xv{background:rgba(240,21,122,0.1);color:var(--rosa-light)}.aeb.boda{background:rgba(201,168,76,0.1);color:var(--gold)}.aeb.graduacion{background:rgba(0,230,118,0.1);color:var(--verde)}
 .abk{background:none;border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:6px 14px;color:rgba(255,255,255,0.25);font-family:var(--font-body);font-size:10px;cursor:pointer}
 .nms{margin-top:12px}.nmst{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-bottom:5px}
+/* ADMIN PANEL ENHANCED */
+.adm-tabs{display:flex;gap:2px;background:rgba(255,255,255,0.04);border-radius:10px;padding:3px;margin-bottom:14px;overflow-x:auto}
+.adm-tab{flex:none;padding:8px 14px;border:none;border-radius:8px;background:transparent;color:rgba(255,255,255,0.3);font-family:var(--font-body);font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .25s}
+.adm-tab.active{background:var(--rosa);color:white}
+.adm-pn{display:none}.adm-pn.active{display:block;animation:fi .3s ease}
+.adm-ev-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;transition:border-color .2s}
+.adm-ev-card:hover{border-color:rgba(240,21,122,0.15)}
+.adm-ev-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.adm-ev-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--rosa),var(--rosa-dark));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.adm-ev-info{flex:1;min-width:0}
+.adm-ev-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.85)}
+.adm-ev-meta{font-size:9px;color:rgba(255,255,255,0.3);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap}
+.adm-ev-code{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--rosa);letter-spacing:2px;flex-shrink:0}
+.adm-ev-row{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(255,255,255,0.25);padding-top:6px;border-top:1px solid rgba(255,255,255,0.03)}
+.adm-ev-actions{display:flex;gap:4px}
+.adm-btn{padding:5px 10px;border:none;border-radius:6px;font-family:var(--font-body);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s}
+.adm-btn-code{background:rgba(240,21,122,0.08);color:var(--rosa)}
+.adm-btn-checkin{background:rgba(0,230,118,0.08);color:var(--verde)}
+.adm-btn-view{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.4)}
+.adm-btn-wa{background:rgba(37,211,102,0.08);color:#25D366}
+.adm-detail{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:16px;margin-bottom:10px}
+.adm-detail h4{font-family:var(--font-display);font-size:16px;color:rgba(255,255,255,0.7);margin-bottom:10px}
+.adm-back{background:none;border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:5px 12px;color:rgba(255,255,255,0.3);font-family:var(--font-body);font-size:9px;cursor:pointer;margin-bottom:10px}
+/* DASHBOARD */
+.dash-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.dash-card{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px 10px;text-align:center}
+.dash-card-val{font-family:var(--font-display);font-size:24px;font-weight:700;line-height:1}
+.dash-card-lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:4px}
+.dash-section{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:14px;margin-bottom:10px}
+.dash-section-title{font-family:var(--font-display);font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:10px}
+.dash-chart{display:flex;flex-direction:column;gap:6px}
+.dash-bar-row{display:flex;align-items:center;gap:8px}
+.dash-bar-label{font-size:9px;color:rgba(255,255,255,0.35);width:52px;flex-shrink:0;text-align:right}
+.dash-bar-track{flex:1;height:18px;background:rgba(255,255,255,0.04);border-radius:5px;overflow:hidden}
+.dash-bar-fill{height:100%;border-radius:5px;min-width:4px;transition:width .5s}
+.dash-bar-val{font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);width:55px;flex-shrink:0}
+.dash-types{display:flex;flex-direction:column;gap:6px}
+.dash-type-card{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:9px;padding:10px 12px}
+.dash-type-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dash-type-info{flex:1}
+.dash-type-name{font-size:12px;font-weight:700;color:rgba(255,255,255,0.7)}
+.dash-type-count{font-size:9px;color:rgba(255,255,255,0.3);margin-top:1px}
+.dash-upcoming-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:10px;padding:10px 12px;margin-bottom:5px}
+.dash-upcoming-left{flex-shrink:0}
+.dash-upcoming-days{width:44px;height:44px;border-radius:10px;background:rgba(240,21,122,0.06);border:1px solid rgba(240,21,122,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--rosa);line-height:1}
+.dash-upcoming-days.urgent{background:rgba(255,82,82,0.1);border-color:rgba(255,82,82,0.2);color:#FF5252}
+.dash-upcoming-days small{font-size:7px;letter-spacing:1px;text-transform:uppercase;font-weight:600;opacity:.6}
+.dash-upcoming-info{flex:1;min-width:0}
+.dash-upcoming-name{font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dash-upcoming-meta{font-size:9px;color:rgba(255,255,255,0.25);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+@media(min-width:420px){.dash-metrics{grid-template-columns:repeat(4,1fr)}}
 .qr-modal{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;animation:fi .3s ease}
 .qr-box{background:var(--negro);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px 24px;max-width:360px;width:100%;text-align:center}
 .qr-box h3{font-family:var(--font-display);font-size:20px;color:rgba(255,255,255,0.8);margin-bottom:4px}
@@ -209,7 +262,101 @@ select.fi{-webkit-appearance:none;appearance:none;cursor:pointer;background-imag
 .auth-tab{flex:1;padding:10px;border:none;border-radius:10px;background:transparent;color:rgba(255,255,255,0.3);font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .25s}
 .auth-tab.active{background:var(--rosa);color:white}
 .auth-panel{display:none}.auth-panel.active{display:block;animation:fi .3s ease}
+.demo-banner{background:linear-gradient(90deg,rgba(240,21,122,0.15),rgba(255,213,79,0.1));border:1px solid rgba(240,21,122,0.2);border-radius:10px;padding:10px 14px;margin:10px 16px;text-align:center;max-width:520px;margin-left:auto;margin-right:auto;position:relative;z-index:2}
+.demo-banner p{font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:6px}.demo-banner strong{color:var(--rosa)}
+.demo-banner a{display:inline-block;padding:6px 14px;background:#25D366;color:white;border-radius:7px;font-size:9px;font-weight:700;text-decoration:none;font-family:var(--font-body)}
+.demo-lock{opacity:0.3;pointer-events:none;position:relative}.demo-lock::after{content:'🔒 Solo en versión completa';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(9,9,9,0.7);border-radius:8px;font-size:10px;color:var(--rosa);font-weight:700;pointer-events:none}
 @media(max-width:480px){.alogo{font-size:32px}.cdnm{font-size:26px!important}.ring{width:130px;height:130px}.rn{font-size:38px}.vb{font-size:8px;padding:7px 7px}}
+/* FOTOS TAB */
+.foto-main{width:120px;height:120px;border-radius:50%;margin:10px auto;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px dashed rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);position:relative;cursor:pointer;transition:border-color .3s}
+.foto-main:hover{border-color:var(--rosa)}
+.foto-main img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.foto-main.has-photo{border-style:solid;border-color:var(--rosa)}
+.foto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.foto-thumb{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)}
+.foto-thumb img{width:100%;height:100%;object-fit:cover}
+.foto-thumb .foto-del{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:#FF5252;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.foto-thumb:hover .foto-del{opacity:1}
+.foto-upload{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1;border-radius:10px;border:2px dashed rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);cursor:pointer;transition:all .2s;font-size:22px;color:rgba(255,255,255,0.15)}
+.foto-upload:hover{border-color:var(--rosa);color:var(--rosa)}
+.foto-section{margin-bottom:16px}
+.foto-section h4{font-family:var(--font-display);font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:8px;text-align:center}
+.foto-details{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.foto-details .fg{margin-bottom:0}
+/* INVITATIONS TAB */
+.inv-overview{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.inv-badge{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
+.inv-badge-sin_brief{color:#999;border-color:rgba(153,153,153,0.2)}
+.inv-badge-en_diseno{color:#FFD54F;border-color:rgba(255,213,79,0.25)}
+.inv-badge-en_revision{color:#F0157A;border-color:rgba(240,21,122,0.25)}
+.inv-badge-con_cambios{color:#FF9800;border-color:rgba(255,152,0,0.25)}
+.inv-badge-aprobada{color:#00E676;border-color:rgba(0,230,118,0.25)}
+.inv-status{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700}
+.inv-status-sin_brief{background:rgba(153,153,153,0.12);color:#999}
+.inv-status-en_diseno{background:rgba(255,213,79,0.12);color:#FFD54F}
+.inv-status-en_revision{background:rgba(240,21,122,0.12);color:#F0157A}
+.inv-status-con_cambios{background:rgba(255,152,0,0.12);color:#FF9800}
+.inv-status-aprobada{background:rgba(0,230,118,0.12);color:#00E676}
+.inv-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:16px;margin-bottom:10px}
+.inv-card.inv-dimmed{opacity:0.4}
+.inv-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.inv-card-name{font-family:var(--font-display);font-size:14px;font-weight:700;color:rgba(255,255,255,0.8)}
+.inv-brief-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+.inv-brief-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;cursor:pointer}
+.inv-brief-info{font-size:10px;color:rgba(255,255,255,0.5);line-height:1.6;margin:8px 0}
+.inv-brief-info strong{color:rgba(255,255,255,0.7)}
+.inv-comments-box{background:rgba(255,152,0,0.08);border:1px solid rgba(255,152,0,0.2);border-radius:10px;padding:12px;margin:10px 0;font-size:11px;color:#FF9800;line-height:1.5}
+.inv-comments-box::before{content:'Comentarios del cliente:';display:block;font-weight:700;margin-bottom:4px;font-size:10px}
+.inv-preview{margin:10px 0;text-align:center}
+.inv-preview img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
+.inv-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.inv-btn{padding:6px 12px;border:none;border-radius:7px;font-family:var(--font-body);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s}
+.inv-btn-upload{background:rgba(255,213,79,0.12);color:#FFD54F}
+.inv-btn-send{background:rgba(240,21,122,0.12);color:#F0157A}
+.inv-btn-back{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4)}
+.inv-btn-approve{background:rgba(0,230,118,0.12);color:#00E676}
+.inv-btn-revoke{background:rgba(255,82,82,0.1);color:#FF5252}
+.inv-waiting{font-size:10px;color:rgba(255,255,255,0.3);font-style:italic;margin:8px 0}
+.inv-empty{font-size:10px;color:rgba(255,255,255,0.25);margin:8px 0}
+/* ─── CLIENT INVITACION TAB ─── */
+.inv-header{text-align:center;margin-bottom:18px}.inv-header h3{font-family:var(--font-display);font-size:22px;color:rgba(255,255,255,0.85);margin-bottom:6px}.inv-header p{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5}
+.inv-section{margin-bottom:18px}.inv-section h4{font-family:var(--font-display);font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:4px}.inv-section .inv-hint{font-size:9px;color:rgba(255,255,255,0.2);margin-bottom:8px}
+.inv-upload-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.inv-upload-grid.solo{grid-template-columns:repeat(2,1fr);max-width:220px}
+.inv-upload-slot{aspect-ratio:1;border-radius:10px;border:2px dashed rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;transition:all .2s}
+.inv-upload-slot:hover{border-color:var(--rosa);background:rgba(240,21,122,0.03)}
+.inv-upload-slot img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.inv-upload-slot .inv-slot-icon{font-size:22px;color:rgba(255,255,255,0.12)}
+.inv-upload-slot .inv-slot-del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.7);border:none;color:#FF5252;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2}
+.inv-upload-slot:hover .inv-slot-del{opacity:1}
+.inv-colors{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.inv-color-btn{padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.5);font-size:11px;cursor:pointer;transition:all .2s;font-family:var(--font-body)}
+.inv-color-btn.sel{background:var(--rosa);color:white;border-color:var(--rosa)}
+.inv-custom-color{margin-top:6px;display:none}.inv-custom-color.show{display:block}
+.inv-brief-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--rosa),var(--rosa-dark));color:white;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;margin-top:10px}
+.inv-brief-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,21,122,0.3)}
+.inv-status-screen{text-align:center;padding:24px 10px}
+.inv-status-screen h3{font-family:var(--font-display);font-size:20px;color:rgba(255,255,255,0.85);margin-bottom:10px}
+.inv-status-screen p{font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;margin-bottom:10px}
+.inv-spinner{margin:18px auto;width:40px;height:40px;border:3px solid rgba(255,255,255,0.06);border-top-color:var(--rosa);border-radius:50%;animation:inv-spin 1s linear infinite}
+@keyframes inv-spin{to{transform:rotate(360deg)}}
+.inv-brief-summary{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:14px;margin:14px 0;text-align:left}
+.inv-brief-summary h5{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--rosa);margin-bottom:8px}
+.inv-brief-summary .inv-sum-row{font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:4px}.inv-brief-summary .inv-sum-row strong{color:rgba(255,255,255,0.7)}
+.inv-brief-thumbs{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0}
+.inv-brief-thumbs img{width:40px;height:40px;border-radius:6px;object-fit:cover;border:1px solid rgba(255,255,255,0.06)}
+.inv-wa-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border:none;border-radius:10px;background:rgba(37,211,102,0.12);color:#25D366;font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;margin-top:10px;transition:all .2s}
+.inv-wa-btn:hover{background:rgba(37,211,102,0.2)}
+.inv-client-preview{width:100%;max-width:340px;margin:14px auto;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
+.inv-client-preview img{width:100%;display:block}
+.inv-client-preview iframe{width:100%;height:500px;border:none}
+.inv-approve-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--verde-dark),var(--verde));color:#111;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;margin:8px 0;transition:all .3s}
+.inv-approve-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,230,118,0.3)}
+.inv-changes-btn{width:100%;padding:12px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:transparent;color:rgba(255,255,255,0.5);font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;margin:4px 0}
+.inv-changes-ta{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;color:#fff;font-family:var(--font-body);font-size:12px;outline:none;resize:vertical;min-height:80px;margin:8px 0}
+.inv-changes-ta:focus{border-color:var(--rosa)}
+.inv-changes-ta::placeholder{color:rgba(255,255,255,0.18)}
+.inv-comment-box{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;margin:10px 0;font-size:12px;color:rgba(255,255,255,0.5);font-style:italic;line-height:1.5}
+.inv-count-badge{display:inline-block;background:rgba(240,21,122,0.1);color:var(--rosa);padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-top:10px}
 </style>
 </head>
 <body>
@@ -220,19 +367,18 @@ select.fi{-webkit-appearance:none;appearance:none;cursor:pointer;background-imag
 <div class="alogo">Villa<span>verde</span></div><div class="asub">Salón de Fiestas · Chalco</div><div class="atit">Eventus Pro 1.0</div>
 
 <div class="auth-tabs">
-<button class="auth-tab active" onclick="switchAuth('register',this)">🎉 Registrar evento</button>
-<button class="auth-tab" onclick="switchAuth('login',this)">🔑 Iniciar sesión</button>
+<button class="auth-tab active" onclick="switchAuth('register',this)">🎉 Registrar gratis</button>
+<button class="auth-tab" onclick="switchAuth('login',this)">🔑 Ya tengo código</button>
 </div>
 
 <div class="auth-panel active" id="authRegister">
-<div class="asc" id="regS"><h3>🎉 Registrar mi evento</h3><p>Organiza invitados, mesas, menú, programa y pagos.</p><div class="erm" id="rE"></div>
+<div class="asc" id="regS"><h3>🎉 Planea tu evento gratis</h3><p>Registra tu evento y empieza a organizar tu lista de invitados y mesas. Al contratar con el salón, desbloqueamos menú, programa, pagos y más.</p><div class="erm" id="rE"></div>
 <div class="fg"><label>Nombre del festejado(a)</label><input type="text" class="fi" id="rN" placeholder="Ej: Valentina García"></div>
 <div class="fr"><div class="fg"><label>Tipo de evento</label><select class="fi" id="rT"><option value="xv">XV Años</option><option value="boda">Boda</option><option value="graduacion">Graduación</option></select></div>
 <div class="fg"><label>Fecha del evento</label><input type="date" class="fi" id="rD"></div></div>
-<div class="fr"><div class="fg"><label>Paquete</label><select class="fi" id="rP"><option value="6">Premium (6 hrs)</option><option value="7">Diamante (7 hrs)</option><option value="8">Esmeralda (8 hrs)</option></select></div>
-<div class="fg"><label>Costo total del evento ($)</label><input type="number" class="fi" id="rCost" placeholder="Ej: 84000" min="3000"></div></div>
-<button class="btn br" onclick="reg()">Registrar →</button></div>
-<div id="cR" style="display:none"><div class="asc"><h3>✅ ¡Registrado!</h3><div class="cdb"><div class="code" id="nC"></div><p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px">Tu código de acceso — guárdalo bien</p></div><button class="btn bgr" onclick="enter()">Entrar →</button></div></div>
+<div class="fg"><label>Tu WhatsApp</label><input type="tel" class="fi" id="rPhone" placeholder="Ej: 5512345678 (10 dígitos)"></div>
+<button class="btn br" onclick="reg()">Registrar gratis →</button></div>
+<div id="cR" style="display:none"><div class="asc"><h3>✅ ¡Registrado!</h3><div class="cdb"><div class="code" id="nC"></div><p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px">Guarda bien tu código, te servirá para entrar a tu plan de evento desde cualquier dispositivo</p></div><button class="btn bgr" onclick="enter()">Entrar →</button></div></div>
 </div>
 
 <div class="auth-panel" id="authLogin">
@@ -249,15 +395,7 @@ select.fi{-webkit-appearance:none;appearance:none;cursor:pointer;background-imag
 <div class="screen" id="S2">
 <div class="ah"><div class="aht"><div><div class="al2">Villa<span>verde</span></div></div><div style="text-align:right"><div class="acd"><span class="sd ok" id="syncDot"></span><span id="dC"></span></div><button class="bo" onclick="out()">Salir</button></div></div><div class="aen" id="dN"></div></div>
 <div class="cbar" id="cdB"></div>
-<div class="vt">
-<button class="vb active" onclick="sw('lista',this)">📋 Invitados</button>
-<button class="vb" onclick="sw('mesas',this)">🪑 Mesas</button>
-<button class="vb" onclick="sw('menu',this)">🍽 Menú</button>
-<button class="vb" onclick="sw('prog',this)">🎶 Programa</button>
-<button class="vb" onclick="sw('pagos',this)">💰 Pagos</button>
-<button class="vb" onclick="sw('check',this)">✅ Pend.</button>
-<button class="vb" onclick="sw('checkin',this)">📍 Check-in</button>
-</div>
+<div class="vt" id="appTabs"></div>
 <main class="mn">
 <div class="pn active" id="p-lista">
 <div class="ring"><svg viewBox="0 0 150 150"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0157A"/><stop offset="100%" stop-color="#00E676"/></linearGradient></defs><circle class="trk" cx="75" cy="75" r="69"/><circle class="prg" id="pR" cx="75" cy="75" r="69" stroke-dasharray="433.5" stroke-dashoffset="433.5"/></svg><div class="rc"><div class="rn" id="tC">0</div><div class="rl">personas</div></div></div>
@@ -266,13 +404,13 @@ select.fi{-webkit-appearance:none;appearance:none;cursor:pointer;background-imag
 <div class="fts"><button class="ft active" onclick="flt('all',this)">Todos</button><button class="ft" onclick="flt('confirmed',this)">✅</button><button class="ft" onclick="flt('pending',this)">⏳</button><button class="ft" onclick="flt('cancelled',this)">❌</button></div>
 <div class="sb"><input type="text" id="sI" placeholder="Buscar..." oninput="rG()"></div>
 <div class="gl" id="gL"></div>
-<div class="exr"><button class="bex" onclick="exportCSV()">📋 CSV</button><button class="bex" onclick="copyList()">📄 Copiar</button><button class="bex" onclick="shareWA()">💬 WA</button><button class="brs" onclick="rstG()">🗑</button></div></div>
+<div class="exr"><button class="bex" onclick="exportCSV()">📋 CSV</button><button class="bex" onclick="exportPDF()">📄 PDF</button><button class="bex" onclick="copyList()">📄 Copiar</button><button class="bex" onclick="shareWA()">💬 WA</button><button class="brs" onclick="rstG()">🗑</button></div></div>
 <div class="pn" id="p-mesas"><div class="mcf"><label>Mesas:</label><input type="number" id="nM" min="1" max="60" value="20"><button onclick="aM()">Aplicar</button></div><div id="tB"></div></div>
 <div class="pn" id="p-menu"><div id="menuC"></div></div>
 <div class="pn" id="p-prog"><div id="progC"></div></div>
 <div class="pn" id="p-pagos"><div id="pagosC"></div></div>
+<div class="pn" id="p-invitacion"><div id="invitacionC"></div></div>
 <div class="pn" id="p-check"><div class="cla"><input type="text" id="clI" placeholder="Agregar pendiente..."><button onclick="aCL()">+</button></div><div class="clp"><div class="clb"><div class="clf" id="clF"></div></div><div class="clpt" id="clPT"></div></div><div class="cll" id="clL"></div></div>
-<div class="pn" id="p-checkin"><div id="checkinC"></div></div>
 </main>
 <div class="foot"><p>Cortesía de <a href="/">Salón de Fiestas Villaverde</a> · 9995485862</p></div></div>
 
@@ -292,7 +430,7 @@ async function sbPatch(table,query,data){const r=await fetch(SB_URL+'/rest/v1/'+
 async function sbDelete(table,query){await fetch(SB_URL+'/rest/v1/'+table+'?'+query,{method:'DELETE',headers:SB_HEADERS})}
 
 /* ─── DATA ─── */
-let E=null,CF='all';
+let E=null,CF='all',DEMO_MODE=false,ADMIN_VIEW=false;
 const MENU={entradas:['Coctel de frutas con coco','Volovanes (2)','Ensalada de atún','Flor de calabaza con queso','Melón al oporto','Rollos de jamón con ensalada rusa','Pepino relleno de atún','Jitomate relleno de atún','Pimiento relleno de pollo'],cremas:['Elote','Nuez','Champiñones','Chile poblano con elote','Brócoli','Almendras','Pimiento morrón','Zanahoria','Flor de calabaza','Cilantro','Calabaza','Coliflor','Espinacas','Espárragos','Ejote','Chícharos'],pollo:['Almendrado','Al pimiento morrón','En carnitas','En crema de chipotle','En mixiotes con nopales','En vino blanco','En achiote','A la naranja','En adobo','A la ciruela','En crema de nuez','Enchilado','En mole poblano','En mole verde','En crema de champiñones','A la jardinera','A la piña','A los 3 chiles'],cerdo:['Carnitas','Pierna en adobo','Pierna con champiñones','Lomo en adobo','Lomo enchilado','Lomo almendrado','Lomo en crema de chipotle','Lomo en mole poblano','Lomo a la naranja','Lomo a la jardinera','Lomo a la ciruela','Lomo envinado','Chuleta ahumada en chipotle','Chuleta ahumada en piña'],guarniciones:['Ensalada rusa','Puré de papa','Ensalada de zanahoria con piña','Ensalada de manzana con piña','Verduras a la mantequilla','Ensalada de pepino','Papas a la mantequilla','Frijoles refritos o charros','Nopales en escabeche','Rajas con crema','Ensalada Waldorf'],arroz:['Mexicano','Poblano','Jardinero','Blanco','Risotto español']};
 const DCL=[{id:1,text:'Confirmar fecha y paquete'},{id:2,text:'Pagar anticipo $3,000'},{id:3,text:'Elegir menú'},{id:4,text:'Elegir mantelería'},{id:5,text:'Elegir cortesías'},{id:6,text:'Enviar invitaciones'},{id:7,text:'Confirmar lista invitados'},{id:8,text:'Asignar mesas'},{id:9,text:'Misa/ceremonia'},{id:10,text:'Ensayo vals'},{id:11,text:'Pastel'},{id:12,text:'Fotos'},{id:13,text:'Playlist DJ'},{id:14,text:'Vestido/traje'},{id:15,text:'Chambelanes'},{id:16,text:'Recuerdos'},{id:17,text:'Último pago'},{id:18,text:'Confirmar grupo'}];
 
@@ -310,34 +448,119 @@ async function saveGuest(g){syncDot('saving');try{await sbPatch('eventus_guests'
 function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(err?' error':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
 
 /* ─── LOAD FROM SUPABASE ─── */
-async function loadEvent(code){syncDot('saving');try{const evs=await sbGet('eventus_events','code=eq.'+code);if(!evs.length)return null;const ev=evs[0];const guests=await sbGet('eventus_guests','event_code=eq.'+code+'&order=created_at');const payments=await sbGet('eventus_payments','event_code=eq.'+code+'&order=id');const checklist=await sbGet('eventus_checklist','event_code=eq.'+code+'&order=sort_order');const program=await sbGet('eventus_program','event_code=eq.'+code+'&order=sort_order');E={code:ev.code,name:ev.name,type:ev.type,date:ev.date,hours:ev.hours,totalCost:ev.total_cost,contractDate:ev.contract_date,numMesas:ev.num_mesas,menuSel:ev.menu_sel||{},guests:guests.map(function(g){return{id:g.id,name:g.name,companions:g.companions||0,mesa:g.mesa,status:g.status||'pending',wa:g.wa||'',arrived:g.arrived||false,arrivedAt:g.arrived_at}}),payments:payments.map(function(p){return{id:p.id,name:p.name,amount:p.amount,date:p.due_date,note:p.note||'',paid:p.paid||false}}),checklist:checklist.map(function(c){return{id:c.id,text:c.text,done:c.done||false}}),program:program.map(function(p){return{id:p.id,name:p.name,time:p.time?p.time.slice(0,5):'00:00',dur:p.dur||15,note:p.note||''}})};syncDot('ok');return E}catch(e){syncDot('err');return null}}
+async function loadEvent(code){syncDot('saving');try{const evs=await sbGet('eventus_events','code=eq.'+code);if(!evs.length)return null;const ev=evs[0];const guests=await sbGet('eventus_guests','event_code=eq.'+code+'&order=created_at');const payments=await sbGet('eventus_payments','event_code=eq.'+code+'&order=id');const checklist=await sbGet('eventus_checklist','event_code=eq.'+code+'&order=sort_order');const program=await sbGet('eventus_program','event_code=eq.'+code+'&order=sort_order');E={code:ev.code,name:ev.name,type:ev.type,date:ev.date,hours:ev.hours,totalCost:ev.total_cost,contractDate:ev.contract_date,numMesas:ev.num_mesas,menuSel:ev.menu_sel||{},activated:ev.activated||false,phone:ev.phone||'',photo_url:ev.photo_url||'',gallery:ev.gallery||[],dress_code:ev.dress_code||'Elegante',event_time:ev.event_time||'18:00',invitation_status:ev.invitation_status||'sin_brief',invitation_brief:ev.invitation_brief||null,invitation_url:ev.invitation_url||'',invitation_comments:ev.invitation_comments||'',guests:guests.map(function(g){return{id:g.id,name:g.name,companions:g.companions||0,mesa:g.mesa,status:g.status||'pending',wa:g.wa||'',arrived:g.arrived||false,arrivedAt:g.arrived_at}}),payments:payments.map(function(p){return{id:p.id,name:p.name,amount:p.amount,date:p.due_date,note:p.note||'',paid:p.paid||false}}),checklist:checklist.map(function(c){return{id:c.id,text:c.text,done:c.done||false}}),program:program.map(function(p){return{id:p.id,name:p.name,time:p.time?p.time.slice(0,5):'00:00',dur:p.dur||15,note:p.note||''}})};syncDot('ok');return E}catch(e){syncDot('err');return null}}
 
 /* ─── AUTH TABS ─── */
 function switchAuth(tab,btn){document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));document.getElementById(tab==='register'?'authRegister':'authLogin').classList.add('active')}
 
-/* ─── REGISTER ─── */
-async function reg(){const n=document.getElementById('rN').value.trim(),t=document.getElementById('rT').value,d=document.getElementById('rD').value,p=parseInt(document.getElementById('rP').value),cost=parseInt(document.getElementById('rCost').value),e=document.getElementById('rE');e.style.display='none';if(!n){e.textContent='Escribe el nombre';e.style.display='block';return}if(!d){e.textContent='Selecciona fecha';e.style.display='block';return}if(!cost||cost<3000){e.textContent='Mínimo $3,000';e.style.display='block';return}const code=gc(),today=new Date().toISOString().slice(0,10);
-try{const evRes=await sbPost('eventus_events',{code:code,name:n,type:t,date:d,hours:p,total_cost:cost,contract_date:today,num_mesas:20,menu_sel:{}});if(!evRes){e.textContent='Error al registrar. Intenta de nuevo.';e.style.display='block';return}
-const pays=calcPayments(cost,today,d);for(let i=0;i<pays.length;i++){await sbPost('eventus_payments',{event_code:code,name:pays[i].name,amount:pays[i].amount,due_date:pays[i].date,note:pays[i].note,paid:false})}
-for(let i=0;i<DCL.length;i++){await sbPost('eventus_checklist',{event_code:code,text:DCL[i].text,done:false,sort_order:i})}
+/* ─── REGISTER (FREE TIER) ─── */
+async function reg(){const n=document.getElementById('rN').value.trim(),t=document.getElementById('rT').value,d=document.getElementById('rD').value,phone=document.getElementById('rPhone').value.trim().replace(/\D/g,''),e=document.getElementById('rE');e.style.display='none';
+if(!n){e.textContent='Escribe el nombre';e.style.display='block';return}if(!d){e.textContent='Selecciona fecha';e.style.display='block';return}if(!phone||phone.length<10){e.textContent='Ingresa tu WhatsApp (10 dígitos)';e.style.display='block';return}
+const code=gc(),today=new Date().toISOString().slice(0,10);
+try{const evRes=await sbPost('eventus_events',{code:code,name:n,type:t,date:d,hours:7,total_cost:0,contract_date:today,num_mesas:20,menu_sel:{},phone:phone,activated:false});if(!evRes){e.textContent='Error al registrar. Intenta de nuevo.';e.style.display='block';return}
 document.getElementById('nC').textContent=code;document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';await loadEvent(code)}catch(err){e.textContent='Error de conexión';e.style.display='block'}}
 function enter(){show()}
 
 /* ─── LOGIN ─── */
 async function logIn(){const c=document.getElementById('lC').value.trim().toUpperCase(),e=document.getElementById('lE');e.style.display='none';if(!c||c.length<6){e.textContent='Ingresa un código válido';e.style.display='block';return}
-const ev=await loadEvent(c);if(ev){show()}else{e.textContent='Código no encontrado. Regístrate primero.';e.style.display='block'}}
+DEMO_MODE=false;const ev=await loadEvent(c);if(ev){show()}else{e.textContent='Código no encontrado. Regístrate o contacta al salón.';e.style.display='block'}}
 
-function out(){E=null;document.getElementById('wF').style.display='none';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S0').classList.add('active');document.getElementById('regS').style.display='block';document.getElementById('cR').style.display='none'}
+function out(){E=null;DEMO_MODE=false;document.getElementById('wF').style.display='none';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S0').classList.add('active');document.getElementById('regS').style.display='block';document.getElementById('cR').style.display='none'}
 
 /* ─── SHOW APP ─── */
-function show(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S2').classList.add('active');const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};document.getElementById('dC').textContent=E.code;document.getElementById('dN').textContent=(t[E.type]||'Evento')+' de '+E.name;document.getElementById('nM').value=E.numMesas||20;if(!E.guests)E.guests=[];if(!E.checklist||!E.checklist.length)E.checklist=[];if(!E.program)E.program=[];if(!E.menuSel)E.menuSel={};if(!E.payments)E.payments=[];pM();rG();uS();rCD();rCL();rMenu();rProg();rPay();rCheckin();rT();document.getElementById('wF').style.display='flex'}
+function show(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S2').classList.add('active');const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};document.getElementById('dC').textContent=E.code;document.getElementById('dN').textContent=(t[E.type]||'Evento')+' de '+E.name;document.getElementById('nM').value=E.numMesas||20;if(!E.guests)E.guests=[];if(!E.checklist||!E.checklist.length)E.checklist=[];if(!E.program)E.program=[];if(!E.menuSel)E.menuSel={};if(!E.payments)E.payments=[];renderTabs();pM();rG();uS();rCD();rCL();rMenu();rProg();rPay();rT();rInvitacion();document.getElementById('wF').style.display='flex'}
+
+function renderTabs(){const tb=document.getElementById('appTabs');const full=E.activated||ADMIN_VIEW;let h='<button class="vb active" onclick="sw(\'lista\',this)">📋 Invitados</button><button class="vb" onclick="sw(\'mesas\',this)">🪑 Mesas</button><button class="vb" onclick="sw(\'invitacion\',this)">💌 Invitación</button>';if(full){h+='<button class="vb" onclick="sw(\'menu\',this)">🍽 Menú</button><button class="vb" onclick="sw(\'prog\',this)">🎶 Programa</button><button class="vb" onclick="sw(\'pagos\',this)">💰 Pagos</button><button class="vb" onclick="sw(\'check\',this)">✅ Pend.</button>'}tb.innerHTML=h;
+const outBtn=document.querySelector('.bo');if(ADMIN_VIEW){outBtn.textContent='← Admin';outBtn.onclick=function(){ADMIN_VIEW=false;E=null;document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S1').classList.add('active');admRender()}}else{outBtn.textContent='Salir';outBtn.onclick=out}}
 
 /* ─── COUNTDOWN ─── */
-function rCD(){const c=document.getElementById('cdB');if(!E||!E.date){c.innerHTML='';return}const now=new Date(),ev=new Date(E.date+'T23:59:59'),df=ev-now;if(df<=0){c.innerHTML='<div class="cdis" style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--verde)">🎉 ¡El gran día!</div>';return}const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);c.innerHTML='<div class="cdis"><div class="cdlb">Faltan para tu evento</div><div class="cdgr"><div class="cdun"><div class="cdnm">'+d+'</div><div class="cdtx">Días</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(h).padStart(2,'0')+'</div><div class="cdtx">Hrs</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(m).padStart(2,'0')+'</div><div class="cdtx">Min</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(s).padStart(2,'0')+'</div><div class="cdtx">Seg</div></div></div></div>'}
+function rCD(){const c=document.getElementById('cdB');if(!E||!E.date){c.innerHTML='';return}let demoBanner='';if(E&&!E.activated&&!ADMIN_VIEW){demoBanner='<div class="demo-banner"><p><strong>PLAN GRATUITO</strong> — Invitados y mesas disponibles. Contrata tu evento para desbloquear menú, programa, pagos, invitaciones y más.</p><a href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20contratar%20mi%20evento%20en%20Villaverde.%20Mi%20código%20es%20'+E.code+'" target="_blank">💬 Contratar evento</a></div>'}const now=new Date(),ev=new Date(E.date+'T23:59:59'),df=ev-now;if(df<=0){c.innerHTML=demoBanner+'<div class="cdis" style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--verde)">🎉 ¡El gran día!</div>';return}const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);c.innerHTML=demoBanner+'<div class="cdis"><div class="cdlb">Faltan para tu evento</div><div class="cdgr"><div class="cdun"><div class="cdnm">'+d+'</div><div class="cdtx">Días</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(h).padStart(2,'0')+'</div><div class="cdtx">Hrs</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(m).padStart(2,'0')+'</div><div class="cdtx">Min</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(s).padStart(2,'0')+'</div><div class="cdtx">Seg</div></div></div></div>'}
 setInterval(()=>{if(E)rCD()},1000);
 
 /* ─── TAB SWITCH ─── */
-function sw(tab,btn){document.querySelectorAll('.vb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.pn').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+tab).classList.add('active');if(tab==='mesas')rT();if(tab==='checkin')rCheckin()}
+function sw(tab,btn){document.querySelectorAll('.vb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.pn').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+tab).classList.add('active');if(tab==='mesas')rT();if(tab==='checkin')rCheckin();if(tab==='invitacion')rInvitacion()}
+
+/* ─── INVITACION TAB ─── */
+async function uploadFoto(file,path){const url=SB_URL+'/storage/v1/object/eventus-photos/'+E.code+'/'+path;const r=await fetch(url,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':file.type,'x-upsert':'true'},body:file});if(!r.ok){const url2=SB_URL+'/storage/v1/object/eventus-photos/'+E.code+'/'+path;const r2=await fetch(url2,{method:'PUT',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':file.type,'x-upsert':'true'},body:file});if(!r2.ok)throw new Error('Upload failed')}return SB_URL+'/storage/v1/object/public/eventus-photos/'+E.code+'/'+path}
+
+/* Brief photo temp storage */
+let briefCarouselFiles=[null,null,null,null,null];
+let briefSoloFiles=[null,null];
+let briefCarouselPreviews=['','','','',''];
+let briefSoloPreviews=['',''];
+let briefSelectedColor='Rosa y Dorado';
+
+function pickBriefPhoto(type,idx){const input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(ev){if(type==='carousel'){briefCarouselFiles[idx]=file;briefCarouselPreviews[idx]=ev.target.result}else{briefSoloFiles[idx]=file;briefSoloPreviews[idx]=ev.target.result}rInvitacion()};reader.readAsDataURL(file)};input.click()}
+
+function clearBriefPhoto(type,idx){if(type==='carousel'){briefCarouselFiles[idx]=null;briefCarouselPreviews[idx]=''}else{briefSoloFiles[idx]=null;briefSoloPreviews[idx]=''}rInvitacion()}
+
+function selectInvColor(color,btn){briefSelectedColor=color;document.querySelectorAll('.inv-color-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');const custom=document.getElementById('invCustomColor');if(custom){if(color==='Personalizado'){custom.classList.add('show')}else{custom.classList.remove('show')}}}
+
+async function submitBrief(){const song=document.getElementById('invSong')?document.getElementById('invSong').value.trim():'';const message=document.getElementById('invMessage')?document.getElementById('invMessage').value.trim():'';const dressCode=document.getElementById('invDressCode')?document.getElementById('invDressCode').value:'Elegante';const eventTime=document.getElementById('invEventTime')?document.getElementById('invEventTime').value:'18:00';let colors=briefSelectedColor;if(colors==='Personalizado'){const ci=document.getElementById('invCustomColorInput');if(ci&&ci.value.trim())colors='Personalizado: '+ci.value.trim()}
+toast('Subiendo fotos y enviando brief...');try{const carouselUrls=[];for(let i=0;i<5;i++){if(briefCarouselFiles[i]){const fname='brief/carousel_'+i+'_'+Date.now()+'.'+briefCarouselFiles[i].name.split('.').pop();const publicUrl=await uploadFoto(briefCarouselFiles[i],fname);carouselUrls.push(publicUrl)}};const soloUrls=[];for(let i=0;i<2;i++){if(briefSoloFiles[i]){const fname='brief/solo_'+i+'_'+Date.now()+'.'+briefSoloFiles[i].name.split('.').pop();const publicUrl=await uploadFoto(briefSoloFiles[i],fname);soloUrls.push(publicUrl)}};const brief={carousel_photos:carouselUrls,solo_photos:soloUrls,song:song,colors:colors,message:message,dress_code:dressCode,event_time:eventTime};E.invitation_brief=brief;E.invitation_status='en_diseno';E.dress_code=dressCode;E.event_time=eventTime;await sbPatch('eventus_events','code=eq.'+E.code,{invitation_brief:brief,invitation_status:'en_diseno',dress_code:dressCode,event_time:eventTime});briefCarouselFiles=[null,null,null,null,null];briefSoloFiles=[null,null];briefCarouselPreviews=['','','','',''];briefSoloPreviews=['',''];toast('Brief enviado correctamente');rInvitacion()}catch(e){toast('Error al enviar brief',1)}}
+
+async function approveInvitation(){if(!confirm('¿Aprobar la invitación? Una vez aprobada podrás enviarla a tus invitados.'))return;E.invitation_status='aprobada';await sbPatch('eventus_events','code=eq.'+E.code,{invitation_status:'aprobada'});toast('Invitación aprobada');rInvitacion()}
+
+let showChangesForm=false;
+async function requestChanges(){if(!showChangesForm){showChangesForm=true;rInvitacion();return}const ta=document.getElementById('invChangesTA');if(!ta||!ta.value.trim()){toast('Escribe tus comentarios',1);return}E.invitation_comments=ta.value.trim();E.invitation_status='con_cambios';await sbPatch('eventus_events','code=eq.'+E.code,{invitation_status:'con_cambios',invitation_comments:E.invitation_comments});showChangesForm=false;toast('Comentarios enviados');rInvitacion()}
+
+function renderBriefSummary(brief){if(!brief)return'';let h='<div class="inv-brief-summary"><h5>Tu brief</h5>';if(brief.carousel_photos&&brief.carousel_photos.length){h+='<div class="inv-sum-row"><strong>Fotos carrusel:</strong></div><div class="inv-brief-thumbs">';brief.carousel_photos.forEach(function(u){h+='<img src="'+u+'" alt="carousel">'});h+='</div>'}if(brief.solo_photos&&brief.solo_photos.length){h+='<div class="inv-sum-row"><strong>Fotos individuales:</strong></div><div class="inv-brief-thumbs">';brief.solo_photos.forEach(function(u){h+='<img src="'+u+'" alt="solo">'});h+='</div>'}if(brief.song)h+='<div class="inv-sum-row"><strong>Cancion:</strong> '+brief.song+'</div>';if(brief.colors)h+='<div class="inv-sum-row"><strong>Paleta:</strong> '+brief.colors+'</div>';if(brief.message)h+='<div class="inv-sum-row"><strong>Mensaje:</strong> '+brief.message+'</div>';if(brief.dress_code)h+='<div class="inv-sum-row"><strong>Dress code:</strong> '+brief.dress_code+'</div>';if(brief.event_time)h+='<div class="inv-sum-row"><strong>Hora:</strong> '+brief.event_time+'</div>';h+='</div>';return h}
+
+function renderInvPreview(url){if(!url)return'';let h='<div class="inv-client-preview">';if(url.match(/\.(jpg|jpeg|png|gif|webp)(\?|$)/i)){h+='<img src="'+url+'" alt="Invitacion">'}else{h+='<iframe src="'+url+'"></iframe>'}h+='</div>';return h}
+
+function rInvitacion(){const c=document.getElementById('invitacionC');if(!c)return;
+const status=E.invitation_status||'sin_brief';let h='<div class="ab">';
+
+if(status==='sin_brief'){
+h+='<div class="inv-header"><h3>Disena tu invitacion digital</h3><p>Sube tus fotos y preferencias para que nuestro disenador cree una invitacion unica para tu evento.</p></div>';
+h+='<div class="inv-section"><h4>Fotos del carrusel (5)</h4><p class="inv-hint">Estas fotos apareceran en el carrusel de tu invitacion</p><div class="inv-upload-grid">';
+for(let i=0;i<5;i++){if(briefCarouselPreviews[i]){h+='<div class="inv-upload-slot" onclick="pickBriefPhoto(\'carousel\','+i+')"><img src="'+briefCarouselPreviews[i]+'"><button class="inv-slot-del" onclick="event.stopPropagation();clearBriefPhoto(\'carousel\','+i+')">x</button></div>'}else{h+='<div class="inv-upload-slot" onclick="pickBriefPhoto(\'carousel\','+i+')"><span class="inv-slot-icon">+</span></div>'}}
+h+='</div></div>';
+h+='<div class="inv-section"><h4>Fotos individuales (2)</h4><p class="inv-hint">Fotos individuales del festejado(a)</p><div class="inv-upload-grid solo">';
+for(let i=0;i<2;i++){if(briefSoloPreviews[i]){h+='<div class="inv-upload-slot" onclick="pickBriefPhoto(\'solo\','+i+')"><img src="'+briefSoloPreviews[i]+'"><button class="inv-slot-del" onclick="event.stopPropagation();clearBriefPhoto(\'solo\','+i+')">x</button></div>'}else{h+='<div class="inv-upload-slot" onclick="pickBriefPhoto(\'solo\','+i+')"><span class="inv-slot-icon">+</span></div>'}}
+h+='</div></div>';
+h+='<div class="inv-section"><h4>Cancion de fondo</h4><div class="fg"><input type="text" class="fi" id="invSong" placeholder="Nombre de la cancion o link de YouTube/Spotify"></div></div>';
+h+='<div class="inv-section"><h4>Paleta de colores</h4><div class="inv-colors">';
+var colorOpts=['Rosa y Dorado','Azul y Plata','Verde y Dorado','Morado y Dorado','Rojo y Negro','Personalizado'];
+colorOpts.forEach(function(co){h+='<button class="inv-color-btn'+(briefSelectedColor===co?' sel':'')+'" onclick="selectInvColor(\''+co+'\',this)">'+co+'</button>'});
+h+='</div><div class="inv-custom-color'+(briefSelectedColor==='Personalizado'?' show':'')+'" id="invCustomColor"><input type="text" class="fi" id="invCustomColorInput" placeholder="Describe tu paleta de colores"></div></div>';
+h+='<div class="inv-section"><h4>Mensaje personalizado</h4><div class="fg"><textarea class="fi" id="invMessage" rows="3" placeholder="Escribe un mensaje especial para tus invitados (opcional)" style="resize:vertical;min-height:60px"></textarea></div></div>';
+h+='<div class="inv-section"><h4>Codigo de vestimenta</h4><div class="fg"><select class="fi" id="invDressCode"><option value="Elegante"'+(E.dress_code==='Elegante'?' selected':'')+'>Elegante</option><option value="Formal"'+(E.dress_code==='Formal'?' selected':'')+'>Formal</option><option value="Casual"'+(E.dress_code==='Casual'?' selected':'')+'>Casual</option><option value="Tematico"'+(E.dress_code==='Tematico'?' selected':'')+'>Tematico</option></select></div></div>';
+h+='<div class="inv-section"><h4>Hora del evento</h4><div class="fg"><input type="time" class="fi" id="invEventTime" value="'+(E.event_time||'18:00')+'"></div></div>';
+h+='<button class="inv-brief-btn" onclick="submitBrief()">Enviar brief &rarr;</button>';
+}
+
+else if(status==='en_diseno'){
+h+='<div class="inv-status-screen"><h3>Tu disenador esta trabajando en tu invitacion</h3><div class="inv-spinner"></div><p>Estamos creando algo especial para ti.<br>Te notificaremos cuando este lista para tu revision.</p>';
+h+=renderBriefSummary(E.invitation_brief);
+h+='<button class="inv-wa-btn" onclick="window.open(\'https://wa.me/5215517340226?text=Hola%2C%20tengo%20un%20comentario%20sobre%20mi%20invitacion.%20Mi%20codigo%20es%20'+E.code+'\',\'_blank\')"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> Contactanos por WhatsApp</button></div>';
+}
+
+else if(status==='en_revision'){
+h+='<div class="inv-status-screen"><h3>Tu invitacion esta lista para revision</h3><p>Revisa el diseno y apruebalo o solicita cambios.</p>';
+h+=renderInvPreview(E.invitation_url);
+h+='<button class="inv-approve-btn" onclick="approveInvitation()">Aprobar invitacion</button>';
+if(!showChangesForm){h+='<button class="inv-changes-btn" onclick="requestChanges()">Pedir cambios</button>'}else{h+='<textarea class="inv-changes-ta" id="invChangesTA" placeholder="Describe los cambios que necesitas..."></textarea><button class="inv-brief-btn" onclick="requestChanges()">Enviar comentarios</button><button class="inv-changes-btn" onclick="showChangesForm=false;rInvitacion()">Cancelar</button>'}
+h+='</div>';
+}
+
+else if(status==='con_cambios'){
+h+='<div class="inv-status-screen"><h3>Estamos aplicando tus cambios</h3><div class="inv-spinner"></div>';
+if(E.invitation_comments){h+='<div class="inv-comment-box"><strong>Tu comentario:</strong><br>'+E.invitation_comments+'</div>'}
+h+='<p>El disenador esta trabajando en los ajustes.<br>Te notificaremos cuando la nueva version este lista.</p>';
+h+='<button class="inv-wa-btn" onclick="window.open(\'https://wa.me/5215517340226?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20los%20cambios%20de%20mi%20invitacion.%20Mi%20codigo%20es%20'+E.code+'\',\'_blank\')"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> Contactanos por WhatsApp</button></div>';
+}
+
+else if(status==='aprobada'){
+h+='<div class="inv-status-screen"><h3>Tu invitacion esta aprobada!</h3>';
+h+=renderInvPreview(E.invitation_url);
+h+='<p>Ahora puedes enviar la invitacion a tus invitados desde la pestana de Invitados usando el boton de envio.</p>';
+const pendingCount=E.guests?E.guests.filter(function(g){return g.status!=='cancelled'}).length:0;
+h+='<div class="inv-count-badge">'+pendingCount+' invitados pendientes de envio</div></div>';
+}
+
+h+='</div>';
+c.innerHTML=h}
 
 /* ─── MESAS SELECT ─── */
 function pM(){const s=document.getElementById('gM'),v=s.value,n=E.numMesas||20;s.innerHTML='<option value="">Sin mesa</option>';for(let i=1;i<=n;i++)s.innerHTML+='<option value="'+i+'"'+(v==i?' selected':'')+'>Mesa '+i+'</option>'}
@@ -389,24 +612,406 @@ async function aCL(){const i=document.getElementById('clI'),t=i.value.trim();if(
 function rCheckin(){const c=document.getElementById('checkinC');const gs=E.guests||[];const arrived=gs.filter(function(g){return g.arrived});const confirmed=gs.filter(function(g){return g.status==='confirmed'});const totalExpected=confirmed.reduce(function(s,g){return s+1+(g.companions||0)},0);const totalArrived=arrived.reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=totalExpected>0?Math.round(totalArrived/totalExpected*100):0;let h='<div class="checkin-header"><h4>📍 Check-in de invitados</h4></div>';h+='<div class="checkin-stats"><div class="checkin-stat"><div class="cs-num" style="color:var(--verde)">'+totalArrived+'</div><div class="cs-lbl">Llegaron</div></div><div class="checkin-stat"><div class="cs-num" style="color:#FFD54F">'+totalExpected+'</div><div class="cs-lbl">Esperados</div></div><div class="checkin-stat"><div class="cs-num" style="color:var(--rosa)">'+pct+'%</div><div class="cs-lbl">Asistencia</div></div></div>';h+='<div class="scan-area"><p style="font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:8px">Busca por nombre del invitado</p><input type="text" id="scanInput" placeholder="Nombre..."><button onclick="doCheckin()">Registrar llegada</button><div id="scanResult"></div></div>';if(arrived.length){h+='<div class="arrival-list"><h5>Llegadas recientes</h5>';arrived.sort(function(a,b){return(b.arrivedAt||'').localeCompare(a.arrivedAt||'')}).forEach(function(g){const t=g.arrivedAt?new Date(g.arrivedAt).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'--:--';h+='<div class="arrival-item"><span>'+g.name+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+t+'</span></div>'});h+='</div>'}c.innerHTML=h}
 function doCheckin(){const input=document.getElementById('scanInput');const name=input.value.trim().toLowerCase();const res=document.getElementById('scanResult');if(!name){res.innerHTML='';return}const g=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&!x.arrived});if(g){g.arrived=true;g.arrivedAt=new Date().toISOString();g.status='confirmed';saveGuest(g);res.innerHTML='<div class="scan-result ok"><div class="sr-icon">✅</div><div class="sr-name">'+g.name+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompañantes · ':'')+(g.mesa?'Mesa '+g.mesa:'Sin mesa asignada')+'</div></div>';input.value='';rCheckin();uS();rG();toast(g.name+' registrado')}else{const already=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">⚠️</div><div class="sr-name">'+already.name+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">❌</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre o agrega al invitado</div></div>'}}}
 
-/* ─── QR INVITATION ─── */
-function showQR(id){const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const modal=document.getElementById('qrModal');const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const msg='🎉 Invitación especial\n\n'+t[E.type]+' de '+E.name+'\n📅 '+date+'\n📍 Salón de Fiestas Villaverde, Chalco\n\n👤 '+g.name+(g.companions?' (+'+g.companions+' acompañantes)':'')+(g.mesa?'\n🪑 Mesa '+g.mesa:'')+'\n\nCódigo: '+E.code+'\n\n¡Te esperamos!';modal.innerHTML='<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>📨 Invitación</h3><div class="qr-name">'+g.name+'</div><div class="qr-meta">'+t[E.type]+' de '+E.name+' · '+date+'</div><div class="qr-canvas" style="font-size:12px;color:#333;text-align:left;white-space:pre-wrap;max-width:280px;line-height:1.6">'+msg.replace(/\n/g,'<br>')+'</div><div class="qr-actions"><button class="qr-btn qr-btn-wa" onclick="sendInvWA('+g.id+')">💬 Enviar por WhatsApp</button><button class="qr-btn qr-btn-dl" onclick="copyInv('+g.id+')">📋 Copiar</button><button class="qr-btn qr-btn-close" onclick="closeQR()">Cerrar</button></div></div></div>'}
+/* ─── INVITATION SYSTEM ─── */
+const SITE='https://salondefiestasvillaverde.com';
+function showQR(id){if(!E.activated&&!ADMIN_VIEW){toast('Invitaciones disponibles al contratar tu evento',1);return}if(E.invitation_status!=='aprobada'&&!ADMIN_VIEW){toast('Tu invitación aún no está aprobada. Revisa la pestaña 💌 Invitación',1);return}const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const modal=document.getElementById('qrModal');const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rsvpLink=SITE+'/rsvp/'+E.code+'/'+g.id;const paseLink=SITE+'/pase/'+E.code+'/'+g.id;const isConf=g.status==='confirmed';
+modal.innerHTML='<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>📨 Invitación digital</h3><div class="qr-name">'+g.name+'</div><div class="qr-meta">'+t[E.type]+' de '+E.name+' · '+date+'</div>'
++'<div style="margin:14px 0;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;text-align:left">'
++'<p style="font-size:9px;color:rgba(255,255,255,0.25);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Paso 1 — Invitación + Confirmar</p>'
++'<p style="font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:8px;word-break:break-all">'+rsvpLink+'</p>'
++'<div style="display:flex;gap:4px"><button class="qr-btn qr-btn-wa" style="flex:1;font-size:10px;padding:8px" onclick="sendInvWA('+g.id+')">💬 Enviar invitación</button><button class="qr-btn qr-btn-dl" style="font-size:10px;padding:8px" onclick="copyLink(\''+rsvpLink+'\')">📋</button></div></div>'
++(isConf?'<div style="margin-bottom:14px;padding:12px;background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.1);border-radius:10px;text-align:left">'
++'<p style="font-size:9px;color:var(--verde);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Paso 2 — Pase de acceso con QR ✅</p>'
++'<p style="font-size:10px;color:rgba(255,255,255,0.5);margin-bottom:8px;word-break:break-all">'+paseLink+'</p>'
++'<div style="display:flex;gap:4px"><button class="qr-btn qr-btn-wa" style="flex:1;font-size:10px;padding:8px;background:rgba(0,230,118,0.12);color:var(--verde)" onclick="sendPaseWA('+g.id+')">💬 Enviar pase</button><button class="qr-btn qr-btn-dl" style="font-size:10px;padding:8px" onclick="copyLink(\''+paseLink+'\')">📋</button></div></div>'
+:'<div style="margin-bottom:14px;padding:10px;background:rgba(255,213,79,0.04);border:1px solid rgba(255,213,79,0.1);border-radius:10px;text-align:center"><p style="font-size:10px;color:#FFD54F">⏳ El pase se genera cuando el invitado confirme</p></div>')
++'<button class="qr-btn qr-btn-close" style="width:100%" onclick="closeQR()">Cerrar</button></div></div>'}
 function closeQR(e){if(e&&e.target&&!e.target.classList.contains('qr-modal'))return;document.getElementById('qrModal').innerHTML=''}
-function sendInvWA(id){const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const msg='🎉 *Invitación especial*\n\n*'+t[E.type]+' de '+E.name+'*\n📅 '+date+'\n📍 Salón de Fiestas Villaverde, Chalco\n\n👤 '+g.name+(g.companions?' (+'+g.companions+' acompañantes)':'')+(g.mesa?'\n🪑 Mesa '+g.mesa:'')+'\n\n¡Te esperamos! 🥳';const phone=g.wa?('521'+g.wa.replace(/\D/g,'')):'';window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank')}
-function copyInv(id){const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const msg='🎉 Invitación especial\n\n'+t[E.type]+' de '+E.name+'\n📅 '+date+'\n📍 Salón de Fiestas Villaverde, Chalco\n\n👤 '+g.name+(g.companions?' (+'+g.companions+' acompañantes)':'')+(g.mesa?'\n🪑 Mesa '+g.mesa:'')+'\n\n¡Te esperamos!';navigator.clipboard.writeText(msg).then(function(){toast('Invitación copiada')}).catch(function(){toast('Error al copiar',1)})}
+function copyLink(link){navigator.clipboard.writeText(link).then(function(){toast('Link copiado')}).catch(function(){toast('Error al copiar',1)})}
+function sendInvWA(id){const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rsvpLink=SITE+'/rsvp/'+E.code+'/'+g.id;const msg='🎉 *¡Estás invitad@!*\n\n*'+t[E.type]+' de '+E.name+'*\n📅 '+date+'\n📍 Salón de Fiestas Villaverde, Chalco\n\n👤 '+g.name+(g.companions?' (+'+g.companions+' acompañantes)':'')+'\n\n👉 *Confirma tu asistencia aquí:*\n'+rsvpLink+'\n\n¡Te esperamos! 🥳';const phone=g.wa?('521'+g.wa.replace(/\D/g,'')):'';window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank')}
+function sendPaseWA(id){const g=E.guests.find(function(x){return x.id===id});if(!g)return;const paseLink=SITE+'/pase/'+E.code+'/'+g.id;const msg='🎟 *¡Gracias por confirmar!*\n\nAquí está tu pase de acceso para el evento de '+E.name+':\n\n👉 '+paseLink+'\n\nPreséntalo en la entrada el día del evento. ¡Te esperamos! 🥳';const phone=g.wa?('521'+g.wa.replace(/\D/g,'')):'';window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank')}
 
 /* ─── EXPORT ─── */
-function exportCSV(){const gs=E.guests||[];if(!gs.length){toast('No hay invitados',1);return}let csv='Nombre,Acompañantes,Mesa,Estado,WhatsApp,Llegó\n';gs.forEach(function(g){csv+='"'+g.name+'",'+( g.companions||0)+','+(g.mesa||'')+','+g.status+','+(g.wa||'')+','+(g.arrived?'Sí':'No')+'\n'});const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='invitados_'+E.code+'.csv';a.click();URL.revokeObjectURL(url);toast('CSV descargado')}
+function exportCSV(){if(!E.activated&&!ADMIN_VIEW){toast('Exportar CSV disponible al contratar tu evento',1);return}const gs=E.guests||[];if(!gs.length){toast('No hay invitados',1);return}let csv='Nombre,Acompañantes,Mesa,Estado,WhatsApp,Llegó\n';gs.forEach(function(g){csv+='"'+g.name+'",'+( g.companions||0)+','+(g.mesa||'')+','+g.status+','+(g.wa||'')+','+(g.arrived?'Sí':'No')+'\n'});const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='invitados_'+E.code+'.csv';a.click();URL.revokeObjectURL(url);toast('CSV descargado')}
 function copyList(){const gs=E.guests||[];if(!gs.length){toast('No hay invitados',1);return}const tp=function(a){return a.reduce(function(s,g){return s+1+(g.companions||0)},0)};let txt='📋 Lista de invitados — '+E.name+' ('+E.code+')\n\n';txt+='Total: '+tp(gs.filter(function(g){return g.status!=='cancelled'}))+' personas\n';txt+='✅ Confirmados: '+tp(gs.filter(function(g){return g.status==='confirmed'}))+'\n';txt+='⏳ Pendientes: '+tp(gs.filter(function(g){return g.status==='pending'}))+'\n\n';gs.filter(function(g){return g.status!=='cancelled'}).forEach(function(g){txt+=(g.status==='confirmed'?'✅':'⏳')+' '+g.name+(g.companions?' (+'+g.companions+')':'')+(g.mesa?' [Mesa '+g.mesa+']':'')+'\n'});navigator.clipboard.writeText(txt).then(function(){toast('Lista copiada')}).catch(function(){toast('Error al copiar',1)})}
-function shareWA(){const gs=E.guests||[];if(!gs.length){toast('No hay invitados',1);return}const tp=function(a){return a.reduce(function(s,g){return s+1+(g.companions||0)},0)};let txt='📋 *Lista de invitados*\n'+E.name+' ('+E.code+')\n\nTotal: '+tp(gs.filter(function(g){return g.status!=='cancelled'}))+' personas\n✅ '+tp(gs.filter(function(g){return g.status==='confirmed'}))+' confirmados\n⏳ '+tp(gs.filter(function(g){return g.status==='pending'}))+' pendientes';window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
+function shareWA(){if(!E.activated&&!ADMIN_VIEW){toast('Compartir por WhatsApp disponible al contratar tu evento',1);return}const gs=E.guests||[];if(!gs.length){toast('No hay invitados',1);return}const tp=function(a){return a.reduce(function(s,g){return s+1+(g.companions||0)},0)};let txt='📋 *Lista de invitados*\n'+E.name+' ('+E.code+')\n\nTotal: '+tp(gs.filter(function(g){return g.status!=='cancelled'}))+' personas\n✅ '+tp(gs.filter(function(g){return g.status==='confirmed'}))+' confirmados\n⏳ '+tp(gs.filter(function(g){return g.status==='pending'}))+' pendientes';window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank')}
+function exportPDF(){if(!E.activated&&!ADMIN_VIEW){toast('Exportar PDF disponible al contratar tu evento',1);return}
+var gs=E.guests||[];
+if(!gs.length){toast('No hay invitados',1);return}
+var jsPDF=window.jspdf.jsPDF;
+var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+var pw=doc.internal.pageSize.getWidth();
+var rosa=[240,21,122];
+var rosaBg=[255,240,247];
+var grayBg=[245,245,245];
+var darkText=[30,30,30];
+var y=15;
+doc.setFillColor(rosa[0],rosa[1],rosa[2]);
+doc.rect(0,0,pw,42,'F');
+doc.setFillColor(200,16,95);
+doc.rect(0,38,pw,4,'F');
+doc.setFont('helvetica','bold');
+doc.setFontSize(22);
+doc.setTextColor(255,255,255);
+doc.text('Salón de Fiestas Villaverde',pw/2,y+5,{align:'center'});
+doc.setFontSize(14);
+doc.setFont('helvetica','normal');
+doc.text(E.name||'Evento',pw/2,y+14,{align:'center'});
+doc.setFontSize(10);
+var infoLine=(E.type||'')+' — '+(E.date||'')+'   |   Código: '+(E.code||'');
+doc.text(infoLine,pw/2,y+21,{align:'center'});
+y=50;
+var tp=function(arr){return arr.reduce(function(s,g){return s+1+(g.companions||0)},0)};
+var active=gs.filter(function(g){return g.status!=='cancelled'});
+var confirmed=gs.filter(function(g){return g.status==='confirmed'});
+var pending=gs.filter(function(g){return g.status==='pending'});
+var cancelled=gs.filter(function(g){return g.status==='cancelled'});
+doc.setFillColor(rosaBg[0],rosaBg[1],rosaBg[2]);
+doc.roundedRect(14,y,pw-28,22,3,3,'F');
+doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(rosa[0],rosa[1],rosa[2]);
+doc.text('Resumen de Invitados',pw/2,y+7,{align:'center'});
+doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(darkText[0],darkText[1],darkText[2]);
+var summary='Total: '+tp(active)+' personas   |   Confirmados: '+tp(confirmed)+'   |   Pendientes: '+tp(pending)+'   |   Cancelados: '+tp(cancelled);
+doc.text(summary,pw/2,y+15,{align:'center'});
+y+=30;
+doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(rosa[0],rosa[1],rosa[2]);
+doc.text('Lista de Invitados',14,y);y+=3;
+var statusLabel=function(s){if(s==='confirmed')return 'Confirmado';if(s==='pending')return 'Pendiente';return 'Cancelado'};
+var tableRows=gs.map(function(g){return[g.name||'',String(g.companions||0),g.mesa?'Mesa '+g.mesa:'—',statusLabel(g.status)]});
+doc.autoTable({
+startY:y,head:[['Nombre','Acomp.','Mesa','Estado']],body:tableRows,
+margin:{left:14,right:14},
+styles:{fontSize:9,cellPadding:3,textColor:darkText},
+headStyles:{fillColor:rosa,textColor:[255,255,255],fontStyle:'bold',fontSize:9},
+alternateRowStyles:{fillColor:grayBg},
+columnStyles:{0:{cellWidth:65},1:{cellWidth:20,halign:'center'},2:{cellWidth:30,halign:'center'},3:{cellWidth:30,halign:'center'}},
+didParseCell:function(data){if(data.section==='body'&&data.column.index===3){var val=data.cell.raw;if(val==='Confirmado')data.cell.styles.textColor=[0,200,83];else if(val==='Pendiente')data.cell.styles.textColor=[255,160,0];else data.cell.styles.textColor=[255,82,82]}}
+});
+y=doc.lastAutoTable.finalY+10;
+if(E.numMesas&&E.numMesas>0){
+var mesaData={};
+gs.forEach(function(g){if(g.mesa&&g.status!=='cancelled'){if(!mesaData[g.mesa])mesaData[g.mesa]=[];mesaData[g.mesa].push(g.name+(g.companions?' (+'+g.companions+')':''))}});
+var mesaKeys=Object.keys(mesaData).sort(function(a,b){return Number(a)-Number(b)});
+if(mesaKeys.length>0){
+if(y>250){doc.addPage();y=15}
+doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(rosa[0],rosa[1],rosa[2]);
+doc.text('Distribución por Mesas',14,y);y+=3;
+var mesaRows=mesaKeys.map(function(m){return['Mesa '+m,mesaData[m].join(', '),String(mesaData[m].length)]});
+doc.autoTable({
+startY:y,head:[['Mesa','Invitados','Cant.']],body:mesaRows,
+margin:{left:14,right:14},
+styles:{fontSize:9,cellPadding:3,textColor:darkText},
+headStyles:{fillColor:rosa,textColor:[255,255,255],fontStyle:'bold',fontSize:9},
+alternateRowStyles:{fillColor:grayBg},
+columnStyles:{0:{cellWidth:25},2:{cellWidth:18,halign:'center'}}
+});
+y=doc.lastAutoTable.finalY+10;
+}}
+var prog=E.program||[];
+if(prog.length>0){
+if(y>250){doc.addPage();y=15}
+doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(rosa[0],rosa[1],rosa[2]);
+doc.text('Programa del Evento',14,y);y+=3;
+var progRows=prog.map(function(p){return[p.time||'',p.name||'',p.dur?p.dur+' min':'—',p.note||'']});
+doc.autoTable({
+startY:y,head:[['Hora','Actividad','Duración','Notas']],body:progRows,
+margin:{left:14,right:14},
+styles:{fontSize:9,cellPadding:3,textColor:darkText},
+headStyles:{fillColor:rosa,textColor:[255,255,255],fontStyle:'bold',fontSize:9},
+alternateRowStyles:{fillColor:grayBg}
+});
+y=doc.lastAutoTable.finalY+10;
+}
+var menu=E.menuSel||{};
+var menuKeys=Object.keys(menu);
+if(menuKeys.length>0){
+if(y>250){doc.addPage();y=15}
+doc.setFontSize(13);doc.setFont('helvetica','bold');doc.setTextColor(rosa[0],rosa[1],rosa[2]);
+doc.text('Menú Seleccionado',14,y);y+=3;
+var menuRows=menuKeys.map(function(k){var val=menu[k];if(Array.isArray(val))val=val.join(', ');return[k,String(val)]});
+doc.autoTable({
+startY:y,head:[['Categoría','Selección']],body:menuRows,
+margin:{left:14,right:14},
+styles:{fontSize:9,cellPadding:3,textColor:darkText},
+headStyles:{fillColor:rosa,textColor:[255,255,255],fontStyle:'bold',fontSize:9},
+alternateRowStyles:{fillColor:grayBg}
+});
+y=doc.lastAutoTable.finalY+10;
+}
+var pageCount=doc.internal.getNumberOfPages();
+for(var i=1;i<=pageCount;i++){
+doc.setPage(i);
+doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(160,160,160);
+doc.text('Eventus Pro — Salón de Fiestas Villaverde — Generado: '+new Date().toLocaleDateString('es-MX'),pw/2,doc.internal.pageSize.getHeight()-8,{align:'center'});
+doc.text('Página '+i+' de '+pageCount,pw-14,doc.internal.pageSize.getHeight()-8,{align:'right'});
+}
+doc.save('evento_'+E.code+'.pdf');
+toast('PDF descargado');
+}
 async function rstG(){if(!E.guests.length)return;if(confirm('¿Eliminar TODOS los invitados? Esta acción no se puede deshacer.')){await sbDelete('eventus_guests','event_code=eq.'+E.code);E.guests=[];rG();uS();rT();toast('Lista reiniciada')}}
 
 /* ─── ADMIN ─── */
-async function showAdm(){const pwd=prompt('Contraseña admin:');if(pwd!=='1.Tequiladrinkx')return;document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S1').classList.add('active');const c=document.getElementById('adC');
-const allEvents=await sbGet('eventus_events','order=created_at.desc');let totalGuests=0;for(const ev of allEvents){const gs=await sbGet('eventus_guests','event_code=eq.'+ev.code+'&select=id',);totalGuests+=gs.length}
-const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};let h='<div class="admh"><h2>Admin Panel</h2></div>';h+='<div class="asr"><div class="ast"><div class="an">'+allEvents.length+'</div><div class="al">Eventos</div></div><div class="ast"><div class="an">'+totalGuests+'</div><div class="al">Invitados</div></div><div class="ast"><div class="an">'+fmt$(allEvents.reduce(function(s,e){return s+(e.total_cost||0)},0))+'</div><div class="al">Ingresos</div></div></div>';allEvents.forEach(function(ev){h+='<div class="aev" onclick="admOpen(\''+ev.code+'\')"><div class="aei">🎉</div><div class="aeif"><div class="aenm">'+ev.name+'</div><div class="aem"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+fmt$(ev.total_cost)+'</span></div></div></div>'});c.innerHTML=h}
-async function admOpen(code){await loadEvent(code);if(E)show()}
-function bk(){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S0').classList.add('active')}
+let ADM_EVENTS=[];let ADM_TAB='eventos';let ADM_CHECKIN_CODE=null;
+async function showAdm(){const pwd=prompt('Contraseña admin:');if(pwd!=='1.Tequiladrinkx')return;document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S1').classList.add('active');ADM_TAB='eventos';ADM_CHECKIN_CODE=null;await admLoadEvents();admRender()}
+
+async function admLoadEvents(){ADM_EVENTS=await sbGet('eventus_events','order=created_at.desc');for(let i=0;i<ADM_EVENTS.length;i++){const gs=await sbGet('eventus_guests','event_code=eq.'+ADM_EVENTS[i].code+'&select=id,name,companions,status,arrived');ADM_EVENTS[i]._guests=gs}}
+
+function admSwitchTab(tab,btn){ADM_TAB=tab;ADM_CHECKIN_CODE=null;document.querySelectorAll('.adm-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');admRender()}
+
+function admRender(){const c=document.getElementById('adC');const t={xv:'XV Años',boda:'Boda',graduacion:'Graduación'};const totalGuests=ADM_EVENTS.reduce(function(s,e){return s+(e._guests||[]).length},0);const totalIncome=ADM_EVENTS.reduce(function(s,e){return s+(e.total_cost||0)},0);
+
+let h='<div class="admh"><h2>Panel Admin</h2></div>';
+h+='<div class="asr"><div class="ast"><div class="an">'+ADM_EVENTS.length+'</div><div class="al">Eventos</div></div><div class="ast"><div class="an">'+totalGuests+'</div><div class="al">Invitados</div></div><div class="ast"><div class="an">'+fmt$(totalIncome)+'</div><div class="al">Ingresos</div></div></div>';
+
+h+='<div class="adm-tabs"><button class="adm-tab'+(ADM_TAB==='dashboard'?' active':'')+'" onclick="admSwitchTab(\'dashboard\',this)">📊 Dashboard</button><button class="adm-tab'+(ADM_TAB==='eventos'?' active':'')+'" onclick="admSwitchTab(\'eventos\',this)">📋 Eventos</button><button class="adm-tab'+(ADM_TAB==='invitaciones'?' active':'')+'" onclick="admSwitchTab(\'invitaciones\',this)">💌 Invitaciones</button><button class="adm-tab'+(ADM_TAB==='checkin'?' active':'')+'" onclick="admSwitchTab(\'checkin\',this)">📍 Check-in</button><button class="adm-tab'+(ADM_TAB==='codigos'?' active':'')+'" onclick="admSwitchTab(\'codigos\',this)">🔑 Códigos</button></div>';
+
+if(ADM_TAB==='dashboard'){h+=admRenderDashboard(t)}
+else if(ADM_TAB==='eventos'){h+=admRenderEventos(t)}
+else if(ADM_TAB==='checkin'){h+=admRenderCheckin(t)}
+else if(ADM_TAB==='invitaciones'){h+=admRenderInvitaciones(t)}
+else if(ADM_TAB==='codigos'){h+=admRenderCodigos(t)}
+c.innerHTML=h}
+
+function admRenderDashboard(t){
+var h='';
+var today=new Date();today.setHours(0,0,0,0);
+var totalIncome=ADM_EVENTS.reduce(function(s,e){return s+(e.total_cost||0)},0);
+var totalGuests=ADM_EVENTS.reduce(function(s,e){return s+(e._guests||[]).reduce(function(a,g){return a+1+(g.companions||0)},0)},0);
+var totalConf=ADM_EVENTS.reduce(function(s,e){return s+(e._guests||[]).filter(function(g){return g.status==='confirmed'}).reduce(function(a,g){return a+1+(g.companions||0)},0)},0);
+var confRate=totalGuests>0?Math.round(totalConf/totalGuests*100):0;
+var upcoming=ADM_EVENTS.filter(function(e){var d=new Date(e.date+'T00:00:00');return d>=today});
+
+// Row 1: Key Metrics
+h+='<div class="dash-metrics">';
+h+='<div class="dash-card"><div class="dash-card-val" style="color:var(--verde)">'+fmt$(totalIncome)+'</div><div class="dash-card-lbl">Total Ingresos</div></div>';
+h+='<div class="dash-card"><div class="dash-card-val" style="color:var(--rosa)">'+totalGuests+'</div><div class="dash-card-lbl">Total Invitados</div></div>';
+h+='<div class="dash-card"><div class="dash-card-val" style="color:var(--gold)">'+confRate+'%</div><div class="dash-card-lbl">Tasa Confirmaci\u00f3n</div></div>';
+h+='<div class="dash-card"><div class="dash-card-val" style="color:#64B5F6">'+upcoming.length+'</div><div class="dash-card-lbl">Eventos Pr\u00f3ximos</div></div>';
+h+='</div>';
+
+// Group events by month
+var monthNames=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+var eventsByMonth={};var incomeByMonth={};
+ADM_EVENTS.forEach(function(e){
+var parts=e.date?e.date.split('-'):[];
+if(parts.length>=2){var key=parts[0]+'-'+parts[1];var mi=parseInt(parts[1],10)-1;var label=monthNames[mi]+' '+parts[0];
+if(!eventsByMonth[key])eventsByMonth[key]={label:label,count:0,income:0};
+eventsByMonth[key].count++;eventsByMonth[key].income+=(e.total_cost||0)}});
+var months=Object.keys(eventsByMonth).sort();
+var maxEvCount=Math.max.apply(null,months.map(function(k){return eventsByMonth[k].count}).concat([1]));
+var maxIncome=Math.max.apply(null,months.map(function(k){return eventsByMonth[k].income}).concat([1]));
+
+// Row 2: Events by Month
+h+='<div class="dash-section"><div class="dash-section-title">Eventos por Mes</div>';
+if(months.length===0){h+='<div class="emp"><p style="font-size:11px">Sin datos a\u00fan</p></div>'}
+else{h+='<div class="dash-chart">';
+months.forEach(function(k){var m=eventsByMonth[k];var pct=Math.round(m.count/maxEvCount*100);
+h+='<div class="dash-bar-row"><div class="dash-bar-label">'+m.label+'</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:'+pct+'%;background:var(--rosa)"></div></div><div class="dash-bar-val">'+m.count+'</div></div>'});
+h+='</div>'}
+h+='</div>';
+
+// Row 3: Income by Month
+h+='<div class="dash-section"><div class="dash-section-title">Ingresos por Mes</div>';
+if(months.length===0){h+='<div class="emp"><p style="font-size:11px">Sin datos a\u00fan</p></div>'}
+else{h+='<div class="dash-chart">';
+months.forEach(function(k){var m=eventsByMonth[k];var pct=Math.round(m.income/maxIncome*100);
+h+='<div class="dash-bar-row"><div class="dash-bar-label">'+m.label+'</div><div class="dash-bar-track"><div class="dash-bar-fill" style="width:'+pct+'%;background:var(--verde)"></div></div><div class="dash-bar-val">'+fmt$(m.income)+'</div></div>'});
+h+='</div>'}
+h+='</div>';
+
+// Row 4: Events by Type
+var typeCounts={xv:0,boda:0,graduacion:0};
+ADM_EVENTS.forEach(function(e){if(typeCounts.hasOwnProperty(e.type))typeCounts[e.type]++;else typeCounts[e.type]=(typeCounts[e.type]||0)+1});
+var totalEv=ADM_EVENTS.length||1;
+h+='<div class="dash-section"><div class="dash-section-title">Eventos por Tipo</div>';
+h+='<div class="dash-types">';
+h+='<div class="dash-type-card"><div class="dash-type-dot" style="background:var(--rosa)"></div><div class="dash-type-info"><div class="dash-type-name">XV A\u00f1os</div><div class="dash-type-count">'+typeCounts.xv+' eventos &middot; '+Math.round(typeCounts.xv/totalEv*100)+'%</div></div></div>';
+h+='<div class="dash-type-card"><div class="dash-type-dot" style="background:var(--gold)"></div><div class="dash-type-info"><div class="dash-type-name">Boda</div><div class="dash-type-count">'+typeCounts.boda+' eventos &middot; '+Math.round(typeCounts.boda/totalEv*100)+'%</div></div></div>';
+h+='<div class="dash-type-card"><div class="dash-type-dot" style="background:var(--verde)"></div><div class="dash-type-info"><div class="dash-type-name">Graduaci\u00f3n</div><div class="dash-type-count">'+typeCounts.graduacion+' eventos &middot; '+Math.round(typeCounts.graduacion/totalEv*100)+'%</div></div></div>';
+h+='</div></div>';
+
+// Row 5: Upcoming Events
+h+='<div class="dash-section"><div class="dash-section-title">Pr\u00f3ximos Eventos</div>';
+var sorted=upcoming.slice().sort(function(a,b){return a.date.localeCompare(b.date)});
+if(!sorted.length){h+='<div class="emp"><div class="ej">📅</div><p>No hay eventos pr\u00f3ximos</p></div>'}
+else{sorted.forEach(function(ev){
+var evDate=new Date(ev.date+'T00:00:00');var diff=Math.ceil((evDate-today)/(1000*60*60*24));
+var gs=ev._guests||[];var guestCount=gs.reduce(function(s,g){return s+1+(g.companions||0)},0);
+h+='<div class="dash-upcoming-item"><div class="dash-upcoming-left"><div class="dash-upcoming-days'+(diff<=3?' urgent':'')+'">'+diff+'<small>d\u00edas</small></div></div><div class="dash-upcoming-info"><div class="dash-upcoming-name">'+ev.name+'</div><div class="dash-upcoming-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+guestCount+' inv.</span></div></div></div>'})}
+h+='</div>';
+return h}
+
+function admRenderEventos(t){let h='<div class="adm-detail"><h4>+ Crear nuevo evento</h4><div class="ir"><input type="text" class="inf" id="admRN" placeholder="Nombre del festejado(a)"><select class="isl" id="admRT" style="width:110px"><option value="xv">XV Años</option><option value="boda">Boda</option><option value="graduacion">Graduación</option></select></div><div class="ir"><input type="date" class="inf" id="admRD"><select class="isl" id="admRP" style="width:110px"><option value="6">Premium 6h</option><option value="7">Diamante 7h</option><option value="8">Esmeralda 8h</option></select></div><div class="ir"><input type="number" class="inf" id="admRCost" placeholder="Costo total $" min="3000"><input type="tel" class="inf" id="admRPhone" placeholder="WhatsApp 10 dígitos"></div><div class="erm" id="admRE" style="display:none"></div><button class="ba" onclick="admCreateEvent()">+ Crear evento</button></div>';
+if(!ADM_EVENTS.length)return h+'<div class="emp"><div class="ej">📋</div><p>No hay eventos registrados aún</p></div>';
+ADM_EVENTS.forEach(function(ev){const gs=ev._guests||[];const total=gs.reduce(function(s,g){return s+1+(g.companions||0)},0);const conf=gs.filter(function(g){return g.status==='confirmed'}).reduce(function(s,g){return s+1+(g.companions||0)},0);
+h+='<div class="adm-ev-card"><div class="adm-ev-top"><div class="adm-ev-icon">🎉</div><div class="adm-ev-info"><div class="adm-ev-name">'+ev.name+'</div><div class="adm-ev-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+total+' inv. ('+conf+' conf.)</span><span>'+fmt$(ev.total_cost)+'</span>'+(ev.activated?'<span style="color:var(--verde);font-weight:700">✅ PRO</span>':'<span style="color:rgba(255,255,255,0.2)">🔒 FREE</span>')+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div class="adm-ev-row"><span>Creado: '+new Date(ev.created_at).toLocaleDateString('es-MX')+'</span><div class="adm-ev-actions"><button class="adm-btn '+(ev.activated?'adm-btn-checkin':'adm-btn-code')+'" onclick="event.stopPropagation();admToggleActivate(\''+ev.code+'\')">'+(ev.activated?'✅ Activado':'🔒 Activar')+'</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">👁 Ver</button><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">📋 Código</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">💬 WA</button><button class="adm-btn" style="background:rgba(255,82,82,0.08);color:#FF5252" onclick="event.stopPropagation();admDeleteEvent(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">🗑</button></div></div></div>'});return h}
+
+function admRenderCheckin(t){let h='';if(ADM_CHECKIN_CODE){return admRenderCheckinDetail()}
+h+='<p style="font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:10px">Selecciona un evento para hacer check-in</p>';
+ADM_EVENTS.forEach(function(ev){const gs=ev._guests||[];const arrived=gs.filter(function(g){return g.arrived}).reduce(function(s,g){return s+1+(g.companions||0)},0);const expected=gs.filter(function(g){return g.status==='confirmed'}).reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=expected>0?Math.round(arrived/expected*100):0;
+h+='<div class="adm-ev-card" onclick="admStartCheckin(\''+ev.code+'\')"><div class="adm-ev-top"><div class="adm-ev-icon" style="background:linear-gradient(135deg,var(--verde-dark),var(--verde))">📍</div><div class="adm-ev-info"><div class="adm-ev-name">'+ev.name+'</div><div class="adm-ev-meta"><span>'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span></div></div></div><div class="adm-ev-row"><span>'+arrived+' / '+expected+' llegaron ('+pct+'%)</span><div style="flex:1;max-width:120px;height:5px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;margin-left:8px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--verde-dark),var(--verde));border-radius:3px"></div></div></div></div>'});return h}
+
+function admRenderCheckinDetail(){const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return'';const gs=ev._guests||[];const arrived=gs.filter(function(g){return g.arrived});const expected=gs.filter(function(g){return g.status!=='cancelled'});const totalArrived=arrived.reduce(function(s,g){return s+1+(g.companions||0)},0);const totalExpected=expected.reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=totalExpected>0?Math.round(totalArrived/totalExpected*100):0;
+
+let h='<button class="adm-back" onclick="ADM_CHECKIN_CODE=null;admRender()">← Volver a eventos</button>';
+h+='<div class="checkin-header"><h4>📍 Check-in: '+ev.name+'</h4></div>';
+h+='<div class="checkin-stats"><div class="checkin-stat"><div class="cs-num" style="color:var(--verde)">'+totalArrived+'</div><div class="cs-lbl">Llegaron</div></div><div class="checkin-stat"><div class="cs-num" style="color:#FFD54F">'+totalExpected+'</div><div class="cs-lbl">Esperados</div></div><div class="checkin-stat"><div class="cs-num" style="color:var(--rosa)">'+pct+'%</div><div class="cs-lbl">Asistencia</div></div></div>';
+h+='<div class="scan-area"><p style="font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:8px">Busca por nombre del invitado</p><input type="text" id="admScanInput" placeholder="Nombre..." onkeydown="if(event.key===\'Enter\')admDoCheckin()"><button onclick="admDoCheckin()">Registrar llegada</button><div id="admScanResult"></div></div>';
+
+// Guest list with check-in buttons
+h+='<div style="margin-top:14px">';
+const pending=gs.filter(function(g){return!g.arrived&&g.status!=='cancelled'});
+if(pending.length){h+='<p style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:6px">Por llegar ('+pending.length+')</p>';
+pending.forEach(function(g){h+='<div class="gi" style="margin-bottom:3px"><div class="gv pending">'+g.name.charAt(0).toUpperCase()+'</div><div class="gi2"><div class="gn">'+g.name+'</div><div class="gm">'+(g.companions?'<span>+'+g.companions+'</span>':'')+'</div></div><button class="adm-btn adm-btn-checkin" onclick="admCheckinGuest('+g.id+')">✓ Llegó</button></div>'})}
+
+if(arrived.length){h+='<p style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin:12px 0 6px">Ya llegaron ('+arrived.length+')</p>';
+arrived.sort(function(a,b){return(b.arrived_at||'').localeCompare(a.arrived_at||'')}).forEach(function(g){const time=g.arrived_at?new Date(g.arrived_at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'--:--';
+h+='<div class="arrival-item"><span>'+g.name+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+time+'</span></div>'})}
+h+='</div>';return h}
+
+async function admStartCheckin(code){ADM_CHECKIN_CODE=code;admRender()}
+
+async function admDoCheckin(){const input=document.getElementById('admScanInput');const name=input.value.trim().toLowerCase();const res=document.getElementById('admScanResult');if(!name){res.innerHTML='';return}
+const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return;const g=ev._guests.find(function(x){return x.name.toLowerCase().includes(name)&&!x.arrived});
+if(g){const now=new Date().toISOString();g.arrived=true;g.arrived_at=now;g.status='confirmed';await sbPatch('eventus_guests','id=eq.'+g.id,{arrived:true,arrived_at:now,status:'confirmed'});
+res.innerHTML='<div class="scan-result ok"><div class="sr-icon">✅</div><div class="sr-name">'+g.name+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompañantes':'')+'</div></div>';
+input.value='';setTimeout(function(){admRender()},1500);toast(g.name+' registrado')}else{const already=ev._guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">⚠️</div><div class="sr-name">'+already.name+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">❌</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre</div></div>'}}}
+
+async function admCheckinGuest(guestId){const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return;const g=ev._guests.find(function(x){return x.id===guestId});if(!g)return;
+const now=new Date().toISOString();g.arrived=true;g.arrived_at=now;g.status='confirmed';await sbPatch('eventus_guests','id=eq.'+guestId,{arrived:true,arrived_at:now,status:'confirmed'});admRender();toast(g.name+' registrado')}
+
+function admRenderCodigos(t){let h='<p style="font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:12px">Códigos de acceso de todos los clientes. Puedes copiarlos o enviarlos por WhatsApp si un cliente olvidó su código.</p>';
+if(!ADM_EVENTS.length)return h+'<div class="emp"><div class="ej">🔑</div><p>No hay eventos</p></div>';
+ADM_EVENTS.forEach(function(ev){h+='<div class="adm-detail"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div><div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8)">'+ev.name+'</div><div style="font-size:9px;color:rgba(255,255,255,0.3)">'+(t[ev.type]||ev.type)+' · '+ev.date+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">📋 Copiar código</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">💬 Enviar por WhatsApp</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">👁 Ver evento</button></div></div>'});return h}
+
+async function admToggleActivate(code){const ev=ADM_EVENTS.find(function(e){return e.code===code});if(!ev)return;const newState=!ev.activated;await sbPatch('eventus_events','code=eq.'+code,{activated:newState});ev.activated=newState;
+if(newState&&!ev._payments){const cost=ev.total_cost||0;if(cost>0){const pays=calcPayments(cost,ev.contract_date||ev.created_at.slice(0,10),ev.date);for(let i=0;i<pays.length;i++){await sbPost('eventus_payments',{event_code:code,name:pays[i].name,amount:pays[i].amount,due_date:pays[i].date,note:pays[i].note,paid:false})}}}
+if(newState){const existing=await sbGet('eventus_checklist','event_code=eq.'+code+'&select=id');if(!existing.length){for(let i=0;i<DCL.length;i++){await sbPost('eventus_checklist',{event_code:code,text:DCL[i].text,done:false,sort_order:i})}}}
+admRender();toast(newState?'Evento '+code+' ACTIVADO — acceso completo':'Evento '+code+' desactivado — solo invitados y mesas')}
+
+async function admCreateEvent(){const n=document.getElementById('admRN').value.trim(),t=document.getElementById('admRT').value,d=document.getElementById('admRD').value,p=parseInt(document.getElementById('admRP').value),cost=parseInt(document.getElementById('admRCost').value),phone=document.getElementById('admRPhone').value.trim().replace(/\D/g,''),e=document.getElementById('admRE');e.style.display='none';
+if(!n){e.textContent='Escribe el nombre';e.style.display='block';return}if(!d){e.textContent='Selecciona fecha';e.style.display='block';return}if(!cost||cost<3000){e.textContent='Mínimo $3,000';e.style.display='block';return}
+const code=gc(),today=new Date().toISOString().slice(0,10);
+try{const evRes=await sbPost('eventus_events',{code:code,name:n,type:t,date:d,hours:p,total_cost:cost,contract_date:today,num_mesas:20,menu_sel:{},phone:phone});if(!evRes){e.textContent='Error al crear evento';e.style.display='block';return}
+const pays=calcPayments(cost,today,d);for(let i=0;i<pays.length;i++){await sbPost('eventus_payments',{event_code:code,name:pays[i].name,amount:pays[i].amount,due_date:pays[i].date,note:pays[i].note,paid:false})}
+for(let i=0;i<DCL.length;i++){await sbPost('eventus_checklist',{event_code:code,text:DCL[i].text,done:false,sort_order:i})}
+await admLoadEvents();admRender();toast('Evento creado: '+code);
+if(phone){const msg='¡Hola! 🎉 Tu evento "'+n+'" ha sido registrado en Eventus Pro.\n\nTu código de acceso es: *'+code+'*\n\nIngresa en: salondefiestasvillaverde.com/eventus\n\nCon este código podrás administrar tu lista de invitados, mesas, menú y más. ¡Guárdalo bien!';window.open('https://wa.me/521'+phone+'?text='+encodeURIComponent(msg),'_blank')}}catch(err){e.textContent='Error de conexión';e.style.display='block'}}
+
+async function admDeleteEvent(code,name){if(!confirm('¿Eliminar el evento "'+name+'" ('+code+')?\n\nSe borrarán TODOS los invitados, pagos, checklist y programa.\n\nEsta acción NO se puede deshacer.'))return;if(!confirm('⚠️ CONFIRMAR: Escribiste que quieres eliminar "'+name+'". ¿Estás seguro?'))return;
+syncDot('saving');await sbDelete('eventus_guests','event_code=eq.'+code);await sbDelete('eventus_payments','event_code=eq.'+code);await sbDelete('eventus_checklist','event_code=eq.'+code);await sbDelete('eventus_program','event_code=eq.'+code);await sbDelete('eventus_events','code=eq.'+code);
+ADM_EVENTS=ADM_EVENTS.filter(function(e){return e.code!==code});syncDot('ok');admRender();toast('Evento '+code+' eliminado')}
+
+function admCopyCode(code){navigator.clipboard.writeText(code).then(function(){toast('Código '+code+' copiado')}).catch(function(){toast('Error al copiar',1)})}
+function admSendCode(code,name){const msg='Hola, tu código de acceso para Eventus Pro es: *'+code+'*\n\nEvento: '+name+'\n\nIngresa en: [link de tu sitio]/eventus\n\n¡Ahí puedes ver y administrar tu lista de invitados!';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}
+async function admOpenEvent(code){ADMIN_VIEW=true;await loadEvent(code);if(E)show()}
+function bk(){ADM_CHECKIN_CODE=null;document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S0').classList.add('active')}
+
+/* ─── INVITACIONES TAB ─── */
+var ADM_INV_BRIEF_OPEN={};
+var INV_STATUS_LABELS={'sin_brief':'📝 Sin brief','en_diseno':'⏳ En diseño','en_revision':'👁 En revisión','con_cambios':'✏️ Con cambios','aprobada':'✅ Aprobada'};
+
+function admRenderInvitaciones(t){
+var h='';
+var counts={'sin_brief':0,'en_diseno':0,'en_revision':0,'con_cambios':0,'aprobada':0};
+ADM_EVENTS.forEach(function(ev){var st=ev.invitation_status||'sin_brief';if(counts[st]!==undefined)counts[st]++;else counts['sin_brief']++});
+h+='<div class="inv-overview">';
+var keys=['sin_brief','en_diseno','en_revision','con_cambios','aprobada'];
+keys.forEach(function(k){h+='<div class="inv-badge inv-badge-'+k+'">'+INV_STATUS_LABELS[k]+': '+counts[k]+'</div>'});
+h+='</div>';
+var sorted=ADM_EVENTS.slice().sort(function(a,b){var order={'en_diseno':0,'con_cambios':1,'en_revision':2,'sin_brief':3,'aprobada':4};var sa=a.invitation_status||'sin_brief';var sb2=b.invitation_status||'sin_brief';return(order[sa]!==undefined?order[sa]:3)-(order[sb2]!==undefined?order[sb2]:3)});
+if(!sorted.length)return h+'<div class="emp"><div class="ej">💌</div><p>No hay eventos</p></div>';
+sorted.forEach(function(ev){
+var st=ev.invitation_status||'sin_brief';
+var brief=ev.invitation_brief||{};
+h+='<div class="inv-card'+(st==='sin_brief'?' inv-dimmed':'')+'">';
+h+='<div class="inv-card-header"><div class="inv-card-name">'+ev.name+'</div><span class="inv-status inv-status-'+st+'">'+INV_STATUS_LABELS[st]+'</span></div>';
+h+='<div style="font-size:9px;color:rgba(255,255,255,0.3);margin-bottom:8px">'+(t[ev.type]||ev.type)+' · '+ev.date+' · <span style="font-family:monospace">'+ev.code+'</span></div>';
+
+if(st==='sin_brief'){
+h+='<div class="inv-empty">El cliente aún no ha enviado su brief</div>';
+}
+else if(st==='en_diseno'){
+h+=admInvBriefSummary(ev,brief);
+h+='<button class="inv-btn inv-btn-back" onclick="admViewBrief(\''+ev.code+'\')">'+(ADM_INV_BRIEF_OPEN[ev.code]?'Ocultar':'Ver')+ ' brief completo</button>';
+if(ADM_INV_BRIEF_OPEN[ev.code])h+=admInvBriefFull(ev,brief);
+h+='<div class="inv-actions">';
+h+='<button class="inv-btn inv-btn-upload" onclick="admUploadInvitation(\''+ev.code+'\')">📎 Subir diseño final</button>';
+if(ev.invitation_url)h+='<button class="inv-btn inv-btn-send" onclick="admSetInvStatus(\''+ev.code+'\',\'en_revision\')">📤 Marcar como lista para revisión</button>';
+h+='</div>';
+if(ev.invitation_url)h+='<div class="inv-preview"><img src="'+ev.invitation_url+'" alt="Diseño"></div>';
+}
+else if(st==='en_revision'){
+if(ev.invitation_url)h+='<div class="inv-preview"><img src="'+ev.invitation_url+'" alt="Invitación"></div>';
+h+='<div class="inv-waiting">⏳ Esperando aprobación del cliente...</div>';
+h+='<div class="inv-actions"><button class="inv-btn inv-btn-back" onclick="admSetInvStatus(\''+ev.code+'\',\'en_diseno\')">← Volver a diseño</button></div>';
+}
+else if(st==='con_cambios'){
+if(ev.invitation_comments)h+='<div class="inv-comments-box">'+ev.invitation_comments.replace(/\n/g,'<br>')+'</div>';
+if(ev.invitation_url)h+='<div class="inv-preview"><img src="'+ev.invitation_url+'" alt="Invitación actual"></div>';
+h+=admInvBriefSummary(ev,brief);
+h+='<button class="inv-btn inv-btn-back" onclick="admViewBrief(\''+ev.code+'\')">'+(ADM_INV_BRIEF_OPEN[ev.code]?'Ocultar':'Ver')+' brief completo</button>';
+if(ADM_INV_BRIEF_OPEN[ev.code])h+=admInvBriefFull(ev,brief);
+h+='<div class="inv-actions">';
+h+='<button class="inv-btn inv-btn-upload" onclick="admUploadInvitation(\''+ev.code+'\')">📎 Subir nueva versión</button>';
+if(ev.invitation_url)h+='<button class="inv-btn inv-btn-send" onclick="admSetInvStatus(\''+ev.code+'\',\'en_revision\')">📤 Marcar como lista para revisión</button>';
+h+='</div>';
+}
+else if(st==='aprobada'){
+if(ev.invitation_url)h+='<div class="inv-preview"><img src="'+ev.invitation_url+'" alt="Invitación aprobada"></div>';
+h+='<div class="inv-actions"><button class="inv-btn inv-btn-revoke" onclick="admSetInvStatus(\''+ev.code+'\',\'en_revision\')">↩ Revocar aprobación</button></div>';
+}
+h+='</div>';
+});
+return h}
+
+function admInvBriefSummary(ev,brief){
+var parts=[];
+if(brief.song)parts.push('🎵 '+brief.song);
+if(brief.colors)parts.push('🎨 '+brief.colors);
+if(brief.message)parts.push('💬 '+brief.message.substring(0,60)+(brief.message.length>60?'...':''));
+if(!parts.length)return'<div class="inv-brief-info">Sin detalles de brief</div>';
+return'<div class="inv-brief-info">'+parts.join(' · ')+'</div>'}
+
+function admInvBriefFull(ev,brief){
+var h='<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;margin:8px 0">';
+h+='<div class="inv-brief-info">';
+if(brief.song)h+='<div><strong>🎵 Canción:</strong> '+brief.song+'</div>';
+if(brief.colors)h+='<div><strong>🎨 Colores:</strong> '+brief.colors+'</div>';
+if(brief.message)h+='<div><strong>💬 Mensaje:</strong> '+brief.message+'</div>';
+if(brief.dress_code)h+='<div><strong>👔 Dress code:</strong> '+brief.dress_code+'</div>';
+if(brief.event_time)h+='<div><strong>🕐 Hora:</strong> '+brief.event_time+'</div>';
+if(brief.venue)h+='<div><strong>📍 Lugar:</strong> '+brief.venue+'</div>';
+if(brief.notes)h+='<div><strong>📝 Notas:</strong> '+brief.notes+'</div>';
+h+='</div>';
+var photos=brief.photos||brief.reference_photos||[];
+if(photos.length){h+='<div class="inv-brief-grid">';photos.forEach(function(p){h+='<img src="'+p+'" onclick="window.open(\''+p+'\',\'_blank\')" alt="Ref">'});h+='</div>'}
+if(brief.solo_photos){var solos=brief.solo_photos||[];if(solos.length){h+='<div style="font-size:9px;color:rgba(255,255,255,0.4);margin:6px 0 4px">Fotos solistas:</div><div class="inv-brief-grid">';solos.forEach(function(p){h+='<img src="'+p+'" onclick="window.open(\''+p+'\',\'_blank\')" alt="Solo">'});h+='</div>'}}
+if(brief.carousel_photos){var carousels=brief.carousel_photos||[];if(carousels.length){h+='<div style="font-size:9px;color:rgba(255,255,255,0.4);margin:6px 0 4px">Fotos carrusel:</div><div class="inv-brief-grid">';carousels.forEach(function(p){h+='<img src="'+p+'" onclick="window.open(\''+p+'\',\'_blank\')" alt="Carrusel">'});h+='</div>'}}
+h+='</div>';
+return h}
+
+function admViewBrief(code){ADM_INV_BRIEF_OPEN[code]=!ADM_INV_BRIEF_OPEN[code];admRender()}
+
+async function admUploadInvitation(code){
+var input=document.createElement('input');input.type='file';input.accept='image/*';
+input.onchange=async function(){var file=input.files[0];if(!file)return;
+toast('Subiendo diseño...');
+try{var fname='invitation_'+Date.now()+'.'+file.name.split('.').pop();
+var url=SB_URL+'/storage/v1/object/eventus-photos/'+code+'/'+fname;
+var r=await fetch(url,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':file.type,'x-upsert':'true'},body:file});
+if(!r.ok){r=await fetch(url,{method:'PUT',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':file.type,'x-upsert':'true'},body:file})}
+if(!r.ok)throw new Error('Upload failed');
+var publicUrl=SB_URL+'/storage/v1/object/public/eventus-photos/'+code+'/'+fname;
+await sbPatch('eventus_events','code=eq.'+code,{invitation_url:publicUrl});
+var ev=ADM_EVENTS.find(function(e){return e.code===code});if(ev)ev.invitation_url=publicUrl;
+admRender();toast('Diseño subido correctamente')}catch(e){toast('Error al subir diseño',1)}};
+input.click()}
+
+async function admSetInvStatus(code,status){
+try{await sbPatch('eventus_events','code=eq.'+code,{invitation_status:status});
+var ev=ADM_EVENTS.find(function(e){return e.code===code});if(ev)ev.invitation_status=status;
+admRender();toast('Estado actualizado: '+INV_STATUS_LABELS[status])}catch(e){toast('Error al actualizar estado',1)}}
 </script>
 </body>
 </html>
