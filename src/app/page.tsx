@@ -439,6 +439,7 @@ export default function Home() {
           <a href="#extras" onClick={() => setMenuOpen(false)}>Extras</a>
           <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
           <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
+          <a href="/eventus.html" onClick={() => setMenuOpen(false)}>Eventus</a>
           <a
             href="https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde"
             target="_blank"
