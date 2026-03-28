@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XV Años de Ximena</title>
+  <meta property="og:title" content="XV Años de Ximena">
+  <meta property="og:description" content="Estás invitado(a) a celebrar mis XV Años — Sábado 14 de Marzo, 2026">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green-dark: #2d5a3d;
+      --green: #3d7a52;
+      --green-light: #6a9e7a;
+      --gold: #c9a96e;
+      --gold-light: #dcc896;
+      --gold-dark: #a8884e;
+      --gold-shimmer: #e8d5a0;
+      --cream: #fdf8f0;
+      --cream-dark: #f5ead8;
+      --cream-medium: #f9f0e3;
+      --pink: #e8a0aa;
+      --pink-light: #f5d0d6;
+      --pink-dark: #c47a88;
+      --rose: #d4788a;
+      --rose-light: #e8b0bc;
+      --text-dark: #3a2a2e;
+      --text-medium: #5a4a4e;
+      --text-light: #8a7a7e;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    /* ===== FONTS ===== */
+    .font-script { font-family: 'Great Vibes', cursive; }
+    .font-serif { font-family: 'Cormorant Infant', serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+
+    /* ===== ORNAMENTAL DIVIDERS ===== */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px auto;
+      max-width: 200px;
+    }
+
+    .ornament-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .ornament-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .ornament-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* Gold flourish divider */
+    .flourish {
+      text-align: center;
+      padding: 10px 0;
+      color: var(--gold);
+      font-size: 1.6rem;
+      letter-spacing: 6px;
+      opacity: 0.6;
+    }
+
+    /* ===== SVG FLORAL DECORATIONS ===== */
+    .floral-roses {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .floral-roses svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .floral-top-left {
+      top: -10px;
+      left: -10px;
+      width: 160px;
+      height: 160px;
+    }
+
+    .floral-top-right {
+      top: -10px;
+      right: -10px;
+      width: 160px;
+      height: 160px;
+      transform: scaleX(-1);
+    }
+
+    .floral-bottom-left {
+      bottom: -10px;
+      left: -10px;
+      width: 140px;
+      height: 140px;
+      transform: scaleY(-1);
+    }
+
+    .floral-bottom-right {
+      bottom: -10px;
+      right: -10px;
+      width: 140px;
+      height: 140px;
+      transform: scale(-1);
+    }
+
+    /* Inline rose SVG cluster */
+    .rose-cluster {
+      display: inline-block;
+      width: 120px;
+      height: 40px;
+    }
+
+    /* Section floral strip - horizontal roses between sections */
+    .floral-strip {
+      width: 100%;
+      height: 80px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .floral-strip-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ===== SUBTLE BACKGROUND PATTERN ===== */
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(232,160,170,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(201,169,110,0.06) 0%, transparent 50%);
+    }
+
+    .bg-damask {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 15 30 5Z M30 35 Q35 45 30 55 Q25 45 30 35Z M5 30 Q15 25 25 30 Q15 35 5 30Z M35 30 Q45 25 55 30 Q45 35 35 30Z' fill='%23c9a96e' fill-opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    /* ===== FLOATING PETALS ===== */
+    .petal {
+      position: absolute;
+      border-radius: 50% 50% 50% 0;
+      animation: fall-petal linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .petal-pink {
+      background: radial-gradient(ellipse, rgba(232,160,170,0.5), rgba(245,208,214,0.15));
+    }
+
+    .petal-gold {
+      background: radial-gradient(ellipse, rgba(201,169,110,0.4), rgba(220,200,150,0.1));
+    }
+
+    @keyframes fall-petal {
+      0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0; }
+      10% { opacity: 0.7; }
+      50% { transform: translateY(50vh) rotate(360deg) scale(1); }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(110vh) rotate(720deg) scale(0.6); opacity: 0; }
+    }
+
+    /* ===== SECTION BASE ===== */
+    section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px 40px;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(245,208,214,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(201,169,110,0.1) 0%, transparent 50%),
+        linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 40%, var(--cream-medium) 70%, var(--cream) 100%);
+      text-align: center;
+    }
+
+    .hero-pre {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-medium);
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.8rem;
+      color: var(--green-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 3;
+      text-shadow: 0 2px 8px rgba(45,90,61,0.1);
+    }
+
+    /* ===== ARCH PHOTO FRAME ===== */
+    .arch-container {
+      position: relative;
+      width: 240px;
+      margin: 20px auto 24px;
+      z-index: 3;
+    }
+
+    .arch-floral-top {
+      position: absolute;
+      top: -40px;
+      left: -50px;
+      right: -50px;
+      height: 120px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .arch-floral-left {
+      position: absolute;
+      top: 20%;
+      left: -35px;
+      width: 70px;
+      height: 100px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .arch-floral-right {
+      position: absolute;
+      top: 20%;
+      right: -35px;
+      width: 70px;
+      height: 100px;
+      z-index: 5;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
+
+    .arch-frame {
+      width: 240px;
+      height: 320px;
+      border-radius: 120px 120px 0 0;
+      border: 4px solid var(--gold);
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(180deg, var(--cream-dark), var(--cream-medium));
+      box-shadow:
+        0 0 0 2px var(--cream),
+        0 0 0 5px rgba(201,169,110,0.3),
+        0 20px 50px rgba(60,40,40,0.15),
+        inset 0 0 40px rgba(201,169,110,0.08);
+    }
+
+    .arch-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .arch-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: var(--gold);
+      gap: 8px;
+      background: linear-gradient(180deg, rgba(245,234,216,0.5), rgba(253,248,240,0.8));
+    }
+
+    .arch-placeholder svg { width: 50px; height: 50px; opacity: 0.3; }
+    .arch-placeholder span { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
+
+    .hero-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 5rem;
+      color: var(--gold-dark);
+      line-height: 1;
+      position: relative;
+      z-index: 3;
+      text-shadow: 0 3px 15px rgba(168,136,78,0.2);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      z-index: 3;
+    }
+
+    .scroll-hint svg { width: 22px; height: 22px; stroke: var(--gold); opacity: 0.5; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===== QUOTE ===== */
+    .quote-section {
+      padding: 50px 28px;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .quote-marks {
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 0.5;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-medium);
+      line-height: 1.9;
+      max-width: 320px;
+      margin: 10px auto;
+      font-weight: 400;
+    }
+
+    /* ===== MUSIC PLAYER ===== */
+    .music-section {
+      padding: 10px 20px 50px;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .music-label {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+    }
+
+    .music-player {
+      max-width: 300px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(253,248,240,0.9));
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 24px 20px 20px;
+      box-shadow: 0 8px 30px rgba(60,40,40,0.06);
+      border: 1px solid rgba(201,169,110,0.2);
+    }
+
+    .music-disc {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      background: conic-gradient(from 0deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-dark), var(--gold-light), var(--gold-dark));
+      box-shadow: 0 4px 15px rgba(168,136,78,0.25);
+      position: relative;
+      transition: transform 4s linear;
+    }
+
+    .music-disc.spinning {
+      animation: spin 4s linear infinite;
+    }
+
+    .music-disc::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid var(--gold);
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .music-progress {
+      width: 100%;
+      height: 3px;
+      background: var(--cream-dark);
+      border-radius: 3px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .music-progress-bar {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .music-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-medium);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      padding: 4px;
+    }
+
+    .music-btn:hover { opacity: 1; }
+    .music-btn svg { width: 18px; height: 18px; }
+
+    .music-btn-play {
+      background: var(--green-dark);
+      color: white;
+      opacity: 1;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(45,90,61,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .music-btn-play:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(45,90,61,0.4); }
+    .music-btn-play svg { width: 16px; height: 16px; }
+
+    .music-song {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ===== PARENTS & PADRINOS ===== */
+    .parents-section {
+      padding: 50px 28px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+    }
+
+    .parents-intro {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.05rem;
+      color: var(--text-medium);
+      margin-bottom: 8px;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .parents-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 6px;
+      margin-top: 28px;
+    }
+
+    .parents-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--green-dark);
+      line-height: 1.2;
+    }
+
+    .parents-amp {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 0.9rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin: 2px 0;
+    }
+
+    .parents-event-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-top: 34px;
+      font-weight: 600;
+    }
+
+    .parents-event-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: var(--green-dark);
+      margin-top: 2px;
+    }
+
+    /* ===== FULL-WIDTH PHOTO ===== */
+    .photo-section {
+      width: 100%;
+      height: 350px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--cream-dark) 0%, var(--pink-light) 50%, var(--cream-medium) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--gold);
+    }
+
+    .photo-placeholder svg { width: 48px; height: 48px; opacity: 0.25; }
+    .photo-placeholder span { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.3; font-family: 'Montserrat', sans-serif; }
+
+    .photo-overlay-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(180deg, var(--cream-dark), transparent);
+      pointer-events: none;
+    }
+
+    .photo-overlay-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(0deg, var(--cream), transparent);
+      pointer-events: none;
+    }
+
+    /* Floral corners on photos */
+    .photo-floral-tl, .photo-floral-tr, .photo-floral-bl, .photo-floral-br {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .photo-floral-tl { top: 0; left: 0; }
+    .photo-floral-tr { top: 0; right: 0; transform: scaleX(-1); }
+    .photo-floral-bl { bottom: 0; left: 0; transform: scaleY(-1); }
+    .photo-floral-br { bottom: 0; right: 0; transform: scale(-1); }
+
+    /* ===== DATE SECTION ===== */
+    .date-section {
+      padding: 50px 20px;
+      text-align: center;
+      background: var(--cream-dark);
+    }
+
+    .date-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--green-dark);
+      margin-bottom: 4px;
+    }
+
+    .date-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .date-side {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      writing-mode: vertical-rl;
+    }
+
+    .date-side-left { transform: rotate(180deg); }
+
+    .date-day {
+      font-family: 'Cinzel', serif;
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(45,90,61,0.1);
+    }
+
+    .date-year-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 6px;
+      color: var(--text-dark);
+      margin-top: 4px;
+    }
+
+    /* ===== MINI CALENDAR ===== */
+    .mini-calendar {
+      max-width: 280px;
+      margin: 30px auto 0;
+      background: rgba(255,255,255,0.6);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(201,169,110,0.15);
+      box-shadow: 0 4px 20px rgba(60,40,40,0.04);
+    }
+
+    .cal-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      color: var(--green-dark);
+      margin-bottom: 12px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+    }
+
+    .cal-header {
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+      padding: 4px 0;
+    }
+
+    .cal-day {
+      padding: 5px 0;
+      color: var(--text-medium);
+      border-radius: 50%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+    }
+
+    .cal-day.empty { visibility: hidden; }
+
+    .cal-day.highlight {
+      background: var(--gold);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(201,169,110,0.4);
+    }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-section {
+      padding: 40px 20px 50px;
+      text-align: center;
+      background: var(--cream-dark);
+    }
+
+    .countdown-label {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--green-dark);
+      margin-bottom: 18px;
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .countdown-item {
+      background: linear-gradient(135deg, var(--green-dark), #1f4530);
+      border-radius: 14px;
+      padding: 16px 6px;
+      flex: 1;
+      box-shadow: 0 8px 25px rgba(45,90,61,0.25);
+    }
+
+    .countdown-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+    }
+
+    .countdown-unit {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.45rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+    }
+
+    .countdown-sep {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      padding-bottom: 12px;
+    }
+
+    /* ===== CARD SECTIONS (Misa, Recepcion, etc) ===== */
+    .card-section {
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .info-card {
+      max-width: 360px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(253,248,240,0.95));
+      border-radius: 24px;
+      padding: 36px 28px;
+      box-shadow:
+        0 10px 40px rgba(60,40,40,0.06),
+        0 1px 3px rgba(201,169,110,0.1);
+      border: 1px solid rgba(201,169,110,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .card-icon {
+      margin-bottom: 14px;
+      color: var(--green-dark);
+    }
+
+    .card-icon svg { width: 38px; height: 38px; stroke-width: 1.3; }
+
+    .card-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--green-dark);
+      margin-bottom: 14px;
+      line-height: 1.1;
+    }
+
+    .card-time {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .card-place {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .card-address {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 26px;
+      background: var(--green-dark);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(45,90,61,0.25);
+      transition: all 0.3s;
+    }
+
+    .map-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,90,61,0.35); }
+    .map-btn svg { width: 13px; height: 13px; }
+
+    /* ===== ITINERARY ===== */
+    .itinerary-section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--green-dark);
+      margin-bottom: 30px;
+      line-height: 1.1;
+    }
+
+    .timeline-v {
+      max-width: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline-v::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, var(--green), var(--green), transparent);
+      transform: translateX(-50%);
+    }
+
+    .tl-event {
+      display: flex;
+      align-items: center;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .tl-event:nth-child(odd) { flex-direction: row; }
+    .tl-event:nth-child(even) { flex-direction: row-reverse; }
+
+    .tl-time {
+      flex: 1;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green-dark);
+    }
+
+    .tl-event:nth-child(odd) .tl-time { text-align: right; padding-right: 18px; }
+    .tl-event:nth-child(even) .tl-time { text-align: left; padding-left: 18px; }
+
+    .tl-dot {
+      width: 38px;
+      height: 38px;
+      background: white;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      box-shadow: 0 3px 12px rgba(45,90,61,0.1);
+    }
+
+    .tl-dot svg { width: 15px; height: 15px; color: var(--green-dark); }
+
+    .tl-desc {
+      flex: 1;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-medium);
+    }
+
+    .tl-event:nth-child(odd) .tl-desc { text-align: left; padding-left: 18px; }
+    .tl-event:nth-child(even) .tl-desc { text-align: right; padding-right: 18px; }
+
+    /* ===== DRESS CODE ===== */
+    .dresscode-section {
+      padding: 50px 24px;
+      text-align: center;
+    }
+
+    .dresscode-type {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+
+    .silhouettes {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 24px;
+    }
+
+    .silhouette {
+      text-align: center;
+    }
+
+    .silhouette svg { width: 55px; height: 75px; }
+
+    .dresscode-note {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-medium);
+      max-width: 300px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .dresscode-note strong {
+      color: var(--rose);
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* ===== GIFTS ===== */
+    .gifts-section {
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .gifts-text {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-medium);
+      line-height: 1.8;
+      max-width: 310px;
+      margin: 0 auto 24px;
+    }
+
+    .bank-card {
+      max-width: 280px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.7);
+      border-radius: 16px;
+      padding: 22px 20px;
+      border: 1px solid rgba(201,169,110,0.2);
+      box-shadow: 0 4px 15px rgba(60,40,40,0.04);
+    }
+
+    .bank-icon {
+      margin-bottom: 8px;
+      color: var(--green-dark);
+    }
+
+    .bank-icon svg { width: 22px; height: 22px; }
+
+    .bank-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .bank-type {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      color: var(--text-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .bank-holder {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .bank-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      letter-spacing: 2px;
+    }
+
+    /* ===== RSVP ===== */
+    .rsvp-section {
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .rsvp-text {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1rem;
+      color: var(--text-medium);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+
+    .rsvp-deadline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 22px;
+    }
+
+    .rsvp-btn {
+      display: inline-block;
+      padding: 14px 44px;
+      background: linear-gradient(135deg, var(--green-dark), #1f4530);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 25px rgba(45,90,61,0.3);
+      transition: all 0.3s;
+    }
+
+    .rsvp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,90,61,0.4); }
+
+    /* ===== CLOSING ===== */
+    .closing-section {
+      padding: 50px 24px;
+      text-align: center;
+    }
+
+    .closing-text {
+      font-family: 'Cormorant Infant', serif;
+      font-size: 1rem;
+      color: var(--text-medium);
+      max-width: 310px;
+      margin: 0 auto 20px;
+      line-height: 1.7;
+    }
+
+    .closing-message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: var(--green-dark);
+      margin-bottom: 24px;
+      text-shadow: 0 2px 8px rgba(45,90,61,0.08);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 28px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--green-dark), #1a3c28);
+      color: white;
+    }
+
+    .footer-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+
+    .footer-hashtag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      opacity: 0.5;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
+      .hero-name { font-size: 6rem; }
+      .hero-title { font-size: 4.5rem; }
+      .arch-container { width: 280px; }
+      .arch-frame { width: 280px; height: 370px; border-radius: 140px 140px 0 0; }
+      .countdown-number { font-size: 2.8rem; }
+      .date-day { font-size: 6.5rem; }
+      .info-card { padding: 40px 32px; }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      .petal { animation: none; display: none; }
+      .reveal { transition: none; opacity: 1; transform: none; }
+      .music-disc.spinning { animation: none; }
+      .scroll-hint { animation: none; }
+    }
+
+    #bg-audio { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio">
+    <!-- Floating petals -->
+    <div class="petal petal-pink" style="left:6%; width:10px; height:14px; animation-duration:9s; animation-delay:0s;"></div>
+    <div class="petal petal-gold" style="left:18%; width:7px; height:10px; animation-duration:12s; animation-delay:2s;"></div>
+    <div class="petal petal-pink" style="left:32%; width:8px; height:12px; animation-duration:8s; animation-delay:3.5s;"></div>
+    <div class="petal petal-pink" style="left:52%; width:11px; height:15px; animation-duration:10s; animation-delay:1s;"></div>
+    <div class="petal petal-gold" style="left:68%; width:6px; height:9px; animation-duration:11s; animation-delay:4s;"></div>
+    <div class="petal petal-pink" style="left:82%; width:9px; height:13px; animation-duration:9s; animation-delay:1.5s;"></div>
+    <div class="petal petal-pink" style="left:92%; width:12px; height:16px; animation-duration:13s; animation-delay:5s;"></div>
+
+    <p class="hero-pre">Mis</p>
+    <h1 class="hero-title">XV Años</h1>
+
+    <div class="ornament" style="margin:8px auto 16px;">
+      <span class="ornament-line"></span>
+      <span class="ornament-dot"></span>
+      <span class="ornament-diamond"></span>
+      <span class="ornament-dot"></span>
+      <span class="ornament-line"></span>
+    </div>
+
+    <!-- Arch photo with floral frame -->
+    <div class="arch-container">
+      <!-- SVG Roses Top -->
+      <div class="arch-floral-top">
+        <svg viewBox="0 0 340 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left rose cluster -->
+          <circle cx="60" cy="50" r="18" fill="#e8a0aa" opacity="0.9"/>
+          <circle cx="60" cy="50" r="12" fill="#d4788a" opacity="0.7"/>
+          <circle cx="60" cy="50" r="6" fill="#c46070" opacity="0.5"/>
+          <circle cx="38" cy="40" r="14" fill="#f0b8c2" opacity="0.8"/>
+          <circle cx="38" cy="40" r="8" fill="#e8a0aa" opacity="0.6"/>
+          <circle cx="80" cy="42" r="12" fill="#e8a0aa" opacity="0.7"/>
+          <circle cx="80" cy="42" r="7" fill="#d4788a" opacity="0.5"/>
+          <circle cx="50" cy="65" r="15" fill="#f5d0d6" opacity="0.8"/>
+          <circle cx="50" cy="65" r="9" fill="#e8b0bc" opacity="0.6"/>
+          <circle cx="28" cy="58" r="10" fill="#e8a0aa" opacity="0.6"/>
+          <!-- Leaves left -->
+          <ellipse cx="20" cy="50" rx="16" ry="6" fill="#6a9e7a" opacity="0.7" transform="rotate(-30 20 50)"/>
+          <ellipse cx="30" cy="75" rx="14" ry="5" fill="#5a8e6a" opacity="0.6" transform="rotate(-50 30 75)"/>
+          <ellipse cx="90" cy="55" rx="15" ry="5" fill="#6a9e7a" opacity="0.6" transform="rotate(20 90 55)"/>
+          <ellipse cx="15" cy="38" rx="12" ry="4" fill="#7aae8a" opacity="0.5" transform="rotate(-40 15 38)"/>
+          <!-- Right rose cluster -->
+          <circle cx="280" cy="50" r="18" fill="#e8a0aa" opacity="0.9"/>
+          <circle cx="280" cy="50" r="12" fill="#d4788a" opacity="0.7"/>
+          <circle cx="280" cy="50" r="6" fill="#c46070" opacity="0.5"/>
+          <circle cx="302" cy="40" r="14" fill="#f0b8c2" opacity="0.8"/>
+          <circle cx="302" cy="40" r="8" fill="#e8a0aa" opacity="0.6"/>
+          <circle cx="260" cy="42" r="12" fill="#e8a0aa" opacity="0.7"/>
+          <circle cx="260" cy="42" r="7" fill="#d4788a" opacity="0.5"/>
+          <circle cx="290" cy="65" r="15" fill="#f5d0d6" opacity="0.8"/>
+          <circle cx="290" cy="65" r="9" fill="#e8b0bc" opacity="0.6"/>
+          <circle cx="312" cy="58" r="10" fill="#e8a0aa" opacity="0.6"/>
+          <!-- Leaves right -->
+          <ellipse cx="320" cy="50" rx="16" ry="6" fill="#6a9e7a" opacity="0.7" transform="rotate(30 320 50)"/>
+          <ellipse cx="310" cy="75" rx="14" ry="5" fill="#5a8e6a" opacity="0.6" transform="rotate(50 310 75)"/>
+          <ellipse cx="250" cy="55" rx="15" ry="5" fill="#6a9e7a" opacity="0.6" transform="rotate(-20 250 55)"/>
+          <ellipse cx="325" cy="38" rx="12" ry="4" fill="#7aae8a" opacity="0.5" transform="rotate(40 325 38)"/>
+          <!-- Small buds top center -->
+          <circle cx="140" cy="20" r="8" fill="#f5d0d6" opacity="0.5"/>
+          <circle cx="200" cy="20" r="8" fill="#f5d0d6" opacity="0.5"/>
+          <circle cx="170" cy="12" r="6" fill="#f0b8c2" opacity="0.4"/>
+          <ellipse cx="155" cy="28" rx="10" ry="4" fill="#7aae8a" opacity="0.4" transform="rotate(-15 155 28)"/>
+          <ellipse cx="185" cy="28" rx="10" ry="4" fill="#7aae8a" opacity="0.4" transform="rotate(15 185 28)"/>
+        </svg>
+      </div>
+
+      <!-- Side florals -->
+      <div class="arch-floral-left">
+        <svg viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="35" cy="25" r="14" fill="#e8a0aa" opacity="0.8"/>
+          <circle cx="35" cy="25" r="8" fill="#d4788a" opacity="0.6"/>
+          <circle cx="22" cy="45" r="11" fill="#f0b8c2" opacity="0.7"/>
+          <circle cx="22" cy="45" r="6" fill="#e8a0aa" opacity="0.5"/>
+          <circle cx="40" cy="60" r="12" fill="#f5d0d6" opacity="0.7"/>
+          <circle cx="40" cy="60" r="7" fill="#e8b0bc" opacity="0.5"/>
+          <ellipse cx="15" cy="35" rx="14" ry="5" fill="#6a9e7a" opacity="0.6" transform="rotate(-60 15 35)"/>
+          <ellipse cx="50" cy="45" rx="12" ry="4" fill="#5a8e6a" opacity="0.5" transform="rotate(30 50 45)"/>
+          <ellipse cx="28" cy="72" rx="13" ry="4" fill="#7aae8a" opacity="0.5" transform="rotate(-40 28 72)"/>
+          <circle cx="30" cy="82" r="8" fill="#e8a0aa" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <div class="arch-floral-right">
+        <svg viewBox="0 0 70 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="35" cy="25" r="14" fill="#e8a0aa" opacity="0.8"/>
+          <circle cx="35" cy="25" r="8" fill="#d4788a" opacity="0.6"/>
+          <circle cx="22" cy="45" r="11" fill="#f0b8c2" opacity="0.7"/>
+          <circle cx="22" cy="45" r="6" fill="#e8a0aa" opacity="0.5"/>
+          <circle cx="40" cy="60" r="12" fill="#f5d0d6" opacity="0.7"/>
+          <circle cx="40" cy="60" r="7" fill="#e8b0bc" opacity="0.5"/>
+          <ellipse cx="15" cy="35" rx="14" ry="5" fill="#6a9e7a" opacity="0.6" transform="rotate(-60 15 35)"/>
+          <ellipse cx="50" cy="45" rx="12" ry="4" fill="#5a8e6a" opacity="0.5" transform="rotate(30 50 45)"/>
+          <ellipse cx="28" cy="72" rx="13" ry="4" fill="#7aae8a" opacity="0.5" transform="rotate(-40 28 72)"/>
+          <circle cx="30" cy="82" r="8" fill="#e8a0aa" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <div class="arch-frame">
+        <div class="arch-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Foto aqui</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="hero-name">Ximena</h2>
+
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== QUOTE ===== -->
+  <section class="quote-section reveal">
+    <div class="quote-marks">"</div>
+    <p class="quote-text">
+      Hay momentos inolvidables que se atesoran con el corazón para siempre. Por esa razón, con la alegría y emoción, quiero compartir contigo esta noche maravillosa celebrando juntos mis XV Años.
+    </p>
+    <div class="quote-marks" style="transform: rotate(180deg);">"</div>
+  </section>
+
+  <!-- ===== MUSIC ===== -->
+  <section class="music-section reveal">
+    <p class="music-label">Dale Play</p>
+    <div class="music-player">
+      <div class="music-disc" id="music-disc"></div>
+      <div class="music-progress">
+        <div class="music-progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="music-controls">
+        <button class="music-btn" title="Aleatorio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        </button>
+        <button class="music-btn" title="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19,20 9,12 19,4"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+        </button>
+        <button class="music-btn music-btn-play" id="play-btn" title="Reproducir">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="music-btn" title="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,4 15,12 5,20"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+        </button>
+        <button class="music-btn" title="Repetir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </button>
+      </div>
+      <p class="music-song">A Thousand Years — Christina Perri</p>
+    </div>
+  </section>
+
+  <!-- ===== FLORAL DIVIDER ===== -->
+  <div style="text-align:center; padding:10px 0; overflow:hidden;">
+    <svg width="300" height="50" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="25" x2="110" y2="25" stroke="#c9a96e" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="120" cy="25" r="8" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="120" cy="25" r="4" fill="#d4788a" opacity="0.4"/>
+      <circle cx="140" cy="20" r="10" fill="#f0b8c2" opacity="0.5"/>
+      <circle cx="140" cy="20" r="5" fill="#e8a0aa" opacity="0.4"/>
+      <circle cx="160" cy="25" r="9" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="160" cy="25" r="5" fill="#d4788a" opacity="0.4"/>
+      <circle cx="150" cy="32" r="7" fill="#f5d0d6" opacity="0.5"/>
+      <ellipse cx="105" cy="22" rx="12" ry="4" fill="#6a9e7a" opacity="0.5" transform="rotate(-20 105 22)"/>
+      <ellipse cx="175" cy="22" rx="12" ry="4" fill="#6a9e7a" opacity="0.5" transform="rotate(20 175 22)"/>
+      <ellipse cx="130" cy="35" rx="10" ry="3" fill="#7aae8a" opacity="0.4" transform="rotate(30 130 35)"/>
+      <ellipse cx="165" cy="35" rx="10" ry="3" fill="#7aae8a" opacity="0.4" transform="rotate(-30 165 35)"/>
+      <line x1="190" y1="25" x2="280" y2="25" stroke="#c9a96e" stroke-width="0.5" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <!-- ===== PARENTS & PADRINOS ===== -->
+  <section class="parents-section reveal">
+    <p class="parents-intro">Acompañame en este día tan<br>especial junto a</p>
+
+    <p class="parents-label">Mis Padres</p>
+    <p class="parents-names">Rafael Lopez</p>
+    <p class="parents-amp">&amp;</p>
+    <p class="parents-names">Emilia Peredo</p>
+
+    <p class="parents-label">Mis Padrinos</p>
+    <p class="parents-names">Freddy Pérez</p>
+    <p class="parents-amp">&amp;</p>
+    <p class="parents-names">Mónica Bernal</p>
+
+    <p class="parents-event-label">A festejar mis</p>
+    <p class="parents-event-title">XV Años</p>
+
+    <div class="ornament" style="margin-top:20px;">
+      <span class="ornament-line"></span>
+      <span class="ornament-diamond"></span>
+      <span class="ornament-line"></span>
+    </div>
+  </section>
+
+  <!-- ===== PHOTO 1 - Full width ===== -->
+  <section class="photo-section">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span>Foto en jardín</span>
+    </div>
+    <div class="photo-overlay-top"></div>
+    <div class="photo-overlay-bottom"></div>
+  </section>
+
+  <!-- ===== DATE / CALENDAR ===== -->
+  <section class="date-section reveal bg-damask" id="fecha">
+    <p class="date-script">El Gran Día</p>
+    <div class="ornament" style="margin:6px auto 12px;">
+      <span class="ornament-line"></span>
+      <span class="ornament-dot"></span>
+      <span class="ornament-line"></span>
+    </div>
+
+    <p class="date-script" style="font-size:1.6rem; margin-bottom:0;">Marzo</p>
+
+    <div class="date-main">
+      <span class="date-side date-side-left">Sábado</span>
+      <span class="date-day">14</span>
+      <span class="date-side">2026</span>
+    </div>
+
+    <div class="mini-calendar">
+      <p class="cal-title">Marzo</p>
+      <div class="cal-grid">
+        <span class="cal-header">Lun</span>
+        <span class="cal-header">Mar</span>
+        <span class="cal-header">Mié</span>
+        <span class="cal-header">Jue</span>
+        <span class="cal-header">Vie</span>
+        <span class="cal-header">Sáb</span>
+        <span class="cal-header">Dom</span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day empty"></span>
+        <span class="cal-day">1</span>
+        <span class="cal-day">2</span>
+        <span class="cal-day">3</span>
+        <span class="cal-day">4</span>
+        <span class="cal-day">5</span>
+        <span class="cal-day">6</span>
+        <span class="cal-day">7</span>
+        <span class="cal-day">8</span>
+        <span class="cal-day">9</span>
+        <span class="cal-day">10</span>
+        <span class="cal-day">11</span>
+        <span class="cal-day">12</span>
+        <span class="cal-day">13</span>
+        <span class="cal-day highlight">14</span>
+        <span class="cal-day">15</span>
+        <span class="cal-day">16</span>
+        <span class="cal-day">17</span>
+        <span class="cal-day">18</span>
+        <span class="cal-day">19</span>
+        <span class="cal-day">20</span>
+        <span class="cal-day">21</span>
+        <span class="cal-day">22</span>
+        <span class="cal-day">23</span>
+        <span class="cal-day">24</span>
+        <span class="cal-day">25</span>
+        <span class="cal-day">26</span>
+        <span class="cal-day">27</span>
+        <span class="cal-day">28</span>
+        <span class="cal-day">29</span>
+        <span class="cal-day">30</span>
+        <span class="cal-day">31</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <section class="countdown-section reveal" id="countdown">
+    <p class="countdown-label">Faltan</p>
+    <div class="countdown-grid">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">000</div>
+        <div class="countdown-unit">Días</div>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">00</div>
+        <div class="countdown-unit">Horas</div>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">00</div>
+        <div class="countdown-unit">Minutos</div>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <div class="countdown-number" id="seconds">00</div>
+        <div class="countdown-unit">Segundos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FLORAL DIVIDER ===== -->
+  <div style="text-align:center; padding:15px 0; overflow:hidden; background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);">
+    <svg width="320" height="60" viewBox="0 0 320 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="10" y1="30" x2="90" y2="30" stroke="#c9a96e" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="105" cy="25" r="12" fill="#e8a0aa" opacity="0.7"/>
+      <circle cx="105" cy="25" r="7" fill="#d4788a" opacity="0.5"/>
+      <circle cx="125" cy="30" r="14" fill="#f0b8c2" opacity="0.7"/>
+      <circle cx="125" cy="30" r="8" fill="#e8a0aa" opacity="0.5"/>
+      <circle cx="145" cy="22" r="11" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="145" cy="22" r="6" fill="#d4788a" opacity="0.4"/>
+      <circle cx="160" cy="32" r="13" fill="#f5d0d6" opacity="0.7"/>
+      <circle cx="160" cy="32" r="7" fill="#e8b0bc" opacity="0.5"/>
+      <circle cx="180" cy="24" r="10" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="180" cy="24" r="5" fill="#d4788a" opacity="0.4"/>
+      <circle cx="195" cy="30" r="14" fill="#f0b8c2" opacity="0.7"/>
+      <circle cx="195" cy="30" r="8" fill="#e8a0aa" opacity="0.5"/>
+      <circle cx="215" cy="25" r="12" fill="#e8a0aa" opacity="0.7"/>
+      <circle cx="215" cy="25" r="7" fill="#d4788a" opacity="0.5"/>
+      <ellipse cx="95" cy="20" rx="14" ry="5" fill="#6a9e7a" opacity="0.5" transform="rotate(-25 95 20)"/>
+      <ellipse cx="225" cy="20" rx="14" ry="5" fill="#6a9e7a" opacity="0.5" transform="rotate(25 225 20)"/>
+      <ellipse cx="110" cy="42" rx="12" ry="4" fill="#5a8e6a" opacity="0.4" transform="rotate(35 110 42)"/>
+      <ellipse cx="205" cy="42" rx="12" ry="4" fill="#5a8e6a" opacity="0.4" transform="rotate(-35 205 42)"/>
+      <ellipse cx="140" cy="40" rx="10" ry="3" fill="#7aae8a" opacity="0.4" transform="rotate(20 140 40)"/>
+      <ellipse cx="175" cy="40" rx="10" ry="3" fill="#7aae8a" opacity="0.4" transform="rotate(-20 175 40)"/>
+      <line x1="230" y1="30" x2="310" y2="30" stroke="#c9a96e" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <!-- ===== MISA ===== -->
+  <section class="card-section bg-pattern reveal" style="background: var(--cream);" id="misa">
+    <div class="info-card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4"/><path d="M12 8v4"/>
+        </svg>
+      </div>
+      <h2 class="card-title">Misa de Agradecimiento</h2>
+      <p class="card-time">6:00 PM</p>
+      <p class="card-place">Iglesia Sagrado Corazón</p>
+      <p class="card-address">El Nevado Manzana 009, Toluca de Lerdo.</p>
+      <a href="#" class="map-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Ver Ubicación
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== PHOTO 2 ===== -->
+  <section class="photo-section" style="height:300px;">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span>Foto del salón con flores</span>
+    </div>
+    <div class="photo-overlay-top"></div>
+    <div class="photo-overlay-bottom"></div>
+  </section>
+
+  <!-- ===== RECEPTION ===== -->
+  <section class="card-section bg-pattern reveal" style="background: var(--cream);" id="recepcion">
+    <div class="info-card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+        </svg>
+      </div>
+      <h2 class="card-title">Recepción</h2>
+      <p class="card-time">7:00 PM</p>
+      <p class="card-place">Salón de Fiestas Quinta La Bonita</p>
+      <p class="card-address">De los Jinetes Manzana.</p>
+      <a href="#" class="map-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Ver Ubicación
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FLORAL DIVIDER ===== -->
+  <div style="text-align:center; padding:10px 0; overflow:hidden;">
+    <svg width="280" height="45" viewBox="0 0 280 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="15" y1="22" x2="100" y2="22" stroke="#c9a96e" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="115" cy="22" r="10" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="115" cy="22" r="5" fill="#d4788a" opacity="0.4"/>
+      <circle cx="140" cy="18" r="12" fill="#f0b8c2" opacity="0.6"/>
+      <circle cx="140" cy="18" r="6" fill="#e8a0aa" opacity="0.4"/>
+      <circle cx="165" cy="22" r="10" fill="#e8a0aa" opacity="0.6"/>
+      <circle cx="165" cy="22" r="5" fill="#d4788a" opacity="0.4"/>
+      <ellipse cx="105" cy="16" rx="10" ry="3" fill="#6a9e7a" opacity="0.4" transform="rotate(-20 105 16)"/>
+      <ellipse cx="175" cy="16" rx="10" ry="3" fill="#6a9e7a" opacity="0.4" transform="rotate(20 175 16)"/>
+      <ellipse cx="128" cy="32" rx="8" ry="3" fill="#7aae8a" opacity="0.3" transform="rotate(25 128 32)"/>
+      <ellipse cx="152" cy="32" rx="8" ry="3" fill="#7aae8a" opacity="0.3" transform="rotate(-25 152 32)"/>
+      <line x1="180" y1="22" x2="265" y2="22" stroke="#c9a96e" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <!-- ===== ITINERARY ===== -->
+  <section class="itinerary-section reveal bg-pattern" style="background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);" id="itinerario">
+    <h2 class="section-title">Itinerario de actividades</h2>
+
+    <div class="timeline-v">
+      <div class="tl-event">
+        <div class="tl-time">5:30 PM</div>
+        <div class="tl-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        </div>
+        <div class="tl-desc">Llegada</div>
+      </div>
+
+      <div class="tl-event">
+        <div class="tl-time">6:30 PM</div>
+        <div class="tl-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <div class="tl-desc">Vals</div>
+      </div>
+
+      <div class="tl-event">
+        <div class="tl-time">8:00 PM</div>
+        <div class="tl-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="tl-desc">Sesión de Fotos</div>
+      </div>
+
+      <div class="tl-event">
+        <div class="tl-time">10:30 PM</div>
+        <div class="tl-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="tl-desc">Fiesta</div>
+      </div>
+
+      <div class="tl-event">
+        <div class="tl-time">02:00 AM</div>
+        <div class="tl-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21C12 21 3 13.5 3 8.5a4.5 4.5 0 019-1 4.5 4.5 0 019 1C21 13.5 12 21 12 21z"/></svg>
+        </div>
+        <div class="tl-desc">Despedida</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DRESS CODE ===== -->
+  <section class="dresscode-section reveal bg-damask" style="background: var(--cream-dark);">
+    <h2 class="section-title">Código de vestimenta</h2>
+    <p class="dresscode-type">Etiqueta</p>
+
+    <div class="silhouettes">
+      <div class="silhouette">
+        <svg viewBox="0 0 55 75" fill="#2d5a3d" opacity="0.8">
+          <ellipse cx="27.5" cy="8" rx="6" ry="7"/>
+          <path d="M21 14 C17 22 12 42 8 72 L47 72 C43 42 38 22 34 14 Z"/>
+        </svg>
+      </div>
+      <div class="silhouette">
+        <svg viewBox="0 0 55 75" fill="#2d5a3d" opacity="0.8">
+          <ellipse cx="27.5" cy="8" rx="5.5" ry="7"/>
+          <path d="M20 14 L18 72 L26 72 L26 38 L29 38 L29 72 L37 72 L35 14 Z"/>
+          <path d="M23 14 L27.5 28 L32 14" fill="none" stroke="#fdf8f0" stroke-width="1.2"/>
+        </svg>
+      </div>
+    </div>
+
+    <p class="dresscode-note">
+      Con mucho cariño les pedimos evitar el tono <strong>rosa pastel</strong>, ya que está reservado especialmente para la Quinceañera.
+    </p>
+  </section>
+
+  <!-- ===== PHOTO 3 ===== -->
+  <section class="photo-section" style="height:380px;">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span>Foto vestido dorado</span>
+    </div>
+    <div class="photo-overlay-top"></div>
+    <div class="photo-overlay-bottom"></div>
+  </section>
+
+  <!-- ===== GIFTS ===== -->
+  <section class="gifts-section reveal bg-pattern" style="background: var(--cream);" id="regalos">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="8" width="18" height="14" rx="1"/><path d="M12 8v14"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s4 0 6 0c2 0 6-3 6 0s-4 3-6 0"/>
+      </svg>
+    </div>
+    <h2 class="section-title">Sugerencia de regalos</h2>
+    <p class="gifts-text">
+      Ahora mis sueños se materializan lejos de mi querida ciudad blanca, que siempre llevo en mi corazón. Si deseas apoyarme puedes hacerlo con una transferencia. Gracias por cada detalle.
+    </p>
+
+    <div class="bank-card">
+      <div class="bank-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      </div>
+      <p class="bank-name">Banco ABC</p>
+      <p class="bank-type">Cuenta de Ahorro</p>
+      <p class="bank-holder">Nombre y Apellido</p>
+      <p class="bank-number">1111 2222 3333 4444</p>
+    </div>
+  </section>
+
+  <!-- ===== RSVP ===== -->
+  <section class="rsvp-section reveal" style="background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);" id="confirmar">
+    <h2 class="section-title">Confirmar asistencia</h2>
+    <p class="rsvp-text">Por favor confirma tu asistencia</p>
+    <p class="rsvp-deadline">Antes del 12 de Febrero</p>
+    <a href="#" class="rsvp-btn">Confirmar Aquí</a>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section class="closing-section reveal" style="background: var(--cream-dark);">
+    <p class="closing-text">
+      Con mucho cariño, esta celebración es para que adolescentes y adultos puedan compartir y disfrutar juntos.
+    </p>
+    <p class="closing-text">
+      Tu presencia y alegría hará que esta noche sea inolvidable.
+    </p>
+    <p class="closing-message">Te esperamos!</p>
+  </section>
+
+  <!-- ===== PHOTO 4 (closing) ===== -->
+  <section class="photo-section" style="height:400px;">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      <span>Foto en bote con flores</span>
+    </div>
+    <div class="photo-overlay-top"></div>
+    <div class="photo-overlay-bottom"></div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <h2 class="footer-name">Ximena</h2>
+    <p class="footer-hashtag">#MisXVXimena</p>
+  </footer>
+
+  <audio id="bg-audio" loop></audio>
+
+  <script>
+    // === COUNTDOWN ===
+    const eventDate = new Date('2026-03-14T18:00:00').getTime();
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = eventDate - now;
+
+      if (diff <= 0) {
+        ['days','hours','minutes','seconds'].forEach(id => {
+          document.getElementById(id).textContent = '0';
+        });
+        return;
+      }
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      document.getElementById('days').textContent = d;
+      document.getElementById('hours').textContent = String(h).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // === SCROLL REVEAL ===
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // === MUSIC PLAYER ===
+    const playBtn = document.getElementById('play-btn');
+    const audio = document.getElementById('bg-audio');
+    const disc = document.getElementById('music-disc');
+    const progressBar = document.getElementById('progress-bar');
+    let isPlaying = false;
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying && audio.src) {
+        audio.play().catch(() => {});
+        disc.classList.add('spinning');
+      } else {
+        audio.pause();
+        disc.classList.remove('spinning');
+      }
+      playBtn.innerHTML = isPlaying
+        ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+
+    // === SMOOTH SCROLL ===
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
