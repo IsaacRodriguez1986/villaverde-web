@@ -137,7 +137,7 @@ export default function RootLayout({
                   name: "¿Qué incluye un paquete todo incluido para XV años?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad hasta 250 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre, DJ y Maestro de Ceremonias, iluminación tipo antro, batucada, camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED y más.",
+                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad hasta 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre, DJ y Maestro de Ceremonias, iluminación tipo antro, batucada, camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED y más.",
                   },
                 },
                 {

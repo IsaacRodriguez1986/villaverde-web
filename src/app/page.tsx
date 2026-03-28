@@ -678,7 +678,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Horas de evento</td><td>7h</td><td>8h</td><td>10h</td></tr>
+                <tr><td>Horas de evento</td><td>7h</td><td>8h</td><td>9h</td></tr>
                 <tr><td>Precio desde</td><td>$420/pp</td><td>$530/pp</td><td>$680/pp</td></tr>
                 <tr><td>Descorche libre</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td></tr>
                 <tr><td>Grupo en vivo</td><td className="compare-x">—</td><td className="compare-check">5 int.</td><td className="compare-check">9 int.</td></tr>
@@ -693,7 +693,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Mínimo 100 invitados · Estacionamiento con cargo adicional de $50 por auto
+            Mínimo 100 invitados · Estacionamiento amplio incluido
             <br />
             <strong>Aparta tu fecha con solo $3,000 de anticipo</strong>
           </div>
@@ -1231,7 +1231,7 @@ export default function Home() {
                   <label htmlFor="invitados">¿Cuántos invitados?</label>
                   <select id="invitados" name="invitados" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }}>
                     <option value="">Aproximado...</option>
-                    <option value="50-100">50 – 100</option>
+                    <option value="100-149">100 – 149</option>
                     <option value="100-150">100 – 150</option>
                     <option value="150-200">150 – 200</option>
                     <option value="200-300">200 – 300</option>
