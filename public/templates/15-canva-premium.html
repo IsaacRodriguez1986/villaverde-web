@@ -175,9 +175,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px 60px;
+      padding: 60px 20px 80px;
       background: var(--cream);
       overflow: hidden;
+      gap: 20px;
     }
 
     .hero-floral-tl {
@@ -201,15 +202,15 @@
 
     .hero-frame-wrap {
       position: relative;
-      width: 280px;
-      max-width: 80vw;
-      margin: 0 auto 24px;
+      width: 240px;
+      max-width: 70vw;
+      margin: 0 auto 16px;
       z-index: 2;
     }
 
     .hero-frame-img {
       position: absolute;
-      top: -28px; left: -28px; right: -28px; bottom: -28px;
+      top: -24px; left: -24px; right: -24px; bottom: -24px;
       z-index: 2;
       pointer-events: none;
     }
@@ -260,9 +261,9 @@
 
     .hero-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 64px;
+      font-size: 52px;
       line-height: 1.1;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       opacity: 0;
       animation: heroFadeIn 0.8s ease forwards, shimmer 4s linear infinite;
       animation-delay: 0.8s;
@@ -390,7 +391,7 @@
        SECTION DEFAULTS
        ================================================================ */
     section {
-      padding: 64px 24px;
+      padding: 56px 24px;
     }
 
     .section-label {
@@ -432,20 +433,20 @@
 
     .quote-mark {
       font-family: 'Great Vibes', cursive;
-      font-size: 72px;
+      font-size: 56px;
       color: var(--gold);
-      line-height: 0.5;
-      opacity: 0.5;
+      line-height: 0.6;
+      opacity: 0.4;
     }
 
     .quote-text {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 20px;
-      line-height: 1.7;
+      font-size: 18px;
+      line-height: 1.8;
       color: var(--brown-medium);
-      max-width: 320px;
-      margin: 16px auto;
+      max-width: 300px;
+      margin: 12px auto;
     }
 
     .quote-attribution {
@@ -486,8 +487,8 @@
     }
 
     .music-disc-wrap {
-      width: 120px; height: 120px;
-      margin: 0 auto 20px;
+      width: 90px; height: 90px;
+      margin: 0 auto 16px;
       position: relative;
     }
 
@@ -633,18 +634,20 @@
 
     .parents-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: 19px;
       font-weight: 400;
       color: var(--brown);
-      line-height: 1.6;
+      line-height: 1.5;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
     .parents-amp {
       font-family: 'Great Vibes', cursive;
-      font-size: 28px;
+      font-size: 24px;
       color: var(--gold);
       display: block;
-      margin: 4px 0;
+      margin: 2px 0;
     }
 
     .parents-divider {
@@ -659,7 +662,9 @@
        ================================================================ */
     .fullwidth-photo {
       position: relative;
-      height: 55vh;
+      height: 45vh;
+      min-height: 280px;
+      max-height: 420px;
       overflow: hidden;
     }
 
@@ -686,8 +691,8 @@
     .fullwidth-photo .floral-overlay-tl {
       position: absolute;
       top: -10px; left: -10px;
-      width: 160px;
-      opacity: 0.75;
+      width: 120px;
+      opacity: 0.6;
       z-index: 2;
       pointer-events: none;
     }
@@ -695,8 +700,8 @@
     .fullwidth-photo .floral-overlay-br {
       position: absolute;
       bottom: -10px; right: -10px;
-      width: 160px;
-      opacity: 0.75;
+      width: 120px;
+      opacity: 0.6;
       z-index: 2;
       pointer-events: none;
       transform: scaleX(-1) scaleY(-1);
@@ -712,28 +717,28 @@
 
     .date-big {
       font-family: 'Cinzel', serif;
-      font-size: 64px;
+      font-size: 60px;
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .date-month-year {
       font-family: 'Cinzel', serif;
-      font-size: 18px;
-      letter-spacing: 8px;
+      font-size: 16px;
+      letter-spacing: 6px;
       color: var(--brown);
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .date-day-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-size: 15px;
       font-style: italic;
       color: var(--brown-medium);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .mini-calendar {
@@ -1419,28 +1424,33 @@
     /* ================================================================
        RESPONSIVE
        ================================================================ */
+    /* Small phones (360px default) - already styled above */
+
     @media (min-width: 420px) {
-      .hero-name { font-size: 72px; }
-      .hero-frame-wrap { width: 300px; }
-      .section-title { font-size: 44px; }
-      .countdown-box { min-width: 80px; padding: 20px 16px; }
-      .countdown-number { font-size: 36px; }
+      .hero-name { font-size: 58px; }
+      .hero-frame-wrap { width: 260px; }
+      .section-title { font-size: 42px; }
+      .countdown-box { min-width: 76px; padding: 18px 14px; }
+      .countdown-number { font-size: 34px; }
+      .date-big { font-size: 72px; }
     }
 
     @media (min-width: 600px) {
-      .hero-frame-wrap { width: 340px; }
-      .hero-name { font-size: 80px; }
-      section { padding: 80px 32px; }
-      .info-card { padding: 40px 32px; }
-      .fullwidth-photo { height: 65vh; }
+      .hero-frame-wrap { width: 300px; }
+      .hero-name { font-size: 64px; }
+      section { padding: 64px 32px; }
+      .info-card { padding: 36px 28px; }
+      .fullwidth-photo { height: 50vh; max-height: 500px; }
     }
 
     @media (min-width: 768px) {
-      .hero-frame-wrap { width: 380px; }
-      .hero-floral-tl { width: 280px; }
-      .hero-floral-br { width: 280px; }
-      .countdown-boxes { gap: 20px; }
-      .countdown-box { min-width: 100px; }
+      .hero-frame-wrap { width: 340px; }
+      .hero-name { font-size: 72px; }
+      .hero-floral-tl { width: 260px; }
+      .hero-floral-br { width: 260px; }
+      .countdown-boxes { gap: 18px; }
+      .countdown-box { min-width: 90px; }
+      .date-big { font-size: 80px; }
     }
   </style>
 </head>
