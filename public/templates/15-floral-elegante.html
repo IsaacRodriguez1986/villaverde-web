@@ -1194,16 +1194,269 @@
       opacity: 0.5;
     }
 
-    /* ===== SCROLL REVEAL ===== */
+    /* ===== SCROLL REVEAL ANIMATIONS ===== */
     .reveal {
       opacity: 0;
-      transform: translateY(25px);
-      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(35px);
+      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Staggered children */
+    .reveal.visible .stagger { opacity: 0; animation: staggerIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    .reveal.visible .stagger:nth-child(1) { animation-delay: 0.1s; }
+    .reveal.visible .stagger:nth-child(2) { animation-delay: 0.2s; }
+    .reveal.visible .stagger:nth-child(3) { animation-delay: 0.3s; }
+    .reveal.visible .stagger:nth-child(4) { animation-delay: 0.4s; }
+    .reveal.visible .stagger:nth-child(5) { animation-delay: 0.5s; }
+    .reveal.visible .stagger:nth-child(6) { animation-delay: 0.6s; }
+    .reveal.visible .stagger:nth-child(7) { animation-delay: 0.7s; }
+    .reveal.visible .stagger:nth-child(8) { animation-delay: 0.8s; }
+
+    @keyframes staggerIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Fade from sides */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Scale up */
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.85);
+      transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* ===== HERO ENTRANCE ANIMATION ===== */
+    .hero-pre { animation: heroFade 1s 0.3s both; }
+    .hero-title { animation: heroFade 1s 0.5s both; }
+    .hero .ornament { animation: heroFade 1s 0.7s both; }
+    .arch-container { animation: heroScale 1.2s 0.8s both; }
+    .hero-name { animation: heroFade 1.2s 1.2s both; }
+    .arch-floral-top { animation: floralDrop 1s 1.5s both; }
+    .arch-floral-left { animation: floralSlide 0.8s 1.7s both; }
+    .arch-floral-right { animation: floralSlide 0.8s 1.9s both; }
+
+    @keyframes heroFade {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heroScale {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floralDrop {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floralSlide {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ===== GOLD SHIMMER EFFECT ===== */
+    .shimmer {
+      background: linear-gradient(
+        110deg,
+        var(--gold-dark) 0%,
+        var(--gold) 20%,
+        var(--gold-shimmer) 40%,
+        var(--gold-light) 50%,
+        var(--gold-shimmer) 60%,
+        var(--gold) 80%,
+        var(--gold-dark) 100%
+      );
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 100% 50%; }
+      50% { background-position: 0% 50%; }
+    }
+
+    /* ===== PARALLAX PHOTOS ===== */
+    .photo-section {
+      overflow: hidden;
+    }
+
+    .photo-section img {
+      transition: transform 0.1s linear;
+      will-change: transform;
+    }
+
+    /* ===== FLOATING ANIMATION (for floral dividers) ===== */
+    .float-gentle {
+      animation: floatGentle 4s ease-in-out infinite;
+    }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* ===== PULSE GLOW on countdown ===== */
+    .countdown-item {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    .countdown-item:nth-child(1) { animation-delay: 0s; }
+    .countdown-item:nth-child(3) { animation-delay: 0.5s; }
+    .countdown-item:nth-child(5) { animation-delay: 1s; }
+    .countdown-item:nth-child(7) { animation-delay: 1.5s; }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 8px 25px rgba(45,90,61,0.25); }
+      50% { box-shadow: 0 8px 35px rgba(45,90,61,0.4), 0 0 15px rgba(45,90,61,0.1); }
+    }
+
+    /* ===== MAP BUTTON PULSE ===== */
+    .map-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .map-btn:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* ===== RSVP BUTTON GLOW ===== */
+    .rsvp-btn {
+      position: relative;
+      overflow: hidden;
+      animation: rsvpGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes rsvpGlow {
+      0%, 100% { box-shadow: 0 6px 25px rgba(45,90,61,0.3); }
+      50% { box-shadow: 0 6px 35px rgba(45,90,61,0.5), 0 0 20px rgba(45,90,61,0.15); }
+    }
+
+    .rsvp-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: btnShine 3s infinite;
+    }
+
+    @keyframes btnShine {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
+    }
+
+    /* ===== INFO CARD HOVER ===== */
+    .info-card {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 50px rgba(60,40,40,0.1), 0 2px 6px rgba(201,169,110,0.15);
+    }
+
+    /* ===== GOLD BORDER ANIMATION on cards ===== */
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background-size: 200% 100%;
+      animation: goldSlide 4s ease-in-out infinite;
+    }
+
+    @keyframes goldSlide {
+      0%, 100% { background-position: -100% 0; }
+      50% { background-position: 200% 0; }
+    }
+
+    /* ===== TIMELINE DOT PULSE ===== */
+    .tl-dot {
+      position: relative;
+    }
+
+    .tl-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--green-light);
+      opacity: 0;
+      animation: dotPulse 2.5s ease-out infinite;
+    }
+
+    .tl-event:nth-child(1) .tl-dot::after { animation-delay: 0s; }
+    .tl-event:nth-child(2) .tl-dot::after { animation-delay: 0.4s; }
+    .tl-event:nth-child(3) .tl-dot::after { animation-delay: 0.8s; }
+    .tl-event:nth-child(4) .tl-dot::after { animation-delay: 1.2s; }
+    .tl-event:nth-child(5) .tl-dot::after { animation-delay: 1.6s; }
+
+    @keyframes dotPulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* ===== ORNAMENT FADE LINE ===== */
+    .ornament-line {
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background-size: 200% 100%;
+      animation: goldSlide 5s ease-in-out infinite;
+    }
+
+    /* ===== CLOSING MESSAGE FLOAT ===== */
+    .closing-message {
+      animation: floatGentle 3s ease-in-out infinite;
+    }
+
+    /* ===== PHOTO CORNER SUBTLE ROTATE ===== */
+    .photo-corner img {
+      transition: transform 0.6s ease;
+    }
+
+    .photo-section:hover .photo-corner img {
+      transform: scale(1.05);
+    }
+
+    /* ===== COUNTDOWN NUMBER FLIP ===== */
+    .countdown-number {
+      transition: transform 0.3s ease;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -1273,7 +1526,7 @@
       </div>
     </div>
 
-    <h2 class="hero-name">Ximena</h2>
+    <h2 class="hero-name shimmer">Ximena</h2>
 
     <div class="scroll-hint">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
@@ -1319,26 +1572,26 @@
   </section>
 
   <!-- ===== FLORAL DIVIDER ===== -->
-  <div class="floral-divider floral-divider-sm">
+  <div class="floral-divider floral-divider-sm float-gentle">
     <img src="assets/divider.png" alt="" loading="lazy">
   </div>
 
   <!-- ===== PARENTS & PADRINOS ===== -->
   <section class="parents-section reveal">
-    <p class="parents-intro">Acompañame en este día tan<br>especial junto a</p>
+    <p class="parents-intro stagger">Acompañame en este día tan<br>especial junto a</p>
 
-    <p class="parents-label">Mis Padres</p>
-    <p class="parents-names">Rafael Lopez</p>
-    <p class="parents-amp">&amp;</p>
-    <p class="parents-names">Emilia Peredo</p>
+    <p class="parents-label stagger">Mis Padres</p>
+    <p class="parents-names stagger">Rafael Lopez</p>
+    <p class="parents-amp stagger">&amp;</p>
+    <p class="parents-names stagger">Emilia Peredo</p>
 
-    <p class="parents-label">Mis Padrinos</p>
-    <p class="parents-names">Freddy Pérez</p>
-    <p class="parents-amp">&amp;</p>
-    <p class="parents-names">Mónica Bernal</p>
+    <p class="parents-label stagger">Mis Padrinos</p>
+    <p class="parents-names stagger">Freddy Pérez</p>
+    <p class="parents-amp stagger">&amp;</p>
+    <p class="parents-names stagger">Mónica Bernal</p>
 
-    <p class="parents-event-label">A festejar mis</p>
-    <p class="parents-event-title">XV Años</p>
+    <p class="parents-event-label stagger">A festejar mis</p>
+    <p class="parents-event-title stagger">XV Años</p>
 
     <div class="ornament" style="margin-top:20px;">
       <span class="ornament-line"></span>
@@ -1453,12 +1706,12 @@
   </section>
 
   <!-- ===== FLORAL DIVIDER ===== -->
-  <div class="floral-divider floral-divider-lg" style="background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%); padding: 15px 0;">
+  <div class="floral-divider floral-divider-lg float-gentle" style="background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%); padding: 15px 0;">
     <img src="assets/divider-lg.png" alt="" loading="lazy">
   </div>
 
   <!-- ===== MISA ===== -->
-  <section class="card-section bg-pattern reveal" style="background: var(--cream);" id="misa">
+  <section class="card-section bg-pattern reveal-scale" style="background: var(--cream);" id="misa">
     <div class="info-card">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -1486,7 +1739,7 @@
   </section>
 
   <!-- ===== RECEPTION ===== -->
-  <section class="card-section bg-pattern reveal" style="background: var(--cream);" id="recepcion">
+  <section class="card-section bg-pattern reveal-scale" style="background: var(--cream);" id="recepcion">
     <div class="info-card">
       <div class="card-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3">
@@ -1505,7 +1758,7 @@
   </section>
 
   <!-- ===== FLORAL DIVIDER ===== -->
-  <div class="floral-divider floral-divider-sm">
+  <div class="floral-divider floral-divider-sm float-gentle">
     <img src="assets/divider.png" alt="" loading="lazy">
   </div>
 
@@ -1653,8 +1906,9 @@
   <audio id="bg-audio" loop></audio>
 
   <script>
-    // === COUNTDOWN ===
+    // === COUNTDOWN WITH FLIP ANIMATION ===
     const eventDate = new Date('2026-03-14T18:00:00').getTime();
+    const prevValues = {};
 
     function updateCountdown() {
       const now = Date.now();
@@ -1672,23 +1926,68 @@
       const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
 
-      document.getElementById('days').textContent = d;
-      document.getElementById('hours').textContent = String(h).padStart(2, '0');
-      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
-      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+      const vals = {
+        days: String(d),
+        hours: String(h).padStart(2, '0'),
+        minutes: String(m).padStart(2, '0'),
+        seconds: String(s).padStart(2, '0')
+      };
+
+      Object.keys(vals).forEach(id => {
+        const el = document.getElementById(id);
+        if (prevValues[id] !== vals[id]) {
+          el.style.transform = 'scale(1.15)';
+          setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+          el.textContent = vals[id];
+          prevValues[id] = vals[id];
+        }
+      });
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // === SCROLL REVEAL ===
-    const observer = new IntersectionObserver((entries) => {
+    // === SCROLL REVEAL (all animation types) ===
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // === PARALLAX ON PHOTOS ===
+    const photoSections = document.querySelectorAll('.photo-section img');
+
+    function handleParallax() {
+      photoSections.forEach(img => {
+        const section = img.closest('.photo-section');
+        const rect = section.getBoundingClientRect();
+        const windowH = window.innerHeight;
+        if (rect.top < windowH && rect.bottom > 0) {
+          const progress = (windowH - rect.top) / (windowH + rect.height);
+          const offset = (progress - 0.5) * 40;
+          img.style.transform = 'translateY(' + offset + 'px) scale(1.08)';
+        }
+      });
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    handleParallax();
 
     // === MUSIC PLAYER ===
     const playBtn = document.getElementById('play-btn');
@@ -1725,6 +2024,25 @@
         if (t) t.scrollIntoView({ behavior: 'smooth' });
       });
     });
+
+    // === SPARKLE PARTICLES ON HERO ===
+    (function createSparkles() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      for (let i = 0; i < 15; i++) {
+        const s = document.createElement('div');
+        s.style.cssText = 'position:absolute;width:3px;height:3px;background:' +
+          (Math.random() > 0.5 ? 'var(--gold)' : 'var(--gold-light)') +
+          ';border-radius:50%;pointer-events:none;z-index:1;opacity:0;animation:sparkle ' +
+          (2 + Math.random()*3) + 's ' + (Math.random()*5) + 's infinite;left:' +
+          (Math.random()*100) + '%;top:' + (Math.random()*100) + '%;';
+        hero.appendChild(s);
+      }
+      // Add sparkle keyframes
+      const style = document.createElement('style');
+      style.textContent = '@keyframes sparkle{0%,100%{opacity:0;transform:scale(0)}25%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.5)}75%{opacity:0.3;transform:scale(0.5)}}';
+      document.head.appendChild(style);
+    })();
   </script>
 
 </body>
