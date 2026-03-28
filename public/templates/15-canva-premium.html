@@ -132,7 +132,7 @@
        ================================================================ */
     .scroll-indicator {
       position: absolute;
-      bottom: 24px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
@@ -175,17 +175,17 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 20px 80px;
+      padding: 40px 24px 60px;
       background: var(--cream);
       overflow: hidden;
-      gap: 20px;
+      gap: 12px;
     }
 
     .hero-floral-tl {
       position: absolute;
       top: -20px; left: -30px;
-      width: 200px;
-      opacity: 0.85;
+      width: 140px;
+      opacity: 0.55;
       z-index: 2;
       pointer-events: none;
     }
@@ -193,8 +193,8 @@
     .hero-floral-br {
       position: absolute;
       bottom: -20px; right: -30px;
-      width: 200px;
-      opacity: 0.85;
+      width: 140px;
+      opacity: 0.55;
       z-index: 2;
       pointer-events: none;
       transform: scaleX(-1) scaleY(-1);
@@ -202,15 +202,15 @@
 
     .hero-frame-wrap {
       position: relative;
-      width: 240px;
-      max-width: 70vw;
-      margin: 0 auto 16px;
+      width: 200px;
+      max-width: 56vw;
+      margin: 0 auto 8px;
       z-index: 2;
     }
 
     .hero-frame-img {
       position: absolute;
-      top: -24px; left: -24px; right: -24px; bottom: -24px;
+      top: -18px; left: -18px; right: -18px; bottom: -18px;
       z-index: 2;
       pointer-events: none;
     }
@@ -239,11 +239,11 @@
 
     .hero-pre {
       font-family: 'Cinzel', serif;
-      font-size: 11px;
-      letter-spacing: 5px;
+      font-size: 10px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       opacity: 0;
       animation: heroFadeIn 0.8s ease forwards;
       animation-delay: 0.3s;
@@ -251,9 +251,9 @@
 
     .hero-mis-xv {
       font-family: 'Great Vibes', cursive;
-      font-size: 36px;
+      font-size: 28px;
       color: var(--brown);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       opacity: 0;
       animation: heroFadeIn 0.8s ease forwards;
       animation-delay: 0.5s;
@@ -261,9 +261,9 @@
 
     .hero-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 52px;
+      font-size: 42px;
       line-height: 1.1;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       opacity: 0;
       animation: heroFadeIn 0.8s ease forwards, shimmer 4s linear infinite;
       animation-delay: 0.8s;
@@ -276,7 +276,7 @@
 
     .hero-date {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 400;
       letter-spacing: 2px;
       color: var(--brown-medium);
@@ -286,10 +286,10 @@
     }
 
     .hero-divider {
-      width: 60px;
+      width: 50px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 12px auto;
+      margin: 8px auto;
       opacity: 0;
       animation: heroFadeIn 0.8s ease forwards;
       animation-delay: 1.2s;
@@ -391,35 +391,36 @@
        SECTION DEFAULTS
        ================================================================ */
     section {
-      padding: 56px 24px;
+      padding: 48px 24px;
     }
 
     .section-label {
       font-family: 'Cinzel', serif;
-      font-size: 10px;
-      letter-spacing: 5px;
+      font-size: 9px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--gold);
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .section-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 40px;
+      font-size: 34px;
       color: var(--brown);
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.2;
     }
 
     .section-subtitle {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
+      font-size: 14px;
       color: var(--brown-medium);
       text-align: center;
       font-style: italic;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      padding: 0 8px;
     }
 
     /* ================================================================
@@ -428,12 +429,12 @@
     .quote-section {
       background: var(--cream);
       text-align: center;
-      padding: 56px 32px;
+      padding: 48px 24px;
     }
 
     .quote-mark {
       font-family: 'Great Vibes', cursive;
-      font-size: 56px;
+      font-size: 48px;
       color: var(--gold);
       line-height: 0.6;
       opacity: 0.4;
@@ -442,11 +443,11 @@
     .quote-text {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 18px;
-      line-height: 1.8;
+      font-size: 16px;
+      line-height: 1.7;
       color: var(--brown-medium);
-      max-width: 300px;
-      margin: 12px auto;
+      max-width: 280px;
+      margin: 10px auto;
     }
 
     .quote-attribution {
@@ -468,11 +469,11 @@
     }
 
     .music-player {
-      max-width: 320px;
+      max-width: 300px;
       margin: 0 auto;
       background: var(--white);
       border-radius: 20px;
-      padding: 32px 24px;
+      padding: 24px 20px;
       box-shadow: var(--shadow-card);
       position: relative;
       overflow: hidden;
@@ -634,17 +635,17 @@
 
     .parents-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
+      font-size: 17px;
       font-weight: 400;
       color: var(--brown);
       line-height: 1.5;
-      max-width: 300px;
+      max-width: 280px;
       margin: 0 auto;
     }
 
     .parents-amp {
       font-family: 'Great Vibes', cursive;
-      font-size: 24px;
+      font-size: 22px;
       color: var(--gold);
       display: block;
       margin: 2px 0;
@@ -654,7 +655,7 @@
       width: 40px;
       height: 1px;
       background: var(--gold);
-      margin: 24px auto;
+      margin: 20px auto;
     }
 
     /* ================================================================
@@ -662,9 +663,9 @@
        ================================================================ */
     .fullwidth-photo {
       position: relative;
-      height: 45vh;
-      min-height: 280px;
-      max-height: 420px;
+      height: 35vh;
+      min-height: 220px;
+      max-height: 360px;
       overflow: hidden;
     }
 
@@ -691,8 +692,8 @@
     .fullwidth-photo .floral-overlay-tl {
       position: absolute;
       top: -10px; left: -10px;
-      width: 120px;
-      opacity: 0.6;
+      width: 90px;
+      opacity: 0.45;
       z-index: 2;
       pointer-events: none;
     }
@@ -700,8 +701,8 @@
     .fullwidth-photo .floral-overlay-br {
       position: absolute;
       bottom: -10px; right: -10px;
-      width: 120px;
-      opacity: 0.6;
+      width: 90px;
+      opacity: 0.45;
       z-index: 2;
       pointer-events: none;
       transform: scaleX(-1) scaleY(-1);
@@ -717,36 +718,36 @@
 
     .date-big {
       font-family: 'Cinzel', serif;
-      font-size: 60px;
+      font-size: 52px;
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .date-month-year {
       font-family: 'Cinzel', serif;
-      font-size: 16px;
-      letter-spacing: 6px;
+      font-size: 14px;
+      letter-spacing: 5px;
       color: var(--brown);
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .date-day-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
+      font-size: 14px;
       font-style: italic;
       color: var(--brown-medium);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .mini-calendar {
-      max-width: 280px;
+      max-width: 270px;
       margin: 0 auto;
       background: var(--white);
       border-radius: 16px;
-      padding: 20px;
+      padding: 16px;
       box-shadow: var(--shadow-soft);
     }
 
@@ -778,11 +779,11 @@
 
     .mini-calendar-grid .day {
       font-family: 'Montserrat', sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--brown-medium);
-      padding: 6px 0;
+      padding: 4px 0;
       border-radius: 50%;
-      width: 32px; height: 32px;
+      width: 28px; height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -804,22 +805,24 @@
     .countdown-section {
       background: var(--cream-dark);
       text-align: center;
-      padding: 56px 24px;
+      padding: 48px 24px;
     }
 
     .countdown-boxes {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 24px;
+      gap: 8px;
+      flex-wrap: nowrap;
+      margin-top: 20px;
     }
 
     .countdown-box {
       background: var(--white);
-      border-radius: 16px;
-      padding: 16px 12px;
-      min-width: 72px;
+      border-radius: 14px;
+      padding: 14px 8px;
+      flex: 1;
+      min-width: 0;
+      max-width: 72px;
       box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
@@ -845,7 +848,7 @@
 
     .countdown-number {
       font-family: 'Cinzel', serif;
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
@@ -892,11 +895,11 @@
        INFO CARDS (Misa & Recepcion)
        ================================================================ */
     .info-card {
-      max-width: 340px;
+      max-width: 312px;
       margin: 0 auto;
       background: var(--white);
       border-radius: 20px;
-      padding: 32px 24px;
+      padding: 28px 20px;
       box-shadow: var(--shadow-card);
       text-align: center;
       position: relative;
@@ -941,14 +944,14 @@
 
     .info-card-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 32px;
+      font-size: 28px;
       color: var(--brown);
       margin-bottom: 4px;
     }
 
     .info-card-time {
       font-family: 'Cinzel', serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       color: var(--gold);
       margin-bottom: 8px;
@@ -956,7 +959,7 @@
 
     .info-card-detail {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-size: 15px;
       color: var(--brown-medium);
       line-height: 1.5;
       margin-bottom: 4px;
@@ -964,22 +967,22 @@
 
     .info-card-address {
       font-family: 'Montserrat', sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--brown-light);
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .map-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: none;
       border: 1.5px solid var(--gold);
       border-radius: 30px;
-      padding: 10px 24px;
+      padding: 10px 20px;
       font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -1027,31 +1030,31 @@
     }
 
     .timeline {
-      max-width: 320px;
+      max-width: 300px;
       margin: 0 auto;
       position: relative;
-      padding-left: 40px;
+      padding-left: 36px;
     }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 15px; top: 0; bottom: 0;
+      left: 13px; top: 0; bottom: 0;
       width: 2px;
       background: linear-gradient(to bottom, var(--gold-light), var(--rose-light), var(--gold-light));
     }
 
     .timeline-item {
       position: relative;
-      padding-bottom: 32px;
+      padding-bottom: 24px;
     }
 
     .timeline-item:last-child { padding-bottom: 0; }
 
     .timeline-dot {
       position: absolute;
-      left: -33px; top: 4px;
-      width: 14px; height: 14px;
+      left: -29px; top: 4px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       background: var(--gold);
       border: 3px solid var(--white);
@@ -1086,7 +1089,7 @@
 
     .timeline-event {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--brown);
       margin-bottom: 2px;
@@ -1094,7 +1097,7 @@
 
     .timeline-desc {
       font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--brown-light);
       line-height: 1.5;
     }
@@ -1115,8 +1118,8 @@
 
     .dresscode-label {
       font-family: 'Cinzel', serif;
-      font-size: 14px;
-      letter-spacing: 4px;
+      font-size: 12px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 4px;
@@ -1124,17 +1127,17 @@
 
     .dresscode-type {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
+      font-size: 16px;
       font-style: italic;
       color: var(--brown-medium);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .dresscode-silhouettes {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin-bottom: 24px;
+      gap: 32px;
+      margin-bottom: 20px;
     }
 
     .silhouette {
@@ -1142,7 +1145,7 @@
     }
 
     .silhouette svg {
-      width: 48px; height: 80px;
+      width: 40px; height: 68px;
       fill: var(--brown-light);
       opacity: 0.6;
     }
@@ -1192,11 +1195,11 @@
     }
 
     .gift-card {
-      max-width: 320px;
-      margin: 24px auto 0;
+      max-width: 300px;
+      margin: 20px auto 0;
       background: var(--white);
       border-radius: 16px;
-      padding: 28px 24px;
+      padding: 24px 18px;
       box-shadow: var(--shadow-card);
       position: relative;
       overflow: hidden;
@@ -1212,36 +1215,40 @@
 
     .gift-card-bank {
       font-family: 'Cinzel', serif;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: 2px;
       color: var(--brown);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .gift-card-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
+      padding: 7px 0;
       border-bottom: 1px solid rgba(197, 165, 90, 0.15);
+      gap: 8px;
     }
 
     .gift-card-row:last-child { border-bottom: none; }
 
     .gift-card-label {
       font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
+      font-size: 9px;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--brown-light);
+      flex-shrink: 0;
     }
 
     .gift-card-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--brown);
+      text-align: right;
+      word-break: break-all;
     }
 
     .copy-btn {
@@ -1281,7 +1288,7 @@
     .rsvp-section {
       background: var(--white);
       text-align: center;
-      padding: 64px 24px;
+      padding: 48px 24px;
     }
 
     .rsvp-btn {
@@ -1289,12 +1296,12 @@
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: var(--white);
       font-family: 'Cinzel', serif;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 16px 40px;
+      padding: 14px 32px;
       border-radius: 50px;
       border: none;
       cursor: pointer;
@@ -1343,19 +1350,19 @@
     .closing-section {
       background: var(--cream);
       text-align: center;
-      padding: 56px 24px;
+      padding: 48px 24px;
     }
 
     .closing-text {
       font-family: 'Great Vibes', cursive;
-      font-size: 44px;
+      font-size: 36px;
       color: var(--gold);
       animation: closingFloat 4s ease-in-out infinite;
     }
 
     .closing-sub {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
+      font-size: 14px;
       font-style: italic;
       color: var(--brown-medium);
       margin-top: 8px;
@@ -1371,15 +1378,15 @@
        ================================================================ */
     .footer {
       background: var(--brown);
-      padding: 32px 24px;
+      padding: 28px 24px;
       text-align: center;
     }
 
     .footer-name {
       font-family: 'Great Vibes', cursive;
-      font-size: 32px;
+      font-size: 28px;
       color: var(--gold);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .footer-hashtag {
@@ -1426,30 +1433,54 @@
        ================================================================ */
     /* Small phones (360px default) - already styled above */
 
+    @media (min-width: 390px) {
+      .hero { padding: 48px 24px 64px; gap: 14px; }
+      .hero-frame-wrap { width: 220px; max-width: 60vw; }
+      .hero-name { font-size: 46px; }
+      .hero-mis-xv { font-size: 30px; }
+      .countdown-box { max-width: 76px; padding: 16px 10px; }
+      .countdown-number { font-size: 28px; }
+    }
+
     @media (min-width: 420px) {
-      .hero-name { font-size: 58px; }
-      .hero-frame-wrap { width: 260px; }
-      .section-title { font-size: 42px; }
-      .countdown-box { min-width: 76px; padding: 18px 14px; }
-      .countdown-number { font-size: 34px; }
-      .date-big { font-size: 72px; }
+      .hero-name { font-size: 52px; }
+      .hero-mis-xv { font-size: 34px; }
+      .hero-frame-wrap { width: 240px; }
+      .hero-floral-tl { width: 160px; }
+      .hero-floral-br { width: 160px; }
+      .section-title { font-size: 38px; }
+      .countdown-box { max-width: 80px; }
+      .countdown-number { font-size: 30px; }
+      .date-big { font-size: 60px; }
+      .closing-text { font-size: 40px; }
+      .info-card { max-width: 340px; padding: 32px 24px; }
+      .gift-card { max-width: 320px; padding: 28px 24px; }
+      .music-player { max-width: 320px; padding: 32px 24px; }
     }
 
     @media (min-width: 600px) {
       .hero-frame-wrap { width: 300px; }
       .hero-name { font-size: 64px; }
+      .hero-floral-tl { width: 200px; opacity: 0.7; }
+      .hero-floral-br { width: 200px; opacity: 0.7; }
       section { padding: 64px 32px; }
+      .section-title { font-size: 42px; }
       .info-card { padding: 36px 28px; }
-      .fullwidth-photo { height: 50vh; max-height: 500px; }
+      .fullwidth-photo { height: 45vh; max-height: 500px; }
+      .countdown-boxes { gap: 14px; }
+      .countdown-box { max-width: 90px; }
+      .countdown-number { font-size: 34px; }
+      .date-big { font-size: 72px; }
+      .closing-text { font-size: 44px; }
     }
 
     @media (min-width: 768px) {
       .hero-frame-wrap { width: 340px; }
       .hero-name { font-size: 72px; }
-      .hero-floral-tl { width: 260px; }
-      .hero-floral-br { width: 260px; }
+      .hero-floral-tl { width: 260px; opacity: 0.85; }
+      .hero-floral-br { width: 260px; opacity: 0.85; }
       .countdown-boxes { gap: 18px; }
-      .countdown-box { min-width: 90px; }
+      .countdown-box { max-width: 100px; }
       .date-big { font-size: 80px; }
     }
   </style>
