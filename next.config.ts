@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
         source: "/eventus",
         destination: "/eventus.html",
       },
+      {
+        source: "/invitaciones",
+        destination: "/invitaciones.html",
+      },
     ];
   },
 };

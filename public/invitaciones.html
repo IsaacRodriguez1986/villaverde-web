@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitaciones Digitales — Villaverde</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rosa: #E8156E;
+  --rosa-dark: #B8104F;
+  --verde: #00E676;
+  --negro: #0A0A0F;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --text-primary: rgba(255,255,255,0.92);
+  --text-secondary: rgba(255,255,255,0.6);
+  --text-muted: rgba(255,255,255,0.35);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--negro); color: #fff; min-height: 100vh; overflow-x: hidden; font-size: 14px; line-height: 1.5; }
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at 20% 0%, rgba(232,21,110,0.05) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(0,230,118,0.04) 0%, transparent 50%), #0A0A0F; }
+
+/* AUTH */
+.auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; position: relative; z-index: 2; }
+.auth-box { max-width: 400px; width: 100%; text-align: center; }
+.logo { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--rosa); }
+.logo span { color: var(--verde); }
+.subtitle { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.title { font-family: 'Playfair Display', serif; font-size: 22px; color: rgba(255,255,255,0.65); font-style: italic; margin-bottom: 32px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); text-align: left; }
+.card h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+.card p { font-size: 13px; color: var(--text-secondary); margin-bottom: 18px; line-height: 1.6; }
+.fg { margin-bottom: 14px; }
+.fg label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+.fi { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; color: #fff; font-family: 'Inter', sans-serif; font-size: 15px; outline: none; transition: border-color .3s; min-height: 48px; }
+.fi::placeholder { color: rgba(255,255,255,0.2); }
+.fi:focus { border-color: var(--rosa); }
+.btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .3s; min-height: 48px; background: linear-gradient(135deg, var(--rosa), var(--rosa-dark)); color: white; }
+.btn:active { transform: scale(0.98); }
+.err { background: rgba(255,82,82,0.1); border-left: 3px solid #FF5252; color: #FF5252; padding: 10px 14px; border-radius: 0 10px 10px 0; font-size: 13px; margin-bottom: 12px; display: none; }
+.footer { margin-top: 24px; font-size: 11px; color: rgba(255,255,255,0.12); }
+.footer a { color: var(--rosa); text-decoration: none; }
+
+/* GALLERY */
+.gallery-screen { display: none; position: relative; z-index: 2; min-height: 100vh; }
+.gallery-screen.active { display: block; animation: fi .4s ease; }
+@keyframes fi { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.header { padding: 20px 20px 12px; text-align: center; }
+.header-row { display: flex; align-items: center; justify-content: space-between; max-width: 800px; margin: 0 auto; }
+.header .logo { font-size: 24px; }
+.header-title { font-family: 'Playfair Display', serif; font-size: 18px; color: rgba(255,255,255,0.5); font-style: italic; margin-top: 4px; }
+.btn-out { background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 14px; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; }
+
+.gallery { max-width: 800px; margin: 0 auto; padding: 0 20px 40px; }
+.section-title { font-family: 'Playfair Display', serif; font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+
+.tmpl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all .3s; }
+.tmpl-card:hover { border-color: rgba(232,21,110,0.2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,21,110,0.1); }
+.tmpl-thumb { width: 100%; aspect-ratio: 9/16; background: linear-gradient(135deg, #f5d5d8, #c49aaa); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.tmpl-thumb iframe { width: 100%; height: 100%; border: none; pointer-events: none; transform: scale(0.5); transform-origin: center center; width: 200%; height: 200%; }
+.tmpl-thumb .preview-icon { font-size: 48px; opacity: 0.6; }
+.tmpl-info { padding: 14px; }
+.tmpl-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.tmpl-meta { font-size: 12px; color: var(--text-muted); display: flex; gap: 8px; align-items: center; }
+.tmpl-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+.tmpl-badge.xv { background: rgba(232,21,110,0.1); color: var(--rosa); }
+.tmpl-badge.boda { background: rgba(212,175,105,0.1); color: #D4AF69; }
+
+.tmpl-actions { display: flex; gap: 6px; margin-top: 10px; }
+.btn-sm { padding: 8px 14px; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; }
+.btn-preview { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); flex: 1; }
+.btn-preview:hover { background: rgba(255,255,255,0.1); }
+.btn-use { background: rgba(232,21,110,0.1); color: var(--rosa); flex: 1; }
+.btn-use:hover { background: rgba(232,21,110,0.2); }
+
+/* PREVIEW MODAL */
+.modal { position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; padding: 16px; }
+.modal.active { display: flex; animation: fi .3s ease; }
+.modal-frame { width: 375px; max-width: 100%; height: 90vh; border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: white; position: relative; }
+.modal-frame iframe { width: 100%; height: 100%; border: none; }
+.modal-close { position: absolute; top: -44px; right: 0; background: rgba(255,255,255,0.1); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: rgba(255,255,255,0.2); }
+
+/* EMPTY */
+.empty { text-align: center; padding: 40px 20px; }
+.empty-icon { font-size: 48px; margin-bottom: 8px; }
+.empty-text { font-size: 14px; color: var(--text-muted); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--verde); color: #111; padding: 12px 24px; border-radius: 14px; font-size: 13px; font-weight: 600; z-index: 999; opacity: 0; transition: all .4s; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr; }
+  .logo { font-size: 36px; }
+  .header .logo { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- AUTH -->
+<div class="auth-screen" id="authScreen">
+<div class="auth-box">
+  <div class="logo">Villa<span>verde</span></div>
+  <div class="subtitle">Salon de Fiestas · Chalco</div>
+  <div class="title">Invitaciones Digitales</div>
+  <div class="card">
+    <h3>Acceso al catalogo</h3>
+    <p>Ingresa la contrasena para ver y gestionar las plantillas de invitaciones digitales.</p>
+    <div class="err" id="errMsg"></div>
+    <div class="fg">
+      <label>Contrasena</label>
+      <input type="password" class="fi" id="pwdInput" placeholder="Ingresa la contrasena" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn" onclick="doLogin()">Entrar</button>
+  </div>
+  <div class="footer">Cortesia de <a href="/">Salon de Fiestas Villaverde</a></div>
+</div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-screen" id="galleryScreen">
+<div class="header">
+  <div class="header-row">
+    <div>
+      <div class="logo">Villa<span>verde</span></div>
+    </div>
+    <div style="text-align:right">
+      <button class="btn-out" onclick="doLogout()">Salir</button>
+    </div>
+  </div>
+  <div class="header-title">Invitaciones Digitales</div>
+</div>
+
+<div class="gallery">
+  <div class="section-title">Plantillas disponibles</div>
+  <div class="grid" id="templateGrid"></div>
+</div>
+</div>
+
+<!-- PREVIEW MODAL -->
+<div class="modal" id="previewModal" onclick="closePreview(event)">
+  <div class="modal-frame" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closePreview()">✕</button>
+    <iframe id="previewFrame" src=""></iframe>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PASSWORD = '1.Tequiladrink';
+
+/* ─── TEMPLATES DATABASE ─── */
+const TEMPLATES = [
+  {
+    id: '15-rosa-pastel',
+    name: '15 Rosa Pastel',
+    type: 'xv',
+    typeLabel: 'XV Anos',
+    description: 'Tonos rosa pastel con petalos flotantes, tipografia elegante',
+    file: '/templates/15-rosa-pastel.html',
+    colors: ['#c4788a', '#e8b4bf', '#fef5f0'],
+    created: '2026-03-28'
+  }
+  // Agregar mas plantillas aqui
+];
+
+/* ─── AUTH ─── */
+function doLogin() {
+  const pwd = document.getElementById('pwdInput').value;
+  const err = document.getElementById('errMsg');
+  err.style.display = 'none';
+  if (pwd !== PASSWORD) {
+    err.textContent = 'Contrasena incorrecta';
+    err.style.display = 'block';
+    return;
+  }
+  sessionStorage.setItem('inv_auth', '1');
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('galleryScreen').classList.add('active');
+  renderTemplates();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('inv_auth');
+  document.getElementById('galleryScreen').classList.remove('active');
+  document.getElementById('galleryScreen').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'flex';
+  document.getElementById('pwdInput').value = '';
+}
+
+/* Auto-login if session active */
+if (sessionStorage.getItem('inv_auth') === '1') {
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('galleryScreen').classList.add('active');
+  renderTemplates();
+}
+
+/* ─── RENDER ─── */
+function renderTemplates() {
+  const grid = document.getElementById('templateGrid');
+  if (!TEMPLATES.length) {
+    grid.innerHTML = '<div class="empty"><div class="empty-icon">💌</div><div class="empty-text">No hay plantillas todavia</div></div>';
+    return;
+  }
+  grid.innerHTML = TEMPLATES.map(function(t) {
+    const colorDots = t.colors.map(function(c) {
+      return '<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:' + c + ';border:1px solid rgba(255,255,255,0.1)"></span>';
+    }).join('');
+    return '<div class="tmpl-card">' +
+      '<div class="tmpl-thumb" style="background:linear-gradient(135deg,' + t.colors[0] + ',' + (t.colors[2] || t.colors[1]) + ')">' +
+        '<span class="preview-icon">💌</span>' +
+      '</div>' +
+      '<div class="tmpl-info">' +
+        '<div class="tmpl-name">' + t.name + '</div>' +
+        '<div class="tmpl-meta">' +
+          '<span class="tmpl-badge ' + t.type + '">' + t.typeLabel + '</span>' +
+          '<span>' + t.description + '</span>' +
+        '</div>' +
+        '<div style="display:flex;gap:4px;margin-top:8px">' + colorDots + '</div>' +
+        '<div class="tmpl-actions">' +
+          '<button class="btn-sm btn-preview" onclick="openPreview(\'' + t.file + '\')">👁 Vista previa</button>' +
+          '<button class="btn-sm btn-use" onclick="copyLink(\'' + t.file + '\')">📋 Copiar link</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ─── PREVIEW ─── */
+function openPreview(file) {
+  document.getElementById('previewFrame').src = file;
+  document.getElementById('previewModal').classList.add('active');
+}
+
+function closePreview(e) {
+  if (e && e.target && !e.target.classList.contains('modal')) return;
+  document.getElementById('previewModal').classList.remove('active');
+  document.getElementById('previewFrame').src = '';
+}
+
+/* ─── COPY LINK ─── */
+function copyLink(file) {
+  const url = window.location.origin + file;
+  navigator.clipboard.writeText(url).then(function() {
+    toast('Link copiado');
+  }).catch(function() {
+    toast('Error al copiar');
+  });
+}
+
+/* ─── TOAST ─── */
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2400);
+}
+</script>
+</body>
+</html>
