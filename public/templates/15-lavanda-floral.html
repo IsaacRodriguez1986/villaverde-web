@@ -87,28 +87,29 @@ button, a, [role="button"] {
   pointer-events: none;
 }
 
-.floral-tl { top: 0; left: 0; }
-.floral-tr { top: 0; right: 0; transform: scaleX(-1); }
-.floral-bl { bottom: 0; left: 0; transform: scaleY(-1); }
-.floral-br { bottom: 0; right: 0; transform: scale(-1, -1); }
+.floral-tl { top: -10px; left: -10px; }
+.floral-tr { top: -10px; right: -10px; }
+.floral-bl { bottom: -10px; left: -10px; }
+.floral-br { bottom: -10px; right: -10px; }
 
-.floral-spray {
-  width: 160px; height: 200px;
-  opacity: 0.9;
+.floral-img {
+  width: 180px; height: auto;
+  display: block;
 }
 
-.floral-spray-sm {
-  width: 120px; height: 150px;
-  opacity: 0.8;
+.floral-img-sm {
+  width: 140px; height: auto;
+  display: block;
 }
 
 /* ══════════ ORNAMENTAL DIVIDER ══════════ */
 .ornamental-divider {
   display: block;
-  width: 200px;
-  height: 40px;
+  width: 240px;
+  height: auto;
   margin: 0 auto;
   pointer-events: none;
+  opacity: 0.85;
 }
 
 .section-divider-wrap {
@@ -799,108 +800,17 @@ button, a, [role="button"] {
 </head>
 <body>
 
-<!-- ══════════ SVG DEFS for reusable floral elements ══════════ -->
+<!-- SVG DEFS (icons only, florals are now PNGs) -->
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
 <defs>
-  <!-- Realistic Rose -->
-  <g id="rose-full">
-    <!-- Outer petals -->
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.7" transform="rotate(0)"/>
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.65" transform="rotate(60)"/>
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.6" transform="rotate(120)"/>
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.65" transform="rotate(180)"/>
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.7" transform="rotate(240)"/>
-    <ellipse cx="0" cy="-4" rx="12" ry="16" fill="#C4A8D8" opacity="0.65" transform="rotate(300)"/>
-    <!-- Mid petals -->
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.8" transform="rotate(30)"/>
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.75" transform="rotate(90)"/>
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.8" transform="rotate(150)"/>
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.75" transform="rotate(210)"/>
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.8" transform="rotate(270)"/>
-    <ellipse cx="0" cy="-3" rx="8" ry="11" fill="#D4BEE4" opacity="0.75" transform="rotate(330)"/>
-    <!-- Inner petals -->
-    <ellipse cx="0" cy="-2" rx="5" ry="7" fill="#E8D8F0" opacity="0.85" transform="rotate(15)"/>
-    <ellipse cx="0" cy="-2" rx="5" ry="7" fill="#E8D8F0" opacity="0.8" transform="rotate(75)"/>
-    <ellipse cx="0" cy="-2" rx="5" ry="7" fill="#E8D8F0" opacity="0.85" transform="rotate(135)"/>
-    <ellipse cx="0" cy="-2" rx="5" ry="7" fill="#E8D8F0" opacity="0.8" transform="rotate(195)"/>
-    <ellipse cx="0" cy="-2" rx="5" ry="7" fill="#E8D8F0" opacity="0.85" transform="rotate(255)"/>
-    <!-- Center spiral -->
-    <circle cx="0" cy="0" r="4" fill="#B898CC" opacity="0.6"/>
-    <circle cx="0" cy="0" r="2" fill="#9B7BB8" opacity="0.5"/>
-  </g>
-
-  <!-- Small rosebud -->
-  <g id="rosebud">
-    <ellipse cx="0" cy="-2" rx="4" ry="7" fill="#D4BEE4" opacity="0.7" transform="rotate(-15)"/>
-    <ellipse cx="0" cy="-2" rx="4" ry="7" fill="#C4A8D8" opacity="0.6" transform="rotate(15)"/>
-    <ellipse cx="0" cy="-1" rx="3" ry="5" fill="#E8D8F0" opacity="0.7"/>
-    <circle cx="0" cy="0" r="2" fill="#B898CC" opacity="0.5"/>
-    <!-- Sepals -->
-    <path d="M-2 4 Q-4 0 -1 -3" stroke="#6B8F5E" stroke-width="1" fill="none" opacity="0.5"/>
-    <path d="M2 4 Q4 0 1 -3" stroke="#6B8F5E" stroke-width="1" fill="none" opacity="0.5"/>
-  </g>
-
-  <!-- Leaf with vein -->
-  <g id="leaf">
-    <path d="M0 0 Q8 -6 0 -22 Q-8 -6 0 0Z" fill="#7BA36E" opacity="0.55"/>
-    <path d="M0 0 L0 -20" stroke="#6B8F5E" stroke-width="0.6" opacity="0.4" fill="none"/>
-    <path d="M0 -6 Q3 -9 5 -10" stroke="#6B8F5E" stroke-width="0.4" opacity="0.3" fill="none"/>
-    <path d="M0 -10 Q-3 -13 -4 -15" stroke="#6B8F5E" stroke-width="0.4" opacity="0.3" fill="none"/>
-    <path d="M0 -14 Q2.5 -16 3.5 -18" stroke="#6B8F5E" stroke-width="0.4" opacity="0.3" fill="none"/>
-  </g>
-
-  <!-- Small leaf -->
-  <g id="leaf-sm">
-    <path d="M0 0 Q5 -4 0 -14 Q-5 -4 0 0Z" fill="#8FBC7A" opacity="0.45"/>
-    <path d="M0 0 L0 -13" stroke="#6B8F5E" stroke-width="0.5" opacity="0.35" fill="none"/>
-  </g>
+  <!-- Floral decorations are now PNG images -->
 </defs>
 </svg>
 
 <!-- ══════════ SECTION 1: HERO ══════════ -->
 <div class="section hero-section">
-  <!-- Floral corner top-left: detailed arrangement -->
-  <svg class="floral-corner floral-tl floral-spray" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Main rose -->
-    <use href="#rose-full" x="35" y="40" transform="translate(35,40) scale(1.3)"/>
-    <!-- Secondary rose -->
-    <use href="#rose-full" x="70" y="25" transform="translate(70,25) scale(0.9)"/>
-    <!-- Small rosebud -->
-    <use href="#rosebud" x="18" y="70" transform="translate(18,70) scale(1.1)"/>
-    <use href="#rosebud" x="90" y="50" transform="translate(90,50) scale(0.8)"/>
-    <use href="#rosebud" x="55" y="10" transform="translate(55,10) scale(0.7)"/>
-    <!-- Leaves -->
-    <use href="#leaf" x="50" y="85" transform="translate(50,85) rotate(-35)"/>
-    <use href="#leaf" x="80" y="65" transform="translate(80,65) rotate(20)"/>
-    <use href="#leaf-sm" x="15" y="95" transform="translate(15,95) rotate(-50)"/>
-    <use href="#leaf-sm" x="100" y="40" transform="translate(100,40) rotate(35)"/>
-    <use href="#leaf-sm" x="30" y="55" transform="translate(30,55) rotate(-15)"/>
-    <!-- Tiny buds (dots) -->
-    <circle cx="110" cy="20" r="3" fill="#E8D8F0" opacity="0.6"/>
-    <circle cx="10" cy="45" r="2.5" fill="#D4BEE4" opacity="0.5"/>
-    <circle cx="65" cy="75" r="2" fill="#E8D8F0" opacity="0.5"/>
-    <!-- Stems -->
-    <path d="M35 60 Q20 80 15 100" stroke="#7BA36E" stroke-width="1" opacity="0.3" fill="none"/>
-    <path d="M70 45 Q85 55 95 50" stroke="#6B8F5E" stroke-width="0.8" opacity="0.25" fill="none"/>
-  </svg>
-  <!-- Floral corner top-right (mirrored) -->
-  <svg class="floral-corner floral-tr floral-spray" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="35" y="40" transform="translate(35,40) scale(1.3)"/>
-    <use href="#rose-full" x="70" y="25" transform="translate(70,25) scale(0.9)"/>
-    <use href="#rosebud" x="18" y="70" transform="translate(18,70) scale(1.1)"/>
-    <use href="#rosebud" x="90" y="50" transform="translate(90,50) scale(0.8)"/>
-    <use href="#rosebud" x="55" y="10" transform="translate(55,10) scale(0.7)"/>
-    <use href="#leaf" x="50" y="85" transform="translate(50,85) rotate(-35)"/>
-    <use href="#leaf" x="80" y="65" transform="translate(80,65) rotate(20)"/>
-    <use href="#leaf-sm" x="15" y="95" transform="translate(15,95) rotate(-50)"/>
-    <use href="#leaf-sm" x="100" y="40" transform="translate(100,40) rotate(35)"/>
-    <use href="#leaf-sm" x="30" y="55" transform="translate(30,55) rotate(-15)"/>
-    <circle cx="110" cy="20" r="3" fill="#E8D8F0" opacity="0.6"/>
-    <circle cx="10" cy="45" r="2.5" fill="#D4BEE4" opacity="0.5"/>
-    <circle cx="65" cy="75" r="2" fill="#E8D8F0" opacity="0.5"/>
-    <path d="M35 60 Q20 80 15 100" stroke="#7BA36E" stroke-width="1" opacity="0.3" fill="none"/>
-    <path d="M70 45 Q85 55 95 50" stroke="#6B8F5E" stroke-width="0.8" opacity="0.25" fill="none"/>
-  </svg>
+  <img class="floral-corner floral-tl floral-img" src="/templates/assets/floral-tl.png" alt="" aria-hidden="true">
+  <img class="floral-corner floral-tr floral-img" src="/templates/assets/floral-tr.png" alt="" aria-hidden="true">
 
   <div class="section-content">
     <!-- Quote -->
@@ -999,51 +909,13 @@ button, a, [role="button"] {
 
 <!-- ══════════ ORNAMENTAL DIVIDER between S1 and S2 ══════════ -->
 <div class="section-divider-wrap">
-  <svg class="ornamental-divider" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Central diamond -->
-    <path d="M100 8 L108 20 L100 32 L92 20Z" stroke="#C4A8D8" stroke-width="1" fill="none"/>
-    <path d="M100 12 L105 20 L100 28 L95 20Z" fill="#E8D8F0" opacity="0.5"/>
-    <!-- Left scrollwork -->
-    <path d="M88 20 Q78 10 60 14 Q50 16 45 20 Q50 24 60 26 Q78 30 88 20Z" stroke="#C4A8D8" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M45 20 Q35 14 22 18 Q15 20 22 22 Q35 26 45 20Z" stroke="#C4A8D8" stroke-width="0.7" fill="none" opacity="0.4"/>
-    <path d="M22 20 L8 20" stroke="#C4A8D8" stroke-width="0.5" opacity="0.3"/>
-    <circle cx="6" r="1.5" cy="20" fill="#D4BEE4" opacity="0.5"/>
-    <!-- Right scrollwork (mirrored) -->
-    <path d="M112 20 Q122 10 140 14 Q150 16 155 20 Q150 24 140 26 Q122 30 112 20Z" stroke="#C4A8D8" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M155 20 Q165 14 178 18 Q185 20 178 22 Q165 26 155 20Z" stroke="#C4A8D8" stroke-width="0.7" fill="none" opacity="0.4"/>
-    <path d="M178 20 L192 20" stroke="#C4A8D8" stroke-width="0.5" opacity="0.3"/>
-    <circle cx="194" r="1.5" cy="20" fill="#D4BEE4" opacity="0.5"/>
-    <!-- Small accent curls -->
-    <path d="M70 15 Q65 12 62 15" stroke="#D4BEE4" stroke-width="0.5" fill="none" opacity="0.4"/>
-    <path d="M130 15 Q135 12 138 15" stroke="#D4BEE4" stroke-width="0.5" fill="none" opacity="0.4"/>
-    <path d="M70 25 Q65 28 62 25" stroke="#D4BEE4" stroke-width="0.5" fill="none" opacity="0.4"/>
-    <path d="M130 25 Q135 28 138 25" stroke="#D4BEE4" stroke-width="0.5" fill="none" opacity="0.4"/>
-  </svg>
+  <img class="ornamental-divider" src="/templates/assets/divider.png" alt="" aria-hidden="true">
 </div>
 
 <!-- ══════════ SECTION 2: DETAILS ══════════ -->
 <div class="section details-section">
-  <!-- Floral corners for details section -->
-  <svg class="floral-corner floral-tl floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="28" y="32" transform="translate(28,32) scale(1.0)"/>
-    <use href="#rosebud" x="60" y="18" transform="translate(60,18) scale(0.9)"/>
-    <use href="#rosebud" x="12" y="55" transform="translate(12,55) scale(0.7)"/>
-    <use href="#leaf" x="45" y="65" transform="translate(45,65) rotate(-30)"/>
-    <use href="#leaf-sm" x="70" y="40" transform="translate(70,40) rotate(25)"/>
-    <use href="#leaf-sm" x="10" y="75" transform="translate(10,75) rotate(-45)"/>
-    <circle cx="80" cy="12" r="2.5" fill="#E8D8F0" opacity="0.5"/>
-    <path d="M28 50 Q15 65 10 80" stroke="#7BA36E" stroke-width="0.8" opacity="0.25" fill="none"/>
-  </svg>
-  <svg class="floral-corner floral-tr floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="28" y="32" transform="translate(28,32) scale(1.0)"/>
-    <use href="#rosebud" x="60" y="18" transform="translate(60,18) scale(0.9)"/>
-    <use href="#rosebud" x="12" y="55" transform="translate(12,55) scale(0.7)"/>
-    <use href="#leaf" x="45" y="65" transform="translate(45,65) rotate(-30)"/>
-    <use href="#leaf-sm" x="70" y="40" transform="translate(70,40) rotate(25)"/>
-    <use href="#leaf-sm" x="10" y="75" transform="translate(10,75) rotate(-45)"/>
-    <circle cx="80" cy="12" r="2.5" fill="#E8D8F0" opacity="0.5"/>
-    <path d="M28 50 Q15 65 10 80" stroke="#7BA36E" stroke-width="0.8" opacity="0.25" fill="none"/>
-  </svg>
+  <img class="floral-corner floral-tl floral-img-sm" src="/templates/assets/floral-sm-tl.png" alt="" aria-hidden="true">
+  <img class="floral-corner floral-tr floral-img-sm" src="/templates/assets/floral-sm-tr.png" alt="" aria-hidden="true">
 
   <div class="section-content">
     <!-- Venue -->
@@ -1147,44 +1019,13 @@ button, a, [role="button"] {
 
 <!-- ══════════ ORNAMENTAL DIVIDER between S2 and S3 ══════════ -->
 <div class="section-divider-wrap">
-  <svg class="ornamental-divider" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Central flower motif -->
-    <circle cx="100" cy="20" r="4" fill="#E8D8F0" opacity="0.6"/>
-    <ellipse cx="100" cy="14" rx="3" ry="5" fill="#D4BEE4" opacity="0.4"/>
-    <ellipse cx="100" cy="26" rx="3" ry="5" fill="#D4BEE4" opacity="0.4"/>
-    <ellipse cx="94" cy="20" rx="5" ry="3" fill="#D4BEE4" opacity="0.4"/>
-    <ellipse cx="106" cy="20" rx="5" ry="3" fill="#D4BEE4" opacity="0.4"/>
-    <circle cx="100" cy="20" r="2" fill="#C4A8D8" opacity="0.5"/>
-    <!-- Left filigree -->
-    <path d="M88 20 C80 14 68 16 60 20 C68 24 80 26 88 20Z" stroke="#C4A8D8" stroke-width="0.7" fill="none" opacity="0.5"/>
-    <path d="M60 20 C52 16 42 18 35 20 C42 22 52 24 60 20Z" stroke="#C4A8D8" stroke-width="0.6" fill="none" opacity="0.35"/>
-    <path d="M35 20 L15 20" stroke="#C4A8D8" stroke-width="0.5" opacity="0.25" stroke-dasharray="2 3"/>
-    <!-- Right filigree (mirrored) -->
-    <path d="M112 20 C120 14 132 16 140 20 C132 24 120 26 112 20Z" stroke="#C4A8D8" stroke-width="0.7" fill="none" opacity="0.5"/>
-    <path d="M140 20 C148 16 158 18 165 20 C158 22 148 24 140 20Z" stroke="#C4A8D8" stroke-width="0.6" fill="none" opacity="0.35"/>
-    <path d="M165 20 L185 20" stroke="#C4A8D8" stroke-width="0.5" opacity="0.25" stroke-dasharray="2 3"/>
-  </svg>
+  <img class="ornamental-divider" src="/templates/assets/divider.png" alt="" aria-hidden="true">
 </div>
 
 <!-- ══════════ SECTION 3: RSVP ══════════ -->
 <div class="section rsvp-section">
-  <!-- Floral corners -->
-  <svg class="floral-corner floral-tl floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="25" y="28" transform="translate(25,28) scale(0.9)"/>
-    <use href="#rosebud" x="55" y="15" transform="translate(55,15) scale(0.8)"/>
-    <use href="#leaf" x="40" y="55" transform="translate(40,55) rotate(-30)"/>
-    <use href="#leaf-sm" x="65" y="35" transform="translate(65,35) rotate(20)"/>
-    <circle cx="75" cy="10" r="2" fill="#E8D8F0" opacity="0.5"/>
-    <path d="M25 45 Q12 60 8 75" stroke="#7BA36E" stroke-width="0.7" opacity="0.2" fill="none"/>
-  </svg>
-  <svg class="floral-corner floral-tr floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="25" y="28" transform="translate(25,28) scale(0.9)"/>
-    <use href="#rosebud" x="55" y="15" transform="translate(55,15) scale(0.8)"/>
-    <use href="#leaf" x="40" y="55" transform="translate(40,55) rotate(-30)"/>
-    <use href="#leaf-sm" x="65" y="35" transform="translate(65,35) rotate(20)"/>
-    <circle cx="75" cy="10" r="2" fill="#E8D8F0" opacity="0.5"/>
-    <path d="M25 45 Q12 60 8 75" stroke="#7BA36E" stroke-width="0.7" opacity="0.2" fill="none"/>
-  </svg>
+  <img class="floral-corner floral-tl floral-img-sm" src="/templates/assets/floral-sm-tl.png" alt="" aria-hidden="true">
+  <img class="floral-corner floral-tr floral-img-sm" src="/templates/assets/floral-sm-tr.png" alt="" aria-hidden="true">
 
   <div class="section-content">
     <!-- Photo - rounded rectangle frame -->
@@ -1228,20 +1069,8 @@ button, a, [role="button"] {
   </div>
 
   <!-- Bottom florals -->
-  <svg class="floral-corner floral-bl floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="25" y="28" transform="translate(25,28) scale(0.9)"/>
-    <use href="#rosebud" x="55" y="15" transform="translate(55,15) scale(0.8)"/>
-    <use href="#leaf" x="40" y="55" transform="translate(40,55) rotate(-30)"/>
-    <use href="#leaf-sm" x="65" y="35" transform="translate(65,35) rotate(20)"/>
-    <circle cx="75" cy="10" r="2" fill="#E8D8F0" opacity="0.5"/>
-  </svg>
-  <svg class="floral-corner floral-br floral-spray-sm" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <use href="#rose-full" x="25" y="28" transform="translate(25,28) scale(0.9)"/>
-    <use href="#rosebud" x="55" y="15" transform="translate(55,15) scale(0.8)"/>
-    <use href="#leaf" x="40" y="55" transform="translate(40,55) rotate(-30)"/>
-    <use href="#leaf-sm" x="65" y="35" transform="translate(65,35) rotate(20)"/>
-    <circle cx="75" cy="10" r="2" fill="#E8D8F0" opacity="0.5"/>
-  </svg>
+  <img class="floral-corner floral-bl floral-img-sm" src="/templates/assets/floral-bl.png" alt="" aria-hidden="true" style="width:140px">
+  <img class="floral-corner floral-br floral-img-sm" src="/templates/assets/floral-br.png" alt="" aria-hidden="true" style="width:140px">
 </div>
 
 <script>
