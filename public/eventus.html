@@ -788,28 +788,18 @@ function switchAuth(tab,btn){document.querySelectorAll('.auth-tab').forEach(t=>t
 /* ─── REGISTER (FREE TIER) ─── */
 async function reg(){const n=document.getElementById('rN').value.trim(),t=document.getElementById('rT').value,d=document.getElementById('rD').value,phone=document.getElementById('rPhone').value.trim().replace(/\D/g,''),e=document.getElementById('rE');e.style.display='none';
 if(!n){e.textContent='Escribe el nombre';e.style.display='block';return}if(!d){e.textContent='Selecciona fecha';e.style.display='block';return}if(!phone||phone.length<10){e.textContent='Ingresa tu WhatsApp (10 digitos)';e.style.display='block';return}
+/* ─── Cooldown 24h: max 1 registro por dispositivo ─── */
+var lastReg=localStorage.getItem('eventus_last_reg');
+if(lastReg&&(Date.now()-parseInt(lastReg))<86400000){e.textContent='Ya registraste un evento recientemente. Intenta de nuevo manana o usa tu codigo para entrar.';e.style.display='block';return}
 try{
 /* ─── Dedup: check if phone already has an event ─── */
 var cleanPhone=phone.replace(/^521/,'').replace(/^52/,'');
 var existing=await sbGet('eventus_events','or=(phone.eq.'+cleanPhone+',phone.eq.'+phone+')&select=code,name&limit=1');
-if(existing&&existing.length>0){
-/* Phone already has event — send code to their WhatsApp, don't show on screen */
-var ex=existing[0];
-try{await fetch('https://bot-villaverde.vercel.app/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:ex.code,name:n,eventType:t})})}catch(x){}
-document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';
-document.querySelector('#cR .asc h3').textContent='Ya tienes un evento';
-document.getElementById('nC').textContent='Revisa tu WhatsApp';
-document.querySelector('#cR .cdb p').textContent='Te enviamos tu codigo de acceso al WhatsApp '+phone.slice(-4)+'. Si no lo recibes, contacta al salon.';
-document.querySelector('#cR .btn.bgr').style.display='none';return}
+if(existing&&existing.length>0){var ex=existing[0];document.getElementById('nC').textContent=ex.code;document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';document.querySelector('#cR .asc h3').textContent='Ya tienes un evento';document.querySelector('#cR .cdb p').textContent='Este telefono ya tiene un evento registrado. Usa este codigo para entrar:';await loadEvent(ex.code);return}
 const code=gc(),today=new Date().toISOString().slice(0,10);
 const evRes=await sbPost('eventus_events',{code:code,name:n,type:t,date:d,hours:7,total_cost:0,contract_date:today,num_mesas:20,menu_sel:{},phone:cleanPhone,activated:false});if(!evRes){e.textContent='Error al registrar. Intenta de nuevo.';e.style.display='block';return}
-/* Send code via WhatsApp — don't show on screen */
-try{await fetch('https://bot-villaverde.vercel.app/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:code,name:n,eventType:t})})}catch(x){}
-document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';
-document.querySelector('#cR .asc h3').textContent='Registro exitoso!';
-document.getElementById('nC').textContent='Revisa tu WhatsApp';
-document.querySelector('#cR .cdb p').textContent='Te enviamos tu codigo de acceso al WhatsApp terminado en '+phone.slice(-4)+'. Usalo para entrar desde cualquier dispositivo.';
-document.querySelector('#cR .btn.bgr').style.display='none'}catch(err){e.textContent='Error de conexion';e.style.display='block'}}
+localStorage.setItem('eventus_last_reg',String(Date.now()));
+document.getElementById('nC').textContent=code;document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';await loadEvent(code)}catch(err){e.textContent='Error de conexion';e.style.display='block'}}
 function enter(){show()}
 function copyCode(){const code=document.getElementById('nC').textContent;navigator.clipboard.writeText(code).then(function(){toast('Codigo copiado: '+code)}).catch(function(){toast('Error al copiar',1)})}
 
