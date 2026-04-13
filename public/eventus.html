@@ -795,7 +795,7 @@ var existing=await sbGet('eventus_events','or=(phone.eq.'+cleanPhone+',phone.eq.
 if(existing&&existing.length>0){
 /* Phone already has event — send code to their WhatsApp, don't show on screen */
 var ex=existing[0];
-try{await fetch('/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:ex.code,name:n,eventType:t})})}catch(x){}
+try{await fetch('https://bot-villaverde.vercel.app/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:ex.code,name:n,eventType:t})})}catch(x){}
 document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';
 document.querySelector('#cR .asc h3').textContent='Ya tienes un evento';
 document.getElementById('nC').textContent='Revisa tu WhatsApp';
@@ -804,7 +804,7 @@ document.querySelector('#cR .btn.bgr').style.display='none';return}
 const code=gc(),today=new Date().toISOString().slice(0,10);
 const evRes=await sbPost('eventus_events',{code:code,name:n,type:t,date:d,hours:7,total_cost:0,contract_date:today,num_mesas:20,menu_sel:{},phone:cleanPhone,activated:false});if(!evRes){e.textContent='Error al registrar. Intenta de nuevo.';e.style.display='block';return}
 /* Send code via WhatsApp — don't show on screen */
-try{await fetch('/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:code,name:n,eventType:t})})}catch(x){}
+try{await fetch('https://bot-villaverde.vercel.app/api/eventus-send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:cleanPhone,code:code,name:n,eventType:t})})}catch(x){}
 document.getElementById('regS').style.display='none';document.getElementById('cR').style.display='block';
 document.querySelector('#cR .asc h3').textContent='Registro exitoso!';
 document.getElementById('nC').textContent='Revisa tu WhatsApp';
