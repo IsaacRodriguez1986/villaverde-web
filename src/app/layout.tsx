@@ -88,6 +88,103 @@ export default function RootLayout({
                 reviewCount: "500",
                 bestRating: "5",
               },
+              review: [
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "María Guadalupe Hernández" },
+                  datePublished: "2025-11-15",
+                  reviewBody: "Hicimos los XV años de mi hija aquí y fue un sueño hecho realidad. El paquete Diamante incluye todo: cena deliciosa de 3 tiempos, descorche libre, DJ increíble y la batucada fue lo máximo. Las instalaciones son hermosas, los jardines con fuente perfectos para las fotos. El equipo de Villaverde nos hizo sentir en familia. 100% recomendado.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Carlos y Fernanda Martínez" },
+                  datePublished: "2025-09-22",
+                  reviewBody: "Celebramos nuestra boda en Villaverde y fue perfecto. El salón estilo hacienda es elegante, la cena estuvo exquisita y el descorche libre nos ahorró muchísimo. Los meseros muy atentos, la iluminación tipo antro transformó el ambiente para el baile. La escalera principal fue ideal para las fotos. Nuestros invitados siguen hablando del evento.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Profesora Leticia Morales" },
+                  datePublished: "2026-01-10",
+                  reviewBody: "Organizamos la graduación de nuestra generación aquí y salió espectacular. El paquete Premium nos dio todo lo que necesitábamos a un precio muy accesible. La comida de 3 tiempos riquísima, el DJ puso excelente ambiente y el estacionamiento amplio fue un plus enorme para nuestros invitados. Definitivamente regresaremos.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Ana Lucía Ramírez" },
+                  datePublished: "2025-08-05",
+                  reviewBody: "Los XV de mi sobrina quedaron muy bonitos. El salón es amplio y elegante, la comida estuvo bien y el servicio fue bueno. Lo único es que hubiéramos querido un poquito más de tiempo, pero el paquete Premium de 7 horas estuvo bien para el presupuesto. El descorche libre es una gran ventaja contra otros salones de Chalco.",
+                  reviewRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
+                },
+                {
+                  "@type": "Review",
+                  author: { "@type": "Person", name: "Roberto y Diana Sánchez" },
+                  datePublished: "2026-02-14",
+                  reviewBody: "Nuestra boda en Villaverde superó todas las expectativas. Elegimos el paquete Esmeralda y valió cada peso: el grupo en vivo fue increíble, las cortesías como los cabezones y el show de burbujas encantaron a todos, y la cena de 3 tiempos estuvo deliciosa. Los jardines con fuente le dieron un toque mágico a la ceremonia. El mejor salón de Chalco sin duda.",
+                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+                },
+              ],
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Paquetes Todo Incluido",
+                itemListElement: [
+                  {
+                    "@type": "Offer",
+                    name: "Paquete Premium — 7 horas totales",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, estacionamiento, invitación digital y 1 cortesía a elegir. 7 horas totales de evento.",
+                    priceSpecification: {
+                      "@type": "PriceSpecification",
+                      minPrice: "420",
+                      maxPrice: "470",
+                      priceCurrency: "MXN",
+                      unitText: "por persona",
+                    },
+                    eligibleQuantity: {
+                      "@type": "QuantitativeValue",
+                      minValue: 100,
+                      maxValue: 450,
+                      unitText: "invitados",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    name: "Paquete Diamante — 8 horas totales (Más Popular)",
+                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. 8 horas totales de evento.",
+                    priceSpecification: {
+                      "@type": "PriceSpecification",
+                      minPrice: "530",
+                      maxPrice: "580",
+                      priceCurrency: "MXN",
+                      unitText: "por persona",
+                    },
+                    eligibleQuantity: {
+                      "@type": "QuantitativeValue",
+                      minValue: 100,
+                      maxValue: 450,
+                      unitText: "invitados",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    name: "Paquete Esmeralda — 9 horas totales (El Más Completo)",
+                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. 9 horas totales de evento.",
+                    priceSpecification: {
+                      "@type": "PriceSpecification",
+                      minPrice: "680",
+                      maxPrice: "720",
+                      priceCurrency: "MXN",
+                      unitText: "por persona",
+                    },
+                    eligibleQuantity: {
+                      "@type": "QuantitativeValue",
+                      minValue: 100,
+                      maxValue: 450,
+                      unitText: "invitados",
+                    },
+                  },
+                ],
+              },
               priceRange: "$420 - $720 MXN por persona",
               openingHoursSpecification: {
                 "@type": "OpeningHoursSpecification",
@@ -129,7 +226,7 @@ export default function RootLayout({
                   name: "¿Cuánto cuesta un salón de fiestas en Chalco?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "En Salón de Fiestas Villaverde los paquetes todo incluido van desde $420 por persona (Paquete Premium con 150+ invitados) hasta $720 por persona (Paquete Esmeralda). Todos incluyen cena formal, descorche libre, DJ, iluminación y más.",
+                    text: "En Salón de Fiestas Villaverde los paquetes todo incluido van desde $420 por persona (Paquete Premium con 150+ invitados) hasta $720 por persona (Paquete Esmeralda). Todos incluyen cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.",
                   },
                 },
                 {
@@ -137,15 +234,15 @@ export default function RootLayout({
                   name: "¿Qué incluye un paquete todo incluido para XV años?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad hasta 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre, DJ y Maestro de Ceremonias, iluminación tipo antro, batucada, camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED y más.",
+                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.",
                   },
                 },
                 {
                   "@type": "Question",
-                  name: "¿Cuánto se necesita de anticipo para apartar fecha?",
+                  name: "¿Cuánto es el anticipo para apartar mi fecha?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Puedes apartar tu fecha con solo $3,000 MXN de anticipo. El resto se cubre en pagos antes del evento.",
+                    text: "Puedes apartar tu fecha con solo $3,000 MXN de anticipo. El resto se cubre en pagos cómodos antes del evento. Te recomendamos apartar con anticipación ya que las fechas de fin de semana se agotan rápido.",
                   },
                 },
                 {
@@ -153,7 +250,15 @@ export default function RootLayout({
                   name: "¿El salón Villaverde permite descorche libre?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Sí, todos nuestros paquetes (Premium, Diamante y Esmeralda) incluyen descorche libre. Puedes traer tus propias bebidas alcohólicas sin ningún cargo adicional. Además, el paquete incluye botella ¾ por mesa y refresco ilimitado.",
+                    text: "Sí, todos nuestros paquetes (Premium, Diamante y Esmeralda) incluyen descorche libre. Puedes traer tus propias bebidas alcohólicas sin ningún cargo adicional. Además, cada paquete incluye botella ¾ por mesa y refresco con hielo ilimitado durante todo el evento.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "¿Cuántos invitados caben en el salón?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "El Salón de Fiestas Villaverde tiene capacidad para 100 a 450 invitados. Contamos con mesas redondas, sillas Tiffany y amplios jardines con fuente para la recepción.",
                   },
                 },
                 {
@@ -161,15 +266,23 @@ export default function RootLayout({
                   name: "¿Dónde se encuentra el Salón de Fiestas Villaverde?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Estamos ubicados en Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México. Contamos con estacionamiento amplio para tus invitados.",
+                    text: "Estamos en Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México. Contamos con estacionamiento amplio incluido. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.",
                   },
                 },
                 {
                   "@type": "Question",
-                  name: "¿Cuál es la capacidad máxima del salón?",
+                  name: "¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "El Salón de Fiestas Villaverde tiene capacidad de 100 a 450 invitados. Contamos con mesas redondas, sillas Tiffany y amplios jardines con fuente para la recepción.",
+                    text: "El Premium ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 7 horas totales. El Diamante ($530/pp) es el más popular: agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 8 horas totales. El Esmeralda ($680/pp) es el paquete máximo con show de robot, cabina 360, cantante en cena y todas las cortesías incluidas con 9 horas totales.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "¿Puedo agendar una visita para conocer el salón?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Por supuesto. Las visitas son con cita previa de lunes a sábado en horarios de 10am a 12pm y de 3pm a 6pm. Puedes agendar por WhatsApp al 9995485862 y te mostraremos las instalaciones completas: salón, jardines, camerinos, cocina y todo lo que incluyen nuestros paquetes. Las fotos no le hacen justicia, te invitamos a conocernos en persona.",
                   },
                 },
               ],
