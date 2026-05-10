@@ -1,6 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useAnimations } from "./useAnimations";
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+function trackWaLead(category: string) {
+  if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    window.fbq("track", "Lead", {
+      content_name: "whatsapp_click",
+      content_category: category,
+    });
+  }
+}
 
 /* ===== SVG ICON COMPONENTS ===== */
 
@@ -311,6 +328,14 @@ function IconFlower({ size = 20 }: { size?: number }) {
   );
 }
 
+function IconDancer({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="14" cy="3" r="2" /><path d="M16.5 7l-3.5 5 3 3 2 5M10 7l-1.5 5H4m6-5l-3 9" />
+    </svg>
+  );
+}
+
 /* ===== DATA ===== */
 
 const testimonials = [
@@ -347,14 +372,16 @@ const testimonials = [
 ];
 
 const galleryImages = [
-  { src: "https://lh3.googleusercontent.com/d/1ULTFHFO50ZyblmQpaEcgfHUSWhaM-Oy3", alt: "Fachada del Salón de Fiestas Villaverde en Chalco estilo hacienda", className: "wide" },
-  { src: "https://lh3.googleusercontent.com/d/1BLlyoHkWGhy6I0Hp7ZzG2EVe6yEVHm9B", alt: "Interior del salón Villaverde decorado para evento en Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1qE0i254xALH01pZuRA4-41pnoKATtwMC", alt: "Jardines con fuente del salón para bodas y XV años en Chalco", className: "tall" },
-  { src: "https://lh3.googleusercontent.com/d/13Rdtbkgu1ZGpHdiu9t0KS6lG3OjBN0e_", alt: "Montaje de mesas elegantes para banquete en salón Villaverde", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1JH9OgRsPQf0k70Be-2qP1n8BXwT50lKR", alt: "Decoración elegante para boda en salón de fiestas Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA", alt: "Vista panorámica del Salón de Fiestas Villaverde capacidad hasta 450 personas", className: "wide" },
-  { src: "https://lh3.googleusercontent.com/d/166Xx50pqnhCd4CkMRwb3BKzsfuYICHpp", alt: "Pista LED iluminada para XV años en salón Villaverde Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1jRn3R0MimtNoSng13RODuNvFkxty0nhG", alt: "Escalera principal del salón para fotos de quinceañera en Chalco", className: "" },
+  { src: "/fotos/fachada.jpg", alt: "Fachada del Salón de Fiestas Villaverde en Chalco estilo hacienda", className: "wide" },
+  { src: "/fotos/interior.jpg", alt: "Interior del salón Villaverde decorado para evento en Chalco", className: "" },
+  { src: "/fotos/jardines.jpg", alt: "Jardines con fuente del salón para bodas y XV años en Chalco", className: "tall" },
+  { src: "/fotos/mesas.jpg", alt: "Montaje de mesas elegantes para banquete en salón Villaverde", className: "" },
+  { src: "/fotos/decoracion.jpg", alt: "Decoración elegante para boda en salón de fiestas Chalco", className: "" },
+  { src: "/fotos/panoramica.jpg", alt: "Vista panorámica del Salón de Fiestas Villaverde capacidad hasta 450 personas", className: "wide" },
+  { src: "/fotos/pista-led.jpg", alt: "Pista LED iluminada para XV años en salón Villaverde Chalco", className: "" },
+  { src: "/fotos/escalera.jpg", alt: "Escalera principal del salón para fotos de quinceañera en Chalco", className: "" },
+  { src: "/gallery-azul.png", alt: "Quinceañera con vestido azul celeste frente al Salón Villaverde al atardecer", className: "tall" },
+  { src: "/gallery-azul1.png", alt: "Quinceañera con vestido azul rey frente al Salón Villaverde al atardecer", className: "tall" },
 ];
 
 /* ===== COMPONENT ===== */
@@ -368,17 +395,10 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [formError, setFormError] = useState("");
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  // GSAP animations (hero timeline, scroll reveals, countUp, parallax)
+  useAnimations();
 
+  useEffect(() => {
     const handleScroll = () => {
       setShowSticky(window.scrollY > window.innerHeight * 0.3);
     };
@@ -389,7 +409,6 @@ export default function Home() {
     }, 5000);
 
     return () => {
-      observer.disconnect();
       window.removeEventListener("scroll", handleScroll);
       clearInterval(testiInterval);
     };
@@ -420,6 +439,7 @@ export default function Home() {
           href="https://wa.me/529995485862?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackWaLead("promo_bar")}
         >
           APARTAR AHORA →
         </a>
@@ -428,7 +448,7 @@ export default function Home() {
       {/* Nav */}
       <nav className="nav">
         <a href="#inicio" className="nav-logo">
-          Villa<span>verde</span>
+          <img src="/logo-villaverde.png" alt="Salón de Fiestas Villaverde" className="nav-logo-img" />
         </a>
         <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú">
           {menuOpen ? <IconX size={24} /> : <IconMenu size={24} />}
@@ -500,6 +520,30 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Quick CTA — visible sin scroll */}
+      <section className="quick-cta reveal">
+        <div className="section-narrow quick-cta-inner">
+          <div className="quick-cta-text">
+            <h2>Cotiza tu evento en 30 segundos</h2>
+            <p>Escríbenos por WhatsApp y recibe tu cotización personalizada con fotos, paquetes y disponibilidad de fecha.</p>
+            <div className="quick-cta-trust">
+              <span><IconCheck size={14} /> Respuesta en menos de 1 hora</span>
+              <span><IconCheck size={14} /> Sin compromiso</span>
+              <span><IconCheck size={14} /> 138 reseñas en Google</span>
+            </div>
+          </div>
+          <div className="quick-cta-action">
+            <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20mi%20evento%20en%20Villaverde" target="_blank" rel="noopener noreferrer" className="btn-wa-quick" onClick={() => trackWaLead("quick_cta")}>
+              <WhatsAppIcon size={22} /> Cotizar por WhatsApp
+            </a>
+            <span className="quick-cta-or">o</span>
+            <a href="#formulario" className="btn-form-quick">
+              Dejar mis datos y que me contacten
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Eventos */}
       <section className="section reveal">
         <div className="section-narrow">
@@ -509,7 +553,7 @@ export default function Home() {
           <p className="section-sub"></p>
           <div className="events-grid">
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/13fdfyk_4KgzeFUbmc02tqNMOewdHiIO1" alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco" />
+              <Image src="/fotos/xv-anos.jpg" alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco" fill sizes="(max-width: 960px) 100vw, 33vw" style={{objectFit: "cover"}} />
               <div className="event-overlay">
                 <h3>XV Años</h3>
                 <p>La fiesta que siempre soñaste</p>
@@ -517,7 +561,7 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/1gPY-XRFHFsPyvlnDg2NSYlPP6-ubOuqb" alt="Salón para bodas todo incluido en Chalco Estado de México" />
+              <Image src="/fotos/bodas.jpg" alt="Salón para bodas todo incluido en Chalco Estado de México" fill sizes="(max-width: 960px) 100vw, 33vw" style={{objectFit: "cover"}} />
               <div className="event-overlay">
                 <h3>Bodas</h3>
                 <p>El día más especial merece el lugar perfecto</p>
@@ -525,7 +569,7 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/1BAzHGdTpbbc2Gk8Z6wKrtp421A1ZbR59" alt="Fiesta de graduación en salón de fiestas Villaverde Chalco" />
+              <Image src="/fotos/graduaciones.jpg" alt="Fiesta de graduación en salón de fiestas Villaverde Chalco" fill sizes="(max-width: 960px) 100vw, 33vw" style={{objectFit: "cover"}} />
               <div className="event-overlay">
                 <h3>Graduaciones</h3>
                 <p>Celebra tu logro a lo grande</p>
@@ -545,7 +589,7 @@ export default function Home() {
           </p>
           <div className="pkg-grid">
             {/* Premium */}
-            <div className="pkg pkg-premium reveal">
+            <div className="pkg pkg-premium">
               <div className="pkg-head">
                 <div className="pkg-icon"><IconSparkles size={28} /></div>
                 <div className="pkg-name">Premium</div>
@@ -573,20 +617,21 @@ export default function Home() {
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Mesas redondas + sillas Tiffany vestidas (colores básicos)</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Meseros con capitán + personal de recepción</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> DJ todo el evento + Maestro de Ceremonias</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina iluminada para DJ</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Iluminación inteligente tipo antro</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Batucada con globos</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> 2 camerinos privados (XV/novios + chambelanes)</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Estacionamiento amplio</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Invitación digital animada</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Invitación digital animada de regalo</div>
                 <div className="pkg-cort"><IconGift size={16} /> 1 cortesía a elegir de nuestra lista exclusiva</div>
               </div>
-              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20PREMIUM" target="_blank" rel="noopener noreferrer" className="pkg-btn">
+              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20PREMIUM" target="_blank" rel="noopener noreferrer" className="pkg-btn" onClick={() => trackWaLead("Premium")}>
                 Apartar fecha — Premium
               </a>
             </div>
 
             {/* Diamante */}
-            <div className="pkg pkg-diamante reveal">
+            <div className="pkg pkg-diamante">
               <div className="pkg-head">
                 <div className="pkg-badge">Más Popular</div>
                 <div className="pkg-icon"><IconDiamond size={28} /></div>
@@ -595,19 +640,14 @@ export default function Home() {
               </div>
               <div className="pkg-prices">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$580</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-label">Mín. 150 inv.</div>
                   <div className="pkg-price-num">$530</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
               </div>
               <div className="pkg-body">
                 <h4>Todo lo del Premium más</h4>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 7 horas de evento (1 hora extra)</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 7 horas de evento + recepción y desalojo</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Grupo versátil en vivo (5 integrantes)</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina profesional para DJ con iluminación</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Pantalla gigante LED</div>
@@ -616,13 +656,13 @@ export default function Home() {
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Colores de mantelería a elegir</div>
                 <div className="pkg-cort"><IconGift size={16} /><IconGift size={16} /> 2 cortesías a elegir de nuestra lista exclusiva</div>
               </div>
-              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20DIAMANTE" target="_blank" rel="noopener noreferrer" className="pkg-btn">
+              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20DIAMANTE" target="_blank" rel="noopener noreferrer" className="pkg-btn" onClick={() => trackWaLead("Diamante")}>
                 Apartar fecha — Diamante
               </a>
             </div>
 
             {/* Esmeralda */}
-            <div className="pkg pkg-esmeralda reveal">
+            <div className="pkg pkg-esmeralda">
               <div className="pkg-head">
                 <div className="pkg-badge">La joya de la corona</div>
                 <div className="pkg-icon"><IconSparkles size={28} /></div>
@@ -631,33 +671,33 @@ export default function Home() {
               </div>
               <div className="pkg-prices">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$720</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-label">Mín. 150 inv.</div>
                   <div className="pkg-price-num">$680</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
               </div>
               <div className="pkg-body">
                 <h4>Todo lo del Diamante más</h4>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 8 horas de evento (2 horas extra)</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 8 horas de evento + recepción y desalojo</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Grupo versátil de 9 integrantes</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Pista LED iluminada completa</div>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Show de robot con pirotecnia</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Show de robot</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina fotográfica 360 (1 hora)</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Letras gigantes luminosas XV o BODA</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cascada de flores en escalera</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Arco de flores artificiales</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cóctel de bienvenida</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cóctel de bienvenida</div>
+                <h4 style={{ marginTop: "12px" }}>Todas las cortesías incluidas</h4>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cantante durante la cena</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Iluminación LED en cada mesa</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Menú premium personalizado</div>
-                <div className="pkg-cort"><IconGift size={16} /> TODAS las cortesías incluidas sin límite</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cascada de flores en escalera</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Arco de flores (cuadrado o medio punto)</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Inflable o trampolín en jardín</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabezones</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Video remembranza</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Máquina de burbujas</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Servicio de taxi dancer</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Kit para batucada</div>
               </div>
-              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20ESMERALDA" target="_blank" rel="noopener noreferrer" className="pkg-btn">
+              <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20ESMERALDA" target="_blank" rel="noopener noreferrer" className="pkg-btn" onClick={() => trackWaLead("Esmeralda")}>
                 Apartar fecha — Esmeralda
               </a>
             </div>
@@ -678,13 +718,13 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Horas de evento</td><td>7h</td><td>8h</td><td>9h</td></tr>
+                <tr><td>Horas de evento</td><td>6h</td><td>7h</td><td>9h</td></tr>
                 <tr><td>Precio desde</td><td>$420/pp</td><td>$530/pp</td><td>$680/pp</td></tr>
                 <tr><td>Descorche libre</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td></tr>
                 <tr><td>Grupo en vivo</td><td className="compare-x">—</td><td className="compare-check">5 int.</td><td className="compare-check">9 int.</td></tr>
                 <tr><td>Pantalla LED</td><td className="compare-x">—</td><td className="compare-check">Incluida</td><td className="compare-check">Incluida</td></tr>
                 <tr><td>Pista LED</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Incluida</td></tr>
-                <tr><td>Show de robot</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Con pirotecnia</td></tr>
+                <tr><td>Show de robot</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Incluido</td></tr>
                 <tr><td>Cabina 360</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">1 hora</td></tr>
                 <tr><td>Chilaquiles</td><td className="compare-x">—</td><td className="compare-check">Incluidos</td><td className="compare-check">Incluidos</td></tr>
                 <tr><td>Cortesías</td><td>1</td><td>2</td><td>Todas</td></tr>
@@ -693,7 +733,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Mínimo 100 invitados · Estacionamiento amplio incluido
+            Premium: mín. 100 inv. · Diamante y Esmeralda: mín. 150 inv.
             <br />
             <strong>Aparta tu fecha con solo $3,000 de anticipo</strong>
           </div>
@@ -723,10 +763,12 @@ export default function Home() {
               <div className="ce-label">todas incluidas<br /><strong style={{ color: "var(--esmeralda)" }}>Esmeralda</strong></div>
             </div>
           </div>
+          <p className="reveal" style={{ textAlign: "center", fontSize: "15px", color: "var(--esmeralda)", fontWeight: 600, marginBottom: "16px" }}>
+            En el paquete Esmeralda todas estas cortesías ya vienen incluidas
+          </p>
           <div className="cort-grid reveal">
             <div className="cort-item"><span className="ci"><IconFerrisWheel size={20} /></span> Inflable o trampolín en jardín</div>
             <div className="cort-item"><span className="ci"><IconUtensils size={20} /></span> Torna fiesta de chilaquiles</div>
-            <div className="cort-item"><span className="ci"><IconMusic size={20} /></span> Cabina iluminada para DJ</div>
             <div className="cort-item"><span className="ci"><IconLightbulb size={20} /></span> Iluminación LED en mesas</div>
             <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Arco de flores (cuadrado)</div>
             <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Arco de flores (medio punto)</div>
@@ -735,7 +777,9 @@ export default function Home() {
             <div className="cort-item"><span className="ci"><IconVideo size={20} /></span> Video remembranza</div>
             <div className="cort-item"><span className="ci"><IconDroplets size={20} /></span> Máquina de burbujas</div>
             <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Cascada de flores en escalera</div>
-            <div className="cort-item"><span className="ci"><IconBot size={20} /></span> Show de robot (sin pirotecnia)</div>
+            <div className="cort-item"><span className="ci"><IconBot size={20} /></span> Show de robot</div>
+            <div className="cort-item"><span className="ci"><IconDancer size={20} /></span> Servicio de taxi dancer</div>
+            <div className="cort-item"><span className="ci"><IconDrum size={20} /></span> Kit para batucada</div>
           </div>
         </div>
       </section>
@@ -971,46 +1015,42 @@ export default function Home() {
           <p className="section-sub reveal">Servicios adicionales para hacer tu fiesta aún más espectacular</p>
           <div className="extras-grid reveal">
             {[
-              { icon: <IconLightbulb size={28} />, name: "Pista LED", price: "$6,000" },
-              { icon: <IconPartyPopper size={28} />, name: "Cabezones", price: "$600", detail: "c/u" },
-              { icon: <IconCamera size={28} />, name: "Cabina 360", price: "$2,500", detail: "1 hora" },
-              { icon: <IconMonitor size={28} />, name: "Pantalla LED Gigante", price: "$10,000" },
-              { icon: <IconDroplets size={28} />, name: "Burbujas", price: "$6,000" },
-              { icon: <IconType size={28} />, name: "Letras Gigantes", price: "$500", detail: "c/u" },
-              { icon: <IconVideo size={28} />, name: "Video Remembranza", price: "$600" },
-              { icon: <IconChurch size={28} />, name: "Ceremonia Religiosa", price: "$5,000" },
-              { icon: <IconUtensils size={28} />, name: "Torna Fiesta", price: "$4,000", detail: "100 personas" },
-              { icon: <IconClock size={28} />, name: "Hora Extra", price: "$6,000" },
+              { icon: <IconLightbulb size={28} />, name: "Pista LED" },
+              { icon: <IconPartyPopper size={28} />, name: "Cabezones" },
+              { icon: <IconCamera size={28} />, name: "Cabina 360" },
+              { icon: <IconMonitor size={28} />, name: "Pantalla LED Gigante" },
+              { icon: <IconDroplets size={28} />, name: "Burbujas" },
+              { icon: <IconType size={28} />, name: "Letras Gigantes" },
+              { icon: <IconVideo size={28} />, name: "Video Remembranza" },
+              { icon: <IconChurch size={28} />, name: "Ceremonia Religiosa" },
+              { icon: <IconUtensils size={28} />, name: "Torna Fiesta" },
+              { icon: <IconClock size={28} />, name: "Hora Extra" },
             ].map((extra) => (
               <div key={extra.name} className="extra-card">
                 <div className="extra-icon">{extra.icon}</div>
                 <div className="extra-name">{extra.name}</div>
-                <div className="extra-price">{extra.price}</div>
-                {extra.detail && <div className="extra-detail">{extra.detail}</div>}
               </div>
             ))}
           </div>
           <div className="extras-subtitle reveal"><IconMusic size={24} /> Música en Vivo</div>
           <div className="extras-grid reveal">
             {[
-              { icon: <IconMusic size={28} />, name: "Mariachi", price: "$4,000" },
-              { icon: <IconMic size={28} />, name: "Cantante", price: "$15,000" },
-              { icon: <IconDrum size={28} />, name: "Banda 13 int.", price: "$13,000" },
-              { icon: <IconGuitar size={28} />, name: "Grupo 5 int.", price: "$13,000" },
-              { icon: <IconMusic size={28} />, name: "Grupo 9 int.", price: "$10,500" },
-              { icon: <IconMusic size={28} />, name: "Trío", price: "$3,000" },
-              { icon: <IconMusic size={28} />, name: "Norteño 4 int.", price: "$3,000" },
+              { icon: <IconMusic size={28} />, name: "Mariachi" },
+              { icon: <IconMic size={28} />, name: "Cantante" },
+              { icon: <IconDrum size={28} />, name: "Banda 13 int." },
+              { icon: <IconGuitar size={28} />, name: "Grupo 5 int." },
+              { icon: <IconMusic size={28} />, name: "Grupo 9 int." },
+              { icon: <IconMusic size={28} />, name: "Trío" },
+              { icon: <IconMusic size={28} />, name: "Norteño 4 int." },
             ].map((extra) => (
               <div key={extra.name} className="extra-card">
                 <div className="extra-icon">{extra.icon}</div>
                 <div className="extra-name">{extra.name}</div>
-                <div className="extra-price">{extra.price}</div>
               </div>
             ))}
           </div>
           <div className="extra-coctel reveal">
             <h3><IconWine size={24} /> Fiesta Cóctel</h3>
-            <div className="ec-price">$8,600</div>
             <p>
               Para 100 personas — 4 vitroleros de 10 lts (piña colada, azulito,
               mojito frutos rojos, mojito mango) + 100 micheladas de ½ litro con
@@ -1024,6 +1064,18 @@ export default function Home() {
       <section className="section bg-gris">
         <div className="section-narrow">
           <h2 className="section-title reveal">Lo que dicen nuestras familias</h2>
+          {/* Video reseña destacado */}
+          <div className="reveal" style={{ maxWidth: 400, margin: "0 auto 36px", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 32px rgba(219,39,119,0.12)" }}>
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster="/resena-poster.jpg"
+              style={{ width: "100%", display: "block", borderRadius: 16 }}
+            >
+              <source src="/resena.mp4" type="video/mp4" />
+            </video>
+          </div>
           <div className="testi-carousel reveal">
             <button className="testi-nav prev" onClick={() => setCurrentTesti((currentTesti - 1 + testimonials.length) % testimonials.length)} aria-label="Anterior">
               <IconChevronLeft size={20} />
@@ -1099,13 +1151,13 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Cuánto cuesta un salón de fiestas en Chalco?</summary>
               <div className="faq-answer">
-                En Salón de Fiestas Villaverde nuestros paquetes todo incluido van desde <strong>$420 por persona</strong> (Paquete Premium con 150+ invitados) hasta <strong>$720 por persona</strong> (Paquete Esmeralda). Todos incluyen cena formal, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.
+                En Salón de Fiestas Villaverde nuestros paquetes todo incluido van desde <strong>$420 por persona</strong> (Paquete Premium con 150+ invitados) hasta <strong>$680 por persona</strong> (Paquete Esmeralda, mín. 150 invitados). Todos incluyen cena formal, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.
               </div>
             </details>
             <details className="faq-item">
               <summary className="faq-question">¿Qué incluye un paquete todo incluido para XV años?</summary>
               <div className="faq-answer">
-                Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.
+                Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.
               </div>
             </details>
             <details className="faq-item">
@@ -1129,13 +1181,13 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Dónde se encuentra el Salón de Fiestas Villaverde?</summary>
               <div className="faq-answer">
-                Estamos en <strong>Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México</strong>. Contamos con estacionamiento amplio. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.
+                Estamos en <strong>Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México</strong>. Contamos con estacionamiento amplio disponible. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.
               </div>
             </details>
             <details className="faq-item">
               <summary className="faq-question">¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?</summary>
               <div className="faq-answer">
-                El <strong>Premium</strong> ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía. El <strong>Diamante</strong> ($530/pp) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías. El <strong>Esmeralda</strong> ($680/pp) es el paquete máximo con pista LED, show de robot con pirotecnia, cabina 360, cantante en cena y todas las cortesías incluidas.
+                El <strong>Premium</strong> ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir. El <strong>Diamante</strong> ($530/pp) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías a elegir. El <strong>Esmeralda</strong> ($680/pp) es el paquete todo incluido: show de robot, cabina 360, cantante en cena, cabezones, inflable, y todas las cortesías ya integradas en el paquete.
               </div>
             </details>
             <details className="faq-item">
@@ -1161,6 +1213,7 @@ export default function Home() {
               <a
                 href="https://wa.me/529995485862?text=Hola%2C%20acabo%20de%20llenar%20el%20formulario%20en%20su%20p%C3%A1gina"
                 target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ marginTop: "16px", display: "inline-flex" }}
+                onClick={() => trackWaLead("post_form")}
               >
                 <WhatsAppIcon size={18} /> Escribir por WhatsApp
               </a>
@@ -1287,7 +1340,7 @@ export default function Home() {
           <div>
             <h4>Síguenos</h4>
             <div className="footer-social">
-              <a href="https://wa.me/529995485862" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+              <a href="https://wa.me/529995485862" target="_blank" rel="noopener noreferrer" title="WhatsApp" onClick={() => trackWaLead("footer")}>
                 <WhatsAppIcon size={18} />
               </a>
               <a href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" title="Instagram">
@@ -1306,7 +1359,7 @@ export default function Home() {
       </footer>
 
       {/* WhatsApp Float */}
-      <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento" target="_blank" rel="noopener noreferrer" className="wa-float">
+      <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento" target="_blank" rel="noopener noreferrer" className="wa-float" onClick={() => trackWaLead("float_button")}>
         <WhatsAppIcon size={34} />
       </a>
 
