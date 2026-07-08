@@ -25,6 +25,20 @@ const nextConfig: NextConfig = {
         source: "/invitaciones",
         destination: "/invitaciones.html",
       },
+      {
+        source: "/informes",
+        destination: "/informes/index.html",
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: "/informes/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-cache, must-revalidate" },
+        ],
+      },
     ];
   },
 };
