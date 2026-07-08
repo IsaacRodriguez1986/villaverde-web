@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA",
+        url: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/og-cover.jpg",
         width: 1200,
         height: 630,
         alt: "Salón de Fiestas Villaverde en Chalco - Bodas XV Años Graduaciones",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Salón de Fiestas Villaverde — Desde $420/persona",
     description: "Paquetes todo incluido para Bodas, XV Años y Graduaciones en Chalco, Estado de México.",
-    images: ["https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA"],
+    images: ["https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/og-cover.jpg"],
   },
   robots: {
     index: true,
@@ -68,7 +68,7 @@ export default function RootLayout({
               url: "https://www.salondefiestasvillaverde.com",
               telephone: "+529995485862",
               image:
-                "https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA",
+                "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/og-cover.jpg",
               address: {
                 "@type": "PostalAddress",
                 streetAddress:
@@ -107,7 +107,7 @@ export default function RootLayout({
                   "@type": "Review",
                   author: { "@type": "Person", name: "Profesora Leticia Morales" },
                   datePublished: "2026-01-10",
-                  reviewBody: "Organizamos la graduación de nuestra generación aquí y salió espectacular. El paquete Premium nos dio todo lo que necesitábamos a un precio muy accesible. La comida de 3 tiempos riquísima, el DJ puso excelente ambiente y el estacionamiento amplio fue un plus enorme para nuestros invitados. Definitivamente regresaremos.",
+                  reviewBody: "Organizamos la graduación de nuestra generación aquí y salió espectacular. El paquete Premium nos dio todo lo que necesitábamos a un precio muy accesible. La comida de 3 tiempos riquísima, el DJ puso excelente ambiente y todos nuestros invitados la pasaron increíble. Definitivamente regresaremos.",
                   reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
                 },
                 {
@@ -132,7 +132,7 @@ export default function RootLayout({
                   {
                     "@type": "Offer",
                     name: "Paquete Premium — 6 horas totales",
-                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, estacionamiento, invitación digital y 1 cortesía a elegir. 6 horas totales de evento.",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 6 horas totales de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "420",
@@ -234,7 +234,7 @@ export default function RootLayout({
                   name: "¿Qué incluye un paquete todo incluido para XV años?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.",
+                    text: "Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.",
                   },
                 },
                 {
@@ -266,7 +266,7 @@ export default function RootLayout({
                   name: "¿Dónde se encuentra el Salón de Fiestas Villaverde?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Estamos en Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México. Contamos con estacionamiento amplio incluido. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.",
+                    text: "Estamos en Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.",
                   },
                 },
                 {

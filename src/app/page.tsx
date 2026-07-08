@@ -347,14 +347,14 @@ const testimonials = [
 ];
 
 const galleryImages = [
-  { src: "https://lh3.googleusercontent.com/d/1ULTFHFO50ZyblmQpaEcgfHUSWhaM-Oy3", alt: "Fachada del Salón de Fiestas Villaverde en Chalco estilo hacienda", className: "wide" },
-  { src: "https://lh3.googleusercontent.com/d/1BLlyoHkWGhy6I0Hp7ZzG2EVe6yEVHm9B", alt: "Interior del salón Villaverde decorado para evento en Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1qE0i254xALH01pZuRA4-41pnoKATtwMC", alt: "Jardines con fuente del salón para bodas y XV años en Chalco", className: "tall" },
-  { src: "https://lh3.googleusercontent.com/d/13Rdtbkgu1ZGpHdiu9t0KS6lG3OjBN0e_", alt: "Montaje de mesas elegantes para banquete en salón Villaverde", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1JH9OgRsPQf0k70Be-2qP1n8BXwT50lKR", alt: "Decoración elegante para boda en salón de fiestas Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1wy5kl8jPaljjALel4SMNn3LwDfiNOLBA", alt: "Vista panorámica del Salón de Fiestas Villaverde capacidad hasta 450 personas", className: "wide" },
-  { src: "https://lh3.googleusercontent.com/d/166Xx50pqnhCd4CkMRwb3BKzsfuYICHpp", alt: "Pista LED iluminada para XV años en salón Villaverde Chalco", className: "" },
-  { src: "https://lh3.googleusercontent.com/d/1jRn3R0MimtNoSng13RODuNvFkxty0nhG", alt: "Escalera principal del salón para fotos de quinceañera en Chalco", className: "" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/fachada.webp", alt: "Fachada del Salón de Fiestas Villaverde en Chalco estilo hacienda", className: "wide" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/interior.webp", alt: "Interior del salón Villaverde decorado para evento en Chalco", className: "" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/jardines.webp", alt: "Jardines con fuente del salón para bodas y XV años en Chalco", className: "tall" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/montaje.webp", alt: "Montaje de mesas elegantes para banquete en salón Villaverde", className: "" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/boda-decor.webp", alt: "Decoración elegante para boda en salón de fiestas Chalco", className: "" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/panoramica.webp", alt: "Vista panorámica del Salón de Fiestas Villaverde capacidad hasta 450 personas", className: "wide" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/pista-led.webp", alt: "Pista LED iluminada para XV años en salón Villaverde Chalco", className: "" },
+  { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/escalera.webp", alt: "Escalera principal del salón para fotos de quinceañera en Chalco", className: "" },
 ];
 
 /* ===== COMPONENT ===== */
@@ -509,7 +509,7 @@ export default function Home() {
           <p className="section-sub"></p>
           <div className="events-grid">
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/13fdfyk_4KgzeFUbmc02tqNMOewdHiIO1" alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco" />
+              <img src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/xv.webp" alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco" />
               <div className="event-overlay">
                 <h3>XV Años</h3>
                 <p>La fiesta que siempre soñaste</p>
@@ -517,7 +517,7 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/1gPY-XRFHFsPyvlnDg2NSYlPP6-ubOuqb" alt="Salón para bodas todo incluido en Chalco Estado de México" />
+              <img src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/bodas.webp" alt="Salón para bodas todo incluido en Chalco Estado de México" />
               <div className="event-overlay">
                 <h3>Bodas</h3>
                 <p>El día más especial merece el lugar perfecto</p>
@@ -525,7 +525,7 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img src="https://lh3.googleusercontent.com/d/1BAzHGdTpbbc2Gk8Z6wKrtp421A1ZbR59" alt="Fiesta de graduación en salón de fiestas Villaverde Chalco" />
+              <img src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/graduacion.webp" alt="Fiesta de graduación en salón de fiestas Villaverde Chalco" />
               <div className="event-overlay">
                 <h3>Graduaciones</h3>
                 <p>Celebra tu logro a lo grande</p>
@@ -576,7 +576,6 @@ export default function Home() {
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Iluminación inteligente tipo antro</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Batucada con globos</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> 2 camerinos privados (XV/novios + chambelanes)</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Estacionamiento amplio</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Invitación digital animada de regalo</div>
                 <div className="pkg-cort"><IconGift size={16} /> 1 cortesía a elegir de nuestra lista exclusiva</div>
               </div>
@@ -685,7 +684,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Mínimo 100 invitados · Estacionamiento amplio incluido
+            Mínimo 100 invitados
             <br />
             <strong>Aparta tu fecha con solo $3,000 de anticipo</strong>
           </div>
@@ -737,6 +736,21 @@ export default function Home() {
         <div className="section-narrow">
           <h2 className="section-title reveal">Conoce nuestro salón</h2>
           <p className="section-sub reveal">Cada rincón diseñado para que tu evento sea espectacular</p>
+          <div className="reel-wrap reveal">
+            <div className="reel-frame">
+              <span className="reel-badge">Villaverde en video</span>
+              <video
+                src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/videos/reel-villa.mp4"
+                poster="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/brochures/reel-villa-poster.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+              />
+            </div>
+          </div>
           <div className="gallery-grid reveal">
             {galleryImages.map((img, i) => (
               <div key={i} className={`gallery-item ${img.className}`} onClick={() => setLightboxIdx(i)}>
@@ -904,6 +918,8 @@ export default function Home() {
               </div>
             </div>
           )}
+
+          <p className="menu-note reveal">Las verduras se sirven según la temporada del año.</p>
         </div>
       </section>
 
@@ -1048,7 +1064,7 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Qué incluye un paquete todo incluido para XV años?</summary>
               <div className="faq-answer">
-                Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados, estacionamiento e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.
+                Nuestros paquetes para XV años incluyen: salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y Maestro de Ceremonias, iluminación tipo antro, batucada con globos, 2 camerinos privados e invitación digital animada. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED gigante y más espectáculos.
               </div>
             </details>
             <details className="faq-item">
@@ -1072,7 +1088,7 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Dónde se encuentra el Salón de Fiestas Villaverde?</summary>
               <div className="faq-answer">
-                Estamos en <strong>Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México</strong>. Contamos con estacionamiento amplio. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.
+                Estamos en <strong>Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México</strong>. Puedes agendar una visita sin compromiso para conocer nuestras instalaciones.
               </div>
             </details>
             <details className="faq-item">
