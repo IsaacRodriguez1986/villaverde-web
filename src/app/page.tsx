@@ -368,6 +368,13 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [formError, setFormError] = useState("");
 
+  // Solo se cotizan eventos dentro de los próximos 12 meses (los precios se ajustan mensualmente)
+  const fmtMonth = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  const minMonth = fmtMonth(new Date());
+  const maxMonthDate = new Date();
+  maxMonthDate.setMonth(maxMonthDate.getMonth() + 12);
+  const maxMonth = fmtMonth(maxMonthDate);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -1138,12 +1145,13 @@ export default function Home() {
                 const evento = (form.elements.namedItem("evento") as HTMLSelectElement).value;
                 const invitados = (form.elements.namedItem("invitados") as HTMLSelectElement).value;
                 const fecha = (form.elements.namedItem("fecha") as HTMLInputElement).value;
+                const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
 
                 try {
                   const res = await fetch("https://bot-villaverde.vercel.app/api/web-lead", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre, telefono, evento, invitados, fecha }),
+                    body: JSON.stringify({ nombre, telefono, evento, invitados, fecha, email }),
                   });
                   const data = await res.json();
                   if (data.ok) {
@@ -1175,6 +1183,10 @@ export default function Home() {
                   <input type="tel" id="telefono" name="telefono" required placeholder="10 dígitos: 5512345678" pattern="[0-9]{10,13}" title="Ingresa tu número a 10 dígitos" />
                 </div>
                 <div className="form-group">
+                  <label htmlFor="email">Correo (opcional)</label>
+                  <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" />
+                </div>
+                <div className="form-group">
                   <label htmlFor="evento">Tipo de evento</label>
                   <select id="evento" name="evento" required style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }}>
                     <option value="">Selecciona...</option>
@@ -1191,7 +1203,6 @@ export default function Home() {
                   <select id="invitados" name="invitados" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }}>
                     <option value="">Aproximado...</option>
                     <option value="100-149">100 – 149</option>
-                    <option value="100-150">100 – 150</option>
                     <option value="150-200">150 – 200</option>
                     <option value="200-300">200 – 300</option>
                     <option value="300+">300+</option>
@@ -1199,8 +1210,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="form-group" style={{ marginTop: "12px" }}>
-                <label htmlFor="fecha">Fecha tentativa (opcional)</label>
-                <input type="month" id="fecha" name="fecha" min="2026-04" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }} />
+                <label htmlFor="fecha">Fecha tentativa (opcional) — cotizamos eventos dentro de los próximos 12 meses</label>
+                <input type="month" id="fecha" name="fecha" min={minMonth} max={maxMonth} title="Cotizamos eventos dentro de los próximos 12 meses" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }} />
               </div>
               {formError && <p style={{ color: "#ff6b6b", fontSize: "14px", marginTop: "8px" }}>{formError}</p>}
               <button type="submit" className="btn-primary form-submit" disabled={formStatus === "sending"}>
