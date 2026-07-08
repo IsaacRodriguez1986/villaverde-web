@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="/informes/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villaverde · Plataforma de Informes</title>
+
+  <!-- Fuentes self-hosted (offline) — Cormorant Garamond + Mulish -->
+  <link rel="stylesheet" href="assets/vendor/fonts/fonts.css" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#1A0A10" />
+      <text x="50" y="44" font-family="Georgia, serif" font-size="20" fill="#EC1E8C" text-anchor="middle" font-style="italic">Villa</text>
+      <text x="50" y="64" font-family="Georgia, serif" font-size="20" fill="#00C26E" text-anchor="middle" font-style="italic">verde</text>
+    </svg>
+  </template>
+
+  <!-- React + Babel -->
+  <script src="assets/vendor/react.production.min.js"></script>
+  <script src="assets/vendor/react-dom.production.min.js"></script>
+  <script src="assets/vendor/babel.min.js"></script>
+
+  <!-- componente de slots de imagen -->
+  <script src="image-slot.js"></script>
+
+  <!-- datos -->
+  <script src="data.js"></script>
+
+  <!-- componentes y secciones (Babel) -->
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="sections1.jsx"></script>
+  <script type="text/babel" src="sections2.jsx"></script>
+  <script type="text/babel" src="sections3.jsx"></script>
+  <script type="text/babel" src="cotizacion-print.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+
+  <!-- Sonido de burbuja al hacer clic en cualquier parte (Web Audio, sin archivos) -->
+  <script>
+  (function () {
+    var actx = null;
+    function pop() {
+      try {
+        if (!actx) {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          actx = new AC();
+        }
+        if (actx.state === 'suspended') { actx.resume(); }
+        var t = actx.currentTime;
+        var base = 360 + Math.random() * 200;            // jitter de tono = cada pop suena distinto
+        var osc = actx.createOscillator();
+        var gain = actx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(base, t);
+        osc.frequency.exponentialRampToValueAtTime(base * 2.4, t + 0.05); // "bloop" ascendente de burbuja
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.exponentialRampToValueAtTime(0.26, t + 0.006);          // ataque rápido (tronido)
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);         // cola corta
+        osc.connect(gain).connect(actx.destination);
+        osc.start(t);
+        osc.stop(t + 0.16);
+      } catch (e) {}
+    }
+    document.addEventListener('click', pop, true); // captura: suena en CUALQUIER clic
+  })();
+  </script>
+</body>
+</html>
