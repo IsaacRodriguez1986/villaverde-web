@@ -114,7 +114,7 @@ export default function RootLayout({
                   "@type": "Review",
                   author: { "@type": "Person", name: "Ana Lucía Ramírez" },
                   datePublished: "2025-08-05",
-                  reviewBody: "Los XV de mi sobrina quedaron muy bonitos. El salón es amplio y elegante, la comida estuvo bien y el servicio fue bueno. Lo único es que hubiéramos querido un poquito más de tiempo, pero el paquete Premium de 7 horas estuvo bien para el presupuesto. El descorche libre es una gran ventaja contra otros salones de Chalco.",
+                  reviewBody: "Los XV de mi sobrina quedaron muy bonitos. El salón es amplio y elegante, la comida estuvo bien y el servicio fue bueno. Lo único es que hubiéramos querido un poquito más de tiempo, pero el paquete Premium de 6 horas estuvo bien para el presupuesto. El descorche libre es una gran ventaja contra otros salones de Chalco.",
                   reviewRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
                 },
                 {
@@ -131,8 +131,8 @@ export default function RootLayout({
                 itemListElement: [
                   {
                     "@type": "Offer",
-                    name: "Paquete Premium — 7 horas totales",
-                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, estacionamiento, invitación digital y 1 cortesía a elegir. 7 horas totales de evento.",
+                    name: "Paquete Premium — 6 horas totales",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, estacionamiento, invitación digital y 1 cortesía a elegir. 6 horas totales de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "420",
@@ -149,43 +149,43 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Diamante — 8 horas totales (Más Popular)",
-                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. 8 horas totales de evento.",
+                    name: "Paquete Diamante — 7 horas totales (Más Popular)",
+                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 150 invitados. 7 horas totales de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "530",
-                      maxPrice: "580",
+                      maxPrice: "530",
                       priceCurrency: "MXN",
                       unitText: "por persona",
                     },
                     eligibleQuantity: {
                       "@type": "QuantitativeValue",
-                      minValue: 100,
+                      minValue: 150,
                       maxValue: 450,
                       unitText: "invitados",
                     },
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Esmeralda — 9 horas totales (El Más Completo)",
-                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. 9 horas totales de evento.",
+                    name: "Paquete Esmeralda — 8 horas totales (El Más Completo)",
+                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 150 invitados. 8 horas totales de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "680",
-                      maxPrice: "720",
+                      maxPrice: "680",
                       priceCurrency: "MXN",
                       unitText: "por persona",
                     },
                     eligibleQuantity: {
                       "@type": "QuantitativeValue",
-                      minValue: 100,
+                      minValue: 150,
                       maxValue: 450,
                       unitText: "invitados",
                     },
                   },
                 ],
               },
-              priceRange: "$420 - $720 MXN por persona",
+              priceRange: "$420 - $680 MXN por persona",
               openingHoursSpecification: {
                 "@type": "OpeningHoursSpecification",
                 dayOfWeek: [
@@ -226,7 +226,7 @@ export default function RootLayout({
                   name: "¿Cuánto cuesta un salón de fiestas en Chalco?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "En Salón de Fiestas Villaverde los paquetes todo incluido van desde $420 por persona (Paquete Premium con 150+ invitados) hasta $720 por persona (Paquete Esmeralda). Todos incluyen cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.",
+                    text: "En Salón de Fiestas Villaverde los paquetes todo incluido van desde $420 por persona (Paquete Premium con 150+ invitados) hasta $680 por persona (Paquete Esmeralda). Todos incluyen cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.",
                   },
                 },
                 {
@@ -274,7 +274,7 @@ export default function RootLayout({
                   name: "¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "El Premium ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 7 horas totales. El Diamante ($530/pp) es el más popular: agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 8 horas totales. El Esmeralda ($680/pp) es el paquete máximo con show de robot, cabina 360, cantante en cena y todas las cortesías incluidas con 9 horas totales.",
+                    text: "El Premium ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 6 horas totales. El Diamante ($530/pp, desde 150 invitados) es el más popular: agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 7 horas totales. El Esmeralda ($680/pp, desde 150 invitados) es el paquete máximo con show de robot, cabina 360, cantante en cena y todas las cortesías incluidas con 8 horas totales.",
                   },
                 },
                 {

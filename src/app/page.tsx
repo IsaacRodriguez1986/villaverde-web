@@ -565,7 +565,7 @@ export default function Home() {
               </div>
               <div className="pkg-body">
                 <h4>Incluye</h4>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> 6 horas de evento + recepción y desalojo</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> 6 horas totales (6h evento + 30min recepción + 30min desalojo)</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cena formal de 3 tiempos (crema + plato fuerte + guarnición)</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Refresco y hielo ilimitado todo el evento</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Descorche libre — trae tus bebidas sin cargo</div>
@@ -593,21 +593,16 @@ export default function Home() {
                 <div className="pkg-name">Diamante</div>
                 <div className="pkg-tag">El paquete estrella de Villaverde</div>
               </div>
-              <div className="pkg-prices">
+              <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$580</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-label">Desde 150 inv.</div>
                   <div className="pkg-price-num">$530</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
               </div>
               <div className="pkg-body">
                 <h4>Todo lo del Premium más</h4>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 7 horas de evento (1 hora extra)</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 7 horas totales (7h evento + 30min recepción + 30min desalojo)</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Grupo versátil en vivo (5 integrantes)</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina profesional para DJ con iluminación</div>
                 <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Pantalla gigante LED</div>
@@ -629,33 +624,31 @@ export default function Home() {
                 <div className="pkg-name">Esmeralda</div>
                 <div className="pkg-tag">La fiesta perfecta sin límites</div>
               </div>
-              <div className="pkg-prices">
+              <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$720</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-label">Desde 150 inv.</div>
                   <div className="pkg-price-num">$680</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
               </div>
               <div className="pkg-body">
                 <h4>Todo lo del Diamante más</h4>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 8 horas de evento (2 horas extra)</div>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Grupo versátil de 9 integrantes</div>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Pista LED iluminada completa</div>
-                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Show de robot con pirotecnia</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina fotográfica 360 (1 hora)</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Letras gigantes luminosas XV o BODA</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cascada de flores en escalera</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Arco de flores artificiales</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> 8 horas totales (8h evento + 30min recepción + 30min desalojo)</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Grupo versátil 9 integrantes</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabina foto 360 (1 hora)</div>
+                <div className="pkg-feat hi"><span className="ck"><IconCheck size={10} /></span> Show de robot</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cóctel de bienvenida</div>
                 <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cantante durante la cena</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Iluminación LED en cada mesa</div>
-                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Menú premium personalizado</div>
-                <div className="pkg-cort"><IconGift size={16} /> TODAS las cortesías incluidas sin límite</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cascada flores en escalera</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Inflable o trampolín</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Video remembranza</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Taxi dancer</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> LED en cada mesa</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Arco de flores</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Cabezones</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Máquina de burbujas</div>
+                <div className="pkg-feat"><span className="ck"><IconCheck size={10} /></span> Batucada con globos</div>
+                <div className="pkg-cort"><IconGift size={16} /> Paquete todo incluido</div>
               </div>
               <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20ESMERALDA" target="_blank" rel="noopener noreferrer" className="pkg-btn">
                 Apartar fecha — Esmeralda
@@ -678,13 +671,12 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Horas de evento</td><td>7h</td><td>8h</td><td>9h</td></tr>
+                <tr><td>Horas totales</td><td>6h</td><td>7h</td><td>8h</td></tr>
                 <tr><td>Precio desde</td><td>$420/pp</td><td>$530/pp</td><td>$680/pp</td></tr>
                 <tr><td>Descorche libre</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td><td className="compare-check">Incluido</td></tr>
                 <tr><td>Grupo en vivo</td><td className="compare-x">—</td><td className="compare-check">5 int.</td><td className="compare-check">9 int.</td></tr>
                 <tr><td>Pantalla LED</td><td className="compare-x">—</td><td className="compare-check">Incluida</td><td className="compare-check">Incluida</td></tr>
-                <tr><td>Pista LED</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Incluida</td></tr>
-                <tr><td>Show de robot</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Con pirotecnia</td></tr>
+                <tr><td>Show de robot</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">Incluido</td></tr>
                 <tr><td>Cabina 360</td><td className="compare-x">—</td><td className="compare-x">—</td><td className="compare-check">1 hora</td></tr>
                 <tr><td>Chilaquiles</td><td className="compare-x">—</td><td className="compare-check">Incluidos</td><td className="compare-check">Incluidos</td></tr>
                 <tr><td>Cortesías</td><td>1</td><td>2</td><td>Todas</td></tr>
@@ -724,18 +716,18 @@ export default function Home() {
             </div>
           </div>
           <div className="cort-grid reveal">
-            <div className="cort-item"><span className="ci"><IconFerrisWheel size={20} /></span> Inflable o trampolín en jardín</div>
-            <div className="cort-item"><span className="ci"><IconUtensils size={20} /></span> Torna fiesta de chilaquiles</div>
-            <div className="cort-item"><span className="ci"><IconMusic size={20} /></span> Cabina iluminada para DJ</div>
+            <div className="cort-item"><span className="ci"><IconFerrisWheel size={20} /></span> Inflable / trampolín en jardín</div>
             <div className="cort-item"><span className="ci"><IconLightbulb size={20} /></span> Iluminación LED en mesas</div>
-            <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Arco de flores (cuadrado)</div>
-            <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Arco de flores (medio punto)</div>
             <div className="cort-item"><span className="ci"><IconMic size={20} /></span> Cantante durante la cena</div>
-            <div className="cort-item"><span className="ci"><IconPartyPopper size={20} /></span> Cabezones</div>
             <div className="cort-item"><span className="ci"><IconVideo size={20} /></span> Video remembranza</div>
+            <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Cascada flores en escalera</div>
+            <div className="cort-item"><span className="ci"><IconMusic size={20} /></span> Servicio de taxi dancer</div>
+            <div className="cort-item"><span className="ci"><IconUtensils size={20} /></span> Torna fiesta de chilaquiles</div>
+            <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Arco de flores</div>
+            <div className="cort-item"><span className="ci"><IconPartyPopper size={20} /></span> Cabezones bailarines</div>
             <div className="cort-item"><span className="ci"><IconDroplets size={20} /></span> Máquina de burbujas</div>
-            <div className="cort-item"><span className="ci"><IconFlower size={20} /></span> Cascada de flores en escalera</div>
-            <div className="cort-item"><span className="ci"><IconBot size={20} /></span> Show de robot (sin pirotecnia)</div>
+            <div className="cort-item"><span className="ci"><IconBot size={20} /></span> Robot show (sin pirotecnia)</div>
+            <div className="cort-item"><span className="ci"><IconType size={20} /></span> Letras iluminadas</div>
           </div>
         </div>
       </section>
@@ -843,7 +835,7 @@ export default function Home() {
             <div className="menu-content active">
               <h3>Entradas</h3>
               <div className="menu-items">
-                {["Coctel de frutas con coco", "Volovanes (2)", "Ensalada de atún", "Flor de calabaza con queso", "Melón al oporto", "Rollos de jamón con ensalada rusa", "Pepino relleno de atún", "Jitomate relleno de atún", "Pimiento relleno de pollo"].map((item) => (
+                {["Coctel de frutas", "Volovanes", "Ensaladas", "Melón"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
@@ -854,7 +846,7 @@ export default function Home() {
             <div className="menu-content active">
               <h3>Cremas</h3>
               <div className="menu-items">
-                {["Elote", "Nuez", "Champiñones", "Chile poblano con elote", "Brócoli", "Almendras", "Pimiento morrón", "Zanahoria", "Flor de calabaza", "Cilantro", "Calabaza", "Coliflor", "Espinacas", "Espárragos", "Ejote", "Chícharos"].map((item) => (
+                {["Elote", "Nuez", "Champiñones", "Chile poblano"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
               </div>
@@ -863,19 +855,11 @@ export default function Home() {
 
           {activeMenu === "pasta" && (
             <div className="menu-content active">
-              <h3>Pasta y Espagueti</h3>
-              <div className="menu-subsection">
-                <h4>Codito</h4>
-                <div className="menu-items">
-                  {["Con crema y jamón", "Con atún", "A la poblana", "A la crema con espinaca", "Con jamón y queso", "A la hawaiana", "Al chipotle", "A la boloñesa", "A la italiana", "Con jamón y gratín"].map((item) => (
-                    <span key={item} className="menu-item">{item}</span>
-                  ))}
-                </div>
-              </div>
+              <h3>Pasta</h3>
               <div className="menu-subsection">
                 <h4>Espagueti</h4>
                 <div className="menu-items">
-                  {["A la italiana", "A la jardinera", "A la hawaiana", "A la poblana", "A la boloñesa", "Con chorizo", "A la francesa", "A la florentina", "A la mantequilla", "Al chipotle", "Al gratín", "A la salsa rosa"].map((item) => (
+                  {["A la italiana", "A la boloñesa", "A la hawaiana", "A la poblana"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
@@ -887,44 +871,20 @@ export default function Home() {
             <div className="menu-content active">
               <h3>Pollo</h3>
               <div className="menu-items">
-                {["Almendrado", "Al pimiento morrón", "En carnitas", "En crema de chipotle", "En mixiotes con nopales", "En vino blanco", "En achiote", "A la naranja", "En adobo", "A la ciruela", "En crema de nuez", "Enchilado", "En mole poblano", "En mole verde", "En crema de champiñones", "A la jardinera", "A la piña", "A los 3 chiles"].map((item) => (
+                {["Almendrado", "A la naranja", "Adobado", "Cordon Blue"].map((item) => (
                   <span key={item} className="menu-item">{item}</span>
                 ))}
-              </div>
-              <div className="menu-subsection">
-                <h4>Pechugas Cordon Blue rellenas de:</h4>
-                <div className="menu-items">
-                  {["Jamón y queso amarillo", "Huitlacoche c/ queso", "Flor de calabaza c/ queso", "Ensalada rusa", "Calabacitas con cebolla en vino blanco"].map((item) => (
-                    <span key={item} className="menu-item">{item}</span>
-                  ))}
-                </div>
-                <p style={{ textAlign: "center", fontSize: "13px", color: "var(--gris-text)", marginTop: "10px" }}>
-                  Con baño de crema de: champiñones, chipotle o tres quesos
-                </p>
               </div>
             </div>
           )}
 
           {activeMenu === "cerdo" && (
             <div className="menu-content active">
-              <h3>Cerdo</h3>
-              <div className="menu-items">
-                {["Carnitas", "Pierna en adobo", "Pierna con champiñones"].map((item) => (
-                  <span key={item} className="menu-item">{item}</span>
-                ))}
-              </div>
+              <h3>Cerdito</h3>
               <div className="menu-subsection">
-                <h4>Lomo en:</h4>
+                <h4>Lomo:</h4>
                 <div className="menu-items">
-                  {["Adobo", "Enchilado", "Almendrado", "Crema de chipotle", "Mole poblano", "A la naranja", "A la jardinera", "A la ciruela", "Crema con champiñones", "Envinado", "A la piña", "A los tres chiles"].map((item) => (
-                    <span key={item} className="menu-item">{item}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="menu-subsection">
-                <h4>También disponible:</h4>
-                <div className="menu-items">
-                  {["Chuleta ahumada en chipotle", "Chuleta ahumada en piña"].map((item) => (
+                  {["Enchilado", "Envinado", "A los tres chiles"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
@@ -934,27 +894,10 @@ export default function Home() {
 
           {activeMenu === "guarn" && (
             <div className="menu-content active">
-              <h3>Guarniciones y Arroz</h3>
+              <h3>Guarniciones</h3>
               <div className="menu-subsection">
-                <h4>Guarniciones</h4>
                 <div className="menu-items">
-                  {["Ensalada rusa", "Puré de papa", "Ensalada de zanahoria con piña", "Ensalada de manzana con piña", "Verduras a la mantequilla", "Ensalada de pepino", "Papas a la mantequilla", "Frijoles refritos o charros", "Nopales en escabeche", "Rajas con crema", "Ensalada Waldorf"].map((item) => (
-                    <span key={item} className="menu-item">{item}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="menu-subsection">
-                <h4>Arroz</h4>
-                <div className="menu-items">
-                  {["Mexicano", "Poblano", "Jardinero", "Blanco", "Risotto español"].map((item) => (
-                    <span key={item} className="menu-item">{item}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="menu-subsection">
-                <h4>Consomé</h4>
-                <div className="menu-items">
-                  {["Pollo", "Res"].map((item) => (
+                  {["Puré de papa", "Ensalada de manzana", "Papas a la mantequilla"].map((item) => (
                     <span key={item} className="menu-item">{item}</span>
                   ))}
                 </div>
@@ -1099,7 +1042,7 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Cuánto cuesta un salón de fiestas en Chalco?</summary>
               <div className="faq-answer">
-                En Salón de Fiestas Villaverde nuestros paquetes todo incluido van desde <strong>$420 por persona</strong> (Paquete Premium con 150+ invitados) hasta <strong>$720 por persona</strong> (Paquete Esmeralda). Todos incluyen cena formal, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.
+                En Salón de Fiestas Villaverde nuestros paquetes todo incluido van desde <strong>$420 por persona</strong> (Paquete Premium con 150+ invitados) hasta <strong>$680 por persona</strong> (Paquete Esmeralda). Todos incluyen cena formal, descorche libre, DJ, iluminación inteligente, meseros y más. Sin costos ocultos.
               </div>
             </details>
             <details className="faq-item">
@@ -1135,7 +1078,7 @@ export default function Home() {
             <details className="faq-item">
               <summary className="faq-question">¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?</summary>
               <div className="faq-answer">
-                El <strong>Premium</strong> ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía. El <strong>Diamante</strong> ($530/pp) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías. El <strong>Esmeralda</strong> ($680/pp) es el paquete máximo con pista LED, show de robot con pirotecnia, cabina 360, cantante en cena y todas las cortesías incluidas.
+                El <strong>Premium</strong> ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía. El <strong>Diamante</strong> ($530/pp) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías. El <strong>Esmeralda</strong> ($680/pp) es el paquete máximo con show de robot, cabina 360, cantante en cena y todas las cortesías incluidas.
               </div>
             </details>
             <details className="faq-item">
