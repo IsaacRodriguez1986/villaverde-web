@@ -1,0 +1,48 @@
+TEMÁTICAS DEL INFORME  ·  cómo agregar / rellenar
+==================================================
+
+Cada temática aparece como una tarjeta en el paso "El Salón" del informe.
+Al hacer click se abre un visor a pantalla completa con SUS fotos y videos.
+
+La lista de temáticas vive en:   ../data.js   ->   VV.TEMATICAS
+Las fotos/videos de cada una viven en:   assets/tematicas/<id>/
+
+
+PARA CAMBIAR LAS FOTOS DE UNA TEMÁTICA QUE YA EXISTE
+----------------------------------------------------
+1) Entra a la carpeta de esa temática, p.ej.  assets/tematicas/alicia/
+2) Sobrescribe los archivos con los mismos nombres (01.jpg, 02.jpg, ...).
+   -> No hay que tocar código. Las nuevas fotos salen solas.
+
+   * OJO — Alicia trae fotos de RELLENO por ahora (mesas LED / iluminación)
+     solo para que se vea funcionando. Reemplázalas por las reales.
+   * El VIDEO de Alicia es de ejemplo (usa assets/cantante-cena.mp4). Para el
+     real: mete tu archivo en assets/tematicas/alicia/video.mp4 y en data.js
+     cambia   video: 'assets/cantante-cena.mp4'
+     por      video: 'assets/tematicas/alicia/video.mp4'
+
+
+PARA AGREGAR UNA TEMÁTICA NUEVA
+-------------------------------
+1) Crea la carpeta:   assets/tematicas/<id>/   (id en minúsculas y sin espacios,
+   p.ej. "mexicana", "hollywood", "neon")
+2) Mete ahí sus fotos (01.jpg, 02.jpg, ...) y su video opcional (video.mp4).
+3) En ../data.js agrega un bloque a VV.TEMATICAS:
+
+     { id: 'mexicana', name: 'Fiesta Mexicana',
+       // video: 'assets/tematicas/mexicana/video.mp4',   // opcional
+       gallery: [
+         'assets/tematicas/mexicana/01.jpg',
+         'assets/tematicas/mexicana/02.jpg',
+       ] },
+
+   - La PRIMERA foto de gallery se usa como portada de la tarjeta.
+   - Formatos: fotos .jpg/.png ; video .mp4 (H.264). Videos ligeros (<16 MB ideal).
+   - Una temática con  gallery: []  se ve en gris ("Próximamente") y no abre.
+
+
+NOTAS
+-----
+- Fuente de la verdad de este informe = este repo (villaverde-web).
+  NO reconstruir desde el proyecto viejo de Claude Design (quedó atrás).
+- Para publicar cambios:  npx -y vercel --prod --yes   desde villaverde-web/

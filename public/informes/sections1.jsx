@@ -75,6 +75,7 @@ function SecSalon() {
   const [sid, setSid] = useState(() => localStorage.getItem('vv_salon') || 'villaverde');
   useEffect(() => { localStorage.setItem('vv_salon', sid); }, [sid]);
   const sal = SALONES.find(s => s.id === sid);
+  const [temaOpen, setTemaOpen] = useState(null);
 
   const amen = [
     { icon: 'users', t: `Hasta ${sal.cap} invitados`, s: 'Capacidad cómoda y holgada' },
@@ -107,6 +108,46 @@ function SecSalon() {
       </div>
 
       <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--vv-muted)', maxWidth: 720, margin: '0 0 24px' }}>{sal.desc}</p>
+
+      {/* ---- TEMÁTICAS QUE HEMOS AMBIENTADO ---- */}
+      {temaOpen && <GaleriaLightbox media={temaOpen} onClose={() => setTemaOpen(null)} />}
+      <div style={{ margin: '0 0 34px' }}>
+        <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+          Temáticas que hemos <em>ambientado</em>
+        </h2>
+        <p className="vv-lead" style={{ marginBottom: 16 }}>Fiestas reales que hemos montado. Toca una para ver sus fotos y videos.</p>
+        <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+          {(VV.TEMATICAS || []).map(tm => {
+            const media = [
+              ...(tm.video ? [{ video: tm.video, poster: (tm.gallery && tm.gallery[0]) || undefined }] : []),
+              ...(tm.gallery || []),
+            ];
+            const hasMedia = media.length > 0;
+            const cover = tm.gallery && tm.gallery.length ? tm.gallery[0] : null;
+            const n = tm.gallery ? tm.gallery.length : 0;
+            return (
+              <button key={tm.id}
+                onClick={() => hasMedia && setTemaOpen(media)}
+                disabled={!hasMedia}
+                className={'vv-tema' + (hasMedia ? '' : ' is-soon')}
+                title={hasMedia ? ('Ver galería · ' + tm.name) : 'Próximamente'}>
+                <span className={'vv-tema__cover' + (cover ? '' : ' is-plain')}
+                  style={cover ? { backgroundImage: `url(${cover})` } : undefined}>
+                  <span className="vv-tema__grad"></span>
+                  {!hasMedia && <span className="vv-tema__soon">Próximamente</span>}
+                  {hasMedia && (
+                    <span className="vv-tema__count">
+                      <Icon name={tm.video ? 'play' : 'camera'} size={13} />
+                      {tm.video ? (n ? `video + ${n}` : 'video') : `${n} foto${n > 1 ? 's' : ''}`}
+                    </span>
+                  )}
+                </span>
+                <span className="vv-tema__name">{tm.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {sal.pano ? (
         /* Panorámica full-width (Gardenia) */

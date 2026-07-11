@@ -671,6 +671,53 @@ image-slot { cursor: zoom-in; }
 }
 
 /* ===========================================================
+   TEMÁTICAS (tarjetas de galería · paso Salón)
+   =========================================================== */
+.vv-tema {
+  position: relative; text-align: left; cursor: pointer;
+  display: flex; flex-direction: column;
+  background: var(--vv-cream);
+  border: 1px solid var(--vv-line);
+  border-radius: var(--vv-radius);
+  padding: 0; overflow: hidden;
+  box-shadow: var(--vv-shadow-sm);
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.vv-tema:hover { transform: translateY(-3px); box-shadow: var(--vv-shadow-md); border-color: var(--vv-crimson); }
+.vv-tema:active { transform: scale(.97); }
+.vv-tema.is-soon { cursor: default; opacity: .6; }
+.vv-tema.is-soon:hover { transform: none; box-shadow: var(--vv-shadow-sm); border-color: var(--vv-line); }
+.vv-tema__cover {
+  display: block; position: relative; height: 128px;
+  background-size: cover; background-position: center;
+  background-color: var(--vv-paper-2);
+}
+.vv-tema__cover.is-plain {
+  background-image: repeating-linear-gradient(45deg, var(--vv-paper-2) 0 12px, var(--vv-paper) 12px 24px);
+}
+.vv-tema__grad {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(26,10,16,.05) 0%, rgba(26,10,16,.10) 55%, rgba(26,10,16,.44) 100%);
+}
+.vv-tema__count {
+  position: absolute; left: 10px; bottom: 8px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 999px;
+  background: rgba(0,0,0,.55); color: #fff; backdrop-filter: blur(4px);
+  font-size: 11px; font-weight: 700; letter-spacing: .2px;
+}
+.vv-tema__soon {
+  position: absolute; left: 10px; top: 10px; z-index: 1;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(0,0,0,.35); color: #fff; backdrop-filter: blur(4px);
+  font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+}
+.vv-tema__name {
+  padding: 11px 14px 13px; font-weight: 800; font-size: 14px; line-height: 1.25;
+  color: var(--vv-ink);
+}
+
+/* ===========================================================
    PAQUETES
    =========================================================== */
 .vv-pkg {

@@ -195,6 +195,36 @@ VV.CORTESIAS = [
     gallery: ['assets/ceremonia-religiosa.jpg'] },
 ];
 
+/* ---------- TEMÁTICAS QUE HEMOS AMBIENTADO (galería por temática) ----------
+   Cada temática abre el visor GaleriaLightbox con SUS fotos y videos.
+   La primera foto de `gallery` se usa como portada de la tarjeta.
+   Una temática con `gallery` vacío se muestra en gris ("Próximamente").
+
+   Para agregar o rellenar una temática:
+   1) Crea la carpeta  assets/tematicas/<id>/  y mete ahí sus fotos/videos.
+   2) Lista las rutas en `gallery` (y `video` opcional).
+   Basta sobrescribir los archivos con los mismos nombres para cambiar las fotos
+   —sin tocar este archivo. Ver assets/tematicas/LEEME.txt. */
+VV.TEMATICAS = [
+  { id: 'alicia', name: 'Alicia en el País de las Maravillas',
+    // Video de EJEMPLO (reutiliza un video existente para que veas fotos+video ya funcionando).
+    // Cuando tengas el video real de esta temática, ponlo en assets/tematicas/alicia/video.mp4
+    // y cambia esta ruta por 'assets/tematicas/alicia/video.mp4'.
+    video: 'assets/cantante-cena.mp4',
+    // Fotos de RELLENO — reemplázalas por las reales (mismos nombres 01..04.jpg).
+    gallery: [
+      'assets/tematicas/alicia/01.jpg',
+      'assets/tematicas/alicia/02.jpg',
+      'assets/tematicas/alicia/03.jpg',
+      'assets/tematicas/alicia/04.jpg',
+    ] },
+
+  // Ejemplos vacíos: se ven en gris "Próximamente" hasta que tengan fotos.
+  // Renómbralos con tus temáticas reales y llénales la carpeta + gallery.
+  { id: 'glow',   name: 'Glow / Neón',      gallery: [] },
+  { id: 'jardin', name: 'Jardín Encantado', gallery: [] },
+];
+
 /* ---------- COMPLEMENTA TU EVENTO ---------- */
 VV.COMPLEMENTOS = ['Pista LED', 'Pantalla LED gigante', 'Video remembranza', '1 hora extra', 'Cabezones', 'Burbujas', 'Ceremonia', 'Cabina foto 360°', 'Letras gigantes', 'Torna fiesta'];
 VV.MUSICA = ['Mariachi', 'Banda', 'Grupo 5 o 9 integrantes', 'Trío', 'Norteño', 'Cantante'];
