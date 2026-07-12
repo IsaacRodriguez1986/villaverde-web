@@ -1021,6 +1021,7 @@ html { -webkit-tap-highlight-color: transparent; }
 /* — Foco visible por teclado (asesor que navega con tab) — */
 .vv-btn:focus-visible, .vv-navbtn:focus-visible, .vv-qpick:focus-visible, .vv-pkgtab:focus-visible,
 .vv-salontab:focus-visible, .vv-cortesia:focus-visible, .vv-pkgitem:focus-visible,
+.vv-tema:focus-visible,
 .vv-day:focus-visible, .vv-step:focus-visible {
   outline: 2px solid var(--vv-crimson); outline-offset: 2px;
 }

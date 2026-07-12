@@ -197,7 +197,8 @@ VV.CORTESIAS = [
 
 /* ---------- TEMÁTICAS QUE HEMOS AMBIENTADO (galería por temática) ----------
    Cada temática abre el visor GaleriaLightbox con SUS fotos y videos.
-   La primera foto de `gallery` se usa como portada de la tarjeta.
+   La primera foto de `gallery` se usa como portada (o define `cover: 'ruta.jpg'`
+   para una portada explícita — útil si la temática es solo video).
    Una temática con `gallery` vacío se muestra en gris ("Próximamente").
 
    Para agregar o rellenar una temática:

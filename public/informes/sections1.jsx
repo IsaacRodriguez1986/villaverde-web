@@ -118,18 +118,22 @@ function SecSalon() {
         <p className="vv-lead" style={{ marginBottom: 16 }}>Fiestas reales que hemos montado. Toca una para ver sus fotos y videos.</p>
         <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
           {(VV.TEMATICAS || []).map(tm => {
+            const cover = tm.cover || (tm.gallery && tm.gallery.length ? tm.gallery[0] : null);
             const media = [
-              ...(tm.video ? [{ video: tm.video, poster: (tm.gallery && tm.gallery[0]) || undefined }] : []),
+              ...(tm.video ? [{ video: tm.video, poster: cover || undefined }] : []),
               ...(tm.gallery || []),
             ];
             const hasMedia = media.length > 0;
-            const cover = tm.gallery && tm.gallery.length ? tm.gallery[0] : null;
             const n = tm.gallery ? tm.gallery.length : 0;
+            const label = tm.video
+              ? (n ? `video + ${n} foto${n > 1 ? 's' : ''}` : 'video')
+              : `${n} foto${n > 1 ? 's' : ''}`;
             return (
               <button key={tm.id}
                 onClick={() => hasMedia && setTemaOpen(media)}
                 disabled={!hasMedia}
                 className={'vv-tema' + (hasMedia ? '' : ' is-soon')}
+                aria-label={hasMedia ? `Ver galería de ${tm.name} (${label})` : `${tm.name} — próximamente`}
                 title={hasMedia ? ('Ver galería · ' + tm.name) : 'Próximamente'}>
                 <span className={'vv-tema__cover' + (cover ? '' : ' is-plain')}
                   style={cover ? { backgroundImage: `url(${cover})` } : undefined}>
@@ -138,7 +142,7 @@ function SecSalon() {
                   {hasMedia && (
                     <span className="vv-tema__count">
                       <Icon name={tm.video ? 'play' : 'camera'} size={13} />
-                      {tm.video ? (n ? `video + ${n}` : 'video') : `${n} foto${n > 1 ? 's' : ''}`}
+                      {label}
                     </span>
                   )}
                 </span>
