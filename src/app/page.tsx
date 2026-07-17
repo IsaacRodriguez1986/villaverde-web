@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ===== SVG ICON COMPONENTS ===== */
 
@@ -367,6 +367,8 @@ export default function Home() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [formError, setFormError] = useState("");
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
 
   // Solo se cotizan eventos dentro de los próximos 12 meses (los precios se ajustan mensualmente)
   const fmtMonth = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
@@ -418,6 +420,15 @@ export default function Home() {
     };
   }, [lightboxIdx]);
 
+  // Move focus into the lightbox when it opens, restore it to the trigger on close
+  useEffect(() => {
+    if (lightboxIdx !== null) {
+      lightboxRef.current?.focus();
+    } else {
+      lastGalleryFocusRef.current?.focus();
+    }
+  }, [lightboxIdx]);
+
   return (
     <>
       {/* Promo Bar */}
@@ -437,7 +448,7 @@ export default function Home() {
         <a href="#inicio" className="nav-logo">
           Villa<span>verde</span>
         </a>
-        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú">
+        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú" aria-expanded={menuOpen}>
           {menuOpen ? <IconX size={24} /> : <IconMenu size={24} />}
         </button>
         <div className={`nav-links${menuOpen ? " open" : ""}`}>
@@ -760,7 +771,21 @@ export default function Home() {
           </div>
           <div className="gallery-grid reveal">
             {galleryImages.map((img, i) => (
-              <div key={i} className={`gallery-item ${img.className}`} onClick={() => setLightboxIdx(i)}>
+              <div
+                key={i}
+                className={`gallery-item ${img.className}`}
+                role="button"
+                tabIndex={0}
+                aria-label={`Ampliar foto: ${img.alt}`}
+                onClick={(e) => { lastGalleryFocusRef.current = e.currentTarget; setLightboxIdx(i); }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    lastGalleryFocusRef.current = e.currentTarget;
+                    setLightboxIdx(i);
+                  }
+                }}
+              >
                 <img src={img.src} alt={img.alt} loading="lazy" />
                 <div className="gallery-zoom"><IconZoomIn size={28} /></div>
               </div>
@@ -776,7 +801,15 @@ export default function Home() {
 
       {/* Lightbox */}
       {lightboxIdx !== null && (
-        <div className="lightbox" onClick={() => setLightboxIdx(null)}>
+        <div
+          className="lightbox"
+          onClick={() => setLightboxIdx(null)}
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Foto ampliada de la galería"
+          tabIndex={-1}
+        >
           <button className="lightbox-close" onClick={() => setLightboxIdx(null)} aria-label="Cerrar">
             <IconX size={24} />
           </button>
@@ -840,10 +873,14 @@ export default function Home() {
         <div className="section-narrow">
           <h2 className="section-title reveal">Nuestro Menú de Banquete</h2>
           <p className="section-sub reveal">Cocina de primera para consentir a tus invitados</p>
-          <div className="menu-tabs reveal">
+          <div className="menu-tabs reveal" role="tablist" aria-label="Menú de Banquete">
             {["entradas", "cremas", "pasta", "pollo", "cerdo", "guarn"].map((tab) => (
               <button
                 key={tab}
+                id={`menu-tab-${tab}`}
+                role="tab"
+                aria-selected={activeMenu === tab}
+                aria-controls={`menu-panel-${tab}`}
                 className={`menu-tab${activeMenu === tab ? " active" : ""}`}
                 onClick={() => setActiveMenu(tab)}
               >
@@ -853,7 +890,7 @@ export default function Home() {
           </div>
 
           {activeMenu === "entradas" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-entradas" aria-labelledby="menu-tab-entradas">
               <h3>Entradas</h3>
               <div className="menu-items">
                 {["Coctel de frutas", "Volovanes", "Ensaladas", "Melón"].map((item) => (
@@ -864,7 +901,7 @@ export default function Home() {
           )}
 
           {activeMenu === "cremas" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-cremas" aria-labelledby="menu-tab-cremas">
               <h3>Cremas</h3>
               <div className="menu-items">
                 {["Elote", "Nuez", "Champiñones", "Chile poblano"].map((item) => (
@@ -875,7 +912,7 @@ export default function Home() {
           )}
 
           {activeMenu === "pasta" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-pasta" aria-labelledby="menu-tab-pasta">
               <h3>Pasta</h3>
               <div className="menu-subsection">
                 <h4>Espagueti</h4>
@@ -889,7 +926,7 @@ export default function Home() {
           )}
 
           {activeMenu === "pollo" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-pollo" aria-labelledby="menu-tab-pollo">
               <h3>Pollo</h3>
               <div className="menu-items">
                 {["Almendrado", "A la naranja", "Adobado", "Cordon Blue"].map((item) => (
@@ -900,7 +937,7 @@ export default function Home() {
           )}
 
           {activeMenu === "cerdo" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-cerdo" aria-labelledby="menu-tab-cerdo">
               <h3>Cerdito</h3>
               <div className="menu-subsection">
                 <h4>Lomo:</h4>
@@ -914,7 +951,7 @@ export default function Home() {
           )}
 
           {activeMenu === "guarn" && (
-            <div className="menu-content active">
+            <div className="menu-content active" role="tabpanel" id="menu-panel-guarn" aria-labelledby="menu-tab-guarn">
               <h3>Guarniciones</h3>
               <div className="menu-subsection">
                 <div className="menu-items">
@@ -1257,13 +1294,13 @@ export default function Home() {
           <div>
             <h4>Síguenos</h4>
             <div className="footer-social">
-              <a href="https://wa.me/529995485862" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+              <a href="https://wa.me/529995485862" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">
                 <WhatsAppIcon size={18} />
               </a>
-              <a href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" title="Instagram">
+              <a href="https://www.instagram.com/salon.villaverde/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
                 <IconInstagram size={18} />
               </a>
-              <a href="https://www.facebook.com/SalonVillaVerde/" target="_blank" rel="noopener noreferrer" title="Facebook">
+              <a href="https://www.facebook.com/SalonVillaVerde/" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
                 <IconFacebook size={18} />
               </a>
             </div>
@@ -1276,7 +1313,7 @@ export default function Home() {
       </footer>
 
       {/* WhatsApp Float */}
-      <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento" target="_blank" rel="noopener noreferrer" className="wa-float">
+      <a href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento" target="_blank" rel="noopener noreferrer" className="wa-float" aria-label="Contactar por WhatsApp">
         <WhatsAppIcon size={34} />
       </a>
 

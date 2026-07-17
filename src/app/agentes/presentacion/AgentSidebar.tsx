@@ -16,9 +16,10 @@ export default function AgentSidebar({ isOpen, onClose }: AgentSidebarProps) {
   const resto = total - anticipo;
 
   return (
-    <div className={`agent-sidebar ${isOpen ? "open" : ""}`}>
-      <button 
+    <div className={`agent-sidebar ${isOpen ? "open" : ""}`} inert={!isOpen}>
+      <button
         onClick={onClose}
+        aria-label="Cerrar panel"
         style={{ position: "absolute", top: "20px", right: "20px", background: "none", border: "none", color: "white", fontSize: "24px", cursor: "pointer" }}
       >
         ×

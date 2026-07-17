@@ -584,8 +584,6 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-var PASSWORD = '1.Tequiladrink';
-
 /* ─── TEMPLATES DATABASE ─── */
 var TEMPLATES = [
   {
@@ -653,12 +651,24 @@ var ICON = {
 };
 
 /* ─── AUTH ─── */
-function doLogin() {
+async function doLogin() {
   var pwd = document.getElementById('pwdInput').value;
   var err = document.getElementById('errMsg');
   err.style.display = 'none';
-  if (pwd !== PASSWORD) {
-    err.textContent = 'Contrasena incorrecta';
+  try {
+    var res = await fetch('/api/invitaciones-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd })
+    });
+    var data = await res.json().catch(function() { return {}; });
+    if (!res.ok || !data.ok) {
+      err.textContent = 'Contrasena incorrecta';
+      err.style.display = 'block';
+      return;
+    }
+  } catch (e) {
+    err.textContent = 'Error de conexion. Intenta de nuevo.';
     err.style.display = 'block';
     return;
   }

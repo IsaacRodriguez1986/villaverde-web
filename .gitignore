@@ -5,3 +5,6 @@ out
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# graphify (grafo de conocimiento regenerable)
+graphify-out/

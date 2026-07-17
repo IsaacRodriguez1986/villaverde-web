@@ -174,8 +174,20 @@ function ConfettiCanvas() {
 /* ─── Lightbox ─── */
 
 function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    closeRef.current?.focus();
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Foto ampliada"
       onClick={onClose}
       style={{
         position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
@@ -184,6 +196,20 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
         padding: 20, cursor: "pointer", animation: "fadeIn 0.3s ease",
       }}
     >
+      <button
+        ref={closeRef}
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        aria-label="Cerrar"
+        style={{
+          position: "fixed", top: 16, right: 16,
+          width: 44, height: 44, borderRadius: "50%",
+          background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.25)",
+          color: "#fff", fontSize: 22, lineHeight: 1, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1,
+        }}
+      >
+        {"✕"}
+      </button>
       <img
         src={src}
         alt=""
@@ -433,13 +459,15 @@ function PhotoGallery({ gallery }: { gallery: string[] }) {
           }}
         >
           {photos.map((url, i) => (
-            <div
+            <button
               key={i}
+              type="button"
               onClick={() => setLightboxSrc(url)}
+              aria-label={`Ampliar foto ${i + 1}`}
               style={{
                 flexShrink: 0, width: 140, height: 140, borderRadius: 14, overflow: "hidden",
-                border: "1px solid rgba(201,168,76,0.15)", cursor: "pointer",
-                scrollSnapAlign: "start", transition: "transform 0.2s ease",
+                border: "1px solid rgba(201,168,76,0.15)", cursor: "pointer", padding: 0,
+                background: "none", scrollSnapAlign: "start", transition: "transform 0.2s ease",
               }}
             >
               <img
@@ -447,7 +475,7 @@ function PhotoGallery({ gallery }: { gallery: string[] }) {
                 alt={`Foto ${i + 1}`}
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
-            </div>
+            </button>
           ))}
         </div>
       </div>
