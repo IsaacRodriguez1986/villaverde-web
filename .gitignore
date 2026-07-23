@@ -8,3 +8,4 @@ next-env.d.ts
 
 # graphify (grafo de conocimiento regenerable)
 graphify-out/
+.env*
