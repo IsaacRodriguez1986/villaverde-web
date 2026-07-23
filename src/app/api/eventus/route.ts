@@ -24,6 +24,30 @@ function j(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } });
 }
 
+// --- Rate limiting (in-memory, per-instance) — audit 2026-07-22 C1/C2.
+// Mitiga la fuerza bruta de "codes" de ~20 bits y el oráculo de admin password.
+// Limitación conocida: es por instancia de Vercel; el fix robusto es (a) desacoplar el
+// code humano de un token UUID de alta entropía como capacidad, y (b) un store durable
+// (Upstash/tabla Supabase). Esto sube el costo del ataque mientras tanto.
+const RL = new Map<string, { n: number; reset: number }>();
+function rateLimited(key: string, max: number, windowMs: number): boolean {
+  const now = Date.now();
+  const e = RL.get(key);
+  if (!e || now > e.reset) {
+    RL.set(key, { n: 1, reset: now + windowMs });
+    if (RL.size > 5000) RL.forEach((v, k) => { if (now > v.reset) RL.delete(k); });
+    return false;
+  }
+  if (e.n >= max) return true;
+  e.n++;
+  return false;
+}
+function clientIp(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  return req.headers.get("x-real-ip") || "unknown";
+}
+
 async function sb(method: string, path: string, body?: unknown) {
   const r = await fetch(SUPABASE_URL + "/rest/v1/" + path, {
     method,
@@ -72,6 +96,7 @@ function sanitizeRegister(body: any) {
 // ---- RSVP (guest-facing): GET ?code=&guestId= ; capability = knowing code+guestId ----
 export async function GET(req: Request) {
   if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
+  if (rateLimited("ev-get:" + clientIp(req), 60, 60_000)) return j({ error: "rate limited" }, 429);
   const url = new URL(req.url);
   const code = url.searchParams.get("code");
   const guestId = url.searchParams.get("guestId");
@@ -85,6 +110,7 @@ export async function GET(req: Request) {
 // ---- RSVP write: PATCH {code, guestId, status} ----
 export async function PATCH(req: Request) {
   if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
+  if (rateLimited("ev-patch:" + clientIp(req), 60, 60_000)) return j({ error: "rate limited" }, 429);
   let b: any = {};
   try { b = await req.json(); } catch { b = {}; }
   const { code, guestId, status } = b || {};
@@ -98,12 +124,18 @@ export async function PATCH(req: Request) {
 // ---- Main proxy: POST {op:'auth'} | {op:'db', method, table, query, body, code, adminPw} ----
 export async function POST(req: Request) {
   if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
+  const ip = clientIp(req);
+  if (rateLimited("ev-post:" + ip, 90, 60_000)) return j({ error: "rate limited" }, 429);
   let b: any = {};
   try { b = await req.json(); } catch { return j({ error: "bad json" }, 400); }
 
   const isAdmin = !!(b.adminPw && ADMIN_PW && b.adminPw === ADMIN_PW);
 
-  if (b.op === "auth") return j({ admin: isAdmin });
+  if (b.op === "auth") {
+    // Límite más estricto sobre el oráculo de auth para frenar el guessing de admin password (C2).
+    if (rateLimited("ev-auth:" + ip, 8, 60_000)) return j({ error: "rate limited" }, 429);
+    return j({ admin: isAdmin });
+  }
   if (b.op !== "db") return j({ error: "bad op" }, 400);
 
   const method = String(b.method || "GET").toUpperCase();

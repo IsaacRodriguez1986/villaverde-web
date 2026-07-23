@@ -79,12 +79,20 @@ ALTER TABLE eventus_payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE eventus_checklist ENABLE ROW LEVEL SECURITY;
 ALTER TABLE eventus_program ENABLE ROW LEVEL SECURITY;
 
--- Políticas: cualquiera con el código puede leer/escribir su evento
-CREATE POLICY "public_all_events" ON eventus_events FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "public_all_guests" ON eventus_guests FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "public_all_payments" ON eventus_payments FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "public_all_checklist" ON eventus_checklist FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "public_all_program" ON eventus_program FOR ALL USING (true) WITH CHECK (true);
+-- ⚠️ NO EJECUTAR ESTE BLOQUE (footgun de seguridad — auditoría 2026-07-22, hallazgo C4).
+-- El modelo real de producción es: RLS ENABLED + SIN policies = deny-all para anon,
+-- y TODO acceso a datos pasa por el proxy server-side src/app/api/eventus/route.ts,
+-- que usa SUPABASE_SERVICE_KEY (bypassa RLS) y valida la "capacidad" (event code) por request.
+--
+-- Las siguientes policies `USING(true) WITH CHECK(true)` NO tienen filtro por dueño:
+-- aplicarlas abriría lectura/escritura/borrado de TODOS los eventos a cualquiera con la
+-- anon key (que está en el cliente). Se dejan comentadas como advertencia, NO como setup.
+--
+-- CREATE POLICY "public_all_events"    ON eventus_events    FOR ALL USING (true) WITH CHECK (true);
+-- CREATE POLICY "public_all_guests"    ON eventus_guests    FOR ALL USING (true) WITH CHECK (true);
+-- CREATE POLICY "public_all_payments"  ON eventus_payments  FOR ALL USING (true) WITH CHECK (true);
+-- CREATE POLICY "public_all_checklist" ON eventus_checklist FOR ALL USING (true) WITH CHECK (true);
+-- CREATE POLICY "public_all_program"   ON eventus_program   FOR ALL USING (true) WITH CHECK (true);
 
 -- 8. Función para actualizar updated_at automáticamente
 CREATE OR REPLACE FUNCTION update_updated_at()
