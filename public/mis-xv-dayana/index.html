@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XV Años de Dayana Yamile — 29 de Agosto, 2026</title>
+<meta name="description" content="Acompáñame a celebrar mis XV Años. Sábado 29 de agosto de 2026, Chalco, Estado de México.">
+
+<!-- Privacidad: lleva nombre, dirección y teléfono de un cliente real, y vive
+     en el dominio público del salón. El noindex se refuerza con el header
+     X-Robots-Tag que aplica next.config.ts sobre /mis-xv-dayana. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#fff8f3">
+
+<link rel="canonical" href="https://www.salondefiestasvillaverde.com/mis-xv-dayana">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="XV Años de Dayana Yamile">
+<meta property="og:description" content="Acompáñame a celebrar mis XV Años — Sábado 29 de Agosto, 2026">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://www.salondefiestasvillaverde.com/mis-xv-dayana">
+<!-- URL absoluta obligatoria: el crawler de WhatsApp/Facebook no resuelve
+     rutas relativas de forma confiable y el preview se quedaría sin imagen. -->
+<meta property="og:image" content="https://www.salondefiestasvillaverde.com/mis-xv-dayana/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="XV Años de Dayana Yamile — 29 de Agosto de 2026">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Marca el documento como "JS vivo". Sin esto nada se oculta jamás:
+     si el script falla, la invitación se lee completa igual. -->
+<script>document.documentElement.className += ' js';</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+/* ============================================================
+   ETHEREAL BLOOM — tokens
+   Nombrados por ROL, nunca por valor: cambiar la paleta no debe
+   volver mentirosos los nombres. Ver docs/ui-design/ETHEREAL-BLOOM.md
+   ============================================================ */
+:root{
+  /* Superficies — los "nuts" / nudes cálidos */
+  --eb-surface:            #fff8f3;
+  --eb-surface-low:        #fff1e3;
+  --eb-surface-container:  #f9ecde;
+  --eb-surface-high:       #f3e6d8;
+  --eb-surface-variant:    #eee0d2;
+  --eb-surface-dim:        #e5d8ca;
+  --eb-surface-lowest:     #ffffff;
+
+  /* Texto */
+  --eb-on-surface:         #211b12;   /* 16.24:1 sobre surface */
+  --eb-on-surface-variant: #4f4445;   /*  8.90:1 */
+
+  /* Líneas. outline NUNCA como color de texto (4.27:1, insuficiente). */
+  --eb-outline:            #807475;
+  --eb-outline-variant:    #d2c3c4;   /* 1.62:1 — solo decoración */
+
+  /* Rosa Sakura — el color del vestido */
+  --eb-primary:            #70585b;   /* 6.17:1 sobre surface */
+  --eb-on-primary:         #ffffff;
+  --eb-primary-container:  #fadadd;
+  --eb-primary-fixed:      #fbdbde;
+
+  /* Dorado. secondary es el legible (6.13:1); secondary-container es decorativo. */
+  --eb-secondary:           #735c00;
+  --eb-secondary-container: #fed65b;
+
+  --eb-tertiary-container: #e7e1d8;
+  --eb-error:              #ba1a1a;
+
+  /* Canales RGB: única forma de que los alfas se recalculen solos
+     al cambiar la paleta. color-mix() no llega a Androids viejos. */
+  --eb-secondary-rgb: 115 92 0;
+  --eb-sakura-rgb:    250 218 221;
+  --eb-shadow-rgb:    74 66 56;
+
+  --eb-hairline: rgb(var(--eb-secondary-rgb) / .42);
+
+  /* Tipografía */
+  --eb-font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --eb-font-body:    'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --eb-display-lg:  clamp(2.25rem, 7.5vw, 3rem);
+  --eb-headline-md: clamp(1.625rem, 4.5vw, 2rem);
+  --eb-headline-sm: clamp(1.375rem, 3.5vw, 1.5rem);
+  --eb-body-lg:     1.125rem;
+  --eb-body-md:     1rem;
+  --eb-label:       .75rem;          /* 12px — piso absoluto de tamaño */
+
+  /* El nombre del hero excede display-lg a propósito. Único caso. */
+  --eb-hero-name:   clamp(2.5rem, 10.5vw, 4.5rem);
+
+  /* Forma */
+  --eb-r-sm:.25rem; --eb-r:.5rem; --eb-r-md:.75rem;
+  --eb-r-lg:1rem;   --eb-r-xl:1.5rem; --eb-r-full:9999px;
+
+  /* Espacio — unidad 8px */
+  --eb-s1:8px;  --eb-s2:16px; --eb-s3:24px; --eb-s4:32px;
+  --eb-s5:40px; --eb-s6:48px; --eb-s8:64px;
+  --eb-container:1200px;
+  --eb-gutter:24px;
+  --eb-section-gap: clamp(56px, 9vw, 80px);
+
+  /* Elevación: capas tonales y hairlines, nunca sombras densas */
+  --eb-elev:        0 4px 20px rgb(var(--eb-shadow-rgb) / .05);
+  --eb-elev-raised: 0 8px 28px rgb(var(--eb-shadow-rgb) / .07);
+
+  /* Movimiento — "pétalo cayendo" */
+  --eb-ease:     cubic-bezier(.22,1,.36,1);
+  --eb-dur-fast: 180ms;
+  --eb-dur:      320ms;
+}
+@media(max-width:600px){ :root{ --eb-gutter:20px; } }
+
+html{ scroll-behavior:smooth; scroll-padding-top:76px; -webkit-text-size-adjust:100%; }
+
+body{
+  font-family:var(--eb-font-body);
+  font-size:var(--eb-body-md);
+  line-height:1.6;
+  color:var(--eb-on-surface);
+  background:var(--eb-surface);
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+
+:focus-visible{
+  outline:2px solid var(--eb-secondary);
+  outline-offset:2px;
+  border-radius:var(--eb-r-sm);
+}
+
+.eb-wrap{ width:100%; max-width:var(--eb-container); margin:0 auto; padding:0 var(--eb-gutter); }
+
+.eb-skip{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--eb-surface-lowest); color:var(--eb-on-surface);
+  padding:12px 20px; border:1px solid var(--eb-secondary);
+  border-radius:0 0 var(--eb-r) 0; font-size:var(--eb-label); font-weight:600;
+}
+.eb-skip:focus{ left:0; }
+
+/* ---------- Utilidades tipográficas ---------- */
+.eb-label{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+
+.eb-eyebrow{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-secondary);
+  display:flex; align-items:center; justify-content:center; gap:var(--eb-s2);
+}
+.eb-eyebrow::before, .eb-eyebrow::after{
+  content:''; height:1px; width:clamp(18px,6vw,48px); background:var(--eb-hairline);
+}
+
+.eb-title{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-md); line-height:1.25;
+  color:var(--eb-on-surface); margin-top:var(--eb-s2);
+}
+
+section{ position:relative; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.eb-nav{
+  position:sticky; top:0; z-index:60;
+  background:rgb(255 248 243 / .82);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--eb-dur), background var(--eb-dur);
+}
+.eb-nav.is-stuck{ border-bottom-color:var(--eb-hairline); }
+.eb-nav__inner{
+  max-width:var(--eb-container); margin:0 auto;
+  padding:10px var(--eb-gutter);
+  display:flex; align-items:center; justify-content:space-between; gap:var(--eb-s2);
+}
+.eb-nav__logo{
+  font-family:var(--eb-font-display); font-weight:600; font-size:1.1rem;
+  color:var(--eb-on-surface); text-decoration:none; white-space:nowrap;
+  display:flex; align-items:center; min-height:44px;
+}
+.eb-nav__links{ display:flex; gap:var(--eb-s4); list-style:none; }
+.eb-nav__links a{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+  text-decoration:none; position:relative;
+  display:flex; align-items:center; min-height:44px;
+  transition:color var(--eb-dur-fast);
+}
+.eb-nav__links a::after{
+  content:''; position:absolute; left:0; bottom:12px; height:1px; width:0;
+  background:var(--eb-secondary); transition:width var(--eb-dur) var(--eb-ease);
+}
+.eb-nav__links a:hover{ color:var(--eb-on-surface); }
+.eb-nav__links a:hover::after{ width:100%; }
+@media(max-width:820px){ .eb-nav__links{ display:none; } }
+
+/* ============================================================
+   BOTONES
+   El primario NECESITA el borde dorado: primary-container sobre
+   surface da 1.24:1 y sin borde el botón no se percibe como forma.
+   ============================================================ */
+.eb-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--eb-s1);
+  min-height:44px; padding:12px var(--eb-s3);
+  border-radius:var(--eb-r-full); border:1px solid transparent;
+  font-family:var(--eb-font-display); font-weight:600; font-size:.9rem;
+  letter-spacing:.01em; text-decoration:none; cursor:pointer;
+  background:none; color:inherit;
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur), color var(--eb-dur);
+}
+.eb-btn:hover{ transform:scale(1.02); }
+.eb-btn svg{ width:15px; height:15px; flex-shrink:0; }
+
+.eb-btn--primary{
+  background:var(--eb-primary-container);
+  color:var(--eb-on-surface);
+  border-color:var(--eb-secondary);
+}
+.eb-btn--primary:hover{ background:var(--eb-primary-fixed); }
+
+.eb-btn--ghost{
+  background:transparent;
+  color:var(--eb-primary);
+  border-color:var(--eb-secondary);
+}
+.eb-btn--ghost:hover{ background:var(--eb-surface-container); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.eb-hero{
+  text-align:center; overflow:hidden;
+  padding:clamp(40px,7vw,72px) 0 var(--eb-section-gap);
+  background:linear-gradient(180deg, var(--eb-surface) 0%, var(--eb-surface-low) 45%, var(--eb-surface-container) 100%);
+}
+
+/* Capa media: patrón Sakura al 12%. La opacidad va DENTRO del SVG
+   (fill-opacity) para no crear un contexto de apilamiento. */
+.eb-veil{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='190' height='190' viewBox='0 0 190 190'%3E%3Cg fill='%23e594ab' fill-opacity='0.12'%3E%3Cpath d='M46 22c-4-5-5-11-1-14 3-2 6 1 6 5 1-4 4-6 7-4 3 2 2 9-2 13 5-2 10-1 10 3s-5 5-10 3c4 4 5 9 2 11-3 2-6-1-7-6-1 5-4 8-7 6-3-2-2-7 2-11-5 2-10 1-10-3s5-5 10-3z'/%3E%3Cpath d='M139 118c-4-5-5-11-1-14 3-2 6 1 6 5 1-4 4-6 7-4 3 2 2 9-2 13 5-2 10-1 10 3s-5 5-10 3c4 4 5 9 2 11-3 2-6-1-7-6-1 5-4 8-7 6-3-2-2-7 2-11-5 2-10 1-10-3s5-5 10-3z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:190px 190px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 38%, #000 28%, transparent 76%);
+          mask-image:radial-gradient(ellipse at 50% 38%, #000 28%, transparent 76%);
+}
+
+.eb-hero > *:not(.eb-veil):not(.eb-petals){ position:relative; z-index:2; }
+
+.eb-hero__name{
+  font-family:var(--eb-font-display); font-weight:700;
+  font-size:var(--eb-hero-name); line-height:1.05; letter-spacing:-.02em;
+  color:var(--eb-on-surface); margin:var(--eb-s3) 0 var(--eb-s2);
+}
+.eb-hero__surname{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+
+/* ---------- Marco de retrato con esquinas doradas ---------- */
+.eb-frame{
+  position:relative; width:min(320px, 78vw);
+  margin:clamp(32px,5vw,48px) auto 0;
+  padding:var(--eb-s3);
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-outline-variant);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+}
+.eb-frame__media{
+  border-radius:var(--eb-r); overflow:hidden;
+  background:linear-gradient(160deg, var(--eb-primary-container), var(--eb-surface-variant));
+}
+.eb-frame__media img,
+.eb-frame__media video{ width:100%; height:auto; display:block; }
+
+/* Control de pausa. Obligatorio: contenido en movimiento automático de
+   más de 5 s necesita un mecanismo para detenerlo (WCAG 2.2.2). */
+.eb-frame__toggle{
+  position:absolute; z-index:4;
+  right:calc(var(--eb-s3) + 10px); bottom:calc(var(--eb-s3) + 10px);
+  width:44px; height:44px; border-radius:var(--eb-r-full);
+  display:flex; align-items:center; justify-content:center;
+  background:rgb(255 255 255 / .9);
+  border:1px solid var(--eb-secondary);
+  color:var(--eb-primary); cursor:pointer;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur);
+}
+.eb-frame__toggle:hover{ transform:scale(1.06); background:#fff; }
+.eb-frame__toggle svg{ width:16px; height:16px; }
+.eb-frame__toggle[hidden]{ display:none; }
+
+.eb-frame__fallback{
+  aspect-ratio:2/3; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:var(--eb-s1);
+  color:var(--eb-primary); text-align:center; padding:var(--eb-s3);
+}
+.eb-frame__fallback svg{ width:40px; height:40px; opacity:.5; }
+.eb-frame__fallback span{ font-size:var(--eb-label); color:var(--eb-on-surface-variant); }
+
+/* Esquinas: dos bordes por span. Cero SVG, cero riesgo al exportar. */
+.eb-frame__corner{ position:absolute; width:26px; height:26px; pointer-events:none; }
+.eb-frame__corner--tl{ top:8px;  left:8px;  border-top:1px solid var(--eb-secondary); border-left:1px solid var(--eb-secondary);  border-radius:var(--eb-r-md) 0 0 0; }
+.eb-frame__corner--tr{ top:8px;  right:8px; border-top:1px solid var(--eb-secondary); border-right:1px solid var(--eb-secondary); border-radius:0 var(--eb-r-md) 0 0; }
+.eb-frame__corner--bl{ bottom:8px; left:8px; border-bottom:1px solid var(--eb-secondary); border-left:1px solid var(--eb-secondary);  border-radius:0 0 0 var(--eb-r-md); }
+.eb-frame__corner--br{ bottom:8px; right:8px;border-bottom:1px solid var(--eb-secondary); border-right:1px solid var(--eb-secondary); border-radius:0 0 var(--eb-r-md) 0; }
+
+/* Racimos de sakura sobre el marco */
+.eb-frame__bloom{ position:absolute; width:104px; pointer-events:none; z-index:3; }
+.eb-frame__bloom svg{ width:100%; height:auto; }
+.eb-frame__bloom--tl{ top:-34px; left:-34px; }
+.eb-frame__bloom--br{ bottom:-34px; right:-34px; transform:rotate(180deg); }
+@media(max-width:480px){
+  .eb-frame__bloom{ width:78px; }
+  .eb-frame__bloom--tl{ top:-24px; left:-20px; }
+  .eb-frame__bloom--br{ bottom:-24px; right:-20px; }
+}
+
+.eb-hero__date{
+  margin-top:clamp(32px,5vw,48px);
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-headline-sm); color:var(--eb-on-surface);
+}
+.eb-hero__place{ margin-top:var(--eb-s1); }
+
+/* ---------- Pétalos ---------- */
+.eb-petals{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+.eb-petal{ position:absolute; top:-8vh; animation:ebFall linear infinite; opacity:0; }
+.eb-petal svg{ width:100%; height:100%; }
+@keyframes ebFall{
+  0%  { transform:translate3d(0,-8vh,0) rotate(0) scale(.85); opacity:0; }
+  12% { opacity:.85; }
+  35% { transform:translate3d(24px,32vh,0) rotate(190deg) scale(1); }
+  68% { transform:translate3d(-18px,66vh,0) rotate(410deg) scale(.94); }
+  88% { opacity:.5; }
+  100%{ transform:translate3d(14px,112vh,0) rotate(720deg) scale(.7); opacity:0; }
+}
+
+/* ============================================================
+   DIVISOR FLORAL
+   Con capas tonales casi idénticas (surface vs container = 1.10:1),
+   los divisores no son adorno: son la separación entre secciones.
+   ============================================================ */
+.eb-divider{
+  display:block; width:min(300px,74vw); margin:0 auto;
+  padding:var(--eb-section-gap) 0 0;
+}
+.eb-divider svg{ width:100%; height:auto; }
+.eb-float{ animation:ebFloat 5s ease-in-out infinite; }
+@keyframes ebFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+/* ============================================================
+   CUENTA REGRESIVA — sin cajas, hairlines doradas
+   ============================================================ */
+.eb-countdown{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-cd{
+  display:flex; justify-content:center; align-items:stretch;
+  margin-top:var(--eb-s5);
+}
+.eb-cd__cell{
+  flex:1 1 0; min-width:0;              /* min-width:0 = no desborda a 320px */
+  padding:0 clamp(6px,2.5vw,20px);
+  position:relative;
+}
+.eb-cd__cell + .eb-cd__cell::before{
+  content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+  width:1px; height:48px; background:var(--eb-hairline);
+}
+.eb-cd__num{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:clamp(1.9rem,7vw,3rem); line-height:1;
+  color:var(--eb-on-surface); font-variant-numeric:tabular-nums;
+}
+.eb-cd__unit{ margin-top:var(--eb-s1); font-size:var(--eb-label); font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--eb-on-surface-variant); }
+
+/* Clase, no estilo inline: un inline no se puede apagar con reduced-motion */
+.eb-cd__num--tick{ animation:ebTick 260ms var(--eb-ease); }
+@keyframes ebTick{ 0%{ transform:scale(1);} 45%{ transform:scale(1.09);} 100%{ transform:scale(1);} }
+
+.eb-cd__done{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-md); color:var(--eb-primary); padding:var(--eb-s3) 0;
+}
+
+/* ============================================================
+   FAMILIA
+   ============================================================ */
+.eb-family{ padding:var(--eb-section-gap) 0 0; }
+.eb-family__card{
+  max-width:720px; margin:0 auto; position:relative;
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-hairline);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+  padding:clamp(36px,6vw,var(--eb-s8)) clamp(24px,5vw,56px);
+  text-align:center;
+}
+.eb-quote{
+  font-family:var(--eb-font-display); font-weight:500; font-style:italic;
+  font-size:clamp(1.1rem,3vw,1.375rem); line-height:1.7;
+  color:var(--eb-on-surface); max-width:460px; margin:0 auto;
+}
+.eb-family__grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:var(--eb-s4);
+  margin-top:clamp(32px,5vw,var(--eb-s5));
+  padding-top:clamp(28px,4vw,var(--eb-s4));
+  border-top:1px solid var(--eb-outline-variant);
+}
+.eb-family__role{ color:var(--eb-secondary); margin-bottom:var(--eb-s1); }
+.eb-family__name{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-body-lg); line-height:1.45; color:var(--eb-on-surface);
+}
+@media(max-width:520px){ .eb-family__grid{ grid-template-columns:1fr; gap:var(--eb-s3); } }
+
+/* ============================================================
+   DETALLES — 3 tarjetas
+   ============================================================ */
+.eb-details{ padding:var(--eb-section-gap) 0 0; }
+.eb-cards{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--eb-s3);
+  margin-top:clamp(36px,5vw,var(--eb-s5)); align-items:stretch;
+}
+.eb-card{
+  display:flex; flex-direction:column; text-align:center;
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-outline-variant);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+  padding:clamp(28px,3.4vw,var(--eb-s5)) clamp(20px,2.6vw,var(--eb-s3));
+  transition:transform var(--eb-dur) var(--eb-ease);
+}
+.eb-card:hover{ transform:scale(1.02); }
+.eb-card--feature{
+  border-color:var(--eb-secondary);
+  background:linear-gradient(170deg, var(--eb-surface-lowest), var(--eb-surface-low));
+  box-shadow:var(--eb-elev-raised);
+}
+.eb-card__ico{
+  width:44px; height:44px; margin:0 auto var(--eb-s2);
+  border-radius:var(--eb-r-full);
+  background:var(--eb-surface-container);
+  border:1px solid var(--eb-hairline);
+  display:flex; align-items:center; justify-content:center; color:var(--eb-primary);
+}
+.eb-card--feature .eb-card__ico{ background:var(--eb-primary-container); }
+.eb-card__ico svg{ width:19px; height:19px; }
+
+.eb-card__name{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-sm); color:var(--eb-on-surface); margin-bottom:var(--eb-s1);
+}
+.eb-card__hour{
+  font-family:var(--eb-font-display); font-weight:600; font-size:var(--eb-body-lg);
+  color:var(--eb-primary); margin-bottom:var(--eb-s2);
+}
+.eb-card__venue{
+  font-family:var(--eb-font-display); font-weight:500; font-size:var(--eb-body-md);
+  color:var(--eb-on-surface); margin-bottom:var(--eb-s1);
+}
+.eb-card__addr{
+  font-size:.875rem; line-height:1.7; color:var(--eb-on-surface-variant);
+  margin-bottom:var(--eb-s3);
+}
+.eb-card__dress{
+  font-family:var(--eb-font-display); font-weight:600; font-size:var(--eb-body-lg);
+  color:var(--eb-primary); margin-bottom:var(--eb-s2);
+}
+.eb-card__note{ font-size:.875rem; line-height:1.65; color:var(--eb-on-surface-variant); }
+.eb-card__note strong{ color:var(--eb-on-surface); font-weight:600; }
+.eb-card__spacer{ flex:1 1 auto; min-height:var(--eb-s2); }
+.eb-card .eb-btn{ align-self:center; }
+
+@media(max-width:860px){
+  .eb-cards{ grid-template-columns:1fr; max-width:420px; margin-left:auto; margin-right:auto; }
+}
+
+/* ============================================================
+   ITINERARIO
+   ============================================================ */
+.eb-itinerary{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-timeline{
+  max-width:440px; margin:clamp(36px,5vw,var(--eb-s5)) auto 0; position:relative;
+}
+.eb-timeline::before{
+  content:''; position:absolute; left:50%; top:16px; bottom:16px; width:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg, transparent, var(--eb-hairline) 12%, var(--eb-hairline) 88%, transparent);
+}
+.eb-tl{
+  display:grid; grid-template-columns:1fr 44px 1fr; align-items:center;
+  gap:var(--eb-s1); margin-bottom:var(--eb-s3);
+}
+.eb-tl__time{
+  text-align:right; font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-body-md); color:var(--eb-on-surface);
+}
+.eb-tl__time--tbd{
+  font-family:var(--eb-font-body); font-weight:600; font-size:var(--eb-label);
+  letter-spacing:.1em; text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+.eb-tl__mark{
+  width:44px; height:44px; border-radius:var(--eb-r-full);
+  background:var(--eb-surface-lowest); border:1px solid var(--eb-hairline);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; z-index:1;
+}
+.eb-tl__mark svg{ width:16px; height:16px; color:var(--eb-primary); }
+.eb-tl__label{
+  text-align:left; font-size:var(--eb-label); font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+
+/* ============================================================
+   RSVP
+   ============================================================ */
+.eb-rsvp{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-rsvp__copy{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-body-lg); line-height:1.75; color:var(--eb-on-surface-variant);
+  max-width:440px; margin:var(--eb-s3) auto 0;
+}
+.eb-rsvp__copy strong{ color:var(--eb-on-surface); font-weight:600; }
+
+.eb-form{
+  max-width:400px; margin:clamp(32px,5vw,var(--eb-s5)) auto 0;
+  display:flex; flex-direction:column; gap:var(--eb-s3); text-align:left;
+}
+.eb-field label{ display:block; margin-bottom:var(--eb-s1); }
+
+/* Solo borde inferior. En reposo va en --eb-outline (4.27:1) y no en
+   outline-variant (1.62:1): es el único indicador del control. */
+.eb-field input, .eb-field select{
+  width:100%; padding:12px 4px;
+  font-family:var(--eb-font-body); font-size:var(--eb-body-md);
+  color:var(--eb-on-surface);
+  background:var(--eb-surface-container);
+  border:0; border-bottom:1px solid var(--eb-outline);
+  border-radius:var(--eb-r-sm) var(--eb-r-sm) 0 0;
+  transition:border-color var(--eb-dur-fast), border-width var(--eb-dur-fast);
+  -webkit-appearance:none; appearance:none;
+}
+.eb-field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f4445' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 8px center; background-size:16px;
+  padding-right:34px;
+}
+.eb-field input:focus, .eb-field select:focus{
+  border-bottom-width:2px; border-bottom-color:var(--eb-secondary);
+  outline:2px solid var(--eb-secondary); outline-offset:2px;
+}
+.eb-field input::placeholder{ color:var(--eb-outline); }
+
+.eb-form__error{
+  font-size:.875rem; color:var(--eb-error); min-height:1.25rem;
+}
+.eb-form__submit{ align-self:center; padding:14px var(--eb-s5); }
+
+.eb-rsvp__direct{
+  margin-top:var(--eb-s3); font-size:.875rem; color:var(--eb-on-surface-variant);
+}
+.eb-rsvp__direct a{ color:var(--eb-primary); font-weight:600; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.eb-footer{
+  margin-top:var(--eb-section-gap);
+  padding:clamp(44px,6vw,var(--eb-s8)) 0 var(--eb-s4);
+  text-align:center;
+  background:var(--eb-surface-container);
+  border-top:1px solid var(--eb-hairline);
+}
+.eb-footer__name{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-md); color:var(--eb-on-surface);
+}
+.eb-footer__links{
+  display:flex; justify-content:center; gap:var(--eb-s3);
+  list-style:none; margin:var(--eb-s3) 0; flex-wrap:wrap;
+}
+.eb-footer__links a{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant); text-decoration:none;
+  display:inline-flex; align-items:center; min-height:44px; padding:0 var(--eb-s1);
+}
+.eb-footer__links a:hover{ color:var(--eb-primary); }
+.eb-footer__fine{ font-size:.875rem; color:var(--eb-on-surface-variant); }
+
+/* ============================================================
+   REVEAL — solo cuando el JS está vivo
+   ============================================================ */
+.js .eb-rv{
+  opacity:0; transform:translateY(28px);
+  transition:opacity .8s var(--eb-ease), transform .8s var(--eb-ease);
+}
+.js .eb-rv.is-on{ opacity:1; transform:none; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(min-width:861px){
+  .eb-cd{ max-width:640px; margin-left:auto; margin-right:auto; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   OJO: .eb-frame__bloom--br depende de rotate(180deg). Apagar la
+   animación sin reponer el transform lo dejaría al derecho.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .eb-petals{ display:none; }
+  .js .eb-rv{ opacity:1; transform:none; transition:none; }
+  .eb-float, .eb-cd__num--tick{ animation:none; }
+  .eb-btn:hover, .eb-card:hover{ transform:none; }
+  .eb-frame__bloom--br{ transform:rotate(180deg); }
+}
+
+/* ============================================================
+   PRINT — la gente imprime invitaciones
+   ============================================================ */
+@media print{
+  .eb-nav, .eb-petals, .eb-veil, .eb-divider, .eb-form, .eb-footer__links{ display:none !important; }
+  :root{ --eb-surface:#fff; --eb-surface-lowest:#fff; --eb-surface-container:#fff; }
+  body{ background:#fff; }
+  .js .eb-rv{ opacity:1; transform:none; }
+  .eb-card, .eb-family__card{ box-shadow:none; break-inside:avoid; }
+  a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.7em; word-break:break-all; }
+}
+</style>
+</head>
+<body>
+
+<a class="eb-skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ============================================================
+     DEFINICIONES FLORALES
+
+     REGLA QUE NO SE PUEDE ROMPER: aquí solo van PATHS PUROS.
+     Nunca un <use> dentro de otro <symbol> o <g> referenciado — ese
+     anidamiento hace que los pétalos desaparezcan al exportar o
+     convertir el documento. Corolario: los racimos compuestos son
+     marcado duplicado A PROPÓSITO; no se pueden factorizar.
+
+     Se emite xlink:href junto a href porque varios conversores
+     SVG→PDF/PNG siguen requiriéndolo y descartan la referencia en
+     silencio si falta.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="ebPetal" cx="50%" cy="88%" r="82%">
+      <stop offset="0%"   stop-color="#fffdfc"/>
+      <stop offset="52%"  stop-color="#fadadd"/>
+      <stop offset="100%" stop-color="#e594ab"/>
+    </radialGradient>
+    <radialGradient id="ebPetalPale" cx="50%" cy="88%" r="82%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="58%"  stop-color="#fbdbde"/>
+      <stop offset="100%" stop-color="#e5d8ca"/>
+    </radialGradient>
+    <linearGradient id="ebBranch" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#8f7412"/>
+      <stop offset="100%" stop-color="#735c00"/>
+    </linearGradient>
+
+    <!-- Sakura abierta: 5 pétalos con muesca + estambres -->
+    <g id="ebFl">
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetal)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetal)" transform="rotate(72)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetal)" transform="rotate(144)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetal)" transform="rotate(216)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetal)" transform="rotate(288)"/>
+      <g stroke="#d97f9a" stroke-width="1" stroke-linecap="round" fill="none">
+        <path d="M0 0 0-10"/><path d="M0 0 6.6-7"/><path d="M0 0-6.6-7"/><path d="M0 0 8.6-1.4"/><path d="M0 0-8.6-1.4"/>
+      </g>
+      <circle cy="-10" r="1.6" fill="#e9b949"/>
+      <circle cx="6.6" cy="-7" r="1.5" fill="#e9b949"/>
+      <circle cx="-6.6" cy="-7" r="1.5" fill="#e9b949"/>
+      <circle cx="8.6" cy="-1.4" r="1.4" fill="#e9b949"/>
+      <circle cx="-8.6" cy="-1.4" r="1.4" fill="#e9b949"/>
+      <circle r="2.2" fill="#c9a227"/>
+    </g>
+
+    <!-- Sakura pálida -->
+    <g id="ebFlPale">
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetalPale)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetalPale)" transform="rotate(72)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetalPale)" transform="rotate(144)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetalPale)" transform="rotate(216)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" fill="url(#ebPetalPale)" transform="rotate(288)"/>
+      <circle r="2" fill="#c9a227"/>
+    </g>
+
+    <!-- Sakura de contorno: la pieza que hace "minimalismo moderno" -->
+    <g id="ebFlLine" fill="none" stroke="#735c00" stroke-width="1" stroke-linejoin="round" opacity=".75">
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" transform="rotate(72)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" transform="rotate(144)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" transform="rotate(216)"/>
+      <path d="M0 0C-7.6-9-10.2-20.2-4-25.8L0-21.2 4-25.8C10.2-20.2 7.6-9 0 0Z" transform="rotate(288)"/>
+    </g>
+
+    <g id="ebBud">
+      <ellipse rx="5.2" ry="7" fill="url(#ebPetal)"/>
+      <path d="M0-7C3 0 3 0 0 7-3 0-3 0 0-7Z" fill="#fbdbde" opacity=".55"/>
+    </g>
+
+    <g id="ebLeaf">
+      <path d="M0 0C9-4 17-2 21 4 15 10 6 9 0 0Z" fill="#b9b48a" opacity=".8"/>
+      <path d="M0 0C8-1 15 1 20 4" stroke="#9a9470" stroke-width=".8" fill="none"/>
+    </g>
+
+    <g id="ebPt">
+      <path d="M0-13C6-8 8 2 0 13-8 2-6-8 0-13Z" fill="url(#ebPetal)"/>
+      <path d="M0-11C2-5 2 4 0 10" stroke="#e594ab" stroke-width=".7" fill="none" opacity=".5"/>
+    </g>
+    <g id="ebPtPale">
+      <path d="M0-13C6-8 8 2 0 13-8 2-6-8 0-13Z" fill="url(#ebPetalPale)"/>
+    </g>
+  </defs>
+</svg>
+
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="eb-nav" id="nav" aria-label="Navegación principal">
+  <div class="eb-nav__inner">
+    <a class="eb-nav__logo" href="#inicio">Dayana Yamile</a>
+    <ul class="eb-nav__links">
+      <li><a href="#familia">Familia</a></li>
+      <li><a href="#detalles">Detalles</a></li>
+      <li><a href="#itinerario">Itinerario</a></li>
+    </ul>
+    <a class="eb-btn eb-btn--primary" href="#confirmar">Asistiré</a>
+  </div>
+</nav>
+
+<main id="contenido">
+
+<!-- ==================== HERO ==================== -->
+<header class="eb-hero" id="inicio">
+  <div class="eb-veil"></div>
+  <div class="eb-petals" id="petals" aria-hidden="true"></div>
+
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Mis Quince Años</p>
+    <h1 class="eb-hero__name">Dayana Yamile</h1>
+    <p class="eb-hero__surname">Suárez Bolaños</p>
+
+    <div class="eb-frame">
+      <div class="eb-frame__bloom eb-frame__bloom--tl">
+        <svg viewBox="0 0 150 130" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="url(#ebBranch)" stroke-linecap="round">
+            <path d="M4 10C34 22 62 46 82 78c10 16 18 32 22 48" stroke-width="2.4"/>
+            <path d="M40 30C46 44 42 56 30 64" stroke-width="1.4"/>
+            <path d="M78 70C92 68 104 74 110 86" stroke-width="1.3"/>
+          </g>
+          <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(52 44) rotate(-20) scale(.7)"/>
+          <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(30 64) rotate(-14) scale(.9)"/>
+          <use href="#ebFl"     xlink:href="#ebFl"     transform="translate(10 14) scale(.95)"/>
+          <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(110 86) scale(.78)"/>
+          <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(104 124) scale(.6)"/>
+        </svg>
+      </div>
+
+      <div class="eb-frame__bloom eb-frame__bloom--br">
+        <svg viewBox="0 0 150 130" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="url(#ebBranch)" stroke-linecap="round">
+            <path d="M4 10C34 22 62 46 82 78c10 16 18 32 22 48" stroke-width="2.4"/>
+            <path d="M40 30C46 44 42 56 30 64" stroke-width="1.4"/>
+            <path d="M78 70C92 68 104 74 110 86" stroke-width="1.3"/>
+          </g>
+          <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(52 44) rotate(-20) scale(.7)"/>
+          <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(30 64) rotate(-14) scale(.9)"/>
+          <use href="#ebFl"     xlink:href="#ebFl"     transform="translate(10 14) scale(.95)"/>
+          <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(110 86) scale(.78)"/>
+          <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(104 124) scale(.6)"/>
+        </svg>
+      </div>
+
+      <span class="eb-frame__corner eb-frame__corner--tl"></span>
+      <span class="eb-frame__corner eb-frame__corner--tr"></span>
+      <span class="eb-frame__corner eb-frame__corner--bl"></span>
+      <span class="eb-frame__corner eb-frame__corner--br"></span>
+
+      <div class="eb-frame__media">
+        <!-- Rutas ABSOLUTAS: el rewrite sirve esta página en /mis-xv-dayana
+             (sin barra final), así que "assets/…" resolvería a /assets/… y daría 404.
+             El poster llena el marco desde el primer instante: el mp4 pesa 17 MB. -->
+        <video id="retrato" src="/mis-xv-dayana/assets/animacion-princesa.mp4"
+               poster="/mis-xv-dayana/assets/poster.jpg"
+               width="1248" height="1664"
+               autoplay muted loop playsinline preload="auto"
+               disablepictureinpicture
+               aria-label="Animación de Dayana Yamile en su vestido de XV Años"></video>
+      </div>
+
+      <button type="button" class="eb-frame__toggle" id="video-toggle" aria-label="Pausar la animación">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1"/><rect x="13" y="5" width="4" height="14" rx="1"/></svg>
+      </button>
+    </div>
+
+    <p class="eb-hero__date">Sábado 29 de Agosto de 2026</p>
+    <p class="eb-label eb-hero__place">Chalco, Estado de México</p>
+  </div>
+</header>
+
+
+<!-- ==================== CUENTA REGRESIVA ====================
+     Adorno: la fecha completa ya vive arriba como texto fijo.
+     ========================================================== -->
+<section class="eb-countdown eb-rv" aria-labelledby="cd-h">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow" id="cd-h">Estamos contando los días</p>
+    <div class="eb-cd" id="cd">
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-d">—</div><div class="eb-cd__unit">Días</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-h2">—</div><div class="eb-cd__unit">Horas</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-m">—</div><div class="eb-cd__unit">Min</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-s">—</div><div class="eb-cd__unit">Seg</div></div>
+    </div>
+  </div>
+</section>
+
+
+<div class="eb-divider eb-float">
+  <svg viewBox="0 0 340 76" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="url(#ebBranch)" stroke-linecap="round" stroke-width="1.6">
+      <path d="M8 46C54 34 100 46 140 38"/>
+      <path d="M332 46C286 34 240 46 200 38"/>
+      <path d="M62 40C68 30 68 22 62 14" stroke-width="1.1"/>
+      <path d="M278 40C272 30 272 22 278 14" stroke-width="1.1"/>
+    </g>
+    <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(96 40) rotate(-16) scale(.66)"/>
+    <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(244 40) rotate(196) scale(.66)"/>
+    <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(120 36) rotate(-14)"/>
+    <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(220 36) rotate(14)"/>
+    <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(146 34) scale(.72)"/>
+    <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(194 34) scale(.72)"/>
+    <use href="#ebFl"     xlink:href="#ebFl"     transform="translate(170 38) scale(1.05)"/>
+    <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(62 14) scale(.7)"/>
+    <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(278 14) scale(.7)"/>
+  </svg>
+</div>
+
+
+<!-- ==================== FAMILIA ==================== -->
+<section class="eb-family eb-rv" id="familia">
+  <div class="eb-wrap">
+    <div class="eb-family__card">
+      <p class="eb-quote">
+        Con la bendición de Dios y el amor de mi familia comienzo esta nueva etapa.
+        Hay momentos que se guardan en el corazón para siempre, y quiero que tú seas parte del mío.
+      </p>
+
+      <div class="eb-family__grid">
+        <div>
+          <p class="eb-label eb-family__role">Mi Mamá</p>
+          <p class="eb-family__name">Brenda Susana<br>Suárez Bolaños</p>
+        </div>
+        <div>
+          <p class="eb-label eb-family__role">Mi Madrina</p>
+          <p class="eb-family__name">Lizeth Sofía<br>Suárez Bolaños</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== DETALLES ==================== -->
+<section class="eb-details eb-rv" id="detalles">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Todo lo que necesitas saber</p>
+    <h2 class="eb-title" style="text-align:center">Los Detalles</h2>
+
+    <div class="eb-cards">
+      <!-- MISA -->
+      <article class="eb-card">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4"/><path d="M12 8v4"/></svg>
+        </div>
+        <h3 class="eb-card__name">Misa</h3>
+        <p class="eb-card__hour">3:00 PM</p>
+        <p class="eb-card__venue">Parroquia de San Miguel Arcángel</p>
+        <p class="eb-card__addr">
+          12 de Diciembre 87, San Miguel Jacalones<br>
+          56604 Chalco de Díaz Covarrubias<br>
+          Estado de México
+        </p>
+        <div class="eb-card__spacer"></div>
+        <a class="eb-btn eb-btn--ghost" href="https://maps.app.goo.gl/3oSEZJLAh2AFadHq8" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Ver Ubicación
+        </a>
+      </article>
+
+      <!-- RECEPCIÓN -->
+      <article class="eb-card eb-card--feature">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </div>
+        <h3 class="eb-card__name">Recepción</h3>
+        <p class="eb-card__hour">6:00 PM</p>
+        <p class="eb-card__venue">Salón de Fiestas Villaverde</p>
+        <p class="eb-card__addr">
+          Carretera México-Cuautla, Km 35.5<br>
+          Col. Santa Cruz Amalinalco, C.P. 56609<br>
+          Chalco, Estado de México
+        </p>
+        <div class="eb-card__spacer"></div>
+        <a class="eb-btn eb-btn--primary" href="https://maps.app.goo.gl/WiNBbqdBas4L6RDt6" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Ver Ubicación
+        </a>
+      </article>
+
+      <!-- VESTIMENTA -->
+      <article class="eb-card">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3l3 3 3-3"/><path d="M9 3L5.5 5.2a2 2 0 00-.9 2.2L6 13v8h12v-8l1.4-5.6a2 2 0 00-.9-2.2L15 3"/></svg>
+        </div>
+        <h3 class="eb-card__name">Vestimenta</h3>
+        <p class="eb-card__dress">Casual / Formal</p>
+        <p class="eb-card__note">
+          Con mucho cariño les pedimos reservar el <strong>rosa palo</strong> y el
+          <strong>blanco</strong>, que están destinados a la Quinceañera.
+        </p>
+        <div class="eb-card__spacer"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== ITINERARIO ==================== -->
+<section class="eb-itinerary eb-rv" id="itinerario">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">El recorrido del día</p>
+    <h2 class="eb-title">Itinerario</h2>
+
+    <div class="eb-timeline">
+      <div class="eb-tl">
+        <div class="eb-tl__time">2:30 PM</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></div>
+        <div class="eb-tl__label">Llegada</div>
+      </div>
+      <div class="eb-tl">
+        <div class="eb-tl__time">3:00 PM</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M7 8h10"/></svg></div>
+        <div class="eb-tl__label">Misa</div>
+      </div>
+      <div class="eb-tl">
+        <div class="eb-tl__time">6:00 PM</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <div class="eb-tl__label">Recepción</div>
+      </div>
+      <div class="eb-tl">
+        <div class="eb-tl__time eb-tl__time--tbd">Por confirmar</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M2 12h3M19 12h3M4.9 19.1l2.2-2.2M16.9 7.1l2.2-2.2"/></svg></div>
+        <div class="eb-tl__label">Vals</div>
+      </div>
+      <div class="eb-tl">
+        <div class="eb-tl__time eb-tl__time--tbd">Por confirmar</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg></div>
+        <div class="eb-tl__label">Sesión de fotos</div>
+      </div>
+      <div class="eb-tl">
+        <div class="eb-tl__time eb-tl__time--tbd">Por confirmar</div>
+        <div class="eb-tl__mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+        <div class="eb-tl__label">Fiesta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="eb-divider eb-float">
+  <svg viewBox="0 0 340 76" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="url(#ebBranch)" stroke-linecap="round" stroke-width="1.6">
+      <path d="M8 46C54 34 100 46 140 38"/>
+      <path d="M332 46C286 34 240 46 200 38"/>
+      <path d="M62 40C68 30 68 22 62 14" stroke-width="1.1"/>
+      <path d="M278 40C272 30 272 22 278 14" stroke-width="1.1"/>
+    </g>
+    <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(96 40) rotate(-16) scale(.66)"/>
+    <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(244 40) rotate(196) scale(.66)"/>
+    <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(120 36) rotate(-14)"/>
+    <use href="#ebBud"    xlink:href="#ebBud"    transform="translate(220 36) rotate(14)"/>
+    <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(146 34) scale(.72)"/>
+    <use href="#ebFlLine" xlink:href="#ebFlLine" transform="translate(194 34) scale(.72)"/>
+    <use href="#ebFl"     xlink:href="#ebFl"     transform="translate(170 38) scale(1.05)"/>
+    <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(62 14) scale(.7)"/>
+    <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(278 14) scale(.7)"/>
+  </svg>
+</div>
+
+
+<!-- ==================== CONFIRMAR ==================== -->
+<section class="eb-rsvp eb-rv" id="confirmar">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Confirmación</p>
+    <h2 class="eb-title">Te espero con ilusión</h2>
+    <p class="eb-rsvp__copy">
+      Tu presencia hará de este día un recuerdo inolvidable.
+      Confirma tu asistencia antes del <strong>15 de agosto</strong> para preparar cada detalle.
+    </p>
+
+    <form class="eb-form" id="rsvp" novalidate>
+      <div class="eb-field">
+        <label class="eb-label" for="f-nombre">Tu nombre</label>
+        <input type="text" id="f-nombre" name="nombre" placeholder="Nombre y apellido"
+               autocomplete="name" required aria-describedby="f-error">
+      </div>
+
+      <div class="eb-field">
+        <label class="eb-label" for="f-pases">Número de personas</label>
+        <select id="f-pases" name="pases">
+          <option>1 persona</option>
+          <option>2 personas</option>
+          <option>3 personas</option>
+          <option>4 personas</option>
+          <option>5 personas</option>
+          <option>6 o más personas</option>
+        </select>
+      </div>
+
+      <div class="eb-field">
+        <label class="eb-label" for="f-asiste">¿Nos acompañas?</label>
+        <select id="f-asiste" name="asiste">
+          <option value="si">Sí, ahí estaré</option>
+          <option value="no">Lamento no poder asistir</option>
+        </select>
+      </div>
+
+      <p class="eb-form__error" id="f-error" role="alert"></p>
+
+      <button type="submit" class="eb-btn eb-btn--primary eb-form__submit">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 00-8.6 15.05L2 22l5.07-1.33A10 10 0 1012 2z"/></svg>
+        Confirmar Asistencia
+      </button>
+    </form>
+
+    <!-- Ruta sin JS. Siempre presente, nunca depende del formulario. -->
+    <p class="eb-rsvp__direct">
+      O escríbenos directo por
+      <a href="https://wa.me/527203898985?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20los%20XV%20A%C3%B1os%20de%20Dayana%20Yamile%20el%2029%20de%20agosto%20de%202026." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="eb-footer">
+  <div class="eb-wrap">
+    <p class="eb-footer__name">Dayana Yamile</p>
+    <ul class="eb-footer__links">
+      <li><a href="#familia">La Familia</a></li>
+      <li><a href="#detalles">Detalles</a></li>
+      <li><a href="#confirmar">Asistir</a></li>
+    </ul>
+    <p class="eb-footer__fine">29 de Agosto de 2026 &middot; Chalco, Estado de México</p>
+  </div>
+</footer>
+
+
+<script>
+'use strict';
+
+/* Offset -06:00 explícito: la cuenta regresiva marca lo mismo sin
+   importar la zona horaria del invitado. Ancla = misa, 3:00 PM. */
+var EVENT_TS   = new Date('2026-08-29T15:00:00-06:00').getTime();
+var RSVP_PHONE = '527203898985';
+
+/* ---------- NAVBAR ---------- */
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('is-stuck', window.scrollY > 10); }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+/* ---------- CUENTA REGRESIVA ---------- */
+(function () {
+  var box = document.getElementById('cd');
+  var el  = { d:document.getElementById('cd-d'), h:document.getElementById('cd-h2'),
+              m:document.getElementById('cd-m'), s:document.getElementById('cd-s') };
+  var prev = {}, timer;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function tick(){
+    var diff = EVENT_TS - Date.now();
+
+    if (diff <= 0) {
+      box.innerHTML = '<p class="eb-cd__done">¡Hoy es el gran día!</p>';
+      clearInterval(timer);
+      return;
+    }
+
+    var v = {
+      d: String(Math.floor(diff / 86400000)),
+      h: pad(Math.floor(diff % 86400000 / 3600000)),
+      m: pad(Math.floor(diff % 3600000 / 60000)),
+      s: pad(Math.floor(diff % 60000 / 1000))
+    };
+
+    /* Diffing por llave: sin esto se repintan 4 nodos por segundo. */
+    Object.keys(v).forEach(function (k) {
+      if (prev[k] === v[k]) return;
+      prev[k] = v[k];
+      el[k].textContent = v[k];
+      el[k].classList.remove('eb-cd__num--tick');
+      void el[k].offsetWidth;                    /* reinicia la animación */
+      el[k].classList.add('eb-cd__num--tick');
+    });
+  }
+
+  tick();
+  timer = setInterval(tick, 1000);
+})();
+
+/* ---------- CONFIRMACIÓN POR WHATSAPP ---------- */
+(function () {
+  var form  = document.getElementById('rsvp');
+  var name  = document.getElementById('f-nombre');
+  var seats = document.getElementById('f-pases');
+  var going = document.getElementById('f-asiste');
+  var err   = document.getElementById('f-error');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var n = name.value.trim();
+    if (n.length < 3) {
+      err.textContent = 'Por favor escribe tu nombre completo.';
+      name.focus();
+      return;
+    }
+    err.textContent = '';
+
+    var msg = going.value === 'si'
+      ? '¡Hola! Soy ' + n + '. Confirmo mi asistencia a los XV Años de Dayana Yamile el 29 de agosto de 2026. Asistimos: ' + seats.value + '.'
+      : '¡Hola! Soy ' + n + '. Lamento mucho no poder acompañarlos en los XV Años de Dayana Yamile el 29 de agosto de 2026. ¡Muchas felicidades!';
+
+    window.open('https://wa.me/' + RSVP_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  });
+})();
+
+/* ---------- VIDEO DEL HERO ---------- */
+(function () {
+  var vid    = document.getElementById('retrato');
+  var toggle = document.getElementById('video-toggle');
+  if (!vid || !toggle) return;
+
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="4" height="14" rx="1"/><rect x="13" y="5" width="4" height="14" rx="1"/></svg>';
+  var ICON_PLAY  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+  /* Si el archivo falta o el códec no carga, el marco no queda vacío. */
+  vid.addEventListener('error', function () {
+    var box = document.createElement('div');
+    box.className = 'eb-frame__fallback';
+    box.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/>' +
+      '<path d="M21 16l-5.5-5.5L7 19"/></svg>' +
+      '<span>No se pudo cargar assets/animacion-princesa.mp4</span>';
+    vid.replaceWith(box);
+    toggle.hidden = true;
+  }, { once:true });
+
+  /* Quien pidió menos movimiento no recibe reproducción automática. */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    vid.removeAttribute('autoplay');
+    vid.pause();
+  }
+
+  function sync() {
+    var paused = vid.paused;
+    toggle.innerHTML = paused ? ICON_PLAY : ICON_PAUSE;
+    toggle.setAttribute('aria-label', paused ? 'Reproducir la animación' : 'Pausar la animación');
+  }
+
+  vid.addEventListener('play',  sync);
+  vid.addEventListener('pause', sync);
+
+  toggle.addEventListener('click', function () {
+    if (vid.paused) { vid.play().catch(function () {}); }
+    else            { vid.pause(); }
+  });
+
+  sync();
+})();
+
+/* ---------- REVEAL ---------- */
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.eb-rv').forEach(function (el) { el.classList.add('is-on'); });
+    return;
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-on');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold:.1, rootMargin:'0px 0px -50px 0px' });
+
+  document.querySelectorAll('.eb-rv').forEach(function (el) { obs.observe(el); });
+})();
+
+/* ---------- LLUVIA DE PÉTALOS ---------- */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+
+  var field = document.getElementById('petals');
+  var count = window.innerWidth < 600 ? 10 : 18;
+
+  for (var i = 0; i < count; i++) {
+    var el = document.createElement('div');
+    var size = 9 + Math.random() * 12;
+
+    el.className = 'eb-petal';
+    el.style.left = (Math.random() * 100) + '%';
+    el.style.width = size + 'px';
+    el.style.height = (size * 1.45) + 'px';
+    el.style.animationDuration = (9 + Math.random() * 9) + 's';
+    el.style.animationDelay = (Math.random() * 12) + 's';
+    el.innerHTML = '<svg viewBox="-10 -14 20 28" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+                   '<use href="#' + (Math.random() > .45 ? 'ebPt' : 'ebPtPale') + '"/></svg>';
+
+    field.appendChild(el);
+  }
+})();
+</script>
+
+</body>
+</html>
