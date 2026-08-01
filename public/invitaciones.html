@@ -350,6 +350,10 @@ body {
   background: rgba(0,230,118,0.15); color: var(--verde);
   border: 1px solid rgba(0,230,118,0.1);
 }
+.t-thumb-badge.maestro {
+  background: rgba(184,35,42,0.25); color: #fffaeb;
+  border: 1px solid rgba(212,165,30,0.45);
+}
 
 /* Preview play button */
 .t-play {
@@ -580,8 +584,6 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-var PASSWORD = '1.Tequiladrink';
-
 /* ─── TEMPLATES DATABASE ─── */
 var TEMPLATES = [
   {
@@ -627,6 +629,17 @@ var TEMPLATES = [
     colors: ['#c5a55a', '#d4919a', '#8faa8b'],
     thumb: '/templates/assets/thumb-canva-premium.jpg',
     created: '2026-03-28'
+  },
+  {
+    id: 'dia-del-maestro',
+    name: 'Dia del Maestro S114',
+    type: 'maestro',
+    typeLabel: 'Docente',
+    description: 'Diseno elegante con particulas doradas, rosas decorativas, cronometro dinamico y RSVP con confirmacion directa',
+    file: '/diadelmaestro/index.html',
+    colors: ['#d4a51e', '#b8232a', '#fffaeb'],
+    thumb: '/diadelmaestro/assets/photo-villa.jpg',
+    created: '2026-05-21'
   }
 ];
 
@@ -638,12 +651,24 @@ var ICON = {
 };
 
 /* ─── AUTH ─── */
-function doLogin() {
+async function doLogin() {
   var pwd = document.getElementById('pwdInput').value;
   var err = document.getElementById('errMsg');
   err.style.display = 'none';
-  if (pwd !== PASSWORD) {
-    err.textContent = 'Contrasena incorrecta';
+  try {
+    var res = await fetch('/api/invitaciones-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd })
+    });
+    var data = await res.json().catch(function() { return {}; });
+    if (!res.ok || !data.ok) {
+      err.textContent = 'Contrasena incorrecta';
+      err.style.display = 'block';
+      return;
+    }
+  } catch (e) {
+    err.textContent = 'Error de conexion. Intenta de nuevo.';
     err.style.display = 'block';
     return;
   }

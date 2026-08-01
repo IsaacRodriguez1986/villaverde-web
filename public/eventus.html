@@ -23,9 +23,9 @@
   --surface: rgba(255,255,255,0.04);
   --surface-hover: rgba(255,255,255,0.06);
   --border: rgba(255,255,255,0.08);
-  --text-primary: rgba(255,255,255,0.92);
-  --text-secondary: rgba(255,255,255,0.6);
-  --text-muted: rgba(255,255,255,0.35);
+  --text-primary: rgba(255,255,255,0.94);
+  --text-secondary: rgba(255,255,255,0.74);
+  --text-muted: rgba(255,255,255,0.55);
   --radius: 16px;
   --radius-sm: 10px;
   --font-display: 'Playfair Display', Georgia, serif;
@@ -228,7 +228,7 @@ select.fi option { background: #1a1a1a; color: white; }
 
 .gi2 { flex: 1; min-width: 0; }
 .gn { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gm { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 2px; display: flex; gap: 6px; align-items: center; }
+.gm { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; display: flex; gap: 6px; align-items: center; }
 .mt { background: rgba(201,168,76,0.12); color: var(--gold); padding: 2px 7px; border-radius: 4px; font-weight: 600; font-size: 11px; }
 
 /* Guest action buttons */
@@ -584,7 +584,7 @@ select.fi option { background: #1a1a1a; color: white; }
 .inv-header p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 .inv-section { margin-bottom: 20px; }
 .inv-section h4 { font-family: var(--font-display); font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
-.inv-section .inv-hint { font-size: 12px; color: rgba(255,255,255,0.25); margin-bottom: 10px; }
+.inv-section .inv-hint { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
 .inv-upload-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
 .inv-upload-grid.solo { grid-template-columns: repeat(2, 1fr); max-width: 240px; }
 .inv-upload-slot { aspect-ratio: 1; border-radius: 12px; border: 2px dashed rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; transition: all .2s; }
@@ -645,6 +645,42 @@ select.fi option { background: #1a1a1a; color: white; }
 /* ─── LOADING SKELETON ─── */
 @keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
 .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 100%); background-size: 200px 100%; animation: shimmer 1.5s infinite; border-radius: 10px; }
+
+/* ─── INICIO DASHBOARD (added) ─── */
+.greet { text-align: center; margin: 2px 0 14px; }
+.greet h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+.greet p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+.next-step { display: flex; align-items: center; gap: 14px; background: linear-gradient(145deg, rgba(232,21,110,0.12), rgba(0,230,118,0.05)); border: 1px solid rgba(232,21,110,0.2); border-radius: 18px; padding: 16px; margin: 4px 0 6px; cursor: pointer; transition: all .3s cubic-bezier(0.16,1,0.3,1); }
+.next-step:active { transform: scale(0.98); }
+.next-step.ns-static { cursor: default; }
+.next-step.ns-danger { background: linear-gradient(145deg, rgba(255,82,82,0.12), rgba(255,82,82,0.04)); border-color: rgba(255,82,82,0.28); }
+.next-step.ns-done { background: linear-gradient(145deg, rgba(0,230,118,0.1), rgba(0,230,118,0.03)); border-color: rgba(0,230,118,0.22); }
+.next-step .ns-ico { width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, var(--rosa), var(--rosa-dark)); display: flex; align-items: center; justify-content: center; font-size: 23px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(232,21,110,0.3); }
+.next-step.ns-danger .ns-ico { background: linear-gradient(135deg, #D32F2F, #FF5252); box-shadow: 0 4px 12px rgba(255,82,82,0.3); }
+.next-step.ns-done .ns-ico { background: linear-gradient(135deg, var(--verde-dark), var(--verde)); box-shadow: 0 4px 12px rgba(0,230,118,0.3); }
+.next-step .ns-body { flex: 1; min-width: 0; }
+.next-step .ns-kick { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--rosa-light); font-weight: 700; }
+.next-step.ns-danger .ns-kick { color: #FF8A80; }
+.next-step.ns-done .ns-kick { color: var(--verde); }
+.next-step .ns-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px; }
+.next-step .ns-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+.next-step .ns-arrow { font-size: 22px; color: var(--rosa); flex-shrink: 0; align-self: center; }
+.next-step.ns-danger .ns-arrow { color: #FF5252; }
+
+.sec-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin: 20px 0 10px; }
+
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.qa-card { display: flex; flex-direction: column; gap: 10px; background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px; cursor: pointer; transition: all .3s cubic-bezier(0.16,1,0.3,1); position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+.qa-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); }
+.qa-card:hover { border-color: rgba(232,21,110,0.2); transform: translateY(-1px); }
+.qa-card:active { transform: scale(0.97); }
+.qa-card .qa-ico { width: 44px; height: 44px; border-radius: 13px; background: rgba(232,21,110,0.12); display: flex; align-items: center; justify-content: center; font-size: 23px; }
+.qa-card .qa-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.qa-card .qa-sub { font-size: 12px; color: var(--text-secondary); margin-top: -6px; }
+.qa-card.locked .qa-ico { background: rgba(255,255,255,0.05); filter: grayscale(1); opacity: .7; }
+.qa-card.locked .qa-title { color: var(--text-secondary); }
+.qa-card .qa-lock { position: absolute; top: 13px; right: 14px; font-size: 14px; }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 380px) {
@@ -755,10 +791,23 @@ const SB_URL='https://gfbixkddumsqlfrfbsmp.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYml4a2RkdW1zcWxmcmZic21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjU5NDMsImV4cCI6MjA4OTgwMTk0M30.0oMJ8w75vQNJEXwfiKi9fjs3p25-9KEMBtV-Z3A-jiY';
 const SB_HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'};
 
-async function sbGet(table,query){const r=await fetch(SB_URL+'/rest/v1/'+table+'?'+query,{headers:SB_HEADERS});return r.ok?r.json():[]}
-async function sbPost(table,data){const r=await fetch(SB_URL+'/rest/v1/'+table,{method:'POST',headers:SB_HEADERS,body:JSON.stringify(data)});return r.ok?r.json():null}
-async function sbPatch(table,query,data){const r=await fetch(SB_URL+'/rest/v1/'+table+'?'+query,{method:'PATCH',headers:SB_HEADERS,body:JSON.stringify(data)});return r.ok?r.json():null}
-async function sbDelete(table,query){await fetch(SB_URL+'/rest/v1/'+table+'?'+query,{method:'DELETE',headers:SB_HEADERS})}
+/* Todo el acceso a tablas eventus_* pasa por el backend seguro /api/eventus.
+   La anon key (SB_KEY) se conserva SOLO para subir fotos al Storage (bucket eventus-photos). */
+const EVENTUS_API='/api/eventus';
+let LOGIN_CODE=null;
+function capCode(){return (typeof E!=='undefined'&&E&&E.code)?E.code:(LOGIN_CODE||null)}
+function admPw(){try{return sessionStorage.getItem('eventus_adm')||''}catch(e){return''}}
+async function sbReq(method,table,query,body){
+  try{
+    const r=await fetch(EVENTUS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({op:'db',method:method,table:table,query:query||'',body:body||null,code:capCode(),adminPw:admPw()})});
+    if(!r.ok)return method==='GET'?[]:null;
+    return await r.json();
+  }catch(e){return method==='GET'?[]:null}
+}
+async function sbGet(table,query){const d=await sbReq('GET',table,query,null);return Array.isArray(d)?d:[]}
+async function sbPost(table,data){return sbReq('POST',table,null,data)}
+async function sbPatch(table,query,data){return sbReq('PATCH',table,query,data)}
+async function sbDelete(table,query){return sbReq('DELETE',table,query,null)}
 
 /* ─── DATA ─── */
 let E=null,CF='all',DEMO_MODE=false,ADMIN_VIEW=false;
@@ -767,6 +816,8 @@ const DCL=[{id:1,text:'Confirmar fecha y paquete'},{id:2,text:'Pagar anticipo $3
 
 /* ─── HELPERS ─── */
 function gc(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let r='';for(let i=0;i<4;i++)r+=c[Math.floor(Math.random()*c.length)];return'VV-'+r}
+/* Escapa datos de usuario antes de meterlos a innerHTML (audit 2026-07-22 C6, anti-XSS) */
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]})}
 function fmt$(n){return'$'+Number(n).toLocaleString('es-MX')}
 function lci(name,size,stroke){size=size||20;stroke=stroke||'currentColor';if(!window.lucide||!lucide.icons||!lucide.icons[name])return'';var paths=lucide.icons[name];var d='';if(Array.isArray(paths)){for(var i=0;i<paths.length;i++){if(typeof paths[i]==='string')d+=paths[i];else if(Array.isArray(paths[i]))d+='<'+paths[i][0]+' '+Object.entries(paths[i][1]||{}).map(function(e){return e[0]+'="'+e[1]+'"'}).join(' ')+'/>'}}return'<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="'+stroke+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg>'}
 function calcPayments(tc,cd,ed){const s=tc-3000,q=Math.round(s*0.25),c=new Date(cd);const d1=new Date(c);d1.setMonth(d1.getMonth()+3);const d2=new Date(c);d2.setMonth(d2.getMonth()+6);const d3=new Date(c);d3.setMonth(d3.getMonth()+9);const d4=new Date(ed);d4.setDate(d4.getDate()-15);return[{name:'Anticipo',amount:3000,date:cd,note:'No reembolsable',paid:false},{name:'2do pago (25%)',amount:q,date:d1.toISOString().slice(0,10),note:'3 meses',paid:false},{name:'3er pago (25%)',amount:q,date:d2.toISOString().slice(0,10),note:'6 meses',paid:false},{name:'4to pago (25%)',amount:q,date:d3.toISOString().slice(0,10),note:'9 meses',paid:false},{name:'Liquidacion',amount:s-(q*3),date:d4.toISOString().slice(0,10),note:'15 dias antes',paid:false}]}
@@ -780,7 +831,7 @@ async function saveGuest(g){syncDot('saving');try{await sbPatch('eventus_guests'
 function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(err?' error':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
 
 /* ─── LOAD FROM SUPABASE ─── */
-async function loadEvent(code){syncDot('saving');try{const evs=await sbGet('eventus_events','code=eq.'+code);if(!evs.length)return null;const ev=evs[0];const guests=await sbGet('eventus_guests','event_code=eq.'+code+'&order=created_at');const payments=await sbGet('eventus_payments','event_code=eq.'+code+'&order=id');const checklist=await sbGet('eventus_checklist','event_code=eq.'+code+'&order=sort_order');const program=await sbGet('eventus_program','event_code=eq.'+code+'&order=sort_order');E={code:ev.code,name:ev.name,type:ev.type,date:ev.date,hours:ev.hours,totalCost:ev.total_cost,contractDate:ev.contract_date,numMesas:ev.num_mesas,menuSel:ev.menu_sel||{},activated:ev.activated||false,phone:ev.phone||'',photo_url:ev.photo_url||'',gallery:ev.gallery||[],dress_code:ev.dress_code||'Elegante',event_time:ev.event_time||'18:00',invitation_status:ev.invitation_status||'sin_brief',invitation_brief:ev.invitation_brief||null,invitation_url:ev.invitation_url||'',invitation_comments:ev.invitation_comments||'',guests:guests.map(function(g){return{id:g.id,name:g.name,companions:g.companions||0,mesa:g.mesa,status:g.status||'pending',wa:g.wa||'',arrived:g.arrived||false,arrivedAt:g.arrived_at}}),payments:payments.map(function(p){return{id:p.id,name:p.name,amount:p.amount,date:p.due_date,note:p.note||'',paid:p.paid||false}}),checklist:checklist.map(function(c){return{id:c.id,text:c.text,done:c.done||false}}),program:program.map(function(p){return{id:p.id,name:p.name,time:p.time?p.time.slice(0,5):'00:00',dur:p.dur||15,note:p.note||''}})};syncDot('ok');return E}catch(e){syncDot('err');return null}}
+async function loadEvent(code){LOGIN_CODE=code;syncDot('saving');try{const evs=await sbGet('eventus_events','code=eq.'+code);if(!evs.length)return null;const ev=evs[0];const guests=await sbGet('eventus_guests','event_code=eq.'+code+'&order=created_at');const payments=await sbGet('eventus_payments','event_code=eq.'+code+'&order=id');const checklist=await sbGet('eventus_checklist','event_code=eq.'+code+'&order=sort_order');const program=await sbGet('eventus_program','event_code=eq.'+code+'&order=sort_order');E={code:ev.code,name:ev.name,type:ev.type,date:ev.date,hours:ev.hours,totalCost:ev.total_cost,contractDate:ev.contract_date,numMesas:ev.num_mesas,menuSel:ev.menu_sel||{},activated:ev.activated||false,invitation_enabled:ev.invitation_enabled||false,phone:ev.phone||'',photo_url:ev.photo_url||'',gallery:ev.gallery||[],dress_code:ev.dress_code||'Elegante',event_time:ev.event_time||'18:00',invitation_status:ev.invitation_status||'sin_brief',invitation_brief:ev.invitation_brief||null,invitation_url:ev.invitation_url||'',invitation_comments:ev.invitation_comments||'',guests:guests.map(function(g){return{id:g.id,name:g.name,companions:g.companions||0,mesa:g.mesa,status:g.status||'pending',wa:g.wa||'',arrived:g.arrived||false,arrivedAt:g.arrived_at}}),payments:payments.map(function(p){return{id:p.id,name:p.name,amount:p.amount,date:p.due_date,note:p.note||'',paid:p.paid||false}}),checklist:checklist.map(function(c){return{id:c.id,text:c.text,done:c.done||false}}),program:program.map(function(p){return{id:p.id,name:p.name,time:p.time?p.time.slice(0,5):'00:00',dur:p.dur||15,note:p.note||''}})};syncDot('ok');return E}catch(e){syncDot('err');return null}}
 
 /* ─── AUTH TABS ─── */
 function switchAuth(tab,btn){document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));document.getElementById(tab==='register'?'authRegister':'authLogin').classList.add('active')}
@@ -807,7 +858,7 @@ function copyCode(){const code=document.getElementById('nC').textContent;navigat
 async function logIn(){const c=document.getElementById('lC').value.trim().toUpperCase(),e=document.getElementById('lE');e.style.display='none';if(!c||c.length<6){e.textContent='Ingresa un codigo valido';e.style.display='block';return}
 DEMO_MODE=false;const ev=await loadEvent(c);if(ev){show()}else{e.textContent='Codigo no encontrado. Registrate o contacta al salon.';e.style.display='block'}}
 
-function out(){E=null;DEMO_MODE=false;document.getElementById('wF').style.display='none';document.getElementById('bottomNav').style.display='none';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S0').classList.add('active');document.getElementById('regS').style.display='block';document.getElementById('cR').style.display='none'}
+function out(){E=null;LOGIN_CODE=null;DEMO_MODE=false;document.getElementById('wF').style.display='none';document.getElementById('bottomNav').style.display='none';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S0').classList.add('active');document.getElementById('regS').style.display='block';document.getElementById('cR').style.display='none'}
 
 /* ─── SHOW APP ─── */
 function show(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('S2').classList.add('active');const t={xv:'XV Anos',boda:'Boda',graduacion:'Graduacion'};document.getElementById('dC').textContent=E.code;document.getElementById('dN').textContent=(t[E.type]||'Evento')+' de '+E.name;document.getElementById('nM').value=E.numMesas||20;if(!E.guests)E.guests=[];if(!E.checklist||!E.checklist.length)E.checklist=[];if(!E.program)E.program=[];if(!E.menuSel)E.menuSel={};if(!E.payments)E.payments=[];renderTabs();pM();rG();uS();rCD();rCL();rMenu();rProg();rPay();rT();rInvitacion();rInicio();rMas();document.getElementById('wF').style.display='flex';document.getElementById('bottomNav').style.display='flex';navTo('inicio',document.querySelector('.nav-btn'))}
@@ -842,6 +893,22 @@ document.getElementById('p-mas').classList.add('active');
 /* ─── TAB SWITCH (legacy, kept for admin views) ─── */
 function sw(tab,btn){document.querySelectorAll('.vb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.pn').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+tab).classList.add('active');if(tab==='mesas')rT();if(tab==='checkin')rCheckin();if(tab==='invitacion')rInvitacion()}
 
+/* ─── NAV HELPER: jump to any panel (incl. sub-panels under "Mas") ─── */
+function goPanel(tab){
+if(!document.getElementById('p-'+tab))return;
+document.querySelectorAll('.pn').forEach(function(p){p.classList.remove('active')});
+document.getElementById('p-'+tab).classList.add('active');
+var idxMap={inicio:0,lista:1,mesas:2,invitacion:3,mas:4};
+var idx=(idxMap[tab]!==undefined)?idxMap[tab]:4; /* sub-panels highlight "Mas" */
+var btns=document.querySelectorAll('.nav-btn');
+btns.forEach(function(b){b.classList.remove('active')});
+if(btns[idx])btns[idx].classList.add('active');
+if(tab==='mesas')rT();if(tab==='invitacion')rInvitacion();if(tab==='inicio')rInicio();if(tab==='mas')rMas();if(tab==='pagos')rPay();if(tab==='menu')rMenu();if(tab==='prog')rProg();if(tab==='check')rCL();
+window.scrollTo(0,0);
+}
+function contratar(){window.open('https://wa.me/5215517340226?text=Hola%2C%20quiero%20contratar%20mi%20evento%20en%20Villaverde.%20Mi%20codigo%20es%20'+E.code,'_blank')}
+function contratarInvitacion(){window.open('https://wa.me/5215517340226?text=Hola%2C%20quiero%20agregar%20el%20servicio%20de%20invitacion%20digital%20a%20mi%20evento.%20Mi%20codigo%20es%20'+E.code,'_blank')}
+
 /* ─── RENDER INICIO (HOME) PANEL ─── */
 function rInicio(){
 const c=document.getElementById('p-inicio');
@@ -852,19 +919,48 @@ const totalActive=tp(gs.filter(function(g){return g.status!=='cancelled'}));
 const confirmed=tp(gs.filter(function(g){return g.status==='confirmed'}));
 const pending=tp(gs.filter(function(g){return g.status==='pending'}));
 const cancelled=tp(gs.filter(function(g){return g.status==='cancelled'}));
+const full=E.activated||ADMIN_VIEW;
+const invOn=E.invitation_enabled||ADMIN_VIEW;
+const tName={xv:'tus XV Anos',boda:'tu Boda',graduacion:'tu Graduacion'};
+const first=(E.name||'').split(' ')[0]||'';
+const today=new Date().toISOString().slice(0,10);
+const pays=E.payments||[];
+const hasOverdue=pays.some(function(p){return!p.paid&&p.date&&p.date<today});
+const days=E.date?Math.max(0,Math.ceil((new Date(E.date+'T23:59:59')-new Date())/864e5)):null;
 
 let h='';
+
+/* Greeting */
+h+='<div class="greet"><h2>Hola'+(first?', '+first:'')+'</h2><p>Asi va la organizacion de '+(tName[E.type]||'tu evento')+'</p></div>';
 
 /* Ring */
 h+='<div class="ring"><svg viewBox="0 0 150 150"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0157A"/><stop offset="100%" stop-color="#00E676"/></linearGradient></defs><circle class="trk" cx="75" cy="75" r="69"/><circle class="prg" id="pR" cx="75" cy="75" r="69" stroke-dasharray="433.5" stroke-dashoffset="'+( 433.5-(Math.min(totalActive/450,1)*433.5) )+'"/></svg><div class="rc"><div class="rn" id="tC">'+totalActive+'</div><div class="rl">personas</div></div></div>';
 
-/* Stats */
-h+='<div class="sts"><div class="stb"><div class="stn c1" id="cC">'+confirmed+'</div><div class="stl">Confirmados</div></div><div class="stb"><div class="stn c2" id="cP">'+pending+'</div><div class="stl">Pendientes</div></div><div class="stb"><div class="stn c3" id="cX">'+cancelled+'</div><div class="stl">Cancelados</div></div></div>';
+/* Stats (tap to ver lista) */
+h+='<div class="sts"><div class="stb" onclick="goPanel(\'lista\')" style="cursor:pointer"><div class="stn c1" id="cC">'+confirmed+'</div><div class="stl">Confirmados</div></div><div class="stb" onclick="goPanel(\'lista\')" style="cursor:pointer"><div class="stn c2" id="cP">'+pending+'</div><div class="stl">Pendientes</div></div><div class="stb" onclick="goPanel(\'lista\')" style="cursor:pointer"><div class="stn c3" id="cX">'+cancelled+'</div><div class="stl">Cancelados</div></div></div>';
 
-/* Confirmation numbers */
-h+='<div class="conf-nums">';
-h+='<div class="conf-card"><div class="conf-val">'+gs.length+'</div><div class="conf-lbl">Invitados</div></div>';
-h+='<div class="conf-card"><div class="conf-val">'+(E.numMesas||20)+'</div><div class="conf-lbl">Mesas</div></div>';
+/* Confirmation numbers (tap to navigate) */
+h+='<div class="conf-nums"><div class="conf-card" onclick="goPanel(\'lista\')" style="cursor:pointer"><div class="conf-val">'+gs.length+'</div><div class="conf-lbl">Invitados</div></div><div class="conf-card" onclick="goPanel(\'mesas\')" style="cursor:pointer"><div class="conf-val">'+(E.numMesas||20)+'</div><div class="conf-lbl">Mesas</div></div></div>';
+
+/* NEXT STEP — guia accionable segun el estado del evento */
+var ns;
+if(gs.length===0){ns={cls:'',ico:'&#128101;',kick:'Empieza aqui',title:'Agrega a tus invitados',desc:'Crea tu lista para organizar mesas y confirmaciones',act:"goPanel('lista')"};}
+else if(full&&hasOverdue){ns={cls:'ns-danger',ico:'&#128176;',kick:'Atencion',title:'Tienes un pago vencido',desc:'Revisa tus pagos pendientes',act:"goPanel('pagos')"};}
+else if(invOn&&E.invitation_status==='en_revision'){ns={cls:'',ico:'&#128140;',kick:'Listo para ti',title:'Revisa tu invitacion',desc:'Tu disenador subio una version para aprobar',act:"goPanel('invitacion')"};}
+else if(pending>0){ns={cls:'',ico:'&#9989;',kick:'Siguiente paso',title:'Confirma a tus invitados',desc:'Te faltan '+pending+' persona'+(pending===1?'':'s')+' por confirmar',act:"goPanel('lista')"};}
+else if(invOn&&(!E.invitation_status||E.invitation_status==='sin_brief')){ns={cls:'',ico:'&#128140;',kick:'Siguiente paso',title:'Disena tu invitacion',desc:'Sube tus fotos y preferencias',act:"goPanel('invitacion')"};}
+else if(!full){ns={cls:'',ico:'&#9989;',kick:'Vas muy bien',title:'Tu lista esta lista',desc:'Contrata con el salon para desbloquear menu y pagos',act:"contratar()"};}
+else{ns={cls:'ns-done ns-static',ico:'&#127881;',kick:'Todo en orden',title:'Vas excelente',desc:(days!==null?'Faltan '+days+' dias para tu gran dia':'Tu evento esta bien organizado'),act:null};}
+h+='<div class="next-step '+ns.cls+'"'+(ns.act?' onclick="'+ns.act+'"':'')+'><div class="ns-ico">'+ns.ico+'</div><div class="ns-body"><div class="ns-kick">'+ns.kick+'</div><div class="ns-title">'+ns.title+'</div><div class="ns-desc">'+ns.desc+'</div></div>'+(ns.act?'<div class="ns-arrow">&#8250;</div>':'')+'</div>';
+
+/* QUICK ACTIONS */
+h+='<div class="sec-label">Accesos rapidos</div><div class="qa-grid">';
+h+='<div class="qa-card" onclick="goPanel(\'lista\')"><div class="qa-ico">&#128101;</div><div class="qa-title">Invitados</div><div class="qa-sub">'+gs.length+' en tu lista</div></div>';
+h+='<div class="qa-card" onclick="goPanel(\'mesas\')"><div class="qa-ico">&#128186;</div><div class="qa-title">Mesas</div><div class="qa-sub">'+(E.numMesas||20)+' mesas</div></div>';
+if(full){h+='<div class="qa-card" onclick="goPanel(\'pagos\')"><div class="qa-ico">&#128176;</div><div class="qa-title">Pagos</div><div class="qa-sub">Control de pagos</div></div>';}
+else{h+='<div class="qa-card locked" onclick="contratar()"><div class="qa-lock">&#128274;</div><div class="qa-ico">&#128176;</div><div class="qa-title">Pagos</div><div class="qa-sub">Al contratar</div></div>';}
+if(invOn){h+='<div class="qa-card" onclick="goPanel(\'invitacion\')"><div class="qa-ico">&#128140;</div><div class="qa-title">Invitacion</div><div class="qa-sub">Tu invitacion digital</div></div>';}
+else{h+='<div class="qa-card locked" onclick="contratarInvitacion()"><div class="qa-lock">&#128274;</div><div class="qa-ico">&#128140;</div><div class="qa-title">Invitacion</div><div class="qa-sub">Servicio aparte</div></div>';}
 h+='</div>';
 
 c.innerHTML=h;
@@ -886,9 +982,9 @@ h+='<div class="mas-card" onclick="navToSub(\'prog\')"><div class="mas-icon">&#1
 h+='<div class="mas-card" onclick="navToSub(\'pagos\')"><div class="mas-icon">&#128176;</div><div class="mas-info"><div class="mas-title">Pagos</div><div class="mas-desc">Control de pagos y fechas</div></div><div class="mas-arrow">&#8250;</div></div>';
 h+='<div class="mas-card" onclick="navToSub(\'check\')"><div class="mas-icon">&#9989;</div><div class="mas-info"><div class="mas-title">Pendientes</div><div class="mas-desc">Tu checklist de organizacion</div></div><div class="mas-arrow">&#8250;</div></div>';
 } else {
-h+='<div class="mas-card" style="opacity:0.4;cursor:default"><div class="mas-icon">&#127869;</div><div class="mas-info"><div class="mas-title">Menu</div><div class="mas-desc">Disponible al contratar tu evento</div></div></div>';
-h+='<div class="mas-card" style="opacity:0.4;cursor:default"><div class="mas-icon">&#127926;</div><div class="mas-info"><div class="mas-title">Programa</div><div class="mas-desc">Disponible al contratar tu evento</div></div></div>';
-h+='<div class="mas-card" style="opacity:0.4;cursor:default"><div class="mas-icon">&#128176;</div><div class="mas-info"><div class="mas-title">Pagos</div><div class="mas-desc">Disponible al contratar tu evento</div></div></div>';
+h+='<div class="mas-card" onclick="contratar()" style="opacity:0.62"><div class="mas-icon">&#127869;</div><div class="mas-info"><div class="mas-title">Menu &#128274;</div><div class="mas-desc">Desbloquea al contratar tu evento</div></div><div class="mas-arrow">&#8250;</div></div>';
+h+='<div class="mas-card" onclick="contratar()" style="opacity:0.62"><div class="mas-icon">&#127926;</div><div class="mas-info"><div class="mas-title">Programa &#128274;</div><div class="mas-desc">Desbloquea al contratar tu evento</div></div><div class="mas-arrow">&#8250;</div></div>';
+h+='<div class="mas-card" onclick="contratar()" style="opacity:0.62"><div class="mas-icon">&#128176;</div><div class="mas-info"><div class="mas-title">Pagos &#128274;</div><div class="mas-desc">Desbloquea al contratar tu evento</div></div><div class="mas-arrow">&#8250;</div></div>';
 h+='<div class="mas-card" onclick="navToSub(\'check\')"><div class="mas-icon">&#9989;</div><div class="mas-info"><div class="mas-title">Pendientes</div><div class="mas-desc">Tu checklist de organizacion</div></div><div class="mas-arrow">&#8250;</div></div>';
 }
 h+='</div>';
@@ -896,7 +992,7 @@ c.innerHTML=h;
 }
 
 /* ─── COUNTDOWN ─── */
-function rCD(){const c=document.getElementById('cdB');if(!E||!E.date){c.innerHTML='';return}let demoBanner='';if(E&&!E.activated&&!ADMIN_VIEW){demoBanner='<div class="demo-banner"><p><strong>PLAN GRATUITO</strong> — Invitados y mesas disponibles. Contrata tu evento para desbloquear menu, programa, pagos, invitaciones y mas.</p><a href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20contratar%20mi%20evento%20en%20Villaverde.%20Mi%20codigo%20es%20'+E.code+'" target="_blank">Contratar evento</a></div>'}const now=new Date(),ev=new Date(E.date+'T23:59:59'),df=ev-now;if(df<=0){c.innerHTML=demoBanner+'<div class="cdis" style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--verde)">El gran dia!</div>';return}const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);c.innerHTML=demoBanner+'<div class="cdis"><div class="cdlb">Faltan para tu evento</div><div class="cdgr"><div class="cdun"><div class="cdnm">'+d+'</div><div class="cdtx">Dias</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(h).padStart(2,'0')+'</div><div class="cdtx">Hrs</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(m).padStart(2,'0')+'</div><div class="cdtx">Min</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(s).padStart(2,'0')+'</div><div class="cdtx">Seg</div></div></div></div>'}
+function rCD(){const c=document.getElementById('cdB');if(!E||!E.date){c.innerHTML='';return}let demoBanner='';if(E&&!E.activated&&!ADMIN_VIEW){demoBanner='<div class="demo-banner"><p><strong>PLAN GRATUITO</strong> — Invitados y mesas disponibles. Contrata tu evento para desbloquear menu, programa, pagos y mas.</p><a href="https://wa.me/5215517340226?text=Hola%2C%20quiero%20contratar%20mi%20evento%20en%20Villaverde.%20Mi%20codigo%20es%20'+E.code+'" target="_blank">Contratar evento</a></div>'}const now=new Date(),ev=new Date(E.date+'T23:59:59'),df=ev-now;if(df<=0){c.innerHTML=demoBanner+'<div class="cdis" style="font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--verde)">El gran dia!</div>';return}const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);c.innerHTML=demoBanner+'<div class="cdis"><div class="cdlb">Faltan para tu evento</div><div class="cdgr"><div class="cdun"><div class="cdnm">'+d+'</div><div class="cdtx">Dias</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(h).padStart(2,'0')+'</div><div class="cdtx">Hrs</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(m).padStart(2,'0')+'</div><div class="cdtx">Min</div></div><div class="cdsp">:</div><div class="cdun"><div class="cdnm">'+String(s).padStart(2,'0')+'</div><div class="cdtx">Seg</div></div></div></div>'}
 setInterval(()=>{if(E)rCD()},1000);
 
 /* ─── INVITACION TAB ─── */
@@ -923,11 +1019,12 @@ async function approveInvitation(){if(!confirm('Aprobar la invitacion? Una vez a
 let showChangesForm=false;
 async function requestChanges(){if(!showChangesForm){showChangesForm=true;rInvitacion();return}const ta=document.getElementById('invChangesTA');if(!ta||!ta.value.trim()){toast('Escribe tus comentarios',1);return}E.invitation_comments=ta.value.trim();E.invitation_status='con_cambios';await sbPatch('eventus_events','code=eq.'+E.code,{invitation_status:'con_cambios',invitation_comments:E.invitation_comments});showChangesForm=false;toast('Comentarios enviados');rInvitacion()}
 
-function renderBriefSummary(brief){if(!brief)return'';let h='<div class="inv-brief-summary"><h5>Tu brief</h5>';if(brief.carousel_photos&&brief.carousel_photos.length){h+='<div class="inv-sum-row"><strong>Fotos carrusel:</strong></div><div class="inv-brief-thumbs">';brief.carousel_photos.forEach(function(u){h+='<img src="'+u+'" alt="carousel">'});h+='</div>'}if(brief.solo_photos&&brief.solo_photos.length){h+='<div class="inv-sum-row"><strong>Fotos individuales:</strong></div><div class="inv-brief-thumbs">';brief.solo_photos.forEach(function(u){h+='<img src="'+u+'" alt="solo">'});h+='</div>'}if(brief.song)h+='<div class="inv-sum-row"><strong>Cancion:</strong> '+brief.song+'</div>';if(brief.colors)h+='<div class="inv-sum-row"><strong>Paleta:</strong> '+brief.colors+'</div>';if(brief.message)h+='<div class="inv-sum-row"><strong>Mensaje:</strong> '+brief.message+'</div>';if(brief.dress_code)h+='<div class="inv-sum-row"><strong>Dress code:</strong> '+brief.dress_code+'</div>';if(brief.event_time)h+='<div class="inv-sum-row"><strong>Hora:</strong> '+brief.event_time+'</div>';h+='</div>';return h}
+function renderBriefSummary(brief){if(!brief)return'';let h='<div class="inv-brief-summary"><h5>Tu brief</h5>';if(brief.carousel_photos&&brief.carousel_photos.length){h+='<div class="inv-sum-row"><strong>Fotos carrusel:</strong></div><div class="inv-brief-thumbs">';brief.carousel_photos.forEach(function(u){h+='<img src="'+u+'" alt="carousel">'});h+='</div>'}if(brief.solo_photos&&brief.solo_photos.length){h+='<div class="inv-sum-row"><strong>Fotos individuales:</strong></div><div class="inv-brief-thumbs">';brief.solo_photos.forEach(function(u){h+='<img src="'+u+'" alt="solo">'});h+='</div>'}if(brief.song)h+='<div class="inv-sum-row"><strong>Cancion:</strong> '+escapeHtml(brief.song)+'</div>';if(brief.colors)h+='<div class="inv-sum-row"><strong>Paleta:</strong> '+escapeHtml(brief.colors)+'</div>';if(brief.message)h+='<div class="inv-sum-row"><strong>Mensaje:</strong> '+escapeHtml(brief.message)+'</div>';if(brief.dress_code)h+='<div class="inv-sum-row"><strong>Dress code:</strong> '+brief.dress_code+'</div>';if(brief.event_time)h+='<div class="inv-sum-row"><strong>Hora:</strong> '+brief.event_time+'</div>';h+='</div>';return h}
 
 function renderInvPreview(url){if(!url)return'';let h='<div class="inv-client-preview">';if(url.match(/\.(jpg|jpeg|png|gif|webp)(\?|$)/i)){h+='<img src="'+url+'" alt="Invitacion">'}else{h+='<iframe src="'+url+'"></iframe>'}h+='</div>';return h}
 
 function rInvitacion(){const c=document.getElementById('invitacionC');if(!c)return;
+if(!(E.invitation_enabled||ADMIN_VIEW)){c.innerHTML='<div class="ab"><div class="inv-status-screen"><div style="font-size:46px;margin-bottom:6px">&#128140;</div><h3>Invitacion digital</h3><p>El servicio de invitacion digital es un complemento. Si lo agregas, nuestro disenador crea una invitacion unica con tus fotos, colores y cancion, lista para compartir por WhatsApp.</p><button class="inv-brief-btn" onclick="contratarInvitacion()">Quiero agregar invitacion &rarr;</button><button class="inv-wa-btn" onclick="window.open(\'https://wa.me/5215517340226?text=Hola%2C%20quiero%20info%20del%20servicio%20de%20invitacion%20digital.%20Mi%20codigo%20es%20'+E.code+'\',\'_blank\')">Tengo dudas</button></div></div>';return;}
 const status=E.invitation_status||'sin_brief';let h='<div class="ab">';
 
 if(status==='sin_brief'){
@@ -997,7 +1094,7 @@ async function dG(id){const g=E.guests.find(function(x){return x.id===id});if(g&
 function flt(f,b){CF=f;document.querySelectorAll('.ft').forEach(function(t){t.classList.remove('active')});b.classList.add('active');rG()}
 
 /* ─── RENDER GUESTS ─── */
-function rG(){const c=document.getElementById('gL'),s=document.getElementById('sI').value.toLowerCase(),gs=E.guests||[];let f=gs.filter(function(g){if(CF!=='all'&&g.status!==CF)return false;if(s&&!g.name.toLowerCase().includes(s))return false;return true});const o={pending:0,confirmed:1,cancelled:2};f.sort(function(a,b){return o[a.status]-o[b.status]||a.name.localeCompare(b.name)});if(!f.length){c.innerHTML='<div class="emp"><div class="ej">'+(gs.length?'&#128269;':'&#127881;')+'</div><p>'+(gs.length?'Sin resultados':'Agrega tu primer invitado arriba')+'</p></div>';return}c.innerHTML=f.map(function(g){var statusLabel=g.status==='confirmed'?'Confirmado':g.status==='pending'?'Pendiente':'Cancelado';return'<div class="gi"><div class="gv '+g.status+'">'+g.name.charAt(0).toUpperCase()+'</div><div class="gi2"><div class="gn">'+g.name+(g.wa?'<span class="gwa"> &#128241;</span>':'')+'</div><div class="gm">'+(g.mesa?'<span class="mt">Mesa '+g.mesa+'</span>':'')+(g.companions>0?'<span>+'+g.companions+'</span>':'')+'<span style="font-size:11px">'+statusLabel+'</span></div></div><div class="ga"><button class="ginv" onclick="showQR('+g.id+')" title="Invitacion QR">&#128232;</button><button class="g1" onclick="sS('+g.id+',\'confirmed\')" title="Confirmar">&#10003;</button><button class="g2" onclick="sS('+g.id+',\'pending\')" title="Pendiente">&#9203;</button><button class="g3" onclick="sS('+g.id+',\'cancelled\')" title="Cancelar">&#10005;</button><button class="g4" onclick="dG('+g.id+')" title="Eliminar">&#128465;</button></div></div>'}).join('')}
+function rG(){const c=document.getElementById('gL'),s=document.getElementById('sI').value.toLowerCase(),gs=E.guests||[];let f=gs.filter(function(g){if(CF!=='all'&&g.status!==CF)return false;if(s&&!g.name.toLowerCase().includes(s))return false;return true});const o={pending:0,confirmed:1,cancelled:2};f.sort(function(a,b){return o[a.status]-o[b.status]||a.name.localeCompare(b.name)});if(!f.length){c.innerHTML='<div class="emp"><div class="ej">'+(gs.length?'&#128269;':'&#127881;')+'</div><p>'+(gs.length?'Sin resultados':'Agrega tu primer invitado arriba')+'</p></div>';return}c.innerHTML=f.map(function(g){var statusLabel=g.status==='confirmed'?'Confirmado':g.status==='pending'?'Pendiente':'Cancelado';return'<div class="gi"><div class="gv '+g.status+'">'+escapeHtml(g.name.charAt(0).toUpperCase())+'</div><div class="gi2"><div class="gn">'+escapeHtml(g.name)+(g.wa?'<span class="gwa"> &#128241;</span>':'')+'</div><div class="gm">'+(g.mesa?'<span class="mt">Mesa '+g.mesa+'</span>':'')+(g.companions>0?'<span>+'+g.companions+'</span>':'')+'<span style="font-size:11px">'+statusLabel+'</span></div></div><div class="ga"><button class="ginv" onclick="showQR('+g.id+')" title="Invitacion QR">&#128232;</button><button class="g1" onclick="sS('+g.id+',\'confirmed\')" title="Confirmar">&#10003;</button><button class="g2" onclick="sS('+g.id+',\'pending\')" title="Pendiente">&#9203;</button><button class="g3" onclick="sS('+g.id+',\'cancelled\')" title="Cancelar">&#10005;</button><button class="g4" onclick="dG('+g.id+')" title="Eliminar">&#128465;</button></div></div>'}).join('')}
 
 /* ─── UPDATE STATS ─── */
 function uS(){const gs=E.guests||[],tp=function(a){return a.reduce(function(s,g){return s+1+(g.companions||0)},0)};
@@ -1008,14 +1105,14 @@ var cX=document.getElementById('cX');if(cX)cX.textContent=tp(gs.filter(function(
 var pR=document.getElementById('pR');if(pR)pR.style.strokeDashoffset=433.5-(Math.min(tp(gs.filter(function(g){return g.status!=='cancelled'}))/450,1)*433.5)}
 
 /* ─── RENDER TABLES ─── */
-function rT(){const c=document.getElementById('tB'),gs=E.guests||[],n=E.numMesas||20;let h='<div class="tg">';for(let i=1;i<=n;i++){const tg=gs.filter(function(g){return g.mesa===i&&g.status!=='cancelled'}),tp=tg.reduce(function(s,g){return s+1+(g.companions||0)},0);h+='<div class="tc"><div class="tch"><div class="tcn">Mesa '+i+'</div><div class="tcc">'+tp+'</div></div><div style="display:flex;flex-direction:column;gap:3px">';if(!tg.length)h+='<div class="tce">Vacia</div>';else tg.forEach(function(g){h+='<div class="tgr"><span class="td2 '+g.status+'"></span><span>'+g.name+(g.companions?' (+'+g.companions+')':'')+'</span></div>'});h+='</div></div>'}h+='</div>';const nt=gs.filter(function(g){return!g.mesa&&g.status!=='cancelled'});if(nt.length){h+='<div class="nms"><div class="nmst">Sin mesa ('+nt.reduce(function(s,g){return s+1+(g.companions||0)},0)+' pers.)</div><div class="tg">';nt.forEach(function(g){h+='<div class="tc" style="border-color:rgba(255,82,82,0.07)"><div class="tch"><div class="tcn" style="color:rgba(255,255,255,0.45);font-size:12px">'+g.name+'</div></div></div>'});h+='</div></div>'}c.innerHTML=h}
+function rT(){const c=document.getElementById('tB'),gs=E.guests||[],n=E.numMesas||20;let h='<div class="tg">';for(let i=1;i<=n;i++){const tg=gs.filter(function(g){return g.mesa===i&&g.status!=='cancelled'}),tp=tg.reduce(function(s,g){return s+1+(g.companions||0)},0);h+='<div class="tc"><div class="tch"><div class="tcn">Mesa '+i+'</div><div class="tcc">'+tp+'</div></div><div style="display:flex;flex-direction:column;gap:3px">';if(!tg.length)h+='<div class="tce">Vacia</div>';else tg.forEach(function(g){h+='<div class="tgr"><span class="td2 '+g.status+'"></span><span>'+escapeHtml(g.name)+(g.companions?' (+'+g.companions+')':'')+'</span></div>'});h+='</div></div>'}h+='</div>';const nt=gs.filter(function(g){return!g.mesa&&g.status!=='cancelled'});if(nt.length){h+='<div class="nms"><div class="nmst">Sin mesa ('+nt.reduce(function(s,g){return s+1+(g.companions||0)},0)+' pers.)</div><div class="tg">';nt.forEach(function(g){h+='<div class="tc" style="border-color:rgba(255,82,82,0.07)"><div class="tch"><div class="tcn" style="color:rgba(255,255,255,0.45);font-size:12px">'+escapeHtml(g.name)+'</div></div></div>'});h+='</div></div>'}c.innerHTML=h}
 
 /* ─── MENU ─── */
 function rMenu(){const c=document.getElementById('menuC');const cats=[{key:'entradas',label:'Entrada'},{key:'cremas',label:'Crema'},{key:'pollo',label:'Pollo'},{key:'cerdo',label:'Cerdo'},{key:'guarniciones',label:'Guarnicion'},{key:'arroz',label:'Arroz'}];let h='<button class="sub-back" onclick="backToMas()">&#8592; Volver</button>';h+='<h4 style="font-family:var(--font-display);font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:8px">Elige tu Menu</h4><p style="font-size:13px;color:rgba(255,255,255,0.25);margin-bottom:10px">Selecciona una opcion de cada categoria</p>';cats.forEach(function(cat){h+='<div class="mcat">'+cat.label+'</div><div class="mopts">';(MENU[cat.key]||[]).forEach(function(item){const sel=E.menuSel[cat.key]===item;h+='<div class="mopt '+(sel?'sel':'')+'" onclick="selMenu(\''+cat.key+'\',\''+item.replace(/'/g,"\\'")+'\')">'+item+'</div>'});h+='</div>'});const sel=E.menuSel;if(Object.values(sel).filter(Boolean).length>0){h+='<div class="msum"><h5>Tu menu</h5><p>';if(sel.entradas)h+='<span class="mi">Entrada:</span> '+sel.entradas+'<br>';if(sel.cremas)h+='<span class="mi">Crema:</span> de '+sel.cremas+'<br>';if(sel.pollo)h+='<span class="mi">Pollo:</span> '+sel.pollo+'<br>';if(sel.cerdo)h+='<span class="mi">Cerdo:</span> '+sel.cerdo+'<br>';if(sel.guarniciones)h+='<span class="mi">Guarnicion:</span> '+sel.guarniciones+'<br>';if(sel.arroz)h+='<span class="mi">Arroz:</span> '+sel.arroz;h+='</p></div>'}c.innerHTML=h}
 function selMenu(cat,item){if(E.menuSel[cat]===item)delete E.menuSel[cat];else E.menuSel[cat]=item;rMenu();saveEvent()}
 
 /* ─── PROGRAM ─── */
-function rProg(){const c=document.getElementById('progC');const prog=E.program||[];const totalMin=prog.reduce(function(s,p){return s+(p.dur||0)},0);const maxMin=E.hours*60;const pct=maxMin>0?Math.min(totalMin/maxMin*100,100):0;const cls=pct>100?'over':pct>85?'warn':'ok';let h='<button class="sub-back" onclick="backToMas()">&#8592; Volver</button>';h+='<h4 style="font-family:var(--font-display);font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:8px">Programa del evento</h4>';h+='<div class="hr-meter"><div class="hr-bar"><div class="hr-fill '+cls+'" style="width:'+Math.min(pct,100)+'%"></div></div><div class="hr-info"><span>'+totalMin+' / '+maxMin+' min</span>'+(totalMin<=maxMin?'<span class="left">'+(maxMin-totalMin)+' min libres</span>':'<span class="over-txt">+'+(totalMin-maxMin)+' min excedidos</span>')+'</div></div>';h+='<div class="prog-add"><input type="text" id="progName" placeholder="Actividad"><input type="time" id="progTime"><input type="number" id="progDur" placeholder="Min" style="width:70px" min="1"><button onclick="addProg()">+ Agregar</button></div>';if(prog.length){h+='<div class="tline">';prog.sort(function(a,b){return(a.time||'').localeCompare(b.time||'')}).forEach(function(p){h+='<div class="titem"><button class="tdel" onclick="delProg('+p.id+')">&#10005;</button><div class="titem-head"><span class="ttm">'+p.time+'</span><span class="tt">'+p.name+'</span><span class="tdur">'+p.dur+' min</span></div>'+(p.note?'<div class="titem-note">'+p.note+'</div>':'')+'</div>'});h+='</div>'}else{h+='<div class="emp"><div class="ej">&#127926;</div><p>Agrega actividades a tu programa</p></div>'}c.innerHTML=h}
+function rProg(){const c=document.getElementById('progC');const prog=E.program||[];const totalMin=prog.reduce(function(s,p){return s+(p.dur||0)},0);const maxMin=E.hours*60;const pct=maxMin>0?Math.min(totalMin/maxMin*100,100):0;const cls=pct>100?'over':pct>85?'warn':'ok';let h='<button class="sub-back" onclick="backToMas()">&#8592; Volver</button>';h+='<h4 style="font-family:var(--font-display);font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:8px">Programa del evento</h4>';h+='<div class="hr-meter"><div class="hr-bar"><div class="hr-fill '+cls+'" style="width:'+Math.min(pct,100)+'%"></div></div><div class="hr-info"><span>'+totalMin+' / '+maxMin+' min</span>'+(totalMin<=maxMin?'<span class="left">'+(maxMin-totalMin)+' min libres</span>':'<span class="over-txt">+'+(totalMin-maxMin)+' min excedidos</span>')+'</div></div>';h+='<div class="prog-add"><input type="text" id="progName" placeholder="Actividad"><input type="time" id="progTime"><input type="number" id="progDur" placeholder="Min" style="width:70px" min="1"><button onclick="addProg()">+ Agregar</button></div>';if(prog.length){h+='<div class="tline">';prog.sort(function(a,b){return(a.time||'').localeCompare(b.time||'')}).forEach(function(p){h+='<div class="titem"><button class="tdel" onclick="delProg('+p.id+')">&#10005;</button><div class="titem-head"><span class="ttm">'+p.time+'</span><span class="tt">'+escapeHtml(p.name)+'</span><span class="tdur">'+p.dur+' min</span></div>'+(p.note?'<div class="titem-note">'+escapeHtml(p.note)+'</div>':'')+'</div>'});h+='</div>'}else{h+='<div class="emp"><div class="ej">&#127926;</div><p>Agrega actividades a tu programa</p></div>'}c.innerHTML=h}
 async function addProg(){const n=document.getElementById('progName').value.trim(),t=document.getElementById('progTime').value,d=parseInt(document.getElementById('progDur').value);if(!n){toast('Escribe la actividad',1);return}
 const res=await sbPost('eventus_program',{event_code:E.code,name:n,time:t||'00:00',dur:d||15,note:'',sort_order:E.program.length});
 if(res&&res.length){E.program.push({id:res[0].id,name:n,time:t||'00:00',dur:d||15,note:''});document.getElementById('progName').value='';document.getElementById('progDur').value='';rProg();toast(n+' agregado')}else{toast('Error al guardar',1)}}
@@ -1027,19 +1124,19 @@ async function togglePay(id){const p=E.payments.find(function(x){return x.id===i
 function payWA(id){const p=E.payments.find(function(x){return x.id===id});if(p){const msg='Hola, te recuerdo que tu pago "'+p.name+'" de '+fmt$(p.amount)+' vence el '+p.date+'. Evento: '+E.name+' ('+E.code+')';window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}}
 
 /* ─── CHECKLIST ─── */
-function rCL(){const cl=E.checklist||[],done=cl.filter(function(c){return c.done}).length,tot=cl.length,pct=tot?Math.round(done/tot*100):0;document.getElementById('clF').style.width=pct+'%';document.getElementById('clPT').textContent=done+'/'+tot+' ('+pct+'%)';const c=document.getElementById('clL');c.innerHTML=cl.map(function(item){return'<div class="cli'+(item.done?' done':'')+'" onclick="tCL('+item.id+')"><div class="cck">'+(item.done?'&#10003;':'')+'</div><div class="ctx">'+item.text+'</div><button class="cdl2" onclick="event.stopPropagation();dCL('+item.id+')">&#10005;</button></div>'}).join('')}
+function rCL(){const cl=E.checklist||[],done=cl.filter(function(c){return c.done}).length,tot=cl.length,pct=tot?Math.round(done/tot*100):0;document.getElementById('clF').style.width=pct+'%';document.getElementById('clPT').textContent=done+'/'+tot+' ('+pct+'%)';const c=document.getElementById('clL');c.innerHTML=cl.map(function(item){return'<div class="cli'+(item.done?' done':'')+'" onclick="tCL('+item.id+')"><div class="cck">'+(item.done?'&#10003;':'')+'</div><div class="ctx">'+escapeHtml(item.text)+'</div><button class="cdl2" onclick="event.stopPropagation();dCL('+item.id+')">&#10005;</button></div>'}).join('')}
 async function tCL(id){const c=E.checklist.find(function(x){return x.id===id});if(c){c.done=!c.done;await sbPatch('eventus_checklist','id=eq.'+id,{done:c.done});rCL()}}
 async function dCL(id){await sbDelete('eventus_checklist','id=eq.'+id);E.checklist=E.checklist.filter(function(x){return x.id!==id});rCL()}
 async function aCL(){const i=document.getElementById('clI'),t=i.value.trim();if(!t)return;const res=await sbPost('eventus_checklist',{event_code:E.code,text:t,done:false,sort_order:E.checklist.length});if(res&&res.length){E.checklist.push({id:res[0].id,text:t,done:false});i.value='';rCL();toast('Pendiente agregado')}else{toast('Error al guardar',1)}}
 
 /* ─── CHECK-IN ─── */
-function rCheckin(){const c=document.getElementById('checkinC');const gs=E.guests||[];const arrived=gs.filter(function(g){return g.arrived});const confirmed=gs.filter(function(g){return g.status==='confirmed'});const totalExpected=confirmed.reduce(function(s,g){return s+1+(g.companions||0)},0);const totalArrived=arrived.reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=totalExpected>0?Math.round(totalArrived/totalExpected*100):0;let h='<div class="checkin-header"><h4>Check-in de invitados</h4></div>';h+='<div class="checkin-stats"><div class="checkin-stat"><div class="cs-num" style="color:var(--verde)">'+totalArrived+'</div><div class="cs-lbl">Llegaron</div></div><div class="checkin-stat"><div class="cs-num" style="color:#FFD54F">'+totalExpected+'</div><div class="cs-lbl">Esperados</div></div><div class="checkin-stat"><div class="cs-num" style="color:var(--rosa)">'+pct+'%</div><div class="cs-lbl">Asistencia</div></div></div>';h+='<div class="scan-area"><p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:10px">Busca por nombre del invitado</p><input type="text" id="scanInput" placeholder="Nombre..."><button onclick="doCheckin()">Registrar llegada</button><div id="scanResult"></div></div>';if(arrived.length){h+='<div class="arrival-list"><h5>Llegadas recientes</h5>';arrived.sort(function(a,b){return(b.arrivedAt||'').localeCompare(a.arrivedAt||'')}).forEach(function(g){const t=g.arrivedAt?new Date(g.arrivedAt).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'--:--';h+='<div class="arrival-item"><span>'+g.name+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+t+'</span></div>'});h+='</div>'}c.innerHTML=h}
-function doCheckin(){const input=document.getElementById('scanInput');const name=input.value.trim().toLowerCase();const res=document.getElementById('scanResult');if(!name){res.innerHTML='';return}const g=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&!x.arrived});if(g){g.arrived=true;g.arrivedAt=new Date().toISOString();g.status='confirmed';saveGuest(g);res.innerHTML='<div class="scan-result ok"><div class="sr-icon">&#9989;</div><div class="sr-name">'+g.name+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompanantes · ':'')+(g.mesa?'Mesa '+g.mesa:'Sin mesa asignada')+'</div></div>';input.value='';rCheckin();uS();rG();toast(g.name+' registrado')}else{const already=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#9888;&#65039;</div><div class="sr-name">'+already.name+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#10060;</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre o agrega al invitado</div></div>'}}}
+function rCheckin(){const c=document.getElementById('checkinC');const gs=E.guests||[];const arrived=gs.filter(function(g){return g.arrived});const confirmed=gs.filter(function(g){return g.status==='confirmed'});const totalExpected=confirmed.reduce(function(s,g){return s+1+(g.companions||0)},0);const totalArrived=arrived.reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=totalExpected>0?Math.round(totalArrived/totalExpected*100):0;let h='<div class="checkin-header"><h4>Check-in de invitados</h4></div>';h+='<div class="checkin-stats"><div class="checkin-stat"><div class="cs-num" style="color:var(--verde)">'+totalArrived+'</div><div class="cs-lbl">Llegaron</div></div><div class="checkin-stat"><div class="cs-num" style="color:#FFD54F">'+totalExpected+'</div><div class="cs-lbl">Esperados</div></div><div class="checkin-stat"><div class="cs-num" style="color:var(--rosa)">'+pct+'%</div><div class="cs-lbl">Asistencia</div></div></div>';h+='<div class="scan-area"><p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:10px">Busca por nombre del invitado</p><input type="text" id="scanInput" placeholder="Nombre..."><button onclick="doCheckin()">Registrar llegada</button><div id="scanResult"></div></div>';if(arrived.length){h+='<div class="arrival-list"><h5>Llegadas recientes</h5>';arrived.sort(function(a,b){return(b.arrivedAt||'').localeCompare(a.arrivedAt||'')}).forEach(function(g){const t=g.arrivedAt?new Date(g.arrivedAt).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'--:--';h+='<div class="arrival-item"><span>'+escapeHtml(g.name)+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+t+'</span></div>'});h+='</div>'}c.innerHTML=h}
+function doCheckin(){const input=document.getElementById('scanInput');const name=input.value.trim().toLowerCase();const res=document.getElementById('scanResult');if(!name){res.innerHTML='';return}const g=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&!x.arrived});if(g){g.arrived=true;g.arrivedAt=new Date().toISOString();g.status='confirmed';saveGuest(g);res.innerHTML='<div class="scan-result ok"><div class="sr-icon">&#9989;</div><div class="sr-name">'+escapeHtml(g.name)+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompanantes · ':'')+(g.mesa?'Mesa '+g.mesa:'Sin mesa asignada')+'</div></div>';input.value='';rCheckin();uS();rG();toast(g.name+' registrado')}else{const already=E.guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#9888;&#65039;</div><div class="sr-name">'+escapeHtml(already.name)+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#10060;</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre o agrega al invitado</div></div>'}}}
 
 /* ─── INVITATION SYSTEM ─── */
 const SITE='https://salondefiestasvillaverde.com';
-function showQR(id){if(!E.activated&&!ADMIN_VIEW){toast('Invitaciones disponibles al contratar tu evento',1);return}if(E.invitation_status!=='aprobada'&&!ADMIN_VIEW){toast('Tu invitacion aun no esta aprobada. Revisa la pestana Invitacion',1);return}const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Anos',boda:'Boda',graduacion:'Graduacion'};const modal=document.getElementById('qrModal');const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rsvpLink=SITE+'/rsvp/'+E.code+'/'+g.id;const paseLink=SITE+'/pase/'+E.code+'/'+g.id;const isConf=g.status==='confirmed';
-modal.innerHTML='<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>Invitacion digital</h3><div class="qr-name">'+g.name+'</div><div class="qr-meta">'+t[E.type]+' de '+E.name+' · '+date+'</div>'
+function showQR(id){if(!(E.activated||E.invitation_enabled)&&!ADMIN_VIEW){toast('El servicio de invitacion digital no esta activo en tu evento',1);return}if(E.invitation_status!=='aprobada'&&!ADMIN_VIEW){toast('Tu invitacion aun no esta aprobada. Revisa la pestana Invitacion',1);return}const g=E.guests.find(function(x){return x.id===id});if(!g)return;const t={xv:'XV Anos',boda:'Boda',graduacion:'Graduacion'};const modal=document.getElementById('qrModal');const date=new Date(E.date).toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rsvpLink=SITE+'/rsvp/'+E.code+'/'+g.id;const paseLink=SITE+'/pase/'+E.code+'/'+g.id;const isConf=g.status==='confirmed';
+modal.innerHTML='<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>Invitacion digital</h3><div class="qr-name">'+escapeHtml(g.name)+'</div><div class="qr-meta">'+t[E.type]+' de '+escapeHtml(E.name)+' · '+date+'</div>'
 +'<div style="margin:16px 0;padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-align:left">'
 +'<p style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Paso 1 — Invitacion + Confirmar</p>'
 +'<p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;word-break:break-all">'+rsvpLink+'</p>'
@@ -1176,7 +1273,7 @@ async function rstG(){if(!E.guests.length)return;if(confirm('Eliminar TODOS los 
 
 /* ─── ADMIN ─── */
 let ADM_EVENTS=[];let ADM_TAB='eventos';let ADM_CHECKIN_CODE=null;
-async function showAdm(){const pwd=prompt('Contrasena admin:');if(pwd!=='1.Tequiladrinkx')return;document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S1').classList.add('active');document.getElementById('bottomNav').style.display='none';ADM_TAB='eventos';ADM_CHECKIN_CODE=null;await admLoadEvents();admRender()}
+async function showAdm(){const pwd=prompt('Contrasena admin:');if(!pwd)return;let ok=false;try{const r=await fetch(EVENTUS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({op:'auth',adminPw:pwd})});ok=r.ok&&(await r.json()).admin}catch(e){ok=false}if(!ok){alert('Contrasena incorrecta');return}try{sessionStorage.setItem('eventus_adm',pwd)}catch(e){}document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById('S1').classList.add('active');document.getElementById('bottomNav').style.display='none';ADM_TAB='eventos';ADM_CHECKIN_CODE=null;await admLoadEvents();admRender()}
 
 async function admLoadEvents(){ADM_EVENTS=await sbGet('eventus_events','order=created_at.desc');for(let i=0;i<ADM_EVENTS.length;i++){const gs=await sbGet('eventus_guests','event_code=eq.'+ADM_EVENTS[i].code+'&select=id,name,companions,status,arrived');ADM_EVENTS[i]._guests=gs}}
 
@@ -1255,35 +1352,35 @@ if(!sorted.length){h+='<div class="emp"><div class="ej">&#128197;</div><p>No hay
 else{sorted.forEach(function(ev){
 var evDate=new Date(ev.date+'T00:00:00');var diff=Math.ceil((evDate-today)/(1000*60*60*24));
 var gs=ev._guests||[];var guestCount=gs.reduce(function(s,g){return s+1+(g.companions||0)},0);
-h+='<div class="dash-upcoming-item"><div class="dash-upcoming-left"><div class="dash-upcoming-days'+(diff<=3?' urgent':'')+'">'+diff+'<small>dias</small></div></div><div class="dash-upcoming-info"><div class="dash-upcoming-name">'+ev.name+'</div><div class="dash-upcoming-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+guestCount+' inv.</span></div></div></div>'})}
+h+='<div class="dash-upcoming-item"><div class="dash-upcoming-left"><div class="dash-upcoming-days'+(diff<=3?' urgent':'')+'">'+diff+'<small>dias</small></div></div><div class="dash-upcoming-info"><div class="dash-upcoming-name">'+escapeHtml(ev.name)+'</div><div class="dash-upcoming-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+guestCount+' inv.</span></div></div></div>'})}
 h+='</div>';
 return h}
 
 function admRenderEventos(t){let h='<div class="adm-detail"><h4>+ Crear nuevo evento</h4><div class="ir"><input type="text" class="inf" id="admRN" placeholder="Nombre del festejado(a)"><select class="isl" id="admRT" style="width:110px"><option value="xv">XV Anos</option><option value="boda">Boda</option><option value="graduacion">Graduacion</option></select></div><div class="ir"><input type="date" class="inf" id="admRD"><select class="isl" id="admRP" style="width:110px"><option value="6">Premium 6h</option><option value="7">Diamante 7h</option><option value="8">Esmeralda 8h</option></select></div><div class="ir"><input type="number" class="inf" id="admRCost" placeholder="Costo total $" min="3000"><input type="tel" class="inf" id="admRPhone" placeholder="WhatsApp 10 digitos"></div><div class="erm" id="admRE" style="display:none"></div><button class="ba" onclick="admCreateEvent()">+ Crear evento</button></div>';
 if(!ADM_EVENTS.length)return h+'<div class="emp"><div class="ej">&#128203;</div><p>No hay eventos registrados aun</p></div>';
 ADM_EVENTS.forEach(function(ev){const gs=ev._guests||[];const total=gs.reduce(function(s,g){return s+1+(g.companions||0)},0);const conf=gs.filter(function(g){return g.status==='confirmed'}).reduce(function(s,g){return s+1+(g.companions||0)},0);
-h+='<div class="adm-ev-card"><div class="adm-ev-top"><div class="adm-ev-icon">&#127881;</div><div class="adm-ev-info"><div class="adm-ev-name">'+ev.name+'</div><div class="adm-ev-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+total+' inv. ('+conf+' conf.)</span><span>'+fmt$(ev.total_cost)+'</span>'+(ev.activated?'<span style="color:var(--verde);font-weight:700">PRO</span>':'<span style="color:rgba(255,255,255,0.2)">FREE</span>')+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div class="adm-ev-row"><span>Creado: '+new Date(ev.created_at).toLocaleDateString('es-MX')+'</span><div class="adm-ev-actions"><button class="adm-btn '+(ev.activated?'adm-btn-checkin':'adm-btn-code')+'" onclick="event.stopPropagation();admToggleActivate(\''+ev.code+'\')">'+(ev.activated?'Activado':'Activar')+'</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">Ver</button><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">Codigo</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">WA</button><button class="adm-btn" style="background:rgba(255,82,82,0.08);color:#FF5252" onclick="event.stopPropagation();admDeleteEvent(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">Borrar</button></div></div></div>'});return h}
+h+='<div class="adm-ev-card"><div class="adm-ev-top"><div class="adm-ev-icon">&#127881;</div><div class="adm-ev-info"><div class="adm-ev-name">'+escapeHtml(ev.name)+'</div><div class="adm-ev-meta"><span class="aeb '+ev.type+'">'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span><span>'+total+' inv. ('+conf+' conf.)</span><span>'+fmt$(ev.total_cost)+'</span>'+(ev.activated?'<span style="color:var(--verde);font-weight:700">PRO</span>':'<span style="color:rgba(255,255,255,0.2)">FREE</span>')+(ev.invitation_enabled?'<span style="color:#F0157A;font-weight:700">INV</span>':'')+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div class="adm-ev-row"><span>Creado: '+new Date(ev.created_at).toLocaleDateString('es-MX')+'</span><div class="adm-ev-actions"><button class="adm-btn '+(ev.activated?'adm-btn-checkin':'adm-btn-code')+'" onclick="event.stopPropagation();admToggleActivate(\''+ev.code+'\')">'+(ev.activated?'Activado':'Activar')+'</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">Ver</button><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">Codigo</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">WA</button><button class="adm-btn" style="background:rgba(255,82,82,0.08);color:#FF5252" onclick="event.stopPropagation();admDeleteEvent(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">Borrar</button></div></div></div>'});return h}
 
 function admRenderCheckin(t){let h='';if(ADM_CHECKIN_CODE){return admRenderCheckinDetail()}
 h+='<p style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:12px">Selecciona un evento para hacer check-in</p>';
 ADM_EVENTS.forEach(function(ev){const gs=ev._guests||[];const arrived=gs.filter(function(g){return g.arrived}).reduce(function(s,g){return s+1+(g.companions||0)},0);const expected=gs.filter(function(g){return g.status==='confirmed'}).reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=expected>0?Math.round(arrived/expected*100):0;
-h+='<div class="adm-ev-card" onclick="admStartCheckin(\''+ev.code+'\')"><div class="adm-ev-top"><div class="adm-ev-icon" style="background:linear-gradient(135deg,var(--verde-dark),var(--verde))">&#128205;</div><div class="adm-ev-info"><div class="adm-ev-name">'+ev.name+'</div><div class="adm-ev-meta"><span>'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span></div></div></div><div class="adm-ev-row"><span>'+arrived+' / '+expected+' llegaron ('+pct+'%)</span><div style="flex:1;max-width:120px;height:6px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;margin-left:8px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--verde-dark),var(--verde));border-radius:3px"></div></div></div></div>'});return h}
+h+='<div class="adm-ev-card" onclick="admStartCheckin(\''+ev.code+'\')"><div class="adm-ev-top"><div class="adm-ev-icon" style="background:linear-gradient(135deg,var(--verde-dark),var(--verde))">&#128205;</div><div class="adm-ev-info"><div class="adm-ev-name">'+escapeHtml(ev.name)+'</div><div class="adm-ev-meta"><span>'+(t[ev.type]||ev.type)+'</span><span>'+ev.date+'</span></div></div></div><div class="adm-ev-row"><span>'+arrived+' / '+expected+' llegaron ('+pct+'%)</span><div style="flex:1;max-width:120px;height:6px;background:rgba(255,255,255,0.04);border-radius:3px;overflow:hidden;margin-left:8px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--verde-dark),var(--verde));border-radius:3px"></div></div></div></div>'});return h}
 
 function admRenderCheckinDetail(){const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return'';const gs=ev._guests||[];const arrived=gs.filter(function(g){return g.arrived});const expected=gs.filter(function(g){return g.status!=='cancelled'});const totalArrived=arrived.reduce(function(s,g){return s+1+(g.companions||0)},0);const totalExpected=expected.reduce(function(s,g){return s+1+(g.companions||0)},0);const pct=totalExpected>0?Math.round(totalArrived/totalExpected*100):0;
 
 let h='<button class="adm-back" onclick="ADM_CHECKIN_CODE=null;admRender()">&#8592; Volver a eventos</button>';
-h+='<div class="checkin-header"><h4>Check-in: '+ev.name+'</h4></div>';
+h+='<div class="checkin-header"><h4>Check-in: '+escapeHtml(ev.name)+'</h4></div>';
 h+='<div class="checkin-stats"><div class="checkin-stat"><div class="cs-num" style="color:var(--verde)">'+totalArrived+'</div><div class="cs-lbl">Llegaron</div></div><div class="checkin-stat"><div class="cs-num" style="color:#FFD54F">'+totalExpected+'</div><div class="cs-lbl">Esperados</div></div><div class="checkin-stat"><div class="cs-num" style="color:var(--rosa)">'+pct+'%</div><div class="cs-lbl">Asistencia</div></div></div>';
 h+='<div class="scan-area"><p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:10px">Busca por nombre del invitado</p><input type="text" id="admScanInput" placeholder="Nombre..." onkeydown="if(event.key===\'Enter\')admDoCheckin()"><button onclick="admDoCheckin()">Registrar llegada</button><div id="admScanResult"></div></div>';
 
 h+='<div style="margin-top:16px">';
 const pendingG=gs.filter(function(g){return!g.arrived&&g.status!=='cancelled'});
 if(pendingG.length){h+='<p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:8px">Por llegar ('+pendingG.length+')</p>';
-pendingG.forEach(function(g){h+='<div class="gi" style="margin-bottom:4px"><div class="gv pending">'+g.name.charAt(0).toUpperCase()+'</div><div class="gi2"><div class="gn">'+g.name+'</div><div class="gm">'+(g.companions?'<span>+'+g.companions+'</span>':'')+'</div></div><button class="adm-btn adm-btn-checkin" onclick="admCheckinGuest('+g.id+')">Llego</button></div>'})}
+pendingG.forEach(function(g){h+='<div class="gi" style="margin-bottom:4px"><div class="gv pending">'+g.name.charAt(0).toUpperCase()+'</div><div class="gi2"><div class="gn">'+escapeHtml(g.name)+'</div><div class="gm">'+(g.companions?'<span>+'+g.companions+'</span>':'')+'</div></div><button class="adm-btn adm-btn-checkin" onclick="admCheckinGuest('+g.id+')">Llego</button></div>'})}
 
 if(arrived.length){h+='<p style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin:14px 0 8px">Ya llegaron ('+arrived.length+')</p>';
 arrived.sort(function(a,b){return(b.arrived_at||'').localeCompare(a.arrived_at||'')}).forEach(function(g){const time=g.arrived_at?new Date(g.arrived_at).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'--:--';
-h+='<div class="arrival-item"><span>'+g.name+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+time+'</span></div>'})}
+h+='<div class="arrival-item"><span>'+escapeHtml(g.name)+(g.companions?' (+'+g.companions+')':'')+'</span><span class="ai-time">'+time+'</span></div>'})}
 h+='</div>';return h}
 
 async function admStartCheckin(code){ADM_CHECKIN_CODE=code;admRender()}
@@ -1291,20 +1388,22 @@ async function admStartCheckin(code){ADM_CHECKIN_CODE=code;admRender()}
 async function admDoCheckin(){const input=document.getElementById('admScanInput');const name=input.value.trim().toLowerCase();const res=document.getElementById('admScanResult');if(!name){res.innerHTML='';return}
 const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return;const g=ev._guests.find(function(x){return x.name.toLowerCase().includes(name)&&!x.arrived});
 if(g){const now=new Date().toISOString();g.arrived=true;g.arrived_at=now;g.status='confirmed';await sbPatch('eventus_guests','id=eq.'+g.id,{arrived:true,arrived_at:now,status:'confirmed'});
-res.innerHTML='<div class="scan-result ok"><div class="sr-icon">&#9989;</div><div class="sr-name">'+g.name+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompanantes':'')+'</div></div>';
-input.value='';setTimeout(function(){admRender()},1500);toast(g.name+' registrado')}else{const already=ev._guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#9888;&#65039;</div><div class="sr-name">'+already.name+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#10060;</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre</div></div>'}}}
+res.innerHTML='<div class="scan-result ok"><div class="sr-icon">&#9989;</div><div class="sr-name">'+escapeHtml(g.name)+'</div><div class="sr-detail">'+(g.companions?'+ '+g.companions+' acompanantes':'')+'</div></div>';
+input.value='';setTimeout(function(){admRender()},1500);toast(g.name+' registrado')}else{const already=ev._guests.find(function(x){return x.name.toLowerCase().includes(name)&&x.arrived});if(already){res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#9888;&#65039;</div><div class="sr-name">'+escapeHtml(already.name)+'</div><div class="sr-detail">Ya fue registrado</div></div>'}else{res.innerHTML='<div class="scan-result err"><div class="sr-icon">&#10060;</div><div class="sr-name">No encontrado</div><div class="sr-detail">Revisa el nombre</div></div>'}}}
 
 async function admCheckinGuest(guestId){const ev=ADM_EVENTS.find(function(e){return e.code===ADM_CHECKIN_CODE});if(!ev)return;const g=ev._guests.find(function(x){return x.id===guestId});if(!g)return;
 const now=new Date().toISOString();g.arrived=true;g.arrived_at=now;g.status='confirmed';await sbPatch('eventus_guests','id=eq.'+guestId,{arrived:true,arrived_at:now,status:'confirmed'});admRender();toast(g.name+' registrado')}
 
 function admRenderCodigos(t){let h='<p style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:14px">Codigos de acceso de todos los clientes. Puedes copiarlos o enviarlos por WhatsApp si un cliente olvido su codigo.</p>';
 if(!ADM_EVENTS.length)return h+'<div class="emp"><div class="ej">&#128273;</div><p>No hay eventos</p></div>';
-ADM_EVENTS.forEach(function(ev){h+='<div class="adm-detail"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">'+ev.name+'</div><div style="font-size:12px;color:rgba(255,255,255,0.35)">'+(t[ev.type]||ev.type)+' · '+ev.date+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">Copiar codigo</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">Enviar por WhatsApp</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">Ver evento</button></div></div>'});return h}
+ADM_EVENTS.forEach(function(ev){h+='<div class="adm-detail"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">'+escapeHtml(ev.name)+'</div><div style="font-size:12px;color:rgba(255,255,255,0.35)">'+(t[ev.type]||ev.type)+' · '+ev.date+'</div></div><div class="adm-ev-code">'+ev.code+'</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="adm-btn adm-btn-code" onclick="admCopyCode(\''+ev.code+'\')">Copiar codigo</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\''+ev.code+'\',\''+ev.name.replace(/'/g,"\\'")+'\')">Enviar por WhatsApp</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\''+ev.code+'\')">Ver evento</button></div></div>'});return h}
 
 async function admToggleActivate(code){const ev=ADM_EVENTS.find(function(e){return e.code===code});if(!ev)return;const newState=!ev.activated;await sbPatch('eventus_events','code=eq.'+code,{activated:newState});ev.activated=newState;
 if(newState&&!ev._payments){const cost=ev.total_cost||0;if(cost>0){const pays=calcPayments(cost,ev.contract_date||ev.created_at.slice(0,10),ev.date);for(let i=0;i<pays.length;i++){await sbPost('eventus_payments',{event_code:code,name:pays[i].name,amount:pays[i].amount,due_date:pays[i].date,note:pays[i].note,paid:false})}}}
 if(newState){const existing=await sbGet('eventus_checklist','event_code=eq.'+code+'&select=id');if(!existing.length){for(let i=0;i<DCL.length;i++){await sbPost('eventus_checklist',{event_code:code,text:DCL[i].text,done:false,sort_order:i})}}}
 admRender();toast(newState?'Evento '+code+' ACTIVADO — acceso completo':'Evento '+code+' desactivado — solo invitados y mesas')}
+
+async function admToggleInvitation(code){const ev=ADM_EVENTS.find(function(e){return e.code===code});if(!ev)return;const newState=!ev.invitation_enabled;const res=await sbPatch('eventus_events','code=eq.'+code,{invitation_enabled:newState});if(!res){toast('Error al guardar, intenta de nuevo',1);return}ev.invitation_enabled=newState;admRender();toast(newState?'Invitacion ACTIVADA para '+ev.name:'Invitacion desactivada para '+ev.name)}
 
 async function admCreateEvent(){const n=document.getElementById('admRN').value.trim(),t=document.getElementById('admRT').value,d=document.getElementById('admRD').value,p=parseInt(document.getElementById('admRP').value),cost=parseInt(document.getElementById('admRCost').value),phone=document.getElementById('admRPhone').value.trim().replace(/\D/g,''),e=document.getElementById('admRE');e.style.display='none';
 if(!n){e.textContent='Escribe el nombre';e.style.display='block';return}if(!d){e.textContent='Selecciona fecha';e.style.display='block';return}if(!cost||cost<3000){e.textContent='Minimo $3,000';e.style.display='block';return}
@@ -1341,9 +1440,12 @@ if(!sorted.length)return h+'<div class="emp"><div class="ej">&#128140;</div><p>N
 sorted.forEach(function(ev){
 var st=ev.invitation_status||'sin_brief';
 var brief=ev.invitation_brief||{};
-h+='<div class="inv-card'+(st==='sin_brief'?' inv-dimmed':'')+'">';
-h+='<div class="inv-card-header"><div class="inv-card-name">'+ev.name+'</div><span class="inv-status inv-status-'+st+'">'+INV_STATUS_LABELS[st]+'</span></div>';
-h+='<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:10px">'+(t[ev.type]||ev.type)+' · '+ev.date+' · <span style="font-family:monospace">'+ev.code+'</span></div>';
+var invOn=ev.invitation_enabled;
+h+='<div class="inv-card'+((!invOn||st==='sin_brief')?' inv-dimmed':'')+'">';
+h+='<div class="inv-card-header"><div class="inv-card-name">'+escapeHtml(ev.name)+'</div>'+(invOn?'<span class="inv-status inv-status-'+st+'">'+INV_STATUS_LABELS[st]+'</span>':'<span class="inv-status inv-status-sin_brief">Servicio off</span>')+'</div>';
+h+='<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:10px">'+(t[ev.type]||ev.type)+' · '+ev.date+' · <span style="font-family:monospace">'+ev.code+'</span></div>';
+h+='<button class="inv-btn '+(invOn?'inv-btn-approve':'inv-btn-upload')+'" onclick="admToggleInvitation(\''+ev.code+'\')" style="margin-bottom:10px">Servicio de invitacion: '+(invOn?'ACTIVADO':'Desactivado')+'</button>';
+if(!invOn){h+='<div class="inv-empty">El cliente no contrato invitacion, no ve esta seccion. Toca el boton para activarsela.</div></div>';return;}
 
 if(st==='sin_brief'){
 h+='<div class="inv-empty">El cliente aun no ha enviado su brief</div>';
@@ -1364,7 +1466,7 @@ h+='<div class="inv-waiting">Esperando aprobacion del cliente...</div>';
 h+='<div class="inv-actions"><button class="inv-btn inv-btn-back" onclick="admSetInvStatus(\''+ev.code+'\',\'en_diseno\')">&#8592; Volver a diseno</button></div>';
 }
 else if(st==='con_cambios'){
-if(ev.invitation_comments)h+='<div class="inv-comments-box">'+ev.invitation_comments.replace(/\n/g,'<br>')+'</div>';
+if(ev.invitation_comments)h+='<div class="inv-comments-box">'+escapeHtml(ev.invitation_comments).replace(/\n/g,'<br>')+'</div>';
 if(ev.invitation_url)h+='<div class="inv-preview"><img src="'+ev.invitation_url+'" alt="Invitacion actual"></div>';
 h+=admInvBriefSummary(ev,brief);
 h+='<button class="inv-btn inv-btn-back" onclick="admViewBrief(\''+ev.code+'\')">'+(ADM_INV_BRIEF_OPEN[ev.code]?'Ocultar':'Ver')+' brief completo</button>';
@@ -1393,9 +1495,9 @@ return'<div class="inv-brief-info">'+parts.join(' · ')+'</div>'}
 function admInvBriefFull(ev,brief){
 var h='<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;margin:10px 0">';
 h+='<div class="inv-brief-info">';
-if(brief.song)h+='<div><strong>Cancion:</strong> '+brief.song+'</div>';
-if(brief.colors)h+='<div><strong>Colores:</strong> '+brief.colors+'</div>';
-if(brief.message)h+='<div><strong>Mensaje:</strong> '+brief.message+'</div>';
+if(brief.song)h+='<div><strong>Cancion:</strong> '+escapeHtml(brief.song)+'</div>';
+if(brief.colors)h+='<div><strong>Colores:</strong> '+escapeHtml(brief.colors)+'</div>';
+if(brief.message)h+='<div><strong>Mensaje:</strong> '+escapeHtml(brief.message)+'</div>';
 if(brief.dress_code)h+='<div><strong>Dress code:</strong> '+brief.dress_code+'</div>';
 if(brief.event_time)h+='<div><strong>Hora:</strong> '+brief.event_time+'</div>';
 if(brief.venue)h+='<div><strong>Lugar:</strong> '+brief.venue+'</div>';

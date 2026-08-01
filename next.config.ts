@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
         destination: "/invitaciones.html",
       },
       {
+        source: "/informes",
+        destination: "/informes/index.html",
+      },
+      {
         source: "/mis-xv-dayana",
         destination: "/mis-xv-dayana/index.html",
       },
@@ -33,6 +37,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/informes/:path*",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
       {
         // Invitaciones de clientes: llevan nombre, dirección y teléfono.
         // Se permite el rastreo (para que el crawler LEA el noindex y para que
