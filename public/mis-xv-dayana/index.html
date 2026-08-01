@@ -353,6 +353,53 @@ section{ position:relative; }
 }
 
 /* ============================================================
+   PORTADA DE ENTRADA
+   El navegador exige un gesto del visitante antes de permitir audio
+   con sonido. En vez de pelear contra esa regla, se convierte ese
+   gesto en la portada: al tocar, musica y video arrancan garantizado.
+   Sin JS no aparece, para no bloquear el contenido nunca.
+   ============================================================ */
+.eb-gate{
+  position:fixed; inset:0; z-index:200;
+  display:none;
+  flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:var(--eb-gutter);
+  background:
+    radial-gradient(ellipse at 50% 30%, rgb(250 218 221 / .45) 0%, transparent 62%),
+    linear-gradient(180deg, var(--eb-surface) 0%, var(--eb-surface-container) 100%);
+}
+.js .eb-gate{ display:flex; }
+.eb-gate.is-gone{
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .8s var(--eb-ease), visibility .8s;
+}
+body.is-gated{ overflow:hidden; }
+
+.eb-gate__name{
+  font-family:var(--eb-font-display); font-weight:700;
+  font-size:clamp(2.4rem,10vw,4rem); line-height:1.05; letter-spacing:-.02em;
+  color:var(--eb-on-surface); margin:var(--eb-s3) 0 var(--eb-s2);
+}
+.eb-gate__date{ margin-bottom:var(--eb-s6); }
+
+.eb-gate__btn{
+  display:inline-flex; align-items:center; gap:var(--eb-s1);
+  min-height:52px; padding:14px var(--eb-s5);
+  border-radius:var(--eb-r-full);
+  background:var(--eb-primary-container);
+  border:1px solid var(--eb-secondary);
+  color:var(--eb-on-surface); cursor:pointer;
+  font-family:var(--eb-font-display); font-weight:600; font-size:1rem;
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur);
+}
+.eb-gate__btn:hover{ transform:scale(1.03); background:var(--eb-primary-fixed); }
+.eb-gate__btn svg{ width:17px; height:17px; }
+.eb-gate__note{ margin-top:var(--eb-s3); opacity:.8; }
+
+.eb-gate__bloom{ width:min(150px,38vw); margin:0 auto; }
+.eb-gate__bloom svg{ width:100%; height:auto; }
+
+/* ============================================================
    REPRODUCTOR DE MÚSICA
    preload="none": los 2.8 MB solo se descargan si alguien toca play,
    así la página abre igual de rápido para quien no la escucha.
@@ -725,6 +772,33 @@ section{ position:relative; }
 <body>
 
 <a class="eb-skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ==================== PORTADA DE ENTRADA ==================== -->
+<div class="eb-gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name">
+  <div class="eb-gate__bloom" aria-hidden="true">
+    <svg viewBox="0 0 340 76" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+      <g fill="none" stroke="url(#ebBranch)" stroke-linecap="round" stroke-width="1.6">
+        <path d="M8 46C54 34 100 46 140 38"/>
+        <path d="M332 46C286 34 240 46 200 38"/>
+      </g>
+      <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(96 40) rotate(-16) scale(.66)"/>
+      <use href="#ebLeaf"   xlink:href="#ebLeaf"   transform="translate(244 40) rotate(196) scale(.66)"/>
+      <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(146 34) scale(.72)"/>
+      <use href="#ebFlPale" xlink:href="#ebFlPale" transform="translate(194 34) scale(.72)"/>
+      <use href="#ebFl"     xlink:href="#ebFl"     transform="translate(170 38) scale(1.05)"/>
+    </svg>
+  </div>
+
+  <p class="eb-eyebrow">Mis Quince Años</p>
+  <h1 class="eb-gate__name" id="gate-name">Dayana Yamile</h1>
+  <p class="eb-label eb-gate__date">29 &middot; Agosto &middot; 2026</p>
+
+  <button type="button" class="eb-gate__btn" id="gate-btn">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    Abrir invitación
+  </button>
+  <p class="eb-label eb-gate__note">Con música</p>
+</div>
 
 <!-- ============================================================
      DEFINICIONES FLORALES
@@ -1195,6 +1269,38 @@ section{ position:relative; }
    importar la zona horaria del invitado. Ancla = misa, 3:00 PM. */
 var EVENT_TS   = new Date('2026-08-29T15:00:00-06:00').getTime();
 var RSVP_PHONE = '527203898985';
+
+/* ---------- PORTADA DE ENTRADA ----------
+   El click del boton es una interaccion real del usuario, asi que dentro
+   de su manejador el navegador SI permite reproducir con sonido. Ese es
+   todo el truco: no se saltan las reglas de autoplay, se cumplen. */
+(function () {
+  var gate = document.getElementById('gate');
+  var btn  = document.getElementById('gate-btn');
+  if (!gate || !btn) return;
+
+  document.body.classList.add('is-gated');
+  btn.focus({ preventScroll: true });
+
+  btn.addEventListener('click', function () {
+    var audio = document.getElementById('audio');
+    var vid   = document.getElementById('retrato');
+    var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (audio) {
+      audio.muted = false;
+      audio.currentTime = 0;
+      audio.play().catch(function () {});
+    }
+    if (vid && !quieto) { vid.play().catch(function () {}); }
+
+    gate.classList.add('is-gone');
+    document.body.classList.remove('is-gated');
+
+    // Se retira del arbol para que no atrape el foco al tabular
+    setTimeout(function () { gate.hidden = true; }, quieto ? 0 : 900);
+  }, { once: true });
+})();
 
 /* ---------- NAVBAR ---------- */
 (function () {
