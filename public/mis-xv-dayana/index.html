@@ -353,6 +353,81 @@ section{ position:relative; }
 }
 
 /* ============================================================
+   REPRODUCTOR DE MÚSICA
+   preload="none": los 2.8 MB solo se descargan si alguien toca play,
+   así la página abre igual de rápido para quien no la escucha.
+   ============================================================ */
+.eb-music{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+
+.eb-music__title{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-headline-sm); color:var(--eb-on-surface);
+  margin-top:var(--eb-s2);
+}
+.eb-music__artist{ margin-top:6px; }
+
+.eb-player{
+  display:none;                       /* sin JS manda el control nativo */
+  max-width:340px; margin:var(--eb-s4) auto 0;
+  flex-direction:column; align-items:center; gap:var(--eb-s2);
+}
+.js .eb-player{ display:flex; }
+
+.eb-player__btn{
+  width:56px; height:56px; border-radius:var(--eb-r-full);
+  display:flex; align-items:center; justify-content:center;
+  background:var(--eb-primary-container);
+  border:1px solid var(--eb-secondary);   /* sin borde no se percibe: 1.24:1 */
+  color:var(--eb-on-surface); cursor:pointer;
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur);
+}
+.eb-player__btn:hover{ transform:scale(1.04); background:var(--eb-primary-fixed); }
+.eb-player__btn svg{ width:20px; height:20px; }
+.eb-player__btn svg.ico-play{ margin-left:3px; }  /* centra ópticamente el triángulo */
+
+.eb-player__bar{
+  display:flex; align-items:center; gap:var(--eb-s2);
+  width:100%;
+}
+.eb-player__time{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.06em;
+  color:var(--eb-on-surface-variant); font-variant-numeric:tabular-nums;
+  min-width:38px;
+}
+.eb-player__time--end{ text-align:right; }
+
+/* Barra de progreso: input range real, para que funcione con teclado */
+.eb-player__seek{
+  -webkit-appearance:none; appearance:none;
+  flex:1 1 auto; min-width:0; height:20px;
+  background:transparent; cursor:pointer; margin:0;
+  --pct:0%;
+}
+.eb-player__seek::-webkit-slider-runnable-track{
+  height:2px; border-radius:2px;
+  background:linear-gradient(90deg, var(--eb-secondary) var(--pct), var(--eb-outline-variant) var(--pct));
+}
+.eb-player__seek::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:12px; height:12px; margin-top:-5px;
+  border-radius:50%; border:none; background:var(--eb-secondary);
+}
+.eb-player__seek::-moz-range-track{
+  height:2px; border-radius:2px; background:var(--eb-outline-variant);
+}
+.eb-player__seek::-moz-range-progress{
+  height:2px; border-radius:2px; background:var(--eb-secondary);
+}
+.eb-player__seek::-moz-range-thumb{
+  width:12px; height:12px; border:none; border-radius:50%; background:var(--eb-secondary);
+}
+.eb-player__seek:focus-visible{ outline:2px solid var(--eb-secondary); outline-offset:4px; }
+
+/* Control nativo: única vía si el JS no corre */
+.eb-audio-native{ width:min(340px,86vw); margin:var(--eb-s4) auto 0; }
+.js .eb-audio-native{ display:none; }
+
+/* ============================================================
    DIVISOR FLORAL
    Con capas tonales casi idénticas (surface vs container = 1.10:1),
    los divisores no son adorno: son la separación entre secciones.
@@ -803,10 +878,11 @@ section{ position:relative; }
       <div class="eb-frame__media">
         <!-- Rutas ABSOLUTAS: el rewrite sirve esta página en /mis-xv-dayana
              (sin barra final), así que "assets/…" resolvería a /assets/… y daría 404.
-             El poster llena el marco desde el primer instante: el mp4 pesa 17 MB. -->
+             Video recomprimido: 17.1 MB -> 1.1 MB (936x1248, CRF 24, sin pista de
+             audio porque se reproduce silenciado). El poster cubre el arranque. -->
         <video id="retrato" src="/mis-xv-dayana/assets/animacion-princesa.mp4"
                poster="/mis-xv-dayana/assets/poster.jpg"
-               width="1248" height="1664"
+               width="936" height="1248"
                autoplay muted loop playsinline preload="auto"
                disablepictureinpicture
                aria-label="Animación de Dayana Yamile en su vestido de XV Años"></video>
@@ -821,6 +897,34 @@ section{ position:relative; }
     <p class="eb-label eb-hero__place">Chalco, Estado de México</p>
   </div>
 </header>
+
+
+<!-- ==================== MÚSICA ==================== -->
+<section class="eb-music eb-rv" id="musica" aria-labelledby="music-h">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow" id="music-h">Dale play</p>
+    <p class="eb-music__title">Apocalypse</p>
+    <p class="eb-label eb-music__artist">Cigarettes After Sex</p>
+
+    <!-- Sin JS este control nativo es la única forma de reproducir -->
+    <audio id="audio" class="eb-audio-native" src="/mis-xv-dayana/assets/cancion.mp3"
+           preload="none" loop controls></audio>
+
+    <div class="eb-player" id="player">
+      <button type="button" class="eb-player__btn" id="pl-btn" aria-label="Reproducir la canción">
+        <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+
+      <div class="eb-player__bar">
+        <span class="eb-player__time" id="pl-cur">0:00</span>
+        <input type="range" class="eb-player__seek" id="pl-seek"
+               min="0" max="180" step="1" value="0"
+               aria-label="Avanzar en la canción">
+        <span class="eb-player__time eb-player__time--end" id="pl-dur">3:00</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <!-- ==================== CUENTA REGRESIVA ====================
@@ -1209,6 +1313,82 @@ var RSVP_PHONE = '527203898985';
   });
 
   sync();
+})();
+
+/* ---------- REPRODUCTOR DE MÚSICA ---------- */
+(function () {
+  var audio = document.getElementById('audio');
+  var btn   = document.getElementById('pl-btn');
+  var seek  = document.getElementById('pl-seek');
+  var cur   = document.getElementById('pl-cur');
+  var dur   = document.getElementById('pl-dur');
+  var box   = document.getElementById('musica');
+  if (!audio || !btn || !seek) return;
+
+  var ICO_PLAY  = '<svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var ICO_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+
+  // El control nativo solo existía por si el JS no corría.
+  audio.removeAttribute('controls');
+
+  // Si el mp3 no carga, la sección entera desaparece en vez de dejar
+  // un reproductor muerto.
+  audio.addEventListener('error', function () { if (box) box.hidden = true; }, { once: true });
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+
+  function paint() {
+    var total = audio.duration;
+    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 180;
+    seek.style.setProperty('--pct', (audio.currentTime / total * 100) + '%');
+  }
+
+  audio.addEventListener('loadedmetadata', function () {
+    if (isFinite(audio.duration)) {
+      seek.max = Math.floor(audio.duration);
+      dur.textContent = fmt(audio.duration);
+    }
+    paint();
+  });
+
+  audio.addEventListener('timeupdate', function () {
+    if (seek.dataset.dragging === '1') return;   // no pelear con el dedo del usuario
+    seek.value = Math.floor(audio.currentTime);
+    cur.textContent = fmt(audio.currentTime);
+    paint();
+  });
+
+  function sync() {
+    btn.innerHTML = audio.paused ? ICO_PLAY : ICO_PAUSE;
+    btn.setAttribute('aria-label', audio.paused ? 'Reproducir la canción' : 'Pausar la canción');
+  }
+  audio.addEventListener('play',  sync);
+  audio.addEventListener('pause', sync);
+
+  btn.addEventListener('click', function () {
+    if (audio.paused) { audio.play().catch(function () {}); }
+    else              { audio.pause(); }
+  });
+
+  ['pointerdown', 'keydown'].forEach(function (e) {
+    seek.addEventListener(e, function () { seek.dataset.dragging = '1'; });
+  });
+  seek.addEventListener('input', function () {
+    cur.textContent = fmt(Number(seek.value));
+    var total = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : Number(seek.max);
+    seek.style.setProperty('--pct', (Number(seek.value) / total * 100) + '%');
+  });
+  seek.addEventListener('change', function () {
+    audio.currentTime = Number(seek.value);
+    seek.dataset.dragging = '0';
+  });
+
+  sync();
+  paint();
 })();
 
 /* ---------- REVEAL ---------- */
