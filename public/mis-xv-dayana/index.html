@@ -1295,9 +1295,27 @@ var RSVP_PHONE = '527203898985';
   }, { once:true });
 
   /* Quien pidió menos movimiento no recibe reproducción automática. */
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quieto) {
     vid.removeAttribute('autoplay');
     vid.pause();
+  } else {
+    /* El atributo autoplay no siempre basta: el ahorro de batería de iOS
+       y el modo ahorro de datos lo ignoran. Se insiste por JS y, si aun
+       así lo bloquean, se arranca al primer gesto del invitado. */
+    var VID_EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+    function nudge() {
+      VID_EVENTS.forEach(function (e) { window.removeEventListener(e, nudge); });
+      vid.play().catch(function () {});
+    }
+    var pv = vid.play();
+    if (pv && typeof pv.catch === 'function') {
+      pv.catch(function () {
+        VID_EVENTS.forEach(function (e) {
+          window.addEventListener(e, nudge, { passive: true });
+        });
+      });
+    }
   }
 
   function sync() {
@@ -1389,30 +1407,55 @@ var RSVP_PHONE = '527203898985';
     seek.dataset.dragging = '0';
   });
 
-  /* Arranque automático.
-     Los navegadores bloquean el audio con sonido si el visitante todavía
-     no ha interactuado con la página (iOS es el más estricto). No es algo
-     que se pueda desactivar: play() devuelve una promesa rechazada.
-     Por eso, si nos lo bloquean, enganchamos el primer gesto real del
-     invitado — un toque, una tecla o un scroll — y arrancamos ahí.
-     En la práctica suena en cuanto rozan la pantalla. */
+  /* Arranque automático, en cascada de tres intentos.
+
+     Los navegadores rechazan reproducir audio CON SONIDO mientras el
+     visitante no haya interactuado con la página (iOS es el más estricto).
+     No se puede desactivar: play() devuelve una promesa rechazada. Pero sí
+     dejan reproducir audio EN SILENCIO. Se aprovecha eso:
+
+       1. Intento con sonido. Si pasa, listo.
+       2. Si lo bloquean, arranco la pista silenciada — esto casi nunca
+          falla — de modo que el reproductor ya está corriendo.
+       3. Al primer gesto del invitado (toque, tecla o scroll) le quito el
+          silencio y la rebobino al inicio, para que la escuche completa
+          y no entrando a mitad.
+
+     Resultado: suena en cuanto rozan la pantalla, sin que tengan que
+     buscar ningún botón. */
   (function autoStart() {
     var EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+    var armed = false;
 
-    function onFirstGesture() {
-      EVENTS.forEach(function (e) { window.removeEventListener(e, onFirstGesture); });
-      audio.play().catch(function () {});   // si aun asi falla, queda el boton
+    function unlock() {
+      if (!armed) return;
+      armed = false;
+      EVENTS.forEach(function (e) { window.removeEventListener(e, unlock); });
+
+      audio.muted = false;
+      audio.currentTime = 0;
+      audio.play().catch(function () {});
+      sync();
     }
 
-    function armFallback() {
+    function arm() {
+      if (armed) return;
+      armed = true;
       EVENTS.forEach(function (e) {
-        window.addEventListener(e, onFirstGesture, { passive: true });
+        window.addEventListener(e, unlock, { passive: true });
       });
     }
 
     var p = audio.play();
-    if (p && typeof p.catch === 'function') { p.catch(armFallback); }
-    else { armFallback(); }                 // navegadores viejos: play() no devuelve promesa
+    if (p && typeof p.catch === 'function') {
+      p.catch(function () {
+        audio.muted = true;                 // silenciada sí la dejan sonar
+        audio.play().catch(function () {});
+        arm();
+      });
+    } else {
+      arm();                                // navegadores viejos: play() sin promesa
+    }
   })();
 
   sync();
