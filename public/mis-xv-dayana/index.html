@@ -906,9 +906,11 @@ section{ position:relative; }
     <p class="eb-music__title">Apocalypse</p>
     <p class="eb-label eb-music__artist">Cigarettes After Sex</p>
 
-    <!-- Sin JS este control nativo es la única forma de reproducir -->
+    <!-- Sin JS este control nativo es la única forma de reproducir.
+         preload="metadata": no baja los 2.8 MB de golpe, pero deja el
+         archivo listo para empezar a sonar en cuanto se pueda. -->
     <audio id="audio" class="eb-audio-native" src="/mis-xv-dayana/assets/cancion.mp3"
-           preload="none" loop controls></audio>
+           preload="metadata" loop controls></audio>
 
     <div class="eb-player" id="player">
       <button type="button" class="eb-player__btn" id="pl-btn" aria-label="Reproducir la canción">
@@ -1386,6 +1388,32 @@ var RSVP_PHONE = '527203898985';
     audio.currentTime = Number(seek.value);
     seek.dataset.dragging = '0';
   });
+
+  /* Arranque automático.
+     Los navegadores bloquean el audio con sonido si el visitante todavía
+     no ha interactuado con la página (iOS es el más estricto). No es algo
+     que se pueda desactivar: play() devuelve una promesa rechazada.
+     Por eso, si nos lo bloquean, enganchamos el primer gesto real del
+     invitado — un toque, una tecla o un scroll — y arrancamos ahí.
+     En la práctica suena en cuanto rozan la pantalla. */
+  (function autoStart() {
+    var EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+
+    function onFirstGesture() {
+      EVENTS.forEach(function (e) { window.removeEventListener(e, onFirstGesture); });
+      audio.play().catch(function () {});   // si aun asi falla, queda el boton
+    }
+
+    function armFallback() {
+      EVENTS.forEach(function (e) {
+        window.addEventListener(e, onFirstGesture, { passive: true });
+      });
+    }
+
+    var p = audio.play();
+    if (p && typeof p.catch === 'function') { p.catch(armFallback); }
+    else { armFallback(); }                 // navegadores viejos: play() no devuelve promesa
+  })();
 
   sync();
   paint();
