@@ -230,20 +230,6 @@ img{ max-width:100%; display:block; }
 .bb-sfil--bl{ bottom:0; left:0; transform:scaleY(-1); }
 .bb-sfil--br{ bottom:0; right:0; transform:scale(-1); }
 
-/* ---------- Rosas de acento en las escenas ---------- */
-.bb-accent{
-  position:absolute; width:clamp(120px,30vw,210px);
-  pointer-events:none; z-index:2; opacity:.9;
-}
-.bb-accent svg{ width:100%; height:auto; display:block; }
-.bb-accent--tr{ top:-18px; right:-42px; }
-.bb-accent--bl{ bottom:-18px; left:-42px; transform:rotate(180deg); }
-@media(max-width:600px){
-  .bb-accent{ width:34vw; opacity:.7; }
-  .bb-accent--tr{ right:-30px; }
-  .bb-accent--bl{ left:-30px; }
-}
-
 /* ---------- Divisor de rosas entre escenas ---------- */
 .bb-div{
   display:block; width:min(300px,72vw); margin:0 auto;
@@ -355,19 +341,7 @@ img{ max-width:100%; display:block; }
   transition:opacity .9s var(--bb-slow) 1.5s, visibility .9s 1.5s;
 }
 
-/* ---------- Filigrana de las cuatro esquinas ---------- */
-.bb-fil{ position:absolute; width:clamp(110px,26vw,190px); pointer-events:none; z-index:2; }
-.bb-fil svg{ width:100%; height:auto; display:block; }
-.bb-fil--tl{ top:0; left:0; }
-.bb-fil--tr{ top:0; right:0; transform:scaleX(-1); }
-.bb-fil--bl{ bottom:0; left:0; transform:scaleY(-1); }
-.bb-fil--br{ bottom:0; right:0; transform:scale(-1); }
 
-/* ---------- Ramos de rosas arriba y abajo ---------- */
-.bb-bouquet{ position:absolute; left:50%; width:clamp(280px,74vw,440px); pointer-events:none; z-index:3; }
-.bb-bouquet svg{ width:100%; height:auto; display:block; }
-.bb-bouquet--top{ top:0; transform:translateX(-50%); }
-.bb-bouquet--bottom{ bottom:0; transform:translateX(-50%) rotate(180deg); }
 
 /* ---------- LA ESCENA FOTOGRÁFICA DEL SOBRE ----------
    Ocupa toda la portada. Al tocar, la cámara entra hacia el sobre y un
@@ -465,14 +439,10 @@ img{ max-width:100%; display:block; }
 }
 .bb-gate.is-open .bb-env{ transform:translateY(18px) scale(.94); opacity:0; }
 
-/* Voluta dorada que baja del ramo al sobre */
-.bb-swirl{
   position:absolute; left:50%; top:14%; width:clamp(60px,16vw,96px);
   transform:translateX(-50%); z-index:4; pointer-events:none;
   transition:opacity .6s ease;
 }
-.bb-swirl svg{ width:100%; height:auto; display:block; }
-.bb-gate.is-open .bb-swirl{ opacity:0; }
 
 /* Texto bajo el sobre */
 .bb-gate__cta{
@@ -795,7 +765,7 @@ body.bb-revealed .bb-music{ display:flex; }
 
   /* La portada se va de golpe, sin coreografía */
   .bb-gate.is-open{ transition:none; }
-  .bb-swirl, .bb-gate__cta, .bb-gate__photo img{ transition:none !important; }
+  .bb-gate__cta, .bb-gate__photo img{ transition:none !important; }
   .bb-gate.is-open .bb-gate__photo img{ transform:none; filter:none; }
   .bb-gate.is-open .bb-gate__flash{ animation:none; opacity:0; }
   .bb-envwrap::after{ animation:none; }
@@ -804,16 +774,9 @@ body.bb-revealed .bb-music{ display:flex; }
   /* Repone los transforms estáticos que las reglas de arriba borrarían */
   .bb-portrait__deco--r{ transform:scaleX(-1) !important; }
   .bb-castle{ transform:translateX(-50%) !important; }
-  .bb-fil--tr{ transform:scaleX(-1) !important; }
-  .bb-fil--bl{ transform:scaleY(-1) !important; }
-  .bb-fil--br{ transform:scale(-1) !important; }
   .bb-sfil--tr{ transform:scaleX(-1) !important; }
   .bb-sfil--bl{ transform:scaleY(-1) !important; }
   .bb-sfil--br{ transform:scale(-1) !important; }
-  .bb-accent--bl{ transform:rotate(180deg) !important; }
-  .bb-bouquet--top{ transform:translateX(-50%) !important; }
-  .bb-bouquet--bottom{ transform:translateX(-50%) rotate(180deg) !important; }
-  .bb-swirl{ transform:translateX(-50%) !important; }
 }
 
 /* ============================================================
