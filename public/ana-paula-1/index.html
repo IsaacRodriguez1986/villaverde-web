@@ -251,6 +251,33 @@ img{ max-width:100%; display:block; }
 }
 .bb-div svg{ width:100%; height:auto; display:block; }
 
+/* ---------- FONDO FOTOGRÁFICO POR ESCENA ----------
+   La imagen se escala al 118% y se desplaza con --p: el encuadre nunca
+   deja ver el borde, y el movimiento lee como una cámara en dolly. */
+.bb-bg{
+  position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+}
+.bb-bg img{
+  position:absolute; inset:-9% 0;
+  width:100%; height:118%;
+  object-fit:cover; object-position:center;
+  transform:translate3d(0, calc(var(--p) * -5.5vh), 0);
+  will-change:transform;
+}
+/* Velo: sin él el texto no se sostiene sobre una foto. Más denso arriba
+   y abajo, donde vive el texto; transparente al centro, donde se ve la
+   escena. */
+.bb-bg::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg,
+    rgb(10 20 32 / .88) 0%,
+    rgb(10 20 32 / .58) 34%,
+    rgb(10 20 32 / .58) 66%,
+    rgb(10 20 32 / .92) 100%);
+}
+/* Las escenas con foto no necesitan su degradado de color plano */
+.bb-scene--photo{ background:var(--bb-night-deep); }
+
 /* ---------- CÁMARA ----------
    El rig escribe --p por escena. Las capas se desplazan según su
    profundidad. Solo transform y opacity: nunca top/left/width. */
@@ -329,15 +356,60 @@ img{ max-width:100%; display:block; }
 .bb-bouquet--top{ top:0; transform:translateX(-50%); }
 .bb-bouquet--bottom{ bottom:0; transform:translateX(-50%) rotate(180deg); }
 
-/* ---------- EL SOBRE ---------- */
+/* ---------- LA ESCENA FOTOGRÁFICA DEL SOBRE ----------
+   Ocupa toda la portada. Al tocar, la cámara entra hacia el sobre y un
+   destello dorado cubre el corte: es el movimiento del video de
+   referencia, donde la cámara se mete dentro del sobre. */
+.bb-gate__photo{
+  position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none;
+}
+.bb-gate__photo img{
+  width:100%; height:100%; object-fit:cover; object-position:center 46%;
+  transform:scale(1.03);
+  transition:transform 2.1s cubic-bezier(.5,0,.35,1), filter 1.6s ease;
+  will-change:transform;
+}
+.bb-gate.is-open .bb-gate__photo img{ transform:scale(2.5); filter:brightness(1.5) blur(3px); }
+
+/* Destello dorado que nace del sello y cubre el corte */
+.bb-gate__flash{
+  position:absolute; left:50%; top:47%; width:34vmax; height:34vmax;
+  transform:translate(-50%,-50%) scale(.2);
+  border-radius:50%; z-index:4; pointer-events:none; opacity:0;
+  background:radial-gradient(circle, rgb(255 246 214 / .95) 0%, rgb(232 207 122 / .5) 34%, transparent 68%);
+}
+.bb-gate.is-open .bb-gate__flash{
+  animation:bbFlash 1.9s cubic-bezier(.4,0,.2,1) .35s forwards;
+}
+@keyframes bbFlash{
+  0%   { opacity:0;   transform:translate(-50%,-50%) scale(.2); }
+  45%  { opacity:1;   transform:translate(-50%,-50%) scale(1.5); }
+  100% { opacity:0;   transform:translate(-50%,-50%) scale(3.4); }
+}
+
+/* Zona tocable sobre el sobre de la foto */
 .bb-envwrap{
   position:relative; z-index:5;
-  perspective:1400px;                    /* profundidad real para la solapa */
   cursor:pointer; background:none; border:0; padding:0; color:inherit;
-  width:min(340px,78vw);
+  width:min(300px,66vw); aspect-ratio:4/3;
+  border-radius:10px;
   transition:transform .55s var(--bb-ease);
 }
-.bb-envwrap:hover{ transform:translateY(-6px); }
+.bb-envwrap:hover{ transform:scale(1.04); }
+
+/* Halo que late sobre el sello, para que se vea que hay que tocarlo */
+.bb-envwrap::after{
+  content:''; position:absolute; left:50%; top:50%;
+  width:74px; height:74px; margin:-37px 0 0 -37px;
+  border-radius:50%; pointer-events:none;
+  box-shadow:0 0 0 0 rgb(232 207 122 / .55);
+  animation:bbSealPulse 2.8s ease-in-out infinite;
+}
+@keyframes bbSealPulse{
+  0%,100% { box-shadow:0 0 0 0    rgb(232 207 122 / .5); }
+  50%     { box-shadow:0 0 0 22px rgb(232 207 122 / 0); }
+}
+.bb-gate.is-open .bb-envwrap::after{ animation:none; opacity:0; }
 
 .bb-env{
   position:relative; width:100%; aspect-ratio:4/3;
@@ -345,80 +417,6 @@ img{ max-width:100%; display:block; }
   transition:transform 1s var(--bb-slow) 1.05s, opacity .7s ease 1.5s;
 }
 .bb-gate.is-open .bb-env{ transform:translateY(18px) scale(.94); opacity:0; }
-
-/* Papel: cuerpo del sobre */
-.bb-env__body{
-  position:absolute; inset:0; border-radius:6px;
-  background:linear-gradient(160deg, #dde1e8 0%, #c3c8d2 48%, #aeb4c0 100%);
-  box-shadow:0 26px 60px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .5);
-}
-/* Los dos triángulos laterales y el inferior, dibujados con clip-path */
-.bb-env__pocket{
-  position:absolute; inset:0; border-radius:6px; overflow:hidden;
-  z-index:3;
-}
-.bb-env__pocket::before,
-.bb-env__pocket::after{
-  content:''; position:absolute; inset:0;
-}
-.bb-env__pocket::before{
-  background:linear-gradient(140deg, #cfd4dc, #b7bcc7);
-  clip-path:polygon(0 0, 50% 42%, 0 100%);
-}
-.bb-env__pocket::after{
-  background:linear-gradient(220deg, #cfd4dc, #b7bcc7);
-  clip-path:polygon(100% 0, 50% 42%, 100% 100%);
-}
-.bb-env__front{
-  position:absolute; inset:0; z-index:4; border-radius:6px;
-  background:linear-gradient(180deg, #c9ced7, #b2b8c4);
-  clip-path:polygon(0 100%, 50% 43%, 100% 100%);
-  box-shadow:inset 0 1px 0 rgb(255 255 255 / .35);
-}
-
-/* Solapa: gira sobre su borde superior */
-.bb-env__flap{
-  position:absolute; left:0; right:0; top:0; height:56%;
-  z-index:6; transform-origin:50% 0%;
-  background:linear-gradient(180deg, #d6dae2, #bcc2cd);
-  clip-path:polygon(0 0, 100% 0, 50% 100%);
-  filter:drop-shadow(0 3px 6px rgb(0 0 0 / .25));
-  transition:transform .85s cubic-bezier(.6,.02,.3,1) .25s;
-  backface-visibility:hidden;
-}
-.bb-gate.is-open .bb-env__flap{ transform:rotateX(-172deg); }
-
-/* Sello de lacre */
-.bb-env__seal{
-  position:absolute; left:50%; top:47%; width:24%;
-  transform:translate(-50%,-50%); z-index:8;
-  transition:transform .5s var(--bb-ease), opacity .4s ease;
-}
-.bb-env__seal svg{ width:100%; height:auto; display:block; }
-.bb-gate.is-open .bb-env__seal{ transform:translate(-50%,-50%) scale(.7) rotate(-24deg); opacity:0; }
-
-/* La tarjeta que sale del sobre */
-.bb-env__card{
-  position:absolute; left:7%; right:7%; top:8%; bottom:14%;
-  z-index:5; border-radius:4px;
-  background:linear-gradient(170deg, #fdf8ee, #f2e4c8);
-  box-shadow:0 8px 24px rgb(0 0 0 / .35);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:6px; padding:8%;
-  transition:transform .9s var(--bb-slow) .9s;
-}
-.bb-gate.is-open .bb-env__card{ transform:translateY(-58%); }
-.bb-env__card-k{
-  font-family:var(--bb-display); font-size:.5rem; font-weight:600;
-  letter-spacing:.24em; text-indent:.24em; text-transform:uppercase; color:var(--bb-gold-deep);
-}
-.bb-env__card-n{
-  font-family:var(--bb-script); font-size:clamp(1.3rem,5.5vw,1.9rem);
-  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
-  color:#5e0a14;
-}
-.bb-env__card-r{ width:26px; }
-.bb-env__card-r svg{ width:100%; height:auto; display:block; }
 
 /* Voluta dorada que baja del ramo al sobre */
 .bb-swirl{
@@ -749,9 +747,11 @@ body.bb-revealed .bb-music{ display:flex; }
 
   /* La portada se va de golpe, sin coreografía */
   .bb-gate.is-open{ transition:none; }
-  .bb-env, .bb-env__flap, .bb-env__card, .bb-env__seal,
-  .bb-swirl, .bb-gate__cta{ transition:none !important; }
-  .bb-gate.is-open .bb-env__flap{ transform:rotateX(-172deg); }
+  .bb-swirl, .bb-gate__cta, .bb-gate__photo img{ transition:none !important; }
+  .bb-gate.is-open .bb-gate__photo img{ transform:none; filter:none; }
+  .bb-gate.is-open .bb-gate__flash{ animation:none; opacity:0; }
+  .bb-envwrap::after{ animation:none; }
+  .bb-bg img{ transform:none !important; }
 
   /* Repone los transforms estáticos que las reglas de arriba borrarían */
   .bb-portrait__deco--r{ transform:scaleX(-1) !important; }
@@ -765,7 +765,6 @@ body.bb-revealed .bb-music{ display:flex; }
   .bb-accent--bl{ transform:rotate(180deg) !important; }
   .bb-bouquet--top{ transform:translateX(-50%) !important; }
   .bb-bouquet--bottom{ transform:translateX(-50%) rotate(180deg) !important; }
-  .bb-env__seal{ transform:translate(-50%,-50%) !important; }
   .bb-swirl{ transform:translateX(-50%) !important; }
 }
 
@@ -901,6 +900,14 @@ body.bb-revealed .bb-music{ display:flex; }
 <!-- ==================== PRÓLOGO ==================== -->
 <div class="bb-gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name">
 
+  <!-- La escena fotográfica del sobre lacrado -->
+  <div class="bb-gate__photo" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-sobre.webp"
+         srcset="/ana-paula-1/assets/esc-sobre.webp 900w,
+                 /ana-paula-1/assets/esc-sobre@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" decoding="async">
+  </div>
+
   <!-- Filigrana de las cuatro esquinas -->
   <div class="bb-fil bb-fil--tl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
   <div class="bb-fil bb-fil--tr" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
@@ -941,47 +948,9 @@ body.bb-revealed .bb-music{ display:flex; }
     </svg>
   </div>
 
-  <!-- EL SOBRE -->
-  <button type="button" class="bb-envwrap" id="gate-btn" aria-label="Abrir la invitación">
-    <div class="bb-env">
-      <div class="bb-env__body"></div>
-
-      <!-- La tarjeta sale de aquí -->
-      <div class="bb-env__card">
-        <span class="bb-env__card-k">Mi primer añito</span>
-        <span class="bb-env__card-n">Ana Paula</span>
-        <span class="bb-env__card-r" aria-hidden="true">
-          <svg viewBox="-34 -34 68 68" xmlns:xlink="http://www.w3.org/1999/xlink"><use href="#bbRose" xlink:href="#bbRose"/></svg>
-        </span>
-      </div>
-
-      <div class="bb-env__pocket"></div>
-      <div class="bb-env__front"></div>
-
-      <div class="bb-env__flap"></div>
-
-      <!-- Sello de lacre -->
-      <div class="bb-env__seal" aria-hidden="true">
-        <svg viewBox="0 0 100 100" focusable="false">
-          <defs>
-            <radialGradient id="bbWax" cx="38%" cy="34%" r="72%">
-              <stop offset="0%"   stop-color="#e0a077"/>
-              <stop offset="52%"  stop-color="#c07a4f"/>
-              <stop offset="100%" stop-color="#8f5233"/>
-            </radialGradient>
-          </defs>
-          <path d="M50 4c8 0 12 6 20 7s14-3 19 4-1 14 2 21 9 10 6 18-11 8-15 15-2 15-9 18-13-3-21-2-12 8-20 6-9-10-15-14-15-4-17-12 5-13 5-21-7-13-5-21 11-8 17-12S42 4 50 4Z" fill="url(#bbWax)"/>
-          <path d="M50 12c6 0 10 5 16 6s11-2 15 3-1 11 2 17 7 8 5 14-9 7-12 12-2 12-7 14-11-2-17-1-10 6-16 4-7-8-12-11-12-3-14-9 4-11 4-17-6-11-4-17 9-7 14-10S44 12 50 12Z" fill="none" stroke="#6f3d24" stroke-width="1.2" opacity=".45"/>
-          <g transform="translate(50 50) scale(.62)" opacity=".92">
-            <path d="M0-22C-11-14-14-4-8 5-3 12 3 12 8 5 14-4 11-14 0-22Z" fill="#7c452a"/>
-            <path d="M0-15C-6-10-8-3-5 2-2 6 2 6 5 2 8-3 6-10 0-15Z" fill="#9a5c3a"/>
-            <path d="M-24 8C-14 2-4 4 0 12-8 18-19 16-24 8Z" fill="#7c452a"/>
-            <path d="M24 8C14 2 4 4 0 12 8 18 19 16 24 8Z" fill="#7c452a"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-  </button>
+  <!-- Zona tocable, sobre el sobre de la fotografía -->
+  <button type="button" class="bb-envwrap" id="gate-btn" aria-label="Abrir la invitación"></button>
+  <div class="bb-gate__flash" aria-hidden="true"></div>
 
   <div class="bb-gate__cta">
     <p class="bb-gate__name" id="gate-name">Ana Paula</p>
@@ -1026,7 +995,14 @@ body.bb-revealed .bb-music{ display:flex; }
 <main id="contenido">
 
 <!-- ==================== ESCENA · NOMBRE ==================== -->
-<section class="bb-scene bb-scene--night bb-scene--full" id="inicio">
+<section class="bb-scene bb-scene--photo bb-scene--full" id="inicio">
+  <div class="bb-bg" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-escalera.webp"
+         srcset="/ana-paula-1/assets/esc-escalera.webp 900w,
+                 /ana-paula-1/assets/esc-escalera@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
+  </div>
+
   <div class="bb-motes" id="motes" aria-hidden="true"></div>
 
   <div class="bb-castle bb-cam bb-cam--back" aria-hidden="true">
@@ -1118,7 +1094,14 @@ body.bb-revealed .bb-music{ display:flex; }
 
 
 <!-- ==================== ESCENA · FECHA Y CUENTA REGRESIVA ==================== -->
-<section class="bb-scene bb-scene--night" id="fecha">
+<section class="bb-scene bb-scene--photo" id="fecha">
+  <div class="bb-bg" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-rosa.webp"
+         srcset="/ana-paula-1/assets/esc-rosa.webp 900w,
+                 /ana-paula-1/assets/esc-rosa@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
+  </div>
+
   <div class="bb-petals" id="petals" aria-hidden="true"></div>
 
   <div class="bb-accent bb-accent--tr bb-cam bb-cam--front" aria-hidden="true">
@@ -1145,7 +1128,14 @@ body.bb-revealed .bb-music{ display:flex; }
 
 
 <!-- ==================== ESCENA · DETALLES ==================== -->
-<section class="bb-scene bb-scene--lift" id="detalles">
+<section class="bb-scene bb-scene--photo" id="detalles">
+  <div class="bb-bg" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-biblioteca.webp"
+         srcset="/ana-paula-1/assets/esc-biblioteca.webp 900w,
+                 /ana-paula-1/assets/esc-biblioteca@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
+  </div>
+
   <div class="bb-sfil bb-sfil--tr" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
   <div class="bb-sfil bb-sfil--bl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
 
@@ -1262,7 +1252,14 @@ body.bb-revealed .bb-music{ display:flex; }
 
 
 <!-- ==================== ESCENA · CIERRE ==================== -->
-<section class="bb-scene bb-scene--night bb-closing">
+<section class="bb-scene bb-scene--photo bb-closing">
+  <div class="bb-bg" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-salon.webp"
+         srcset="/ana-paula-1/assets/esc-salon.webp 900w,
+                 /ana-paula-1/assets/esc-salon@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
+  </div>
+
   <div class="bb-sfil bb-sfil--bl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
   <div class="bb-sfil bb-sfil--br" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
 
@@ -1411,14 +1408,13 @@ var EVENTO = {
   document.body.classList.add('bb-locked');
   btn.focus({ preventScroll: true });
 
-  /* Coreografía del sobre, encadenada por delays en CSS:
-       0.00s  el sello se desprende y se desvanece
-       0.25s  la solapa gira sobre su borde superior (rotateX)
-       0.90s  la tarjeta sube y sale del sobre
-       1.05s  el sobre entero se aleja y se funde
-       1.50s  la portada se desvanece y aparece la invitación
-     Total 2.4 s. La música arranca en el instante 0, no al final. */
-  var DURACION = 2500;
+  /* Coreografía encadenada por delays en CSS, el mismo movimiento que hace
+     el video de referencia — la cámara se mete dentro del sobre:
+       0.00s  la cámara empieza a empujar hacia el sobre (scale 1.03 -> 2.5)
+       0.35s  un destello dorado nace del sello y se expande
+       1.50s  el destello cubre el corte y la portada se funde
+     Total 2.6 s. La música arranca en el instante 0, no al final. */
+  var DURACION = 2600;
 
   btn.addEventListener('click', function () {
     if (abierto) return;
