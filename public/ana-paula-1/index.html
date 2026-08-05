@@ -86,6 +86,14 @@
   --bb-body:     clamp(1rem, 2.6vw, 1.125rem);
   --bb-label:    .75rem;          /* 12px — piso duro */
 
+  /* Great Vibes tiene astas altas y rabos profundos (la "y", la "P"). Con
+     line-height cerca de 1 la caja de linea queda mas corta que la letra y
+     la recorta, y con background-clip:text el degradado se corta igual.
+     Estas dos variables son el minimo seguro: usarlas SIEMPRE que se
+     escriba en la caligrafica. */
+  --bb-script-lh:  1.32;
+  --bb-script-pad: .14em 0 .26em;
+
   /* Espacio */
   --bb-s1:8px;  --bb-s2:16px; --bb-s3:24px; --bb-s4:32px;
   --bb-s5:40px; --bb-s6:48px; --bb-s8:64px; --bb-s10:80px;
@@ -132,11 +140,15 @@ img{ max-width:100%; display:block; }
 /* ============================================================
    TIPOGRAFÍA COMPARTIDA
    ============================================================ */
+/* text-indent compensa el espacio que letter-spacing deja DESPUES de la
+   ultima letra: sin el, todo texto centrado con tracking se ve corrido a
+   la izquierda. Es el detalle que separa lo amateur de lo compuesto. */
 .bb-kicker{
   font-family:var(--bb-display);
   font-size:var(--bb-label); font-weight:600;
-  letter-spacing:.34em; text-transform:uppercase;
+  letter-spacing:.34em; text-indent:.34em; text-transform:uppercase;
   display:flex; align-items:center; justify-content:center; gap:var(--bb-s2);
+  line-height:1.6;
 }
 .bb-kicker::before, .bb-kicker::after{
   content:''; height:1px; width:clamp(16px,6vw,44px);
@@ -392,11 +404,12 @@ img{ max-width:100%; display:block; }
 .bb-gate.is-open .bb-env__card{ transform:translateY(-58%); }
 .bb-env__card-k{
   font-family:var(--bb-display); font-size:.5rem; font-weight:600;
-  letter-spacing:.24em; text-transform:uppercase; color:var(--bb-gold-deep);
+  letter-spacing:.24em; text-indent:.24em; text-transform:uppercase; color:var(--bb-gold-deep);
 }
 .bb-env__card-n{
   font-family:var(--bb-script); font-size:clamp(1.3rem,5.5vw,1.9rem);
-  line-height:1; color:#5e0a14;
+  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
+  color:#5e0a14;
 }
 .bb-env__card-r{ width:26px; }
 .bb-env__card-r svg{ width:100%; height:auto; display:block; }
@@ -418,20 +431,21 @@ img{ max-width:100%; display:block; }
 .bb-gate.is-open .bb-gate__cta{ opacity:0; }
 .bb-gate__name{
   font-family:var(--bb-script);
-  font-size:clamp(2rem,8vw,3rem); line-height:1.05;
+  font-size:clamp(2rem,8vw,3rem);
+  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
   color:var(--bb-gold-light);
   text-shadow:0 0 34px rgb(201 162 39 / .45);
 }
 .bb-gate__sub{
   font-family:var(--bb-display);
   font-size:var(--bb-label); font-weight:600;
-  letter-spacing:.3em; text-transform:uppercase;
+  letter-spacing:.3em; text-indent:.3em; text-transform:uppercase;
   color:var(--bb-on-night-soft); margin-top:var(--bb-s2);
 }
 .bb-gate__note{
   margin-top:var(--bb-s3); font-family:var(--bb-display);
   font-size:var(--bb-label); font-weight:600;
-  letter-spacing:.22em; text-transform:uppercase;
+  letter-spacing:.22em; text-indent:.22em; text-transform:uppercase;
   color:var(--bb-gold-light); opacity:.9;
   animation:bbBreathe 3s ease-in-out infinite;
 }
@@ -473,7 +487,8 @@ img{ max-width:100%; display:block; }
 .bb-hero{ text-align:center; }
 .bb-hero__name{
   font-family:var(--bb-script);
-  font-size:var(--bb-name); line-height:1.02;
+  font-size:var(--bb-name);
+  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
   margin:var(--bb-s3) 0 var(--bb-s2);
   background:linear-gradient(105deg,
     var(--bb-gold) 0%, var(--bb-gold) 36%,
@@ -494,7 +509,7 @@ body.bb-revealed .bb-hero__name{
 }
 .bb-hero__sur{
   font-family:var(--bb-display); font-weight:500;
-  font-size:var(--bb-label); letter-spacing:.3em; text-transform:uppercase;
+  font-size:var(--bb-label); letter-spacing:.3em; text-indent:.3em; text-transform:uppercase;
   color:var(--bb-on-night-soft);
 }
 .bb-hero__age{
@@ -570,13 +585,14 @@ body.bb-revealed .bb-hero__name{
 .bb-cd__unit{
   margin-top:9px; font-family:var(--bb-display);
   font-size:var(--bb-label); font-weight:500;
-  letter-spacing:.2em; text-transform:uppercase; color:var(--bb-on-night-soft);
+  letter-spacing:.2em; text-indent:.2em; text-transform:uppercase; color:var(--bb-on-night-soft);
 }
 .bb-cd__num--tick{ animation:bbTick 280ms var(--bb-ease); }
 @keyframes bbTick{ 0%{transform:scale(1)} 45%{transform:scale(1.1)} 100%{transform:scale(1)} }
 .bb-cd__done{
   font-family:var(--bb-script); font-size:clamp(2rem,7vw,2.8rem);
-  color:var(--bb-gold-light); padding:var(--bb-s3) 0;
+  line-height:var(--bb-script-lh);
+  color:var(--bb-gold-light); padding:var(--bb-s3) 0 calc(var(--bb-s3) + .2em);
 }
 
 /* ============================================================
@@ -623,7 +639,7 @@ body.bb-revealed .bb-hero__name{
 }
 .bb-card__big{
   font-family:var(--bb-display); font-weight:700;
-  font-size:1.55rem; margin-bottom:var(--bb-s1);
+  font-size:1.55rem; line-height:1.3; padding-bottom:.08em; margin-bottom:var(--bb-s1);
   background:linear-gradient(105deg, var(--bb-gold-deep), var(--bb-gold-pale) 50%, var(--bb-gold-deep));
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; color:transparent;
@@ -697,6 +713,7 @@ body.bb-revealed .bb-music{ display:flex; }
 .bb-closing__msg{
   font-family:var(--bb-script);
   font-size:clamp(2.2rem,8vw,3.4rem);
+  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
   color:var(--bb-gold-light); margin-top:var(--bb-s3);
 }
 .bb-foot{
@@ -704,7 +721,11 @@ body.bb-revealed .bb-music{ display:flex; }
   background:var(--bb-night-deep); color:var(--bb-on-night-soft);
   border-top:1px solid var(--bb-line-soft);
 }
-.bb-foot__name{ font-family:var(--bb-script); font-size:2rem; color:var(--bb-gold-light); }
+.bb-foot__name{
+  font-family:var(--bb-script); font-size:2rem;
+  line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
+  color:var(--bb-gold-light);
+}
 .bb-foot__fine{ font-size:.85rem; margin-top:var(--bb-s2); }
 
 /* ============================================================
