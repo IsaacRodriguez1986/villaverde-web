@@ -275,6 +275,19 @@ img{ max-width:100%; display:block; }
     rgb(10 20 32 / .58) 66%,
     rgb(10 20 32 / .92) 100%);
 }
+/* Velo más ligero donde la escena es clara y cálida: si le pongo el velo
+   oscuro normal, el salón mágico se apaga y pierde justo lo que lo hace
+   mágico. Aquí el texto se sostiene con su propia sombra. */
+.bb-bg--suave::after{
+  background:linear-gradient(180deg,
+    rgb(10 20 32 / .74) 0%,
+    rgb(10 20 32 / .30) 34%,
+    rgb(10 20 32 / .34) 66%,
+    rgb(10 20 32 / .82) 100%);
+}
+.bb-bg--suave ~ * .bb-title,
+.bb-bg--suave ~ * .bb-kicker{ text-shadow:0 2px 14px rgb(10 20 32 / .8); }
+
 /* Las escenas con foto no necesitan su degradado de color plano */
 .bb-scene--photo{ background:var(--bb-night-deep); }
 
@@ -364,12 +377,30 @@ img{ max-width:100%; display:block; }
   position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none;
 }
 .bb-gate__photo img{
+  position:absolute; inset:0;
   width:100%; height:100%; object-fit:cover; object-position:center 46%;
-  transform:scale(1.03);
-  transition:transform 2.1s cubic-bezier(.5,0,.35,1), filter 1.6s ease;
+  transition:transform 2.2s cubic-bezier(.42,0,.3,1), opacity .9s ease;
   will-change:transform;
 }
-.bb-gate.is-open .bb-gate__photo img{ transform:scale(2.5); filter:brightness(1.5) blur(3px); }
+/* Estado cerrado: flota despacio, como si el sobre respirara */
+.bb-gate__photo .is-cerrado{ animation:bbFloat 6s ease-in-out infinite; }
+@keyframes bbFloat{
+  0%,100% { transform:scale(1.02) translateY(0); }
+  50%     { transform:scale(1.035) translateY(-8px); }
+}
+/* Estado abierto: encima, oculto hasta la apertura */
+.bb-gate__photo .is-abierto{ opacity:0; transform:scale(1.02); }
+
+/* Al abrir: el sobre cerrado se funde y aparece el abierto, con un
+   acercamiento SUAVE — 1.28, no un zoom agresivo. */
+.bb-gate.is-open .bb-gate__photo .is-cerrado{
+  animation:none; opacity:0; transform:scale(1.1);
+  transition:opacity .7s ease .45s, transform 2.2s cubic-bezier(.42,0,.3,1);
+}
+.bb-gate.is-open .bb-gate__photo .is-abierto{
+  opacity:1; transform:scale(1.28);
+  transition:opacity .8s ease .35s, transform 2.2s cubic-bezier(.42,0,.3,1);
+}
 
 /* Destello dorado que nace del sello y cubre el corte */
 .bb-gate__flash{
@@ -531,7 +562,8 @@ body.bb-revealed .bb-hero__name{
 /* ============================================================
    ESCENA — LA FESTEJADA (marco dorado)
    ============================================================ */
-.bb-portrait{ position:relative; width:min(330px,74vw); margin:var(--bb-s5) auto 0; }
+/* Ella es la protagonista: el retrato manda en su escena */
+.bb-portrait{ position:relative; width:min(380px,82vw); margin:var(--bb-s5) auto 0; }
 .bb-portrait__frame{
   position:relative; padding:16px;
   background:
@@ -900,11 +932,16 @@ body.bb-revealed .bb-music{ display:flex; }
 <!-- ==================== PRÓLOGO ==================== -->
 <div class="bb-gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name">
 
-  <!-- La escena fotográfica del sobre lacrado -->
+  <!-- Dos estados del mismo sobre: cerrado y abierto. El fundido entre
+       ambos, cubierto por el destello, es lo que lee como "se abrio". -->
   <div class="bb-gate__photo" aria-hidden="true">
-    <img src="/ana-paula-1/assets/esc-sobre.webp"
+    <img class="is-cerrado" src="/ana-paula-1/assets/esc-sobre.webp"
          srcset="/ana-paula-1/assets/esc-sobre.webp 900w,
                  /ana-paula-1/assets/esc-sobre@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" decoding="async">
+    <img class="is-abierto" src="/ana-paula-1/assets/esc-sobre-abierto.webp"
+         srcset="/ana-paula-1/assets/esc-sobre-abierto.webp 900w,
+                 /ana-paula-1/assets/esc-sobre-abierto@2x.webp 1400w"
          sizes="100vw" alt="" width="900" height="1600" decoding="async">
   </div>
 
@@ -1050,7 +1087,15 @@ body.bb-revealed .bb-music{ display:flex; }
 
 
 <!-- ==================== ESCENA · LA FESTEJADA ==================== -->
-<section class="bb-scene bb-scene--lift" id="festejada">
+<section class="bb-scene bb-scene--photo" id="festejada">
+  <!-- El salon magico dorado: Ana Paula es la protagonista y esta es su escena -->
+  <div class="bb-bg bb-bg--suave" aria-hidden="true">
+    <img src="/ana-paula-1/assets/esc-magico.webp"
+         srcset="/ana-paula-1/assets/esc-magico.webp 900w,
+                 /ana-paula-1/assets/esc-magico@2x.webp 1400w"
+         sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
+  </div>
+
   <div class="bb-sfil bb-sfil--tl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
   <div class="bb-sfil bb-sfil--br" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
 
