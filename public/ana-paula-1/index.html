@@ -391,15 +391,15 @@ img{ max-width:100%; display:block; }
 /* Estado abierto: encima, oculto hasta la apertura */
 .bb-gate__photo .is-abierto{ opacity:0; transform:scale(1.02); }
 
-/* Al abrir: el sobre cerrado se funde y aparece el abierto, con un
-   acercamiento SUAVE — 1.28, no un zoom agresivo. */
+/* Al abrir: el cerrado da el tirón y se funde; aparece el abierto con un
+   acercamiento SUAVE de 1.22 — no un zoom que se coma la escena. */
 .bb-gate.is-open .bb-gate__photo .is-cerrado{
-  animation:none; opacity:0; transform:scale(1.1);
-  transition:opacity .7s ease .45s, transform 2.2s cubic-bezier(.42,0,.3,1);
+  opacity:0;
+  transition:opacity .55s ease .5s;
 }
 .bb-gate.is-open .bb-gate__photo .is-abierto{
-  opacity:1; transform:scale(1.28);
-  transition:opacity .8s ease .35s, transform 2.2s cubic-bezier(.42,0,.3,1);
+  opacity:1; transform:scale(1.22);
+  transition:opacity .7s ease .5s, transform 2.3s cubic-bezier(.42,0,.3,1);
 }
 
 /* Destello dorado que nace del sello y cubre el corte */
@@ -424,9 +424,25 @@ img{ max-width:100%; display:block; }
   cursor:pointer; background:none; border:0; padding:0; color:inherit;
   width:min(300px,66vw); aspect-ratio:4/3;
   border-radius:10px;
-  transition:transform .55s var(--bb-ease);
+  transition:transform .3s var(--bb-ease);
 }
-.bb-envwrap:hover{ transform:scale(1.04); }
+.bb-envwrap:hover{ transform:scale(1.045) translateY(-4px); }
+/* Se hunde bajo el dedo: la respuesta tactil que hace que se sienta un
+   objeto y no una imagen. */
+.bb-envwrap:active{ transform:scale(.965); transition-duration:.09s; }
+
+/* Tiron al abrirse, como quien rompe un lacre */
+.bb-gate.is-open .bb-gate__photo .is-cerrado{
+  animation:bbSacudida .5s cubic-bezier(.36,.07,.19,.97);
+}
+@keyframes bbSacudida{
+  0%   { transform:scale(1.02) rotate(0deg); }
+  18%  { transform:scale(1.05) rotate(-1.1deg); }
+  38%  { transform:scale(1.05) rotate(.9deg); }
+  58%  { transform:scale(1.06) rotate(-.6deg); }
+  78%  { transform:scale(1.07) rotate(.35deg); }
+  100% { transform:scale(1.08) rotate(0deg); }
+}
 
 /* Halo que late sobre el sello, para que se vea que hay que tocarlo */
 .bb-envwrap::after{
@@ -1088,11 +1104,12 @@ body.bb-revealed .bb-music{ display:flex; }
 
 <!-- ==================== ESCENA · LA FESTEJADA ==================== -->
 <section class="bb-scene bb-scene--photo" id="festejada">
-  <!-- El salon magico dorado: Ana Paula es la protagonista y esta es su escena -->
+  <!-- Rincón de hada con la coronita: es SU escena, y es la que dice sin
+       palabras que la invitación es para una niña de un año. -->
   <div class="bb-bg bb-bg--suave" aria-hidden="true">
-    <img src="/ana-paula-1/assets/esc-magico.webp"
-         srcset="/ana-paula-1/assets/esc-magico.webp 900w,
-                 /ana-paula-1/assets/esc-magico@2x.webp 1400w"
+    <img src="/ana-paula-1/assets/esc-hada.webp"
+         srcset="/ana-paula-1/assets/esc-hada.webp 900w,
+                 /ana-paula-1/assets/esc-hada@2x.webp 1400w"
          sizes="100vw" alt="" width="900" height="1600" loading="lazy" decoding="async">
   </div>
 
