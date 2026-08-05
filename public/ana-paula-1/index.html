@@ -125,6 +125,12 @@ body.bb-locked{ overflow:hidden; height:100vh; }
 
 img{ max-width:100%; display:block; }
 
+/* El atributo hidden solo funciona por el display:none del navegador, y
+   CUALQUIER display declarado aqui le gana por especificidad. Sin esta
+   regla, .bb-pending (inline-block), .bb-cd (flex) y .bb-btn (inline-flex)
+   ignoran hidden y los avisos de "falta definir" quedan a la vista. */
+[hidden]{ display:none !important; }
+
 :focus-visible{ outline:2px solid var(--bb-gold-light); outline-offset:3px; border-radius:4px; }
 
 .bb-wrap{ width:100%; max-width:var(--bb-max); margin:0 auto; padding:0 var(--bb-gutter); }
