@@ -249,64 +249,157 @@ img{ max-width:100%; display:block; }
   display:none;
   flex-direction:column; align-items:center; justify-content:center;
   text-align:center; padding:var(--bb-gutter);
+  overflow:hidden;
   background:
-    radial-gradient(ellipse at 50% 42%, rgb(201 162 39 / .22) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 42%, rgb(155 28 38 / .18) 0%, transparent 44%),
-    linear-gradient(180deg, var(--bb-night-deep), #0d0914);
+    radial-gradient(ellipse at 50% 46%, rgb(30 58 96 / .55) 0%, transparent 62%),
+    linear-gradient(180deg, #0b1626 0%, #12243c 45%, #0a1420 100%);
   color:var(--bb-on-night);
 }
 .js .bb-gate{ display:flex; }
 .bb-gate.is-open{
   opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity 1.1s var(--bb-slow), visibility 1.1s;
+  transition:opacity .9s var(--bb-slow) 1.5s, visibility .9s 1.5s;
 }
 
-.bb-gate__jar{
-  width:min(280px,64vw); margin:0 auto var(--bb-s5);
-  cursor:pointer; background:none; border:0; padding:0;
-  color:inherit; display:block;
-  transition:transform .5s var(--bb-ease), filter 1s var(--bb-ease), opacity 1s var(--bb-ease);
-}
-.bb-gate__jar svg{ width:100%; height:auto; display:block; }
-.bb-gate__jar:hover{ transform:translateY(-4px) scale(1.02); }
-.bb-gate.is-open .bb-gate__jar{ transform:scale(1.35); filter:blur(7px); opacity:0; }
+/* ---------- Filigrana de las cuatro esquinas ---------- */
+.bb-fil{ position:absolute; width:clamp(110px,26vw,190px); pointer-events:none; z-index:2; }
+.bb-fil svg{ width:100%; height:auto; display:block; }
+.bb-fil--tl{ top:0; left:0; }
+.bb-fil--tr{ top:0; right:0; transform:scaleX(-1); }
+.bb-fil--bl{ bottom:0; left:0; transform:scaleY(-1); }
+.bb-fil--br{ bottom:0; right:0; transform:scale(-1); }
 
+/* ---------- Ramos de rosas arriba y abajo ---------- */
+.bb-bouquet{ position:absolute; left:50%; width:clamp(280px,74vw,440px); pointer-events:none; z-index:3; }
+.bb-bouquet svg{ width:100%; height:auto; display:block; }
+.bb-bouquet--top{ top:0; transform:translateX(-50%); }
+.bb-bouquet--bottom{ bottom:0; transform:translateX(-50%) rotate(180deg); }
+
+/* ---------- EL SOBRE ---------- */
+.bb-envwrap{
+  position:relative; z-index:5;
+  perspective:1400px;                    /* profundidad real para la solapa */
+  cursor:pointer; background:none; border:0; padding:0; color:inherit;
+  width:min(340px,78vw);
+  transition:transform .55s var(--bb-ease);
+}
+.bb-envwrap:hover{ transform:translateY(-6px); }
+
+.bb-env{
+  position:relative; width:100%; aspect-ratio:4/3;
+  transform-style:preserve-3d;
+  transition:transform 1s var(--bb-slow) 1.05s, opacity .7s ease 1.5s;
+}
+.bb-gate.is-open .bb-env{ transform:translateY(18px) scale(.94); opacity:0; }
+
+/* Papel: cuerpo del sobre */
+.bb-env__body{
+  position:absolute; inset:0; border-radius:6px;
+  background:linear-gradient(160deg, #dde1e8 0%, #c3c8d2 48%, #aeb4c0 100%);
+  box-shadow:0 26px 60px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .5);
+}
+/* Los dos triángulos laterales y el inferior, dibujados con clip-path */
+.bb-env__pocket{
+  position:absolute; inset:0; border-radius:6px; overflow:hidden;
+  z-index:3;
+}
+.bb-env__pocket::before,
+.bb-env__pocket::after{
+  content:''; position:absolute; inset:0;
+}
+.bb-env__pocket::before{
+  background:linear-gradient(140deg, #cfd4dc, #b7bcc7);
+  clip-path:polygon(0 0, 50% 42%, 0 100%);
+}
+.bb-env__pocket::after{
+  background:linear-gradient(220deg, #cfd4dc, #b7bcc7);
+  clip-path:polygon(100% 0, 50% 42%, 100% 100%);
+}
+.bb-env__front{
+  position:absolute; inset:0; z-index:4; border-radius:6px;
+  background:linear-gradient(180deg, #c9ced7, #b2b8c4);
+  clip-path:polygon(0 100%, 50% 43%, 100% 100%);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .35);
+}
+
+/* Solapa: gira sobre su borde superior */
+.bb-env__flap{
+  position:absolute; left:0; right:0; top:0; height:56%;
+  z-index:6; transform-origin:50% 0%;
+  background:linear-gradient(180deg, #d6dae2, #bcc2cd);
+  clip-path:polygon(0 0, 100% 0, 50% 100%);
+  filter:drop-shadow(0 3px 6px rgb(0 0 0 / .25));
+  transition:transform .85s cubic-bezier(.6,.02,.3,1) .25s;
+  backface-visibility:hidden;
+}
+.bb-gate.is-open .bb-env__flap{ transform:rotateX(-172deg); }
+
+/* Sello de lacre */
+.bb-env__seal{
+  position:absolute; left:50%; top:47%; width:24%;
+  transform:translate(-50%,-50%); z-index:8;
+  transition:transform .5s var(--bb-ease), opacity .4s ease;
+}
+.bb-env__seal svg{ width:100%; height:auto; display:block; }
+.bb-gate.is-open .bb-env__seal{ transform:translate(-50%,-50%) scale(.7) rotate(-24deg); opacity:0; }
+
+/* La tarjeta que sale del sobre */
+.bb-env__card{
+  position:absolute; left:7%; right:7%; top:8%; bottom:14%;
+  z-index:5; border-radius:4px;
+  background:linear-gradient(170deg, #fdf8ee, #f2e4c8);
+  box-shadow:0 8px 24px rgb(0 0 0 / .35);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; padding:8%;
+  transition:transform .9s var(--bb-slow) .9s;
+}
+.bb-gate.is-open .bb-env__card{ transform:translateY(-58%); }
+.bb-env__card-k{
+  font-family:var(--bb-display); font-size:.5rem; font-weight:600;
+  letter-spacing:.24em; text-transform:uppercase; color:var(--bb-gold-deep);
+}
+.bb-env__card-n{
+  font-family:var(--bb-script); font-size:clamp(1.3rem,5.5vw,1.9rem);
+  line-height:1; color:#5e0a14;
+}
+.bb-env__card-r{ width:26px; }
+.bb-env__card-r svg{ width:100%; height:auto; display:block; }
+
+/* Voluta dorada que baja del ramo al sobre */
+.bb-swirl{
+  position:absolute; left:50%; top:14%; width:clamp(60px,16vw,96px);
+  transform:translateX(-50%); z-index:4; pointer-events:none;
+  transition:opacity .6s ease;
+}
+.bb-swirl svg{ width:100%; height:auto; display:block; }
+.bb-gate.is-open .bb-swirl{ opacity:0; }
+
+/* Texto bajo el sobre */
+.bb-gate__cta{
+  position:relative; z-index:5; margin-top:var(--bb-s5);
+  transition:opacity .5s ease;
+}
+.bb-gate.is-open .bb-gate__cta{ opacity:0; }
 .bb-gate__name{
   font-family:var(--bb-script);
-  font-size:clamp(2.6rem,11vw,4.2rem); line-height:1.05;
+  font-size:clamp(2rem,8vw,3rem); line-height:1.05;
   color:var(--bb-gold-light);
   text-shadow:0 0 34px rgb(201 162 39 / .45);
 }
 .bb-gate__sub{
   font-family:var(--bb-display);
   font-size:var(--bb-label); font-weight:600;
-  letter-spacing:.32em; text-transform:uppercase;
+  letter-spacing:.3em; text-transform:uppercase;
   color:var(--bb-on-night-soft); margin-top:var(--bb-s2);
 }
-
-.bb-gate__btn{
-  display:inline-flex; align-items:center; gap:10px;
-  min-height:52px; margin-top:var(--bb-s6);
-  padding:14px var(--bb-s5); border-radius:999px;
-  background:linear-gradient(135deg, var(--bb-gold), var(--bb-gold-deep));
-  border:1px solid var(--bb-gold-light);
-  color:#2a2008; cursor:pointer;
-  font-family:var(--bb-display); font-weight:700;
-  font-size:.92rem; letter-spacing:.08em;
-  box-shadow:0 10px 34px rgb(201 162 39 / .3);
-  transition:transform var(--bb-dur) var(--bb-ease), box-shadow var(--bb-dur);
-}
-.bb-gate__btn:hover{ transform:scale(1.04); box-shadow:0 14px 44px rgb(201 162 39 / .45); }
-.bb-gate__btn svg{ width:16px; height:16px; }
 .bb-gate__note{
-  margin-top:var(--bb-s3); font-size:var(--bb-label);
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--bb-on-night-soft); opacity:.75;
+  margin-top:var(--bb-s3); font-family:var(--bb-display);
+  font-size:var(--bb-label); font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--bb-gold-light); opacity:.9;
+  animation:bbBreathe 3s ease-in-out infinite;
 }
-
-/* Latido del cristal mientras espera el toque */
-.bb-jar-glow{ animation:bbGlow 3.6s ease-in-out infinite; transform-origin:50% 70%; transform-box:fill-box; }
-@keyframes bbGlow{ 0%,100%{ opacity:.5; } 50%{ opacity:1; } }
+@keyframes bbBreathe{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
 
 /* ============================================================
    PARTÍCULAS — motas de luz y pétalos
@@ -558,13 +651,26 @@ body.bb-revealed .bb-music{ display:flex; }
   .js .bb-rv, .js .bb-rv > *{ opacity:1 !important; transform:none !important; transition:none !important; }
   .bb-cam, .bb-dolly{ transform:none !important; }
   body.bb-revealed .bb-hero__name,
-  .bb-jar-glow, .bb-cd__num--tick, .bb-music.is-playing,
-  .bb-sparkle, .bb-flicker{ animation:none !important; }
-  .bb-btn:hover, .bb-card:hover, .bb-gate__jar:hover{ transform:none; }
-  .bb-gate.is-open .bb-gate__jar{ transform:none; filter:none; }
-  /* Repone transforms estáticos que la regla de arriba borraría */
+  .bb-cd__num--tick, .bb-music.is-playing,
+  .bb-sparkle, .bb-gate__note{ animation:none !important; }
+  .bb-btn:hover, .bb-card:hover, .bb-envwrap:hover{ transform:none; }
+
+  /* La portada se va de golpe, sin coreografía */
+  .bb-gate.is-open{ transition:none; }
+  .bb-env, .bb-env__flap, .bb-env__card, .bb-env__seal,
+  .bb-swirl, .bb-gate__cta{ transition:none !important; }
+  .bb-gate.is-open .bb-env__flap{ transform:rotateX(-172deg); }
+
+  /* Repone los transforms estáticos que las reglas de arriba borrarían */
   .bb-portrait__deco--r{ transform:scaleX(-1) !important; }
   .bb-castle{ transform:translateX(-50%) !important; }
+  .bb-fil--tr{ transform:scaleX(-1) !important; }
+  .bb-fil--bl{ transform:scaleY(-1) !important; }
+  .bb-fil--br{ transform:scale(-1) !important; }
+  .bb-bouquet--top{ transform:translateX(-50%) !important; }
+  .bb-bouquet--bottom{ transform:translateX(-50%) rotate(180deg) !important; }
+  .bb-env__seal{ transform:translate(-50%,-50%) !important; }
+  .bb-swirl{ transform:translateX(-50%) !important; }
 }
 
 /* ============================================================
@@ -637,6 +743,61 @@ body.bb-revealed .bb-music{ display:flex; }
       <path d="M0 0C9-5 18-3 22 4 16 11 6 10 0 0Z" fill="#5d7a4a" opacity=".85"/>
       <path d="M0 0C8-1 16 1 21 4" stroke="#425a34" stroke-width=".8" fill="none"/>
     </g>
+
+    <!-- Hoja oscura del follaje del sobre -->
+    <g id="bbLeafDark">
+      <path d="M0 0C13-8 27-5 33 5 24 16 9 15 0 0Z" fill="#1f4438"/>
+      <path d="M0 0C12-2 24 1 32 5" stroke="#0f2a22" stroke-width="1.1" fill="none" opacity=".8"/>
+    </g>
+
+    <!-- Rosa roja de terciopelo, vista de frente -->
+    <g id="bbRose">
+      <ellipse rx="31" ry="29" fill="#5e0a14"/>
+      <path d="M-31-2C-31-19-18-31 0-31 10-31 19-27 25-19 13-25-4-23-14-14-25-5-29 4-31-2Z" fill="#8b1220"/>
+      <path d="M-31-2C-31-19-18-31 0-31 10-31 19-27 25-19 13-25-4-23-14-14-25-5-29 4-31-2Z" fill="#8b1220" transform="rotate(120)"/>
+      <path d="M-31-2C-31-19-18-31 0-31 10-31 19-27 25-19 13-25-4-23-14-14-25-5-29 4-31-2Z" fill="#8b1220" transform="rotate(240)"/>
+      <path d="M-22-2C-22-14-12-22 0-22 7-22 14-19 18-13 9-18-3-16-10-10-18-3-21 3-22-2Z" fill="#a81c28"/>
+      <path d="M-22-2C-22-14-12-22 0-22 7-22 14-19 18-13 9-18-3-16-10-10-18-3-21 3-22-2Z" fill="#a81c28" transform="rotate(72)"/>
+      <path d="M-22-2C-22-14-12-22 0-22 7-22 14-19 18-13 9-18-3-16-10-10-18-3-21 3-22-2Z" fill="#a81c28" transform="rotate(144)"/>
+      <path d="M-22-2C-22-14-12-22 0-22 7-22 14-19 18-13 9-18-3-16-10-10-18-3-21 3-22-2Z" fill="#a81c28" transform="rotate(216)"/>
+      <path d="M-22-2C-22-14-12-22 0-22 7-22 14-19 18-13 9-18-3-16-10-10-18-3-21 3-22-2Z" fill="#a81c28" transform="rotate(288)"/>
+      <path d="M-13 1C-13-8-7-14 1-14 6-14 11-11 13-7 6-11-2-9-7-5-12 0-13 4-13 1Z" fill="#c72b38"/>
+      <path d="M-13 1C-13-8-7-14 1-14 6-14 11-11 13-7 6-11-2-9-7-5-12 0-13 4-13 1Z" fill="#c72b38" transform="rotate(100)"/>
+      <path d="M-13 1C-13-8-7-14 1-14 6-14 11-11 13-7 6-11-2-9-7-5-12 0-13 4-13 1Z" fill="#c72b38" transform="rotate(200)"/>
+      <path d="M0 6C-5 6-8 2-8-2-8-7-4-10 1-10 5-10 8-7 8-3 8 2 4 6 0 6Z" fill="#7d0f1c"/>
+      <path d="M-4-3C-4-6-2-7 0-7 2-7 4-5 4-3" stroke="#5e0a14" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- Capullo de rosa -->
+    <g id="bbBud">
+      <ellipse rx="13" ry="17" fill="#7d0f1c"/>
+      <path d="M0-17C7-6 7 6 0 17-7 6-7-6 0-17Z" fill="#a81c28"/>
+      <path d="M0-13C3-5 3 5 0 12" stroke="#c72b38" stroke-width="1.6" fill="none" opacity=".7"/>
+    </g>
+
+    <!-- Filigrana dorada de esquina -->
+    <g id="bbFiligree" fill="none" stroke="url(#bbGold)" stroke-linecap="round">
+      <path d="M4 4H150" stroke-width="2.6"/>
+      <path d="M4 4V150" stroke-width="2.6"/>
+      <path d="M4 16H120" stroke-width="1" opacity=".7"/>
+      <path d="M16 4V120" stroke-width="1" opacity=".7"/>
+      <path d="M22 22C40 26 52 40 56 58 44 52 32 42 22 22Z" stroke-width="1.6" fill="url(#bbGold)" opacity=".9"/>
+      <path d="M30 12C48 18 62 32 68 50" stroke-width="1.4"/>
+      <path d="M12 30C18 48 32 62 50 68" stroke-width="1.4"/>
+      <path d="M46 16C58 22 66 32 70 44" stroke-width="1.1" opacity=".8"/>
+      <path d="M16 46C22 58 32 66 44 70" stroke-width="1.1" opacity=".8"/>
+      <path d="M68 50C78 54 84 62 86 72" stroke-width="1.2"/>
+      <path d="M50 68C54 78 62 84 72 86" stroke-width="1.2"/>
+      <path d="M86 72C96 76 102 84 104 94" stroke-width="1"/>
+      <path d="M72 86C76 96 84 102 94 104" stroke-width="1"/>
+      <circle cx="56" cy="58" r="3.4" fill="url(#bbGold)" stroke="none"/>
+      <circle cx="86" cy="72" r="2.6" fill="url(#bbGold)" stroke="none"/>
+      <circle cx="72" cy="86" r="2.6" fill="url(#bbGold)" stroke="none"/>
+      <circle cx="104" cy="94" r="2" fill="url(#bbGold)" stroke="none"/>
+      <circle cx="94" cy="104" r="2" fill="url(#bbGold)" stroke="none"/>
+      <path d="M104 94C114 98 120 106 122 116" stroke-width=".9" opacity=".75"/>
+      <path d="M94 104C98 114 106 120 116 122" stroke-width=".9" opacity=".75"/>
+    </g>
   </defs>
 </svg>
 
@@ -644,60 +805,108 @@ body.bb-revealed .bb-music{ display:flex; }
 <!-- ==================== PRÓLOGO ==================== -->
 <div class="bb-gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name">
 
-  <button type="button" class="bb-gate__jar" id="gate-jar" aria-label="Abrir la invitación">
-    <svg viewBox="0 0 260 320" aria-hidden="true" focusable="false">
-      <!-- Resplandor -->
-      <ellipse class="bb-jar-glow" cx="130" cy="170" rx="96" ry="120" fill="url(#bbGlowG)"/>
+  <!-- Filigrana de las cuatro esquinas -->
+  <div class="bb-fil bb-fil--tl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
+  <div class="bb-fil bb-fil--tr" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
+  <div class="bb-fil bb-fil--bl" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
+  <div class="bb-fil bb-fil--br" aria-hidden="true"><svg viewBox="0 0 150 150" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false"><use href="#bbFiligree" xlink:href="#bbFiligree"/></svg></div>
 
-      <!-- Base de la campana -->
-      <ellipse cx="130" cy="288" rx="86" ry="15" fill="url(#bbGold)"/>
-      <rect x="44" y="272" width="172" height="18" rx="7" fill="url(#bbGold)"/>
-      <ellipse cx="130" cy="272" rx="86" ry="14" fill="#f5e3a8" opacity=".65"/>
-
-      <!-- La rosa -->
-      <g transform="translate(130 196)">
-        <path d="M0 0C-3 26-2 48 0 66" stroke="#4a6338" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <path d="M0 24C12 18 22 22 26 32 16 38 5 34 0 24Z" fill="#5d7a4a"/>
-        <path d="M0 40C-12 34-22 38-26 48-16 54-5 50 0 40Z" fill="#4a6338"/>
-        <!-- Corola -->
-        <path d="M0-46C-20-34-26-14-16 2 -6 14 6 14 16 2 26-14 20-34 0-46Z" fill="url(#bbPetalG)"/>
-        <path d="M0-38C-14-28-18-12-11 1 -4 10 4 10 11 1 18-12 14-28 0-38Z" fill="#c0392b" opacity=".85"/>
-        <path d="M0-28C-8-20-10-8-6 0 -2 6 2 6 6 0 10-8 8-20 0-28Z" fill="#9b1c26"/>
-        <path d="M0-19C-4-13-5-6-3 0 -1 3 1 3 3 0 5-6 4-13 0-19Z" fill="#7d141d"/>
-      </g>
-
-      <!-- Pétalos caídos sobre la base -->
-      <path d="M92 268C97 263 104 264 106 269 101 274 94 273 92 268Z" fill="#9b1c26" opacity=".9"/>
-      <path d="M160 266C166 262 172 264 173 269 167 273 161 271 160 266Z" fill="#c0392b" opacity=".85"/>
-
-      <!-- Cristal -->
-      <path d="M130 34C74 34 40 84 40 150v122h180V150c0-66-34-116-90-116Z"
-            fill="url(#bbGlass)" stroke="rgba(245,227,168,.55)" stroke-width="2"/>
-      <path d="M62 150c0-52 26-92 62-100" stroke="#fff" stroke-width="3" fill="none" opacity=".3" stroke-linecap="round"/>
-
-      <!-- Pomo -->
-      <circle cx="130" cy="26" r="13" fill="url(#bbGold)"/>
-      <circle cx="126" cy="22" r="4" fill="#fff6d8" opacity=".8"/>
-
-      <!-- Destellos, con duraciones primas entre sí para que no se sincronicen -->
-      <g fill="#fff6d8">
-        <circle class="bb-sparkle" cx="76"  cy="120" r="2.6" style="animation:bbTwinkle 2.6s ease-in-out infinite"/>
-        <circle class="bb-sparkle" cx="188" cy="160" r="2.2" style="animation:bbTwinkle 2.2s .7s ease-in-out infinite"/>
-        <circle class="bb-sparkle" cx="96"  cy="228" r="2.0" style="animation:bbTwinkle 2.8s 1.4s ease-in-out infinite"/>
-        <circle class="bb-sparkle" cx="178" cy="96"  r="2.4" style="animation:bbTwinkle 2.4s 2.1s ease-in-out infinite"/>
-        <circle class="bb-sparkle" cx="130" cy="72"  r="1.9" style="animation:bbTwinkle 3.0s .4s ease-in-out infinite"/>
+  <!-- Ramo superior -->
+  <div class="bb-bouquet bb-bouquet--top" aria-hidden="true">
+    <svg viewBox="0 0 440 190" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(150 96) rotate(158) scale(1.5)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(292 96) rotate(22)  scale(1.5)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(174 118) rotate(120) scale(1.2)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(268 118) rotate(60)  scale(1.2)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(206 130) rotate(96)  scale(1.05)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(240 130) rotate(84)  scale(1.05)"/>
+      <use href="#bbBud"  xlink:href="#bbBud"  transform="translate(140 62) rotate(-24)"/>
+      <use href="#bbBud"  xlink:href="#bbBud"  transform="translate(302 62) rotate(24)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(178 56) scale(.92)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(266 56) scale(.92)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(222 34) scale(1.12)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(222 104) scale(.86)"/>
+      <g fill="#f5e3a8">
+        <circle class="bb-sparkle" cx="120" cy="40" r="2.4" style="animation:bbTwinkle 2.6s ease-in-out infinite"/>
+        <circle class="bb-sparkle" cx="330" cy="52" r="2.2" style="animation:bbTwinkle 2.2s .7s ease-in-out infinite"/>
+        <circle class="bb-sparkle" cx="360" cy="96" r="2.0" style="animation:bbTwinkle 2.8s 1.4s ease-in-out infinite"/>
+        <circle class="bb-sparkle" cx="92"  cy="82" r="2.3" style="animation:bbTwinkle 2.4s 2.1s ease-in-out infinite"/>
+        <circle class="bb-sparkle" cx="222" cy="12" r="1.8" style="animation:bbTwinkle 3.0s .4s ease-in-out infinite"/>
       </g>
     </svg>
+  </div>
+
+  <!-- Voluta que baja del ramo al sobre -->
+  <div class="bb-swirl" aria-hidden="true">
+    <svg viewBox="0 0 90 150" focusable="false">
+      <path d="M45 0C45 26 30 34 30 52c0 12 10 18 18 14 8-4 6-16-3-16-12 0-18 12-18 26 0 22 18 30 18 54"
+            fill="none" stroke="url(#bbGold)" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="45" cy="146" r="3" fill="url(#bbGold)"/>
+    </svg>
+  </div>
+
+  <!-- EL SOBRE -->
+  <button type="button" class="bb-envwrap" id="gate-btn" aria-label="Abrir la invitación">
+    <div class="bb-env">
+      <div class="bb-env__body"></div>
+
+      <!-- La tarjeta sale de aquí -->
+      <div class="bb-env__card">
+        <span class="bb-env__card-k">Mi primer añito</span>
+        <span class="bb-env__card-n">Ana Paula</span>
+        <span class="bb-env__card-r" aria-hidden="true">
+          <svg viewBox="-34 -34 68 68" xmlns:xlink="http://www.w3.org/1999/xlink"><use href="#bbRose" xlink:href="#bbRose"/></svg>
+        </span>
+      </div>
+
+      <div class="bb-env__pocket"></div>
+      <div class="bb-env__front"></div>
+
+      <div class="bb-env__flap"></div>
+
+      <!-- Sello de lacre -->
+      <div class="bb-env__seal" aria-hidden="true">
+        <svg viewBox="0 0 100 100" focusable="false">
+          <defs>
+            <radialGradient id="bbWax" cx="38%" cy="34%" r="72%">
+              <stop offset="0%"   stop-color="#e0a077"/>
+              <stop offset="52%"  stop-color="#c07a4f"/>
+              <stop offset="100%" stop-color="#8f5233"/>
+            </radialGradient>
+          </defs>
+          <path d="M50 4c8 0 12 6 20 7s14-3 19 4-1 14 2 21 9 10 6 18-11 8-15 15-2 15-9 18-13-3-21-2-12 8-20 6-9-10-15-14-15-4-17-12 5-13 5-21-7-13-5-21 11-8 17-12S42 4 50 4Z" fill="url(#bbWax)"/>
+          <path d="M50 12c6 0 10 5 16 6s11-2 15 3-1 11 2 17 7 8 5 14-9 7-12 12-2 12-7 14-11-2-17-1-10 6-16 4-7-8-12-11-12-3-14-9 4-11 4-17-6-11-4-17 9-7 14-10S44 12 50 12Z" fill="none" stroke="#6f3d24" stroke-width="1.2" opacity=".45"/>
+          <g transform="translate(50 50) scale(.62)" opacity=".92">
+            <path d="M0-22C-11-14-14-4-8 5-3 12 3 12 8 5 14-4 11-14 0-22Z" fill="#7c452a"/>
+            <path d="M0-15C-6-10-8-3-5 2-2 6 2 6 5 2 8-3 6-10 0-15Z" fill="#9a5c3a"/>
+            <path d="M-24 8C-14 2-4 4 0 12-8 18-19 16-24 8Z" fill="#7c452a"/>
+            <path d="M24 8C14 2 4 4 0 12 8 18 19 16 24 8Z" fill="#7c452a"/>
+          </g>
+        </svg>
+      </div>
+    </div>
   </button>
 
-  <p class="bb-gate__name" id="gate-name">Ana Paula</p>
-  <p class="bb-gate__sub">Mi primer añito</p>
+  <div class="bb-gate__cta">
+    <p class="bb-gate__name" id="gate-name">Ana Paula</p>
+    <p class="bb-gate__sub">Mi primer añito</p>
+    <p class="bb-gate__note">Toca el sobre para abrir</p>
+  </div>
 
-  <button type="button" class="bb-gate__btn" id="gate-btn">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-    Abrir invitación
-  </button>
-  <p class="bb-gate__note">Con música</p>
+  <!-- Ramo inferior -->
+  <div class="bb-bouquet bb-bouquet--bottom" aria-hidden="true">
+    <svg viewBox="0 0 440 190" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false">
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(150 96) rotate(158) scale(1.5)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(292 96) rotate(22)  scale(1.5)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(174 118) rotate(120) scale(1.2)"/>
+      <use href="#bbLeafDark" xlink:href="#bbLeafDark" transform="translate(268 118) rotate(60)  scale(1.2)"/>
+      <use href="#bbBud"  xlink:href="#bbBud"  transform="translate(140 62) rotate(-24)"/>
+      <use href="#bbBud"  xlink:href="#bbBud"  transform="translate(302 62) rotate(24)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(178 56) scale(.92)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(266 56) scale(.92)"/>
+      <use href="#bbRose" xlink:href="#bbRose" transform="translate(222 34) scale(1.12)"/>
+    </svg>
+  </div>
 </div>
 
 <style>
@@ -1037,20 +1246,28 @@ var EVENTO = {
 (function () {
   var gate  = document.getElementById('gate');
   var btn   = document.getElementById('gate-btn');
-  var jar   = document.getElementById('gate-jar');
   var audio = document.getElementById('audio');
   var mBtn  = document.getElementById('music-btn');
-  if (!gate) return;
+  if (!gate || !btn) return;
 
   var abierto = false;
   document.body.classList.add('bb-locked');
   btn.focus({ preventScroll: true });
 
-  function abrir() {
+  /* Coreografía del sobre, encadenada por delays en CSS:
+       0.00s  el sello se desprende y se desvanece
+       0.25s  la solapa gira sobre su borde superior (rotateX)
+       0.90s  la tarjeta sube y sale del sobre
+       1.05s  el sobre entero se aleja y se funde
+       1.50s  la portada se desvanece y aparece la invitación
+     Total 2.4 s. La música arranca en el instante 0, no al final. */
+  var DURACION = 2500;
+
+  btn.addEventListener('click', function () {
     if (abierto) return;
     abierto = true;
 
-    /* La música arranca DENTRO del gesto. Es lo que la hace funcionar en iOS. */
+    /* La música arranca DENTRO del gesto: es lo único que iOS autoriza. */
     audio.volume = 0.4;
     audio.play().then(function () {
       mBtn.classList.remove('is-muted');
@@ -1060,16 +1277,18 @@ var EVENTO = {
       mBtn.classList.add('is-muted');
     });
 
+    var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     gate.classList.add('is-open');
-    document.body.classList.remove('bb-locked');
     document.body.classList.add('bb-revealed');   // dispara la coreografía del hero
 
-    var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setTimeout(function () { gate.hidden = true; }, quieto ? 0 : 1200);
-  }
-
-  btn.addEventListener('click', abrir);
-  jar.addEventListener('click', abrir);
+    /* El scroll se libera cuando la portada ya se fue, para que nadie
+       se pierda la animación deslizando a media apertura. */
+    setTimeout(function () {
+      document.body.classList.remove('bb-locked');
+      gate.hidden = true;
+    }, quieto ? 0 : DURACION);
+  });
 })();
 
 /* ---------- CONTROL DE MÚSICA ---------- */
