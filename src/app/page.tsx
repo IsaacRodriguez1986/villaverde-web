@@ -702,7 +702,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Mínimo 100 invitados
+            Premium desde 100 invitados · Diamante y Esmeralda desde 150
             <br />
             <strong>Aparta tu fecha con solo $3,000 de anticipo</strong>
           </div>
