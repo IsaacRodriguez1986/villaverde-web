@@ -108,6 +108,11 @@ function sanitizeRegister(body: any) {
     activated: false,
     invitation_enabled: false,
     invitation_status: "sin_brief",
+    // Marca el origen para que el calendario público y las fechas ocupadas que el bot le
+    // dicta a los prospectos NO aparten un día por un registro que nadie ha contratado.
+    // Las filas internas se quedan con source NULL y siguen contando como ocupadas; en
+    // cuanto este evento tenga contrato (total_cost o contract_date), vuelve a contar.
+    source: "self_register",
   };
 }
 
