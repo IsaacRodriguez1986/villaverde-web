@@ -75,15 +75,33 @@ async function rowEventCode(table: string, id: string): Promise<string | null> {
   return r.ok && Array.isArray(r.json) && r.json[0] ? r.json[0].event_code : null;
 }
 
+/** Fecha válida YYYY-MM-DD dentro de una ventana razonable, o null.
+ * Sin esto, el alta pública acepta cualquier cadena como fecha de evento y con ella se puede
+ * apartar un día arbitrario del calendario. */
+function fechaEventoValida(raw: any): string | null {
+  const s = String(raw || "");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+  const d = new Date(s + "T12:00:00");
+  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== s) return null;
+  const hoy = new Date();
+  const min = new Date(hoy.getTime() - 30 * 864e5).toISOString().slice(0, 10);
+  const max = new Date(hoy.getTime() + 2 * 365 * 864e5).toISOString().slice(0, 10);
+  return s >= min && s <= max ? s : null;
+}
+
 function sanitizeRegister(body: any) {
   return {
     code: body.code,
     name: String(body.name || "").slice(0, 120),
     type: ["xv", "boda", "graduacion"].includes(body.type) ? body.type : "xv",
-    date: body.date,
+    date: fechaEventoValida(body.date),
     hours: 7,
     total_cost: 0,
-    contract_date: body.contract_date || null,
+    // NUNCA se toma del cliente. `contract_date` es lo que api/lib/sales.js del bot usa para
+    // contar un contrato cerrado: aceptarlo aquí hacía que cada alta pública —incluida una
+    // automatizada— sumara una venta falsa al reporte diario y al de ventas. Un registro que
+    // alguien hace solo desde el portal NO es un contrato firmado; lo pone Isaac desde el CRM.
+    contract_date: null,
     num_mesas: 20,
     menu_sel: {},
     phone: String(body.phone || "").replace(/\D/g, "").slice(0, 15),
@@ -131,8 +149,15 @@ export async function POST(req: Request) {
 
   const isAdmin = !!(b.adminPw && ADMIN_PW && b.adminPw === ADMIN_PW);
 
+  // El límite estricto va sobre CUALQUIER intento fallido de contraseña, no solo sobre
+  // `op:'auth'`. Antes solo lo cubría esa rama, pero `isAdmin` se evalúa igual en `op:'db'`:
+  // se podía adivinar la contraseña mandando `op:'db'` y leyendo si la respuesta venía con
+  // privilegios, a 90 intentos/min en vez de 8. La contraseña es la misma del CRM completo.
+  if (b.adminPw && !isAdmin) {
+    if (rateLimited("ev-auth:" + ip, 8, 60_000)) return j({ error: "rate limited" }, 429);
+  }
+
   if (b.op === "auth") {
-    // Límite más estricto sobre el oráculo de auth para frenar el guessing de admin password (C2).
     if (rateLimited("ev-auth:" + ip, 8, 60_000)) return j({ error: "rate limited" }, 429);
     return j({ admin: isAdmin });
   }
@@ -189,6 +214,11 @@ async function clientOp(method: string, table: string, query: string, body: any,
     if (method === "POST") {
       if (!body || !body.code) throw deny("register needs code");
       const clean = sanitizeRegister(body);
+      // Una fecha inventada aquí aparta un día en el calendario público de /informes y en las
+      // fechas ocupadas que el bot de WhatsApp le dicta a cada prospecto. Sin fecha válida no
+      // se da de alta: es preferible que el cliente la recapture a bloquear un sábado vendible.
+      if (!clean.date) throw deny("fecha de evento inválida");
+      if (!clean.name.trim()) throw deny("falta el nombre");
       const r = await sb("POST", "eventus_events", clean);
       return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
     }
@@ -221,17 +251,20 @@ async function clientOp(method: string, table: string, query: string, body: any,
       return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
     }
     if (method === "PATCH") {
+      if (table === "eventus_payments") {
+        // `paid` es la verdad contable del negocio: el cron de cobranza de las 11am consulta
+        // `paid=eq.false`, el calendario pinta el vencido y la cascada de abonos recalcula
+        // sobre él. Dejarlo en manos de quien tiene el código del evento —que se comparte por
+        // WhatsApp y ronda los 20 bits— permitía a un cliente poner su adeudo en cero y dejar
+        // de recibir cobros. Marcar un pago es exclusivo de admin (rama isAdmin, que sí exige
+        // la contraseña); el portal del cliente muestra sus pagos en solo lectura.
+        throw deny("solo el administrador puede modificar pagos");
+      }
       const id = parseEq(query, "id");
       if (!id) throw deny("patch needs id");
       const ec = await rowEventCode(table, id);
       if (!ec || !cap || ec !== cap) throw deny("row not in your event");
-      let clean: any = body || {};
-      if (table === "eventus_payments") {
-        clean = {};
-        if (body && "paid" in body) clean.paid = body.paid;
-        if (body && "paid_at" in body) clean.paid_at = body.paid_at;
-      }
-      const r = await sb("PATCH", table + "?id=eq." + encodeURIComponent(id), clean);
+      const r = await sb("PATCH", table + "?id=eq." + encodeURIComponent(id), body || {});
       return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
     }
     if (method === "DELETE") {
