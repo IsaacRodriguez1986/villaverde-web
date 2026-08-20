@@ -365,17 +365,18 @@ export default function Home() {
   const [currentTesti, setCurrentTesti] = useState(0);
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [formError, setFormError] = useState("");
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
+  const whatsappQuoteUrl = "https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20un%20evento%20en%20Villaverde";
 
-  // Solo se cotizan eventos dentro de los próximos 12 meses (los precios se ajustan mensualmente)
-  const fmtMonth = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-  const minMonth = fmtMonth(new Date());
-  const maxMonthDate = new Date();
-  maxMonthDate.setMonth(maxMonthDate.getMonth() + 12);
-  const maxMonth = fmtMonth(maxMonthDate);
+  const trackWhatsAppClick = (placement: string) => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "Contact", {
+        content_name: "cotizacion_whatsapp",
+        content_category: placement,
+      });
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -1151,111 +1152,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Formulario de Contacto */}
+      {/* Conversión directa a WhatsApp */}
       <section className="section" id="formulario">
         <div className="section-narrow">
-          <h2 className="section-title reveal">Cotiza en 30 segundos</h2>
-          <p className="section-sub reveal">Déjanos tus datos y te contactamos por WhatsApp en menos de 1 hora</p>
-          {formStatus === "success" ? (
-            <div className="contact-form reveal" style={{ textAlign: "center", padding: "40px 20px" }}>
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>✓</div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "24px", marginBottom: "8px" }}>¡Listo! Ya recibimos tus datos</h3>
-              <p style={{ color: "rgba(255,255,255,0.7)" }}>Te escribimos por WhatsApp en menos de 1 hora. Si quieres escribirnos directo:</p>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20acabo%20de%20llenar%20el%20formulario%20en%20su%20p%C3%A1gina"
-                target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ marginTop: "16px", display: "inline-flex" }}
-              >
-                <WhatsAppIcon size={18} /> Escribir por WhatsApp
-              </a>
+          <div className="wa-conversion reveal">
+            <div className="wa-conversion-copy">
+              <span className="wa-conversion-kicker">Respuesta inmediata</span>
+              <h2>Tu cotización empieza con un mensaje</h2>
+              <p>Abre WhatsApp y nuestro asistente te ayuda a revisar paquetes, disponibilidad y opciones para tu evento.</p>
+              <ul className="wa-conversion-points" aria-label="Lo que puedes consultar">
+                <li><IconCheck size={15} /> Precios según tus invitados</li>
+                <li><IconCheck size={15} /> Disponibilidad de tu fecha</li>
+                <li><IconCheck size={15} /> Visita al salón sin compromiso</li>
+              </ul>
             </div>
-          ) : (
-            <form
-              className="contact-form reveal"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                if (formStatus === "sending") return;
-                setFormStatus("sending");
-                setFormError("");
-                const form = e.target as HTMLFormElement;
-                const nombre = (form.elements.namedItem("nombre") as HTMLInputElement).value.trim();
-                const telefono = (form.elements.namedItem("telefono") as HTMLInputElement).value.trim();
-                const evento = (form.elements.namedItem("evento") as HTMLSelectElement).value;
-                const invitados = (form.elements.namedItem("invitados") as HTMLSelectElement).value;
-                const fecha = (form.elements.namedItem("fecha") as HTMLInputElement).value;
-                const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
-
-                try {
-                  const res = await fetch("https://bot-villaverde.vercel.app/api/web-lead", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ nombre, telefono, evento, invitados, fecha, email }),
-                  });
-                  const data = await res.json();
-                  if (data.ok) {
-                    setFormStatus("success");
-                    // Fire Meta Pixel Lead event
-                    if (typeof window !== "undefined" && (window as any).fbq) {
-                      (window as any).fbq("track", "Lead", {
-                        content_name: evento || "general",
-                        content_category: "landing_form",
-                      });
-                    }
-                  } else {
-                    setFormError(data.error || "Error al enviar. Intenta de nuevo.");
-                    setFormStatus("idle");
-                  }
-                } catch {
-                  setFormError("Error de conexión. Intenta de nuevo.");
-                  setFormStatus("idle");
-                }
-              }}
-            >
-              <div className="form-grid">
-                <div className="form-group">
-                  <label htmlFor="nombre">Tu nombre</label>
-                  <input type="text" id="nombre" name="nombre" required placeholder="¿Cómo te llamas?" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="telefono">WhatsApp</label>
-                  <input type="tel" id="telefono" name="telefono" required placeholder="10 dígitos: 5512345678" pattern="[0-9]{10,13}" title="Ingresa tu número a 10 dígitos" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">Correo (opcional)</label>
-                  <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="evento">Tipo de evento</label>
-                  <select id="evento" name="evento" required style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }}>
-                    <option value="">Selecciona...</option>
-                    <option value="XV Años">XV Años</option>
-                    <option value="Boda">Boda</option>
-                    <option value="Graduación">Graduación</option>
-                    <option value="Bautizo">Bautizo</option>
-                    <option value="Cumpleaños">Cumpleaños</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="invitados">¿Cuántos invitados?</label>
-                  <select id="invitados" name="invitados" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }}>
-                    <option value="">Aproximado...</option>
-                    <option value="100-149">100 – 149</option>
-                    <option value="150-200">150 – 200</option>
-                    <option value="200-300">200 – 300</option>
-                    <option value="300+">300+</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group" style={{ marginTop: "12px" }}>
-                <label htmlFor="fecha">Fecha tentativa (opcional) — cotizamos eventos dentro de los próximos 12 meses</label>
-                <input type="month" id="fecha" name="fecha" min={minMonth} max={maxMonth} title="Cotizamos eventos dentro de los próximos 12 meses" style={{ width: "100%", padding: "12px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.05)", color: "inherit", fontSize: "15px" }} />
-              </div>
-              {formError && <p style={{ color: "#ff6b6b", fontSize: "14px", marginTop: "8px" }}>{formError}</p>}
-              <button type="submit" className="btn-primary form-submit" disabled={formStatus === "sending"}>
-                {formStatus === "sending" ? "Enviando..." : <><WhatsAppIcon size={18} /> Recibir cotización gratis</>}
-              </button>
-            </form>
-          )}
+            <div className="wa-conversion-action">
+              <a
+                href={whatsappQuoteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-wa-big"
+                onClick={() => trackWhatsAppClick("landing_cotizacion")}
+              >
+                <WhatsAppIcon size={24} /> Cotizar por WhatsApp
+              </a>
+              <span>Sin formularios · conversación privada</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1265,7 +1188,7 @@ export default function Home() {
           <h2>¿Lista para la fiesta<br />de tus sueños?</h2>
           <p className="cta-sub">Las fechas de fin de semana se agotan rápido — agenda tu visita sin compromiso.</p>
           <div className="cta-anticipo">Aparta tu fecha con solo $3,000 de anticipo</div>
-          <a href="#formulario" className="btn-wa-big">
+          <a href={whatsappQuoteUrl} target="_blank" rel="noopener noreferrer" className="btn-wa-big" onClick={() => trackWhatsAppClick("cta_final")}>
             <WhatsAppIcon size={24} /> Cotiza gratis ahora
           </a>
           <div className="cta-contact" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px" }}>
