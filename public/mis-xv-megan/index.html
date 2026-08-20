@@ -850,12 +850,13 @@
   <!-- Audio elemento oculto (Lana Del Rey - Young And Beautiful) -->
   <audio id="xv-audio" loop preload="auto">
     <source src="assets/cancion.mp3" type="audio/mpeg">
+    <source src="assets/Lana Del Rey - Young And Beautiful.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Botón flotante de música -->
-  <div class="floating-audio-btn" id="audio-toggle-btn" title="Reproducir / Pausar Música">
+  <!-- Botón flotante de música con nombre de la canción -->
+  <div class="floating-audio-btn" id="audio-toggle-btn" title="Reproducir / Pausar Música: Young and Beautiful - Lana Del Rey">
     <span class="material-symbols-outlined audio-icon-spin paused" id="audio-icon">star</span>
-    <span class="audio-label" id="audio-text">Música</span>
+    <span class="audio-label" id="audio-text">Lana Del Rey — Young and Beautiful</span>
   </div>
 
   <!-- ============================================================
@@ -1241,7 +1242,7 @@
       audioElement.play().then(() => {
         isAudioPlaying = true;
         audioIcon.classList.remove('paused');
-        audioText.innerText = 'Pausar';
+        audioText.innerText = 'Pausar · Lana Del Rey';
       }).catch(e => console.log('Autoplay audio:', e));
 
       setTimeout(() => {
@@ -1250,18 +1251,21 @@
     }
 
     envelopeBox.addEventListener('click', openEnvelope);
+    envelopeScreen.addEventListener('click', (e) => {
+      if (e.target === envelopeScreen) openEnvelope();
+    });
 
     audioToggleBtn.addEventListener('click', () => {
       if (isAudioPlaying) {
         audioElement.pause();
         isAudioPlaying = false;
         audioIcon.classList.add('paused');
-        audioText.innerText = 'Música';
+        audioText.innerText = 'Reproducir · Lana Del Rey';
       } else {
         audioElement.play();
         isAudioPlaying = true;
         audioIcon.classList.remove('paused');
-        audioText.innerText = 'Pausar';
+        audioText.innerText = 'Pausar · Lana Del Rey';
       }
     });
 
