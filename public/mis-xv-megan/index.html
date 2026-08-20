@@ -9,43 +9,48 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mis XV Años — Megan Paulette">
   <meta property="og:description" content="Una noche mágica bajo la luna y las estrellas ✨ Sábado 24 de Octubre de 2026.">
-  <meta property="og:image" content="assets/hero.jpg">
-  <meta name="theme-color" content="#060C1B">
+  <meta property="og:image" content="assets/megan.png">
+  <meta name="theme-color" content="#040914">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-midnight: #060C1B;
-      --bg-space: #0A1329;
-      --bg-sapphire: #0E1E3D;
-      --bg-card: rgba(14, 30, 61, 0.65);
+      --bg-deep: #030712;
+      --bg-space: #060D1F;
+      --bg-midnight: #0A1633;
+      --bg-sapphire: #0F234F;
       
-      --blue-glow: #3877D9;
-      --blue-accent: #2A5BA8;
-      --blue-light: #89B6F9;
-      --blue-pale: #D4E5FF;
+      --blue-primary: #1C4891;
+      --blue-vibrant: #2968D4;
+      --blue-glow: #4D8EFF;
+      --blue-light: #9BC2FF;
+      --blue-pale: #E1EFFF;
       
-      --star-silver: #E6F0FD;
-      --star-gold: #F4D38B;
-      --star-shimmer: linear-gradient(135deg, #A8CEFF 0%, #FFFFFF 40%, #89B6F9 70%, #E6F0FD 100%);
-      --gold-shimmer: linear-gradient(135deg, #F4D38B 0%, #FFF4D2 50%, #C99E47 100%);
+      --star-silver: #F0F6FF;
+      --star-gold: #F5D38A;
+      --gold-deep: #C59B3F;
+      
+      --star-shimmer: linear-gradient(135deg, #A8CEFF 0%, #FFFFFF 35%, #9BC2FF 70%, #E6F0FD 100%);
+      --gold-shimmer: linear-gradient(135deg, #F5D38A 0%, #FFF8E6 50%, #C59B3F 100%);
+      --sapphire-gradient: linear-gradient(145deg, #102654 0%, #081329 100%);
 
-      --text-white: #F0F6FF;
-      --text-muted: #9BB3D6;
-      --text-blue: #70A5F5;
+      --text-white: #FFFFFF;
+      --text-soft: #D0E1F9;
+      --text-muted: #8FAACF;
+      --text-gold: #F5D38A;
 
       --font-display: 'Cinzel', serif;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-script: 'Great Vibes', cursive;
       --font-sans: 'Plus Jakarta Sans', sans-serif;
 
-      --shadow-sm: 0 4px 15px rgba(6, 12, 27, 0.4);
-      --shadow-md: 0 10px 30px rgba(6, 12, 27, 0.6);
-      --shadow-lg: 0 20px 50px rgba(6, 12, 27, 0.8), 0 0 30px rgba(56, 119, 217, 0.2);
+      --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(41, 104, 212, 0.25);
       
       --radius-sm: 10px;
       --radius-md: 20px;
@@ -56,8 +61,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      background-color: var(--bg-midnight);
-      background-image: radial-gradient(circle at 50% 0%, #10244D 0%, #060C1B 70%);
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(circle at 50% 10%, #112859 0%, transparent 60%),
+        radial-gradient(circle at 10% 40%, #0D1E42 0%, transparent 40%),
+        radial-gradient(circle at 90% 70%, #142F69 0%, transparent 50%),
+        radial-gradient(circle at 50% 100%, #091733 0%, var(--bg-deep) 70%);
       color: var(--text-white);
       font-family: var(--font-sans);
       line-height: 1.6;
@@ -65,7 +74,7 @@
       position: relative;
     }
 
-    /* Canvas de Estrellas y Luna */
+    /* Canvas de Estrellas y Nebulosas */
     #stars-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -80,7 +89,7 @@
     #envelope-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #10244D 0%, #040813 100%);
+      background: radial-gradient(circle at center, #112859 0%, #03060F 100%);
       z-index: 9999;
       display: flex;
       flex-direction: column;
@@ -88,6 +97,7 @@
       justify-content: center;
       transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
       padding: 20px;
+      cursor: pointer;
     }
     #envelope-screen.opened {
       opacity: 0;
@@ -97,24 +107,23 @@
 
     .envelope-box {
       width: 100%;
-      max-width: 440px;
-      height: 310px;
-      background: linear-gradient(145deg, #0F234A 0%, #091630 100%);
-      border-radius: 16px;
+      max-width: 450px;
+      height: 320px;
+      background: linear-gradient(145deg, #132A5C 0%, #091633 100%);
+      border-radius: 18px;
       position: relative;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 119, 217, 0.3);
-      cursor: pointer;
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(77, 142, 255, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(137, 182, 249, 0.3);
+      border: 1px solid rgba(155, 194, 255, 0.4);
       transform-style: preserve-3d;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       animation: envelopeFloat 4s ease-in-out infinite;
     }
     .envelope-box:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(137, 182, 249, 0.5);
+      box-shadow: 0 45px 90px rgba(0, 0, 0, 0.95), 0 0 60px rgba(77, 142, 255, 0.5);
     }
     @keyframes envelopeFloat {
       0%, 100% { transform: translateY(0); }
@@ -124,10 +133,10 @@
     .envelope-flap {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 155px;
-      background: linear-gradient(180deg, #132A59 0%, #0E2042 100%);
+      height: 160px;
+      background: linear-gradient(180deg, #183573 0%, #0E224D 100%);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border-bottom: 2px solid rgba(137, 182, 249, 0.4);
+      border-bottom: 2px solid rgba(155, 194, 255, 0.45);
       z-index: 3;
       transform-origin: top;
       transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -137,47 +146,48 @@
       z-index: 1;
     }
 
-    /* Lacre Celestial (Luna & Estrellas) */
+    /* Lacre Celestial con Luna y Estrellas */
     .wax-seal {
       position: absolute;
-      top: 135px;
+      top: 140px;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 82px;
-      height: 82px;
-      background: radial-gradient(circle at 35% 35%, #5691F5, #1B458F 60%, #0D224D 100%);
+      width: 86px;
+      height: 86px;
+      background: radial-gradient(circle at 35% 35%, #4D8EFF, #173E85 60%, #0C214A 100%);
       border-radius: 50%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 25px rgba(86, 145, 245, 0.6);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(77, 142, 255, 0.7);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 5;
-      border: 2px solid #89B6F9;
+      border: 2px solid #9BC2FF;
       transition: transform 0.3s ease, opacity 0.5s ease;
     }
     .wax-seal-icon {
-      font-size: 22px;
+      font-size: 24px;
       color: #FFF4D2;
-      filter: drop-shadow(0 0 6px #F4D38B);
+      filter: drop-shadow(0 0 8px #F5D38A);
     }
     .wax-seal-text {
       font-family: var(--font-display);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       color: #FFFFFF;
       letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
     .wax-seal-pulse {
       position: absolute;
       inset: -8px;
       border-radius: 50%;
-      border: 2px solid #89B6F9;
+      border: 2px solid #9BC2FF;
       animation: sealPulse 2s infinite ease-in-out;
     }
     @keyframes sealPulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.22); opacity: 0; }
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.25); opacity: 0; }
     }
 
     .envelope-instruction {
@@ -191,10 +201,10 @@
       align-items: center;
       gap: 10px;
       animation: pulseText 2s infinite;
-      text-shadow: 0 0 10px rgba(137, 182, 249, 0.4);
+      text-shadow: 0 0 15px rgba(155, 194, 255, 0.5);
     }
     @keyframes pulseText {
-      0%, 100% { opacity: 0.7; }
+      0%, 100% { opacity: 0.75; }
       50% { opacity: 1; }
     }
 
@@ -206,26 +216,26 @@
       bottom: 24px;
       right: 24px;
       z-index: 900;
-      background: rgba(10, 24, 54, 0.88);
-      backdrop-filter: blur(14px);
+      background: rgba(10, 22, 51, 0.92);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--blue-light);
       border-radius: var(--radius-full);
-      padding: 10px 18px 10px 14px;
+      padding: 10px 20px 10px 14px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       color: var(--star-silver);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 119, 217, 0.3);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(77, 142, 255, 0.35);
       cursor: pointer;
       transition: all 0.3s ease;
     }
     .floating-audio-btn:hover {
-      transform: scale(1.06);
-      background: #142D61;
+      transform: scale(1.05);
+      background: #142E66;
       border-color: #FFF;
     }
     .audio-icon-spin {
-      font-size: 20px;
+      font-size: 22px;
       animation: spin 6s linear infinite;
       color: var(--star-gold);
     }
@@ -249,7 +259,7 @@
     .site-wrapper {
       position: relative;
       z-index: 2;
-      max-width: 920px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0 20px;
     }
@@ -262,21 +272,26 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 80px 16px 60px;
+      padding: 90px 16px 60px;
       position: relative;
     }
 
     .moon-emblem {
-      width: 76px;
-      height: 76px;
+      width: 84px;
+      height: 84px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #4784EB, #102654);
+      background: radial-gradient(circle at 35% 35%, #3877D9, #0D2047);
       border: 2px solid var(--blue-light);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 24px;
-      box-shadow: 0 0 25px rgba(137, 182, 249, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 35px rgba(77, 142, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      animation: moonGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes moonGlow {
+      from { box-shadow: 0 0 25px rgba(77, 142, 255, 0.4); }
+      to { box-shadow: 0 0 45px rgba(77, 142, 255, 0.8), 0 0 20px #F5D38A; }
     }
 
     .hero-eyebrow {
@@ -286,13 +301,13 @@
       text-transform: uppercase;
       color: var(--star-gold);
       margin-bottom: 12px;
-      text-shadow: 0 0 10px rgba(244, 211, 139, 0.4);
+      text-shadow: 0 0 12px rgba(245, 211, 138, 0.5);
     }
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
-      letter-spacing: 4px;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      letter-spacing: 5px;
       color: var(--blue-light);
       text-transform: uppercase;
       margin-bottom: 8px;
@@ -300,69 +315,91 @@
 
     .hero-name {
       font-family: var(--font-script);
-      font-size: clamp(4.2rem, 11vw, 7.5rem);
+      font-size: clamp(4.5rem, 12vw, 8rem);
       color: #FFFFFF;
       background: var(--star-shimmer);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.15;
-      margin-bottom: 16px;
-      filter: drop-shadow(0 4px 20px rgba(56, 119, 217, 0.6));
+      margin-bottom: 12px;
+      filter: drop-shadow(0 6px 25px rgba(77, 142, 255, 0.8));
     }
 
     .hero-surname {
       font-family: var(--font-serif);
-      font-size: clamp(1.1rem, 3vw, 1.4rem);
-      letter-spacing: 6px;
+      font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+      letter-spacing: 8px;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 24px;
+      color: var(--text-soft);
+      margin-bottom: 36px;
+    }
+
+    /* Marco Principal Editorial con la Foto Real de Megan */
+    .hero-portrait-frame {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+    .portrait-aura {
+      position: absolute;
+      inset: -15px;
+      border-radius: 40px;
+      background: radial-gradient(circle, rgba(77, 142, 255, 0.3) 0%, transparent 70%);
+      filter: blur(20px);
+      z-index: 0;
+    }
+    .portrait-card {
+      position: relative;
+      z-index: 1;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 3px solid rgba(155, 194, 255, 0.5);
+      background: linear-gradient(180deg, rgba(16, 38, 84, 0.4) 0%, rgba(6, 13, 31, 0.9) 100%);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(77, 142, 255, 0.3);
+    }
+    .portrait-card img {
+      width: 100%;
+      height: auto;
+      max-height: 640px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .portrait-card:hover img {
+      transform: scale(1.03);
+    }
+    .portrait-glow-line {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 90px;
+      background: linear-gradient(to top, var(--bg-deep) 0%, transparent 100%);
+      pointer-events: none;
     }
 
     .hero-tagline {
       font-family: var(--font-serif);
-      font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+      font-size: clamp(1.2rem, 3.2vw, 1.55rem);
       font-style: italic;
       color: var(--blue-pale);
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto 36px;
       line-height: 1.5;
-    }
-
-    .hero-image-frame {
-      width: 100%;
-      max-width: 600px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      border: 4px solid rgba(137, 182, 249, 0.35);
-      position: relative;
-      margin-bottom: 40px;
-    }
-    .hero-image-frame img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.8s ease;
-    }
-    .hero-image-frame:hover img {
-      transform: scale(1.04);
     }
 
     .hero-date-badge {
       display: inline-flex;
       align-items: center;
       gap: 16px;
-      background: linear-gradient(135deg, #132A59, #0B1936);
+      background: linear-gradient(135deg, #153066, #0A1836);
       color: #FFFFFF;
-      padding: 14px 34px;
+      padding: 14px 36px;
       border-radius: var(--radius-full);
       font-family: var(--font-display);
       font-size: 13px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      box-shadow: var(--shadow-md), 0 0 20px rgba(56, 119, 217, 0.3);
+      box-shadow: var(--shadow-md), 0 0 25px rgba(77, 142, 255, 0.4);
       border: 1px solid var(--blue-light);
     }
 
@@ -370,14 +407,14 @@
        COUNTDOWN TIMER
        ============================================================ */
     .countdown-container {
-      background: var(--bg-card);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(137, 182, 249, 0.25);
+      background: rgba(14, 30, 61, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(155, 194, 255, 0.35);
       border-radius: var(--radius-lg);
-      padding: 44px 24px;
+      padding: 48px 24px;
       box-shadow: var(--shadow-md);
       text-align: center;
-      margin: 60px 0;
+      margin: 70px 0;
       position: relative;
     }
     .countdown-title {
@@ -386,34 +423,35 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--star-gold);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      text-shadow: 0 0 10px rgba(245, 211, 138, 0.4);
     }
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      max-width: 560px;
+      gap: 14px;
+      max-width: 580px;
       margin: 0 auto;
     }
     .countdown-item {
-      background: rgba(6, 15, 36, 0.7);
-      border: 1px solid rgba(137, 182, 249, 0.2);
+      background: rgba(4, 10, 26, 0.85);
+      border: 1px solid rgba(155, 194, 255, 0.25);
       border-radius: var(--radius-md);
-      padding: 18px 8px;
-      box-shadow: inset 0 0 15px rgba(56, 119, 217, 0.1);
+      padding: 20px 8px;
+      box-shadow: inset 0 0 20px rgba(77, 142, 255, 0.15);
     }
     .countdown-number {
       font-family: var(--font-serif);
-      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
       font-weight: 600;
       color: #FFFFFF;
-      text-shadow: 0 0 15px rgba(137, 182, 249, 0.6);
+      text-shadow: 0 0 20px rgba(155, 194, 255, 0.7);
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .countdown-label {
       font-size: 10px;
@@ -427,32 +465,33 @@
        PADRES DE LA QUINCEAÑERA
        ============================================================ */
     .parents-card {
-      background: radial-gradient(circle at center, #102654 0%, #07122B 100%);
+      background: radial-gradient(circle at center, #132E66 0%, #061026 100%);
       border-radius: var(--radius-lg);
-      padding: 60px 32px;
+      padding: 64px 32px;
       text-align: center;
-      margin: 60px 0;
-      border: 1px solid rgba(137, 182, 249, 0.35);
+      margin: 70px 0;
+      border: 1px solid rgba(155, 194, 255, 0.4);
       box-shadow: var(--shadow-lg);
       position: relative;
     }
     .parents-quote {
       font-family: var(--font-serif);
-      font-size: clamp(1.4rem, 3.6vw, 2rem);
+      font-size: clamp(1.4rem, 3.8vw, 2.1rem);
       font-style: italic;
       color: var(--blue-pale);
-      margin-bottom: 36px;
+      margin-bottom: 40px;
       line-height: 1.4;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
     }
     .parents-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 36px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(137, 182, 249, 0.2);
+      padding-top: 36px;
+      border-top: 1px solid rgba(155, 194, 255, 0.25);
     }
     @media(max-width: 600px) {
-      .parents-grid { grid-template-columns: 1fr; gap: 24px; }
+      .parents-grid { grid-template-columns: 1fr; gap: 28px; }
     }
     .parent-role {
       font-family: var(--font-display);
@@ -464,93 +503,94 @@
     }
     .parent-name {
       font-family: var(--font-serif);
-      font-size: 1.4rem;
-      color: var(--white);
+      font-size: 1.45rem;
+      color: #FFFFFF;
       letter-spacing: 1px;
     }
 
     /* ============================================================
-       LUGAR Y HORA (RECEPCIÓN VILLAVERDE)
+       LUGAR Y HORA (RECEPCIÓN SALÓN VILLAVERDE)
        ============================================================ */
     .venue-card {
-      background: var(--bg-card);
+      background: rgba(14, 30, 61, 0.7);
       border-radius: var(--radius-lg);
-      padding: 50px 32px;
-      border: 1px solid rgba(137, 182, 249, 0.35);
+      padding: 56px 32px;
+      border: 1px solid rgba(155, 194, 255, 0.4);
       box-shadow: var(--shadow-lg);
       text-align: center;
-      margin: 60px 0;
+      margin: 70px 0;
       position: relative;
     }
     .venue-icon {
-      width: 72px;
-      height: 72px;
+      width: 78px;
+      height: 78px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #2A5BA8, #0B1936);
+      background: radial-gradient(circle at 35% 35%, #2968D4, #0D1C3D);
       border: 2px solid var(--blue-light);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 24px;
-      box-shadow: 0 0 25px rgba(56, 119, 217, 0.4);
+      box-shadow: 0 0 30px rgba(77, 142, 255, 0.5);
       color: #FFF;
     }
     .venue-title {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 28px;
       color: #FFFFFF;
       margin-bottom: 6px;
     }
     .venue-salon {
       font-family: var(--font-serif);
-      font-size: 28px;
+      font-size: 30px;
       font-style: italic;
       color: var(--blue-light);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .venue-time-badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(244, 211, 139, 0.15);
+      background: rgba(245, 211, 138, 0.15);
       border: 1px solid var(--star-gold);
       color: var(--star-gold);
-      padding: 10px 24px;
+      padding: 12px 28px;
       border-radius: var(--radius-full);
       font-family: var(--font-display);
       font-size: 13px;
       letter-spacing: 2px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(245, 211, 138, 0.2);
     }
     .venue-address {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--blue-pale);
-      max-width: 560px;
-      margin: 0 auto 28px;
+      max-width: 580px;
+      margin: 0 auto 32px;
       line-height: 1.6;
     }
     .btn-map {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: linear-gradient(135deg, #2A5BA8, #142E63);
+      background: linear-gradient(135deg, #2968D4, #143573);
       color: #FFFFFF;
       text-decoration: none;
-      padding: 14px 32px;
+      padding: 16px 36px;
       border-radius: var(--radius-full);
-      font-size: 12px;
+      font-size: 13px;
       font-family: var(--font-display);
       letter-spacing: 2px;
       text-transform: uppercase;
       transition: all 0.3s ease;
       border: 1px solid var(--blue-light);
-      box-shadow: 0 8px 24px rgba(42, 91, 168, 0.4);
+      box-shadow: 0 10px 30px rgba(41, 104, 212, 0.5);
     }
     .btn-map:hover {
       transform: translateY(-3px) scale(1.03);
-      background: linear-gradient(135deg, #3E79D6, #1C3D82);
-      box-shadow: 0 12px 30px rgba(56, 119, 217, 0.6);
+      background: linear-gradient(135deg, #3D82F5, #1B4596);
+      box-shadow: 0 15px 35px rgba(77, 142, 255, 0.7);
       border-color: #FFF;
     }
 
@@ -558,32 +598,32 @@
        ITINERARIO (TIMELINE NOCHE ESTRELLADA)
        ============================================================ */
     .timeline-section {
-      margin: 80px 0;
+      margin: 90px 0;
       text-align: center;
     }
     .section-header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 54px;
     }
     .section-eyebrow {
       font-family: var(--font-display);
       font-size: 12px;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       text-transform: uppercase;
       color: var(--star-gold);
       margin-bottom: 8px;
     }
     .section-title {
       font-family: var(--font-script);
-      font-size: clamp(3.2rem, 7vw, 4.8rem);
+      font-size: clamp(3.4rem, 8vw, 5.2rem);
       color: #FFFFFF;
       line-height: 1.2;
-      text-shadow: 0 0 20px rgba(137, 182, 249, 0.4);
+      text-shadow: 0 0 25px rgba(155, 194, 255, 0.5);
     }
 
     .timeline-wrap {
       position: relative;
-      max-width: 540px;
+      max-width: 560px;
       margin: 0 auto;
       padding: 20px 0;
     }
@@ -591,57 +631,57 @@
       position: absolute;
       top: 0; bottom: 0; left: 50%;
       width: 2px;
-      background: linear-gradient(180deg, transparent, #5691F5 15%, #5691F5 85%, transparent);
+      background: linear-gradient(180deg, transparent, #4D8EFF 15%, #4D8EFF 85%, transparent);
       transform: translateX(-50%);
     }
     .timeline-item {
       display: flex;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 42px;
       position: relative;
     }
     .timeline-left {
       width: 50%;
       text-align: right;
-      padding-right: 28px;
+      padding-right: 32px;
     }
     .timeline-right {
       width: 50%;
       text-align: left;
-      padding-left: 28px;
+      padding-left: 32px;
     }
     .timeline-icon-box {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 48px;
-      height: 48px;
-      background: #0E2042;
+      width: 50px;
+      height: 50px;
+      background: #0D224D;
       border: 2px solid var(--blue-light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--star-gold);
-      box-shadow: 0 0 16px rgba(137, 182, 249, 0.4);
+      box-shadow: 0 0 20px rgba(77, 142, 255, 0.5);
       z-index: 2;
     }
     .timeline-time {
       font-family: var(--font-serif);
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 600;
       color: var(--blue-light);
     }
     .timeline-event-name {
       font-family: var(--font-display);
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #FFFFFF;
     }
     .timeline-event-sub {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
@@ -649,59 +689,63 @@
        DRESS CODE (FORMAL / AZUL NOCHE)
        ============================================================ */
     .dress-code-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(137, 182, 249, 0.25);
+      background: rgba(14, 30, 61, 0.7);
+      border: 1px solid rgba(155, 194, 255, 0.3);
       border-radius: var(--radius-lg);
-      padding: 50px 24px;
+      padding: 56px 24px;
       text-align: center;
-      margin: 60px 0;
+      margin: 70px 0;
       box-shadow: var(--shadow-md);
     }
     .dress-title {
       font-family: var(--font-display);
-      font-size: 22px;
+      font-size: 24px;
       color: #FFFFFF;
       margin-bottom: 10px;
     }
     .dress-desc {
       font-family: var(--font-serif);
-      font-size: 26px;
+      font-size: 28px;
       font-style: italic;
       color: var(--star-gold);
-      margin-bottom: 24px;
+      margin-bottom: 26px;
     }
     .dress-palette {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 18px;
+      margin-bottom: 26px;
     }
     .dress-color {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(56, 119, 217, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(77, 142, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      transition: transform 0.3s ease;
+    }
+    .dress-color:hover {
+      transform: scale(1.15);
     }
     .dress-note {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--blue-pale);
       letter-spacing: 1px;
       text-transform: uppercase;
-      max-width: 500px;
+      max-width: 540px;
       margin: 0 auto;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     /* ============================================================
-       GALERÍA DEL SALÓN VILLAVERDE
+       GALERÍA DEL SALÓN
        ============================================================ */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin: 60px 0;
+      gap: 18px;
+      margin: 70px 0;
     }
     @media(max-width: 650px) {
       .gallery-grid { grid-template-columns: 1fr; }
@@ -709,9 +753,9 @@
     .gallery-item {
       border-radius: var(--radius-md);
       overflow: hidden;
-      height: 270px;
+      height: 280px;
       box-shadow: var(--shadow-sm);
-      border: 3px solid rgba(137, 182, 249, 0.3);
+      border: 3px solid rgba(155, 194, 255, 0.35);
       position: relative;
     }
     .gallery-item img {
@@ -728,32 +772,32 @@
        LLUVIA DE SOBRES
        ============================================================ */
     .gifts-card {
-      background: radial-gradient(circle at center, #102654 0%, #060D1E 100%);
-      border: 1px solid rgba(137, 182, 249, 0.35);
+      background: radial-gradient(circle at center, #132E66 0%, #061026 100%);
+      border: 1px solid rgba(155, 194, 255, 0.4);
       color: var(--white);
       border-radius: var(--radius-lg);
-      padding: 50px 28px;
+      padding: 56px 28px;
       text-align: center;
-      margin: 60px 0;
+      margin: 70px 0;
       box-shadow: var(--shadow-lg);
     }
     .gifts-icon {
-      font-size: 42px;
+      font-size: 46px;
       color: var(--star-gold);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .gifts-title {
       font-family: var(--font-script);
-      font-size: 3.8rem;
+      font-size: 4rem;
       color: #FFFFFF;
       margin-bottom: 12px;
-      text-shadow: 0 0 15px rgba(137, 182, 249, 0.5);
+      text-shadow: 0 0 20px rgba(155, 194, 255, 0.6);
     }
     .gifts-text {
       font-family: var(--font-serif);
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       color: var(--blue-pale);
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
       line-height: 1.5;
     }
@@ -762,20 +806,20 @@
        CONFIRMACIÓN DE ASISTENCIA (RSVP A 5571808883)
        ============================================================ */
     .rsvp-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(137, 182, 249, 0.35);
+      background: rgba(14, 30, 61, 0.75);
+      border: 1px solid rgba(155, 194, 255, 0.4);
       border-radius: var(--radius-lg);
-      padding: 50px 32px;
-      margin: 60px 0 100px;
+      padding: 56px 32px;
+      margin: 70px 0 110px;
       box-shadow: var(--shadow-lg);
       text-align: center;
     }
     .rsvp-form {
-      max-width: 520px;
-      margin: 32px auto 0;
+      max-width: 540px;
+      margin: 36px auto 0;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
       text-align: left;
     }
     .form-group label {
@@ -789,10 +833,10 @@
     }
     .form-control {
       width: 100%;
-      padding: 15px 18px;
+      padding: 16px 20px;
       border-radius: var(--radius-sm);
-      border: 1px solid rgba(137, 182, 249, 0.3);
-      background: rgba(6, 15, 36, 0.8);
+      border: 1px solid rgba(155, 194, 255, 0.35);
+      background: rgba(4, 10, 26, 0.85);
       font-family: var(--font-sans);
       font-size: 15px;
       color: var(--text-white);
@@ -801,13 +845,13 @@
     }
     .form-control:focus {
       border-color: var(--blue-light);
-      box-shadow: 0 0 15px rgba(56, 119, 217, 0.4);
+      box-shadow: 0 0 18px rgba(77, 142, 255, 0.5);
     }
     .btn-rsvp {
-      background: linear-gradient(135deg, #2A5BA8, #142E63);
+      background: linear-gradient(135deg, #2968D4, #143573);
       color: #FFFFFF;
       border: 1px solid var(--blue-light);
-      padding: 18px 28px;
+      padding: 18px 32px;
       border-radius: var(--radius-full);
       font-family: var(--font-display);
       font-size: 13px;
@@ -820,13 +864,13 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 10px 30px rgba(42, 91, 168, 0.4);
+      box-shadow: 0 10px 30px rgba(41, 104, 212, 0.5);
       margin-top: 10px;
     }
     .btn-rsvp:hover {
-      background: linear-gradient(135deg, #3E79D6, #1C3D82);
+      background: linear-gradient(135deg, #3D82F5, #1B4596);
       transform: translateY(-2px);
-      box-shadow: 0 15px 35px rgba(56, 119, 217, 0.6);
+      box-shadow: 0 15px 35px rgba(77, 142, 255, 0.7);
       border-color: #FFF;
     }
 
@@ -838,7 +882,7 @@
       font-family: var(--font-display);
       font-size: 11px;
       letter-spacing: 3px;
-      border-top: 1px solid rgba(137, 182, 249, 0.15);
+      border-top: 1px solid rgba(155, 194, 255, 0.2);
     }
   </style>
 </head>
@@ -876,7 +920,7 @@
     </div>
     <div class="envelope-instruction">
       <span class="material-symbols-outlined" style="font-size: 18px;">touch_app</span>
-      Toca el sobre para abrir tu invitación
+      Toca el sobre para entrar a la invitación
     </div>
   </div>
 
@@ -885,20 +929,26 @@
        ============================================================ -->
   <div class="site-wrapper">
     
-    <!-- Hero Section -->
+    <!-- Hero Section con la Foto Real de Megan -->
     <section class="hero-section">
       <div class="moon-emblem">
-        <span class="material-symbols-outlined" style="font-size: 38px; color: #FFF4D2; filter: drop-shadow(0 0 10px #F4D38B);">bedtime</span>
+        <span class="material-symbols-outlined" style="font-size: 40px; color: #FFF4D2; filter: drop-shadow(0 0 10px #F5D38A);">bedtime</span>
       </div>
       <div class="hero-eyebrow">Bajo la luz de la luna y las estrellas</div>
       <div class="hero-title">Mis Quince Años</div>
       <h1 class="hero-name">Megan Paulette</h1>
       <div class="hero-surname">Alvarez Moreno</div>
-      <p class="hero-tagline">"Hay momentos en la vida que brillan como estrellas en el firmamento, y vivirlos junto a ti lo hará inolvidable."</p>
 
-      <div class="hero-image-frame">
-        <img src="assets/hero.jpg" alt="Megan Paulette XV Años">
+      <!-- Retrato Editorial de Megan Paulette -->
+      <div class="hero-portrait-frame">
+        <div class="portrait-aura"></div>
+        <div class="portrait-card">
+          <img src="assets/megan.png" alt="Megan Paulette Alvarez Moreno">
+          <div class="portrait-glow-line"></div>
+        </div>
       </div>
+
+      <p class="hero-tagline">"Hay momentos en la vida que brillan como estrellas en el firmamento, y vivirlos junto a ti lo hará inolvidable."</p>
 
       <div class="hero-date-badge">
         <span class="material-symbols-outlined" style="font-size: 18px; color: var(--star-gold);">calendar_month</span>
@@ -952,7 +1002,7 @@
     <!-- Lugar y Hora (Salón Villaverde) -->
     <div class="venue-card">
       <div class="venue-icon">
-        <span class="material-symbols-outlined" style="font-size: 38px;">celebration</span>
+        <span class="material-symbols-outlined" style="font-size: 40px;">celebration</span>
       </div>
       <div class="venue-title">Recepción & Fiesta Mágica</div>
       <div class="venue-salon">Salón de Fiestas Villaverde</div>
@@ -1084,7 +1134,7 @@
         <div class="dress-color" style="background: #E5EEF9;" title="Plata Estelar"></div>
       </div>
       <div class="dress-note">
-        ✨ Agradecemos reservar el tono principal del vestido de quinceañera y el color blanco exclusivamente para Megan.
+        ✨ Agradecemos reservar el tono del vestido de quinceañera y el color blanco exclusivamente para Megan.
       </div>
     </div>
 
@@ -1201,15 +1251,15 @@
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.isGold 
-          ? `rgba(244, 211, 139, ${Math.max(0.2, Math.min(1, this.opacity))})` 
-          : `rgba(212, 229, 255, ${Math.max(0.2, Math.min(1, this.opacity))})`;
-        ctx.shadowBlur = this.isGold ? 8 : 5;
-        ctx.shadowColor = this.isGold ? '#F4D38B' : '#89B6F9';
+          ? `rgba(245, 211, 138, ${Math.max(0.2, Math.min(1, this.opacity))})` 
+          : `rgba(225, 239, 255, ${Math.max(0.2, Math.min(1, this.opacity))})`;
+        ctx.shadowBlur = this.isGold ? 10 : 6;
+        ctx.shadowColor = this.isGold ? '#F5D38A' : '#9BC2FF';
         ctx.fill();
       }
     }
 
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < 75; i++) {
       stars.push(new Star());
     }
 
@@ -1224,7 +1274,7 @@
     animateStars();
 
     // -------------------------------------------------------------
-    // APERTURA DE SOBRE Y MÚSICA DE ENTRADA
+    // APERTURA DE SOBRE Y REPRODUCCIÓN AUTOMÁTICA DE MÚSICA
     // -------------------------------------------------------------
     const envelopeScreen = document.getElementById('envelope-screen');
     const envelopeBox = document.getElementById('interactive-envelope');
@@ -1235,25 +1285,43 @@
 
     let isAudioPlaying = false;
 
-    function openEnvelope() {
+    function startMusicAndOpen() {
       envelopeBox.classList.add('is-opening');
       
       // Reproducir música Lana Del Rey
-      audioElement.play().then(() => {
-        isAudioPlaying = true;
-        audioIcon.classList.remove('paused');
-        audioText.innerText = 'Pausar · Lana Del Rey';
-      }).catch(e => console.log('Autoplay audio:', e));
+      const playPromise = audioElement.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isAudioPlaying = true;
+          audioIcon.classList.remove('paused');
+          audioText.innerText = 'Pausar · Lana Del Rey';
+        }).catch(e => {
+          console.log('Autoplay audio restringido por navegador:', e);
+        });
+      }
 
       setTimeout(() => {
         envelopeScreen.classList.add('opened');
       }, 700);
     }
 
-    envelopeBox.addEventListener('click', openEnvelope);
-    envelopeScreen.addEventListener('click', (e) => {
-      if (e.target === envelopeScreen) openEnvelope();
+    envelopeScreen.addEventListener('click', startMusicAndOpen);
+    envelopeBox.addEventListener('click', (e) => {
+      e.stopPropagation();
+      startMusicAndOpen();
     });
+
+    // Fallback: al hacer touch en cualquier parte si aún no se abrió
+    document.body.addEventListener('touchstart', function initialTouch() {
+      if (!isAudioPlaying) {
+        audioElement.play().then(() => {
+          isAudioPlaying = true;
+          audioIcon.classList.remove('paused');
+          audioText.innerText = 'Pausar · Lana Del Rey';
+        }).catch(() => {});
+      }
+      document.body.removeEventListener('touchstart', initialTouch);
+    }, { passive: true });
 
     audioToggleBtn.addEventListener('click', () => {
       if (isAudioPlaying) {
@@ -1310,7 +1378,7 @@
       const guests = document.getElementById('rsvp-guests').value;
       const message = document.getElementById('rsvp-message').value.trim();
 
-      const phone = '525571808883'; // Teléfono proporcionado: 5571808883
+      const phone = '525571808883';
       let text = `¡Hola! Confirmo mi asistencia para los XV Años de Megan Paulette ✨🌙\n\n`;
       text += `👤 *Invitado(s):* ${name}\n`;
       text += `💌 *Respuesta:* ${status}\n`;
