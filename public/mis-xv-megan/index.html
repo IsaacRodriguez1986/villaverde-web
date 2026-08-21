@@ -9,7 +9,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mis XV Años — Megan Paulette">
   <meta property="og:description" content="Una noche mágica bajo la luna y las estrellas ✨ Sábado 24 de Octubre de 2026.">
-  <meta property="og:image" content="assets/megan.png">
+  <meta property="og:image" content="/mis-xv-megan/assets/megan.png">
+  <base href="/mis-xv-megan/">
   <meta name="theme-color" content="#040914">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -893,8 +894,7 @@
 
   <!-- Audio elemento oculto (Lana Del Rey - Young And Beautiful) -->
   <audio id="xv-audio" loop preload="auto">
-    <source src="assets/cancion.mp3" type="audio/mpeg">
-    <source src="assets/Lana Del Rey - Young And Beautiful.mp3" type="audio/mpeg">
+    <source src="/mis-xv-megan/assets/cancion.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Botón flotante de música con nombre de la canción -->
@@ -943,7 +943,7 @@
       <div class="hero-portrait-frame">
         <div class="portrait-aura"></div>
         <div class="portrait-card">
-          <img src="assets/megan.png" alt="Megan Paulette Alvarez Moreno">
+          <img src="/mis-xv-megan/assets/megan.png" alt="Megan Paulette Alvarez Moreno">
           <div class="portrait-glow-line"></div>
         </div>
       </div>
@@ -1141,13 +1141,13 @@
     <!-- Galería del Salón -->
     <div class="gallery-grid">
       <div class="gallery-item">
-        <img src="assets/salon-1.jpg" alt="Salón Villaverde Iluminación">
+        <img src="/mis-xv-megan/assets/salon-1.jpg" alt="Salón Villaverde Iluminación">
       </div>
       <div class="gallery-item">
-        <img src="assets/salon-2.jpg" alt="Salón Villaverde Montaje">
+        <img src="/mis-xv-megan/assets/salon-2.jpg" alt="Salón Villaverde Montaje">
       </div>
       <div class="gallery-item">
-        <img src="assets/salon-3.jpg" alt="Salón Villaverde Pista">
+        <img src="/mis-xv-megan/assets/salon-3.jpg" alt="Salón Villaverde Pista">
       </div>
     </div>
 
@@ -1284,11 +1284,14 @@
     const audioText = document.getElementById('audio-text');
 
     let isAudioPlaying = false;
+    let envelopeOpened = false;
 
-    function startMusicAndOpen() {
-      envelopeBox.classList.add('is-opening');
-      
-      // Reproducir música Lana Del Rey
+    // Pre-cargar audio con volumen máximo
+    audioElement.volume = 1.0;
+    audioElement.load();
+
+    function tryPlayAudio() {
+      audioElement.volume = 1.0;
       const playPromise = audioElement.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -1296,9 +1299,21 @@
           audioIcon.classList.remove('paused');
           audioText.innerText = 'Pausar · Lana Del Rey';
         }).catch(e => {
-          console.log('Autoplay audio restringido por navegador:', e);
+          console.log('Autoplay restringido:', e);
+          // Reintentar cargando la fuente directamente
+          audioElement.src = '/mis-xv-megan/assets/cancion.mp3';
+          audioElement.load();
         });
       }
+    }
+
+    function startMusicAndOpen() {
+      if (envelopeOpened) return;
+      envelopeOpened = true;
+      envelopeBox.classList.add('is-opening');
+      
+      // Reproducir música Lana Del Rey
+      tryPlayAudio();
 
       setTimeout(() => {
         envelopeScreen.classList.add('opened');
@@ -1306,6 +1321,7 @@
     }
 
     envelopeScreen.addEventListener('click', startMusicAndOpen);
+    envelopeScreen.addEventListener('touchend', startMusicAndOpen);
     envelopeBox.addEventListener('click', (e) => {
       e.stopPropagation();
       startMusicAndOpen();
@@ -1313,12 +1329,10 @@
 
     // Fallback: al hacer touch en cualquier parte si aún no se abrió
     document.body.addEventListener('touchstart', function initialTouch() {
-      if (!isAudioPlaying) {
-        audioElement.play().then(() => {
-          isAudioPlaying = true;
-          audioIcon.classList.remove('paused');
-          audioText.innerText = 'Pausar · Lana Del Rey';
-        }).catch(() => {});
+      if (!envelopeOpened) {
+        startMusicAndOpen();
+      } else if (!isAudioPlaying) {
+        tryPlayAudio();
       }
       document.body.removeEventListener('touchstart', initialTouch);
     }, { passive: true });
