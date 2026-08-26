@@ -807,36 +807,6 @@
     }
 
     /* ============================================================
-       GALERÍA DEL SALÓN
-       ============================================================ */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin: 70px 0;
-    }
-    @media(max-width: 650px) {
-      .gallery-grid { grid-template-columns: 1fr; }
-    }
-    .gallery-item {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      height: 280px;
-      box-shadow: var(--shadow-sm);
-      border: 3px solid rgba(155, 194, 255, 0.35);
-      position: relative;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.08);
-    }
-
-    /* ============================================================
        LLUVIA DE SOBRES
        ============================================================ */
     .gifts-card {
@@ -956,7 +926,7 @@
     @media (prefers-reduced-motion: reduce) {
       #stars-canvas { display: none; }
       .envelope-box, .moon-emblem, .wax-seal-pulse, .envelope-instruction,
-      .audio-icon-spin, .portrait-aura, .gallery-item img, .portrait-card img {
+      .audio-icon-spin, .portrait-aura, .portrait-card img {
         animation: none !important;
         transition: none !important;
       }
@@ -1251,19 +1221,6 @@
       </div>
       <div class="style-dots" id="style-dots"></div>
     </section>
-
-    <!-- Galería del Salón -->
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="/mis-xv-megan/assets/salon-1.jpg" alt="Salón Villaverde Iluminación">
-      </div>
-      <div class="gallery-item">
-        <img src="/mis-xv-megan/assets/salon-2.jpg" alt="Salón Villaverde Montaje">
-      </div>
-      <div class="gallery-item">
-        <img src="/mis-xv-megan/assets/salon-3.jpg" alt="Salón Villaverde Pista">
-      </div>
-    </div>
 
     <!-- Lluvia de Sobres -->
     <div class="gifts-card">
