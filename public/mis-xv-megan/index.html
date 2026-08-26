@@ -751,6 +751,62 @@
     }
 
     /* ============================================================
+       MI ESTILO (CARRUSEL PERSONAL)
+       ============================================================ */
+    .style-carousel-section {
+      margin: 90px 0;
+      text-align: center;
+    }
+    .style-carousel {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px calc(50% - 145px) 26px;
+      margin: 0 -20px;
+      scrollbar-width: none;
+    }
+    .style-carousel::-webkit-scrollbar { display: none; }
+    .style-slide {
+      flex: 0 0 290px;
+      scroll-snap-align: center;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      box-shadow: var(--shadow-md), 0 0 25px rgba(77, 142, 255, 0.2);
+      border: 3px solid rgba(155, 194, 255, 0.35);
+      position: relative;
+    }
+    .style-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .style-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .style-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(155, 194, 255, 0.3);
+      border: 1px solid rgba(155, 194, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .style-dot.is-active {
+      background: var(--star-gold);
+      border-color: var(--star-gold);
+      transform: scale(1.3);
+    }
+
+    /* ============================================================
        GALERÍA DEL SALÓN
        ============================================================ */
     .gallery-grid {
@@ -1158,6 +1214,44 @@
       </div>
     </div>
 
+    <!-- Mi Estilo (Carrusel personal de Megan Paulette) -->
+    <section class="style-carousel-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Un Vistazo a Mi Mundo</div>
+        <h2 class="section-title">Mi Estilo</h2>
+      </div>
+      <div class="style-carousel" id="style-carousel">
+        <div class="style-slide">
+          <img
+            src="/mis-xv-megan/assets/gallery-2.webp"
+            srcset="/mis-xv-megan/assets/gallery-2.webp 360w, /mis-xv-megan/assets/gallery-2@2x.webp 720w"
+            sizes="290px"
+            width="360" height="637"
+            alt="Megan Paulette con chamarra de piel y botas altas"
+            loading="lazy">
+        </div>
+        <div class="style-slide">
+          <img
+            src="/mis-xv-megan/assets/gallery-3.webp"
+            srcset="/mis-xv-megan/assets/gallery-3.webp 360w, /mis-xv-megan/assets/gallery-3@2x.webp 720w"
+            sizes="290px"
+            width="360" height="637"
+            alt="Megan Paulette con look vaquero"
+            loading="lazy">
+        </div>
+        <div class="style-slide">
+          <img
+            src="/mis-xv-megan/assets/gallery-4.webp"
+            srcset="/mis-xv-megan/assets/gallery-4.webp 360w, /mis-xv-megan/assets/gallery-4@2x.webp 720w"
+            sizes="290px"
+            width="360" height="637"
+            alt="Megan Paulette frente al volcán Popocatépetl"
+            loading="lazy">
+        </div>
+      </div>
+      <div class="style-dots" id="style-dots"></div>
+    </section>
+
     <!-- Galería del Salón -->
     <div class="gallery-grid">
       <div class="gallery-item">
@@ -1403,6 +1497,38 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    // -------------------------------------------------------------
+    // CARRUSEL "MI ESTILO" (dots generados según el numero de fotos)
+    // -------------------------------------------------------------
+    const styleCarousel = document.getElementById('style-carousel');
+    const styleDotsWrap = document.getElementById('style-dots');
+    const styleSlides = styleCarousel ? Array.from(styleCarousel.children) : [];
+
+    if (styleSlides.length > 1) {
+      styleSlides.forEach((slide, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'style-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', `Foto ${i + 1} de ${styleSlides.length}`);
+        dot.addEventListener('click', () => {
+          slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+        styleDotsWrap.appendChild(dot);
+      });
+
+      const styleDots = Array.from(styleDotsWrap.children);
+      const styleObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idx = styleSlides.indexOf(entry.target);
+            styleDots.forEach(d => d.classList.remove('is-active'));
+            if (styleDots[idx]) styleDots[idx].classList.add('is-active');
+          }
+        });
+      }, { root: styleCarousel, threshold: 0.6 });
+
+      styleSlides.forEach(slide => styleObserver.observe(slide));
+    }
 
     // -------------------------------------------------------------
     // RSVP FORM DIRECTO A WHATSAPP (5571808883)
