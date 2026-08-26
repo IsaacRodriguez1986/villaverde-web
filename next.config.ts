@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
  *  Alimenta a la vez el rewrite de URL limpia y las cabeceras de privacidad,
  *  para que no se pueda publicar una invitación sin una de las dos cosas
  *  (a /eldiabloviste se le olvidó el rewrite y su URL limpia nunca funcionó). */
-const INVITACIONES = ["mis-xv-dayana", "ana-paula-1"];
+const INVITACIONES = ["mis-xv-dayana", "ana-paula-1", "mis-xv-megan", "nuestra-boda"];
 
 const CABECERAS_INVITACION = [
   {

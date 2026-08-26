@@ -9,7 +9,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mis XV Años — Megan Paulette">
   <meta property="og:description" content="Una noche mágica bajo la luna y las estrellas ✨ Sábado 24 de Octubre de 2026.">
-  <meta property="og:image" content="/mis-xv-megan/assets/megan.png">
+  <meta property="og:image" content="https://www.salondefiestasvillaverde.com/mis-xv-megan/assets/megan.png">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <base href="/mis-xv-megan/">
   <meta name="theme-color" content="#040914">
 
@@ -321,7 +322,8 @@
       background: var(--star-shimmer);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.15;
+      line-height: 1.32;
+      padding: .14em 0 .26em;
       margin-bottom: 12px;
       filter: drop-shadow(0 6px 25px rgba(77, 142, 255, 0.8));
     }
@@ -894,6 +896,15 @@
       letter-spacing: 3px;
       border-top: 1px solid rgba(155, 194, 255, 0.2);
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      #stars-canvas { display: none; }
+      .envelope-box, .moon-emblem, .wax-seal-pulse, .envelope-instruction,
+      .audio-icon-spin, .portrait-aura, .gallery-item img, .portrait-card img {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1280,7 +1291,9 @@
       });
       requestAnimationFrame(animateStars);
     }
-    animateStars();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animateStars();
+    }
 
     // -------------------------------------------------------------
     // APERTURA DE SOBRE Y REPRODUCCIÓN AUTOMÁTICA DE MÚSICA
@@ -1300,7 +1313,7 @@
     audioElement.load();
 
     function tryPlayAudio() {
-      audioElement.volume = 1.0;
+      audioElement.volume = 0.55;
       const playPromise = audioElement.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
