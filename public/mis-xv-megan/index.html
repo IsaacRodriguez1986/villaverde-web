@@ -13,6 +13,8 @@
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <base href="/mis-xv-megan/">
   <meta name="theme-color" content="#040914">
+  <!-- Luna dorada en la pestaña del navegador (SVG en línea: sin peticiones extra) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23091633'/%3E%3Cpath d='M21.5 20.8A8.2 8.2 0 0 1 12 8.4a8.6 8.6 0 1 0 9.5 12.4z' fill='%23F5D38A'/%3E%3Ccircle cx='24' cy='9' r='1.6' fill='%23FFF4D2'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -107,166 +109,204 @@
     /* ============================================================
        SOBRE INTERACTIVO DE ENTRADA (LUNA Y ESTRELLAS)
        ============================================================ */
+    /* Pantalla de entrada: el sobre es un video real (terciopelo azul, luna dorada, destellos).
+       El video trae la zona superior fundida al color #060C18 — ahí va el nombre en HTML. */
     #envelope-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #112859 0%, #03060F 100%);
+      background: #060C18;
       z-index: 9999;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
-      padding: 20px;
+      transition: opacity 0.6s ease, visibility 0.6s;
       cursor: pointer;
+      overflow: hidden;
     }
     #envelope-screen.opened {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
+    #envelope-screen > .deco-star { z-index: 7; }
 
-    .envelope-box {
-      width: 100%;
-      max-width: 450px;
-      height: 320px;
-      background: linear-gradient(145deg, #132A5C 0%, #091633 100%);
-      border-radius: 18px;
+    .envelope-stage {
       position: relative;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
-      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(77, 142, 255, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(155, 194, 255, 0.4);
-      transform-style: preserve-3d;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      animation: envelopeFloat 5s ease-in-out infinite;
+      background: #060C18;
+      transform: translateZ(0);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      outline: none;
     }
-    .envelope-box:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 45px 90px rgba(0, 0, 0, 0.95), 0 0 60px rgba(77, 142, 255, 0.5);
-    }
-    @keyframes envelopeFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-12px) rotate(-0.5deg); }
-    }
-
-    /* Marco interior dorado, como una tarjeta de papelería fina */
-    .envelope-frame {
+    .envelope-stage.is-opening { transform: scale(1.035); }
+    .envelope-stage video,
+    .envelope-stage .envelope-poster {
       position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(245, 211, 138, 0.4);
-      border-radius: 11px;
-      pointer-events: none;
-      z-index: 4;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      background: #060C18;
     }
+    .envelope-poster { z-index: 1; }
+    #envelope-idle { z-index: 2; opacity: 0; transition: opacity 0.6s ease; }
+    #envelope-idle.is-playing { opacity: 1; }
+    #envelope-open { z-index: 3; opacity: 0; transition: opacity 0.35s ease; }
+    #envelope-open.is-playing { opacity: 1; }
 
-    /* Destello suave que recorre el sobre */
-    .envelope-shimmer {
-      position: absolute;
-      top: 0; left: -60%;
-      width: 35%; height: 100%;
-      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.16) 45%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.16) 55%, transparent 100%);
-      transform: skewX(-15deg);
-      animation: envelopeShimmer 6s ease-in-out infinite;
-      z-index: 2;
-      pointer-events: none;
-    }
-    @keyframes envelopeShimmer {
-      0% { left: -60%; }
-      35% { left: 130%; }
-      100% { left: 130%; }
-    }
-
-    .envelope-flap {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 160px;
-      background: linear-gradient(180deg, #1B3B7A 0%, #0E224D 100%);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      box-shadow: inset 0 -1px 0 rgba(155, 194, 255, 0.5), 0 6px 18px rgba(0, 0, 0, 0.35);
-      z-index: 3;
-      transform-origin: top;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .envelope-flap::after {
+    /* Velo inferior para que la instrucción se lea sobre el satín */
+    .envelope-stage::after {
       content: '';
       position: absolute;
-      top: 0; left: 50%;
-      width: 1px; height: 100%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent 70%);
-      transform: translateX(-50%) rotate(0deg);
-      transform-origin: top;
-    }
-    .envelope-box.is-opening .envelope-flap {
-      transform: rotateX(180deg);
-      z-index: 1;
+      left: 0; right: 0; bottom: 0;
+      height: 30%;
+      background: linear-gradient(180deg, transparent 0%, rgba(6, 12, 24, 0.55) 55%, rgba(6, 12, 24, 0.85) 100%);
+      z-index: 4;
+      pointer-events: none;
     }
 
-    /* Lacre Celestial con Luna y Estrellas */
-    .wax-seal {
+    /* Nombre de la quinceañera, en la zona superior del video */
+    .envelope-title {
       position: absolute;
-      top: 140px;
-      left: 50%;
+      top: 5.5%;
+      left: 0; right: 0;
+      z-index: 5;
+      text-align: center;
+      padding: 0 20px;
+      pointer-events: none;
+    }
+    .envelope-title::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 130%; height: 220%;
       transform: translate(-50%, -50%);
-      width: 86px;
-      height: 86px;
-      background: radial-gradient(circle at 35% 35%, #4D8EFF, #173E85 60%, #0C214A 100%);
-      border-radius: 50%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(77, 142, 255, 0.7);
+      background: radial-gradient(ellipse at center, rgba(41, 84, 180, 0.32) 0%, transparent 65%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .env-name {
+      font-family: var(--font-script);
+      font-size: clamp(3rem, 14vw, 4.6rem);
+      line-height: 1.25;
+      padding: 0.1em 0 0.2em;
+      color: #FFFFFF;
+      background: var(--star-shimmer);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 18px rgba(155, 194, 255, 0.55));
+      white-space: nowrap;
+    }
+    .env-sub {
+      font-family: var(--font-display);
+      font-size: clamp(0.72rem, 3vw, 0.92rem);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--star-gold);
+      text-shadow: 0 0 14px rgba(245, 211, 138, 0.55);
+      margin-top: 2px;
+      padding-left: 6px;
+    }
+
+    /* Instrucción "toca para abrir" */
+    .envelope-cta {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 6.5%;
+      z-index: 5;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      z-index: 5;
-      border: 2px solid #9BC2FF;
-      transition: transform 0.3s ease, opacity 0.5s ease;
+      gap: 12px;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    .wax-seal::before {
-      content: '';
-      position: absolute;
-      inset: -7px;
+    .envelope-cta.is-hidden { opacity: 0; }
+    .envelope-cta-ring {
+      position: relative;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      border: 1px solid rgba(245, 211, 138, 0.55);
-    }
-    .wax-seal-icon {
-      font-size: 24px;
+      border: 1px solid rgba(245, 211, 138, 0.75);
+      background: rgba(6, 12, 24, 0.4);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #FFF4D2;
-      filter: drop-shadow(0 0 8px #F5D38A);
+      box-shadow: 0 0 24px rgba(245, 211, 138, 0.25);
     }
-    .wax-seal-text {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 800;
-      color: #FFFFFF;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
-    .wax-seal-pulse {
+    .envelope-cta-ring::before {
+      content: '';
       position: absolute;
       inset: -8px;
       border-radius: 50%;
-      border: 2px solid #9BC2FF;
+      border: 1px solid rgba(155, 194, 255, 0.7);
       animation: sealPulse 2s infinite ease-in-out;
     }
+    .envelope-cta-text {
+      font-family: var(--font-display);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+      text-shadow: 0 0 15px rgba(155, 194, 255, 0.5);
+      animation: pulseText 2s infinite;
+    }
+
+    /* Destello dorado que sale del sobre y revela la invitación */
+    .envelope-bloom {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 44%, #FFF8E6 0%, #FFE9B8 16%, rgba(255, 228, 165, 0.94) 30%, rgba(255, 220, 150, 0) 62%);
+      opacity: 0;
+      transform: scale(0.2);
+      transform-origin: 50% 44%;
+      transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .envelope-bloom.is-on { opacity: 1; transform: scale(3.4); }
+    .envelope-bloom.is-fading { opacity: 0; transition: opacity 0.75s ease 0.05s, transform 0.6s ease; }
+
+    /* Pantallas anchas (escritorio, tablet horizontal): el video vive en una tarjeta 9:16 centrada */
+    @media (min-aspect-ratio: 3/5) {
+      .envelope-stage {
+        width: min(calc(100vw - 32px), calc((100vh - 32px) * 9 / 16));
+        height: min(calc(100vh - 32px), calc((100vw - 32px) * 16 / 9));
+        border-radius: 22px;
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 60px rgba(77, 142, 255, 0.25), 0 0 0 1px rgba(155, 194, 255, 0.35);
+        animation: envelopeFloat 6s ease-in-out infinite;
+      }
+      .envelope-stage.is-opening { animation: none; transform: scale(1.03); }
+      .envelope-stage::before {
+        content: '';
+        position: absolute;
+        inset: 10px;
+        border: 1px solid rgba(245, 211, 138, 0.38);
+        border-radius: 14px;
+        z-index: 6;
+        pointer-events: none;
+      }
+      .env-name { font-size: min(4.2rem, 7.5vh); }
+      .env-sub { font-size: min(0.9rem, 1.7vh); }
+      .envelope-cta-text { font-size: min(12px, 1.5vh); }
+    }
+    @keyframes envelopeFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(-0.4deg); }
+    }
+
     @keyframes sealPulse {
       0%, 100% { transform: scale(1); opacity: 0.9; }
       50% { transform: scale(1.25); opacity: 0; }
-    }
-
-    .envelope-instruction {
-      margin-top: 36px;
-      color: var(--blue-light);
-      font-family: var(--font-display);
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: pulseText 2s infinite;
-      text-shadow: 0 0 15px rgba(155, 194, 255, 0.5);
     }
     @keyframes pulseText {
       0%, 100% { opacity: 0.75; }
@@ -1024,13 +1064,12 @@
 
     @media (prefers-reduced-motion: reduce) {
       #stars-canvas { display: none; }
-      .envelope-box, .moon-emblem, .wax-seal-pulse, .envelope-instruction,
-      .audio-icon-spin, .portrait-aura, .portrait-card img,
-      .envelope-shimmer, .deco-star, .style-slide, .floating-audio-btn {
+      .envelope-stage, .envelope-cta-ring::before, .envelope-cta-text, .envelope-bloom,
+      .moon-emblem, .audio-icon-spin, .portrait-aura, .portrait-card img,
+      .deco-star, .style-slide, .floating-audio-btn {
         animation: none !important;
         transition: none !important;
       }
-      .envelope-shimmer { display: none; }
     }
   </style>
 </head>
@@ -1058,24 +1097,29 @@
     <span class="material-symbols-outlined deco-star is-blue" style="top: 18%; right: 12%; font-size: 16px; animation-delay: 1.4s;">auto_awesome</span>
     <span class="material-symbols-outlined deco-star" style="bottom: 4%; left: 6%; font-size: 15px; animation-delay: 2.1s;">auto_awesome</span>
     <span class="material-symbols-outlined deco-star is-blue" style="bottom: 4%; right: 6%; font-size: 19px; animation-delay: .8s;">auto_awesome</span>
-    <div class="envelope-box" id="interactive-envelope" title="Haz clic para abrir tu invitación">
-      <div class="envelope-shimmer"></div>
-      <div class="envelope-flap"></div>
-      <div class="envelope-frame"></div>
-      <div class="wax-seal" id="seal-element">
-        <div class="wax-seal-pulse"></div>
-        <span class="material-symbols-outlined wax-seal-icon">nights_stay</span>
-        <span class="wax-seal-text">MP</span>
+    <div class="envelope-stage" id="interactive-envelope" role="button" tabindex="0" aria-label="Toca para abrir la invitación de Megan Paulette">
+      <img class="envelope-poster" src="/mis-xv-megan/assets/sobre-poster.webp" alt="" aria-hidden="true" width="720" height="1280">
+      <!-- Loop en reposo: el sobre cerrado con los destellos flotando (arranca solo, sin sonido) -->
+      <video id="envelope-idle" muted playsinline loop preload="auto" poster="/mis-xv-megan/assets/sobre-poster.webp" aria-hidden="true">
+        <source src="/mis-xv-megan/assets/sobre-idle.mp4" type="video/mp4">
+        <source src="/mis-xv-megan/assets/sobre-idle.webm" type="video/webm">
+      </video>
+      <!-- Apertura: se reproduce al tocar; al abrirse el sobre, un destello dorado revela la invitación -->
+      <video id="envelope-open" muted playsinline preload="auto" aria-hidden="true">
+        <source src="/mis-xv-megan/assets/sobre-abre.mp4" type="video/mp4">
+        <source src="/mis-xv-megan/assets/sobre-abre.webm" type="video/webm">
+      </video>
+      <div class="envelope-title">
+        <div class="env-name">Megan Paulette</div>
+        <div class="env-sub">Mis XV Años</div>
       </div>
-      <div style="font-family: var(--font-serif); font-size: 21px; font-style: italic; color: #D4E5FF; z-index: 2; margin-top: 90px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
-        Mis Quince Años — Megan Paulette
+      <div class="envelope-cta" id="envelope-cta">
+        <div class="envelope-cta-ring"><span class="material-symbols-outlined" style="font-size: 24px;">touch_app</span></div>
+        <div class="envelope-cta-text">Toca el sobre para abrir</div>
       </div>
-    </div>
-    <div class="envelope-instruction">
-      <span class="material-symbols-outlined" style="font-size: 18px;">touch_app</span>
-      Toca el sobre para entrar a la invitación
     </div>
   </div>
+  <div class="envelope-bloom" id="envelope-bloom" aria-hidden="true"></div>
 
   <!-- ============================================================
        CONTENIDO PRINCIPAL
@@ -1474,7 +1518,12 @@
     // APERTURA DE SOBRE Y REPRODUCCIÓN AUTOMÁTICA DE MÚSICA
     // -------------------------------------------------------------
     const envelopeScreen = document.getElementById('envelope-screen');
-    const envelopeBox = document.getElementById('interactive-envelope');
+    const envelopeStage = document.getElementById('interactive-envelope');
+    const idleVideo = document.getElementById('envelope-idle');
+    const openVideo = document.getElementById('envelope-open');
+    const envelopeCta = document.getElementById('envelope-cta');
+    const envelopeBloom = document.getElementById('envelope-bloom');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const audioElement = document.getElementById('xv-audio');
     const audioToggleBtn = document.getElementById('audio-toggle-btn');
     const audioIcon = document.getElementById('audio-icon');
@@ -1504,19 +1553,85 @@
       }
     }
 
+    // -------------------------------------------------------------
+    // SOBRE EN VIDEO
+    //  - En reposo corre un loop mudo del sobre cerrado (si el navegador
+    //    bloquea el autoplay, se queda la imagen fija del poster).
+    //  - Al tocar: arranca la música y el clip de apertura. Cuando la solapa
+    //    se levanta y sale la luz, un destello dorado crece desde el sobre y
+    //    al apagarse ya está la invitación. Si el video falla por lo que sea,
+    //    se abre igual con el destello.
+    // -------------------------------------------------------------
+    const OPEN_BLOOM_AT = 1.28;   // s del clip de apertura: la luz ya sale del sobre
+    const BLOOM_HOLD_MS = 560;    // el destello crece y cubre la pantalla antes de revelar
+    let bloomStarted = false;
+    let invitationRevealed = false;
+
+    idleVideo.muted = true;
+    openVideo.muted = true;
+    if (!reduceMotion) {
+      idleVideo.addEventListener('playing', () => idleVideo.classList.add('is-playing'), { once: true });
+      const idlePlay = idleVideo.play();
+      if (idlePlay && idlePlay.catch) idlePlay.catch(() => {});
+    }
+
+    function startBloom() {
+      if (bloomStarted) return;
+      bloomStarted = true;
+      // Con "reducir movimiento" no hay destello: sin transiciones sería un flashazo seco
+      if (reduceMotion) { revealInvitation(); return; }
+      envelopeBloom.classList.add('is-on');
+      // el destello se toma su tiempo para crecer; al cubrir la pantalla, revela
+      setTimeout(revealInvitation, BLOOM_HOLD_MS);
+    }
+    function revealInvitation() {
+      if (invitationRevealed) return;
+      invitationRevealed = true;
+      startBloom();
+      envelopeScreen.classList.add('opened');
+      envelopeBloom.classList.add('is-fading');
+      setTimeout(() => {
+        envelopeBloom.style.display = 'none';
+        idleVideo.pause();
+        openVideo.pause();
+      }, 1400);
+    }
+    function watchOpenVideo() {
+      if (invitationRevealed || bloomStarted) return;
+      if (openVideo.currentTime >= OPEN_BLOOM_AT) { startBloom(); return; }
+      requestAnimationFrame(watchOpenVideo);
+    }
+
     function startMusicAndOpen() {
       if (envelopeOpened) return;
       envelopeOpened = true;
-      envelopeBox.classList.add('is-opening');
+      envelopeCta.classList.add('is-hidden');
+      envelopeStage.classList.add('is-opening');
 
-      // Reproducir música Lana Del Rey
+      // Reproducir música Lana Del Rey (gesto del usuario)
       tryPlayAudio();
-
-      setTimeout(() => {
-        envelopeScreen.classList.add('opened');
-      }, 700);
-
       scheduleAudioButtonCollapse();
+
+      if (reduceMotion) { startBloom(); return; }
+
+      let openStarted = false;
+      openVideo.addEventListener('playing', () => {
+        openStarted = true;
+        openVideo.classList.add('is-playing');
+        setTimeout(() => idleVideo.pause(), 450);
+        requestAnimationFrame(watchOpenVideo);
+      }, { once: true });
+      openVideo.addEventListener('ended', startBloom, { once: true });
+      openVideo.addEventListener('error', startBloom, { once: true });
+      try {
+        openVideo.currentTime = 0;
+        const p = openVideo.play();
+        if (p && p.catch) p.catch(startBloom);
+      } catch (e) {
+        startBloom();
+      }
+      // Red lenta o video que no carga: no dejamos al invitado esperando más de ~1 s
+      setTimeout(() => { if (!openStarted && !invitationRevealed) startBloom(); }, 900);
     }
 
     // -------------------------------------------------------------
@@ -1552,19 +1667,18 @@
 
     envelopeScreen.addEventListener('click', startMusicAndOpen);
     envelopeScreen.addEventListener('touchend', startMusicAndOpen);
-    envelopeBox.addEventListener('click', (e) => {
+    envelopeStage.addEventListener('click', (e) => {
       e.stopPropagation();
       startMusicAndOpen();
     });
+    envelopeStage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startMusicAndOpen(); }
+    });
 
-    // Fallback: al hacer touch en cualquier parte si aún no se abrió
-    document.body.addEventListener('touchstart', function initialTouch() {
-      if (!envelopeOpened) {
-        startMusicAndOpen();
-      } else if (!isAudioPlaying) {
-        tryPlayAudio();
-      }
-      document.body.removeEventListener('touchstart', initialTouch);
+    // Si la música no arrancó con la apertura, se reintenta con el siguiente toque
+    document.body.addEventListener('touchend', function retryAudioTouch() {
+      if (envelopeOpened && !isAudioPlaying) tryPlayAudio();
+      if (envelopeOpened) document.body.removeEventListener('touchend', retryAudioTouch);
     }, { passive: true });
 
     audioToggleBtn.addEventListener('click', () => {
