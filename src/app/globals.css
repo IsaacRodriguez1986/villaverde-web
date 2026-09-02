@@ -355,6 +355,58 @@ button { font-family: var(--font-body); }
   padding: 6px 12px; border-radius: 50px; box-shadow: 0 4px 12px var(--rosa-glow);
 }
 
+/* Recorrido 360 embebido (carga bajo demanda) */
+.tour360-wrap { margin: 0 auto 40px; }
+.tour360-frame {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg); overflow: hidden;
+  background: var(--negro); box-shadow: var(--shadow-xl);
+  border: 1px solid var(--gris);
+}
+.tour360-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.tour360-cover {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 24px; border: 0; cursor: pointer; background: var(--negro);
+  font-family: inherit;
+}
+.tour360-cover img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: .62; transition: opacity var(--transition), transform var(--transition);
+}
+.tour360-cover::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 100%);
+}
+.tour360-cover:hover img, .tour360-cover:focus-visible img { opacity: .78; transform: scale(1.03); }
+
+.tour360-cta {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--rosa); color: #fff; padding: 15px 32px; border-radius: 50px;
+  font-size: 16px; font-weight: 700; box-shadow: 0 8px 24px var(--rosa-glow);
+  transition: transform var(--transition);
+}
+.tour360-cover:hover .tour360-cta { transform: translateY(-2px); }
+.tour360-hint {
+  position: relative; z-index: 1; color: rgba(255,255,255,.9);
+  font-size: 14px; text-align: center; text-shadow: 0 1px 6px rgba(0,0,0,.6);
+}
+.tour360-cover:focus-visible { outline: 3px solid var(--rosa-light); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .tour360-frame { aspect-ratio: 4 / 3; }
+  .tour360-cta { padding: 13px 24px; font-size: 15px; }
+  .tour360-hint { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour360-cover img, .tour360-cta { transition: none; }
+  .tour360-cover:hover img, .tour360-cover:focus-visible img { transform: none; }
+  .tour360-cover:hover .tour360-cta { transform: none; }
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed; inset: 0; z-index: 10000;

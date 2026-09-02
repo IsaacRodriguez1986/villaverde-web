@@ -77,6 +77,14 @@ function IconZoomIn({ size = 24 }: { size?: number }) {
 }
 
 /* Lucide-style icons for sections */
+function Icon360({ size = 24 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="12" rx="10" ry="5.5" /><path d="M7 15.5 4.5 18 7 20.5" /><path d="M4.5 18H15" />
+    </svg>
+  );
+}
+
 function IconBuilding({ size = 24 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -357,6 +365,15 @@ const galleryImages = [
   { src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/escalera.webp", alt: "Escalera principal del salón para fotos de quinceañera en Chalco", className: "" },
 ];
 
+/* Recorrido 360. El tour vive en ORBO y se embebe bajo demanda: el iframe no
+ * se monta hasta que el visitante pulsa el boton, porque esta seccion ya carga
+ * un video en autoplay y sumarle WebGL de arranque le costaria datos y bateria
+ * a todos, incluidos los que nunca lo abren. */
+const TOUR_360_ID = "villaverde-360";
+const TOUR_360_URL = `https://360-isaacrodriguez1986s-projects.vercel.app/?t=${TOUR_360_ID}`;
+const TOUR_360_POSTER =
+  "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/tour360-panoramas/poster-tour360.jpg";
+
 /* ===== COMPONENT ===== */
 
 export default function Home() {
@@ -365,6 +382,7 @@ export default function Home() {
   const [currentTesti, setCurrentTesti] = useState(0);
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [tourOpen, setTourOpen] = useState(false);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
   const whatsappQuoteUrl = "https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20un%20evento%20en%20Villaverde";
@@ -375,6 +393,12 @@ export default function Home() {
         content_name: "cotizacion_whatsapp",
         content_category: placement,
       });
+    }
+  };
+
+  const trackTourOpen = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("trackCustom", "TourVirtual360");
     }
   };
 
@@ -770,6 +794,35 @@ export default function Home() {
               />
             </div>
           </div>
+          {TOUR_360_ID && (
+            <div className="tour360-wrap reveal">
+              <div className="tour360-frame">
+                {tourOpen ? (
+                  <iframe
+                    src={TOUR_360_URL}
+                    title="Recorrido virtual 360° por el Salón de Fiestas Villaverde"
+                    allow="accelerometer; gyroscope; xr-spatial-tracking; fullscreen"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="tour360-cover"
+                    onClick={() => { setTourOpen(true); trackTourOpen(); }}
+                    aria-label="Iniciar el recorrido virtual 360 grados por el salón"
+                  >
+                    <img src={TOUR_360_POSTER} alt="" aria-hidden="true" loading="lazy" />
+                    <span className="tour360-cta">
+                      <Icon360 size={22} /> Iniciar recorrido 360°
+                    </span>
+                    <span className="tour360-hint">Muévete por el salón como si estuvieras aquí</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="gallery-grid reveal">
             {galleryImages.map((img, i) => (
               <div
