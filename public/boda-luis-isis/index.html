@@ -11,6 +11,10 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#efe4d2">
+<link rel="icon" type="image/png" sizes="32x32" href="/boda-luis-isis/assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/boda-luis-isis/assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/boda-luis-isis/assets/icon-180.png">
+<meta name="apple-mobile-web-app-title" content="Luis &amp; Isis">
 
 <link rel="canonical" href="https://www.salondefiestasvillaverde.com/boda-luis-isis">
 <meta property="og:type" content="website">
@@ -262,6 +266,7 @@ img{ max-width:100%; display:block; }
   will-change:transform;
 }
 .bb-bg--top img{ object-position:center 30%; }
+.bb-bg--faces img{ object-position:center 12%; }   /* cuerpo entero: las caras van arriba del todo */
 /* Video ambiental detrás de una escena: misma caja y mismo parallax que la
    foto; aparece con un fundido solo cuando de verdad está reproduciendo. */
 .bb-bg__video{
@@ -312,13 +317,12 @@ body.bb-revealed #inicio .bb-bg--hero{ animation:bbKen 9s var(--bb-slow) both; }
 
 /* Escena fotográfica CLARA: velo crema y tinta oscura, para no romper el
    mundo claro con una única pantalla "de noche" (la foto del anillo). */
-.bb-bg--claro::after{
-  background:linear-gradient(180deg,
-    rgb(247 241 230 / .92) 0%,
-    rgb(247 241 230 / .64) 34%,
-    rgb(247 241 230 / .64) 66%,
-    rgb(247 241 230 / .95) 100%);
-}
+.bb-bg--claro::after{ background:linear-gradient(180deg,
+    rgb(247 241 230 / .82) 0%,
+    rgb(247 241 230 / .38) 28%,
+    rgb(247 241 230 / .42) 50%,
+    rgb(247 241 230 / .82) 68%,
+    rgb(247 241 230 / .92) 100%); }
 .bb-scene--claro{ background:var(--bb-cream); color:var(--bb-ink); }
 .bb-scene--claro::before{
   background-image:
@@ -600,6 +604,12 @@ body.bb-revealed .bb-hero__name{
   margin-top:var(--bb-s4);
   text-shadow:0 1px 10px rgb(var(--bb-veil) / .8);
 }
+.bb-hero__guest{
+  font-family:var(--bb-serif); font-style:italic; font-weight:400;
+  font-size:var(--bb-subtitle); color:var(--bb-gold-on-photo);
+  margin-bottom:var(--bb-s3);
+  text-shadow:0 1px 10px rgb(var(--bb-veil) / .8);
+}
 .bb-hero__date{
   font-family:var(--bb-display); font-weight:600;
   font-size:var(--bb-label); letter-spacing:.3em; text-indent:.3em; text-transform:uppercase;
@@ -831,6 +841,12 @@ body.bb-revealed .bb-hero__name{
 .bb-btn--sm{ min-height:40px; padding:9px var(--bb-s3); font-size:.78rem; }
 
 .bb-btn--rsvp{ min-height:56px; padding:16px var(--bb-s6); font-size:.95rem; }
+.bb-rsvp__guest{
+  margin-top:var(--bb-s3); font-family:var(--bb-display); font-weight:600;
+  font-size:1rem; letter-spacing:.08em; color:var(--bb-gold-deep);
+}
+.bb-rsvp__deadline{ margin-top:var(--bb-s2); font-style:italic; color:var(--bb-ink-soft); }
+.bb-rsvp__deadline strong{ font-style:normal; font-weight:600; color:var(--bb-ink); }
 
 /* ============================================================
    REGALOS — desplegable de papel
@@ -895,23 +911,30 @@ body.bb-revealed .bb-hero__name{
    ============================================================ */
 .bb-music{
   position:fixed; top:14px; right:14px; z-index:250;
-  width:46px; height:46px; border-radius:50%;
+  width:42px; height:42px; border-radius:50%;
   display:none; align-items:center; justify-content:center;
-  background:rgb(var(--bb-veil) / .62); border:1px solid var(--bb-line);
-  color:var(--bb-gold-pale); cursor:pointer;
+  background:rgb(247 241 230 / .78); border:1px solid var(--bb-gold);
+  color:var(--bb-gold-deep); cursor:pointer;
+  box-shadow:0 4px 14px rgb(var(--bb-veil) / .18);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   transition:transform var(--bb-dur) var(--bb-ease), opacity var(--bb-dur);
 }
 body.bb-revealed .bb-music{ display:flex; }
 .bb-music:hover{ transform:scale(1.08); }
-.bb-music svg{ width:19px; height:19px; }
+.bb-music svg{ width:18px; height:18px; }
 .bb-music .ico-off{ display:none; }
-.bb-music.is-muted .ico-on{ display:none; }
+.bb-music.is-muted .ico-eq{ display:none; }
 .bb-music.is-muted .ico-off{ display:block; }
+/* Ecualizador: las barras laten solo mientras suena */
+.bb-music .ico-eq rect{ transform-box:fill-box; transform-origin:50% 100%; }
+.bb-music.is-playing .ico-eq rect{ animation:bbEq 1s ease-in-out infinite alternate; }
+.bb-music.is-playing .ico-eq .eq2{ animation-delay:-.35s; }
+.bb-music.is-playing .ico-eq .eq3{ animation-delay:-.7s; }
+@keyframes bbEq{ from{ transform:scaleY(.3); } to{ transform:scaleY(1); } }
 .bb-music.is-playing{ animation:bbPulse 2.6s ease-in-out infinite; }
 @keyframes bbPulse{
-  0%,100%{ box-shadow:0 0 0 0 rgb(201 164 92 / .5); }
-  50%    { box-shadow:0 0 0 12px rgb(201 164 92 / 0); }
+  0%,100%{ box-shadow:0 0 0 0 rgb(201 164 92 / .55); }
+  50%    { box-shadow:0 0 0 10px rgb(201 164 92 / 0); }
 }
 
 /* ============================================================
@@ -936,7 +959,13 @@ body.bb-revealed .bb-music{ display:flex; }
   line-height:var(--bb-script-lh); padding:var(--bb-script-pad);
   color:var(--bb-gold-deep);
 }
-.bb-foot__fine{ font-size:.85rem; margin-top:var(--bb-s2); }
+.bb-foot__fine{ font-size:.9rem; margin-top:var(--bb-s2); line-height:1.7; }
+.bb-foot__credit{
+  margin-top:var(--bb-s4); font-family:var(--bb-display);
+  font-size:var(--bb-label); letter-spacing:.14em; text-transform:uppercase;
+}
+.bb-foot__credit a{ color:var(--bb-gold-deep); text-decoration:none; opacity:.85; }
+.bb-foot__credit a:hover{ opacity:1; text-decoration:underline; }
 
 /* ============================================================
    FRASE
@@ -1144,7 +1173,11 @@ body.bb-revealed .bb-music{ display:flex; }
 
 <!-- ==================== CONTROL DE MÚSICA ==================== -->
 <button type="button" class="bb-music is-muted" id="music-btn" aria-label="Activar la música">
-  <svg class="ico-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+  <svg class="ico-eq" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <rect class="eq1" x="4.5" y="7" width="3" height="11" rx="1.5"/>
+    <rect class="eq2" x="10.5" y="4" width="3" height="14" rx="1.5"/>
+    <rect class="eq3" x="16.5" y="9" width="3" height="9" rx="1.5"/>
+  </svg>
   <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v10.55"/><circle cx="10" cy="17" r="3"/><path d="M4 4l16 16"/></svg>
 </button>
 <audio id="audio" src="/boda-luis-isis/assets/cancion.mp3" preload="none" loop></audio>
@@ -1164,6 +1197,8 @@ body.bb-revealed .bb-music{ display:flex; }
   <div class="bb-motes" id="motes" aria-hidden="true"></div>
 
   <div class="bb-wrap bb-hero bb-rv bb-dolly">
+    <!-- Se llena desde ?para=Familia+Pérez (ver "INVITACIÓN PERSONALIZADA" en el JS) -->
+    <p class="bb-hero__guest" id="hero-invitado" hidden></p>
     <p class="bb-kicker">Nos casamos</p>
     <h1 class="bb-hero__name">Luis Angel<span class="bb-hero__amp">&amp;</span>Isis Alondra</h1>
     <p class="bb-hero__sur">Garcia Merlos &middot; Espinoza Díaz</p>
@@ -1445,7 +1480,7 @@ body.bb-revealed .bb-music{ display:flex; }
   <div class="bb-wrap bb-rv" style="text-align:center">
     <p class="bb-kicker">Un detalle</p>
     <h2 class="bb-title">Mesa de regalos</h2>
-    <p class="bb-lead">Tu presencia es nuestro mejor regalo. Si además quieres tener un detalle con nosotros, aquí tienes dos opciones.</p>
+    <p class="bb-lead">Tu presencia es nuestro mejor regalo. Si quieres tener un detalle con nosotros:</p>
 
     <details class="bb-gift">
       <summary>
@@ -1459,8 +1494,7 @@ body.bb-revealed .bb-music{ display:flex; }
           </svg>
         </span>
         <span class="bb-gift__label">
-          <span class="bb-gift__kicker">Si deseas obsequiarnos algo</span>
-          <span class="bb-gift__title">Ver opciones de regalo</span>
+          <span class="bb-gift__title">Ver opciones</span>
         </span>
         <span class="bb-gift__chev" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -1468,12 +1502,12 @@ body.bb-revealed .bb-music{ display:flex; }
       </summary>
 
       <div class="bb-gift__body">
-        <p class="bb-gift__text">Tenemos una mesa de regalos en Liverpool con lo que más ilusión nos hace para nuestro nuevo hogar.</p>
+        <p class="bb-gift__text">Nuestra mesa de regalos está en Liverpool.</p>
         <div class="bb-gift__actions">
           <a class="bb-btn bb-btn--gold" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60032691" target="_blank" rel="noopener noreferrer">Mesa de regalos Liverpool</a>
         </div>
 
-        <p class="bb-gift__text">Si no sabes qué regalar, también puedes hacer una aportación directa.</p>
+        <p class="bb-gift__text">Si prefieres, puedes hacer una aportación directa.</p>
         <p class="bb-banco__nojs">Escríbenos por WhatsApp y te compartimos los datos bancarios.</p>
         <div class="bb-gift__actions">
           <button type="button" class="bb-btn bb-btn--ghost" id="banco-btn" hidden>Ver datos bancarios</button>
@@ -1504,6 +1538,9 @@ body.bb-revealed .bb-music{ display:flex; }
     <p class="bb-lead">
       Confírmanos tu asistencia por WhatsApp para preparar cada detalle de este día.
     </p>
+    <p class="bb-rsvp__guest" id="rsvp-invitado" hidden></p>
+    <!-- PROVISIONAL: fecha límite propuesta (16 días antes); confirmar con los novios -->
+    <p class="bb-rsvp__deadline">Te pedimos confirmar antes del <strong>15 de octubre</strong>.</p>
 
     <a class="bb-btn bb-btn--gold bb-btn--rsvp" id="rsvp-btn"
        href="https://wa.me/525636051127?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Luis%20Angel%20e%20Isis%20Alondra%20el%20s%C3%A1bado%2031%20de%20octubre%20de%202026."
@@ -1517,7 +1554,7 @@ body.bb-revealed .bb-music{ display:flex; }
 
 <!-- ==================== ESCENA · CIERRE ==================== -->
 <section class="bb-scene bb-scene--photo bb-scene--full bb-closing">
-  <div class="bb-bg bb-bg--hero bb-bg--top" aria-hidden="true">
+  <div class="bb-bg bb-bg--hero bb-bg--faces" aria-hidden="true">
     <img src="/boda-luis-isis/assets/esc-cierre.webp"
          srcset="/boda-luis-isis/assets/esc-cierre.webp 900w,
                  /boda-luis-isis/assets/esc-cierre@2x.webp 1400w"
@@ -1542,7 +1579,8 @@ body.bb-revealed .bb-music{ display:flex; }
 <footer class="bb-foot">
   <div class="bb-wrap">
     <p class="bb-foot__name">Luis &amp; Isis</p>
-    <p class="bb-foot__fine">Sábado 31 de octubre de 2026 &middot; Misa 4:00 PM &middot; Recepción 6:00 PM</p>
+    <p class="bb-foot__fine">Sábado 31 de octubre de 2026<br>Misa 4:00 PM &middot; Recepción 6:00 PM</p>
+    <p class="bb-foot__credit"><a href="https://www.salondefiestasvillaverde.com" target="_blank" rel="noopener noreferrer">Invitación digital &middot; Salón de Fiestas Villaverde</a></p>
   </div>
 </footer>
 
@@ -1603,6 +1641,38 @@ var EVENTO = {
   if (rh && EVENTO.recepcion && rh.textContent.trim() !== EVENTO.recepcion.hora) {
     console.warn('EVENTO.recepcion.hora no coincide con el HTML');
   }
+})();
+
+/* ---------- INVITACIÓN PERSONALIZADA ----------
+   ?para=Familia+Pérez&pases=2 saluda por nombre en la portada, anota los
+   pases en la confirmación y manda el WhatsApp ya con nombre y pases.
+   Solo textContent: lo que venga en la URL nunca se interpreta como HTML. */
+(function () {
+  var q = new URLSearchParams(window.location.search);
+  var nombre = (q.get('para') || q.get('p') || '')
+    .replace(/[<>&"]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60);
+  if (!nombre) return;
+  var pases = parseInt(q.get('pases') || q.get('n'), 10);
+  var conPases = isFinite(pases) && pases > 0 && pases <= 20;
+  var plural = function (n, uno, varios) { return n + ' ' + (n === 1 ? uno : varios); };
+
+  var hero = document.getElementById('hero-invitado');
+  if (hero) { hero.textContent = 'Con cariño para ' + nombre; hero.hidden = false; }
+
+  var rsvp = document.getElementById('rsvp-invitado');
+  if (rsvp) {
+    rsvp.textContent = nombre + (conPases ? ' \u00b7 ' + plural(pases, 'pase reservado', 'pases reservados') : '');
+    rsvp.hidden = false;
+  }
+
+  var btn = document.getElementById('rsvp-btn');
+  if (btn) {
+    var msg = '¡Hola! Somos ' + nombre + '. Confirmamos nuestra asistencia a la boda de ' +
+      'Luis Angel e Isis Alondra el sábado 31 de octubre de 2026' +
+      (conPases ? ' (' + plural(pases, 'pase', 'pases') + ')' : '') + '.';
+    btn.href = 'https://wa.me/' + EVENTO.telefono + '?text=' + encodeURIComponent(msg);
+  }
+  document.title = 'Boda de Luis Angel e Isis Alondra \u00b7 ' + nombre;
 })();
 
 /* ---------- CUENTA REGRESIVA ---------- */
