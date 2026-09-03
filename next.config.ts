@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
  *  Alimenta a la vez el rewrite de URL limpia y las cabeceras de privacidad,
  *  para que no se pueda publicar una invitación sin una de las dos cosas
  *  (a /eldiabloviste se le olvidó el rewrite y su URL limpia nunca funcionó). */
-const INVITACIONES = ["mis-xv-dayana", "ana-paula-1", "mis-xv-megan", "nuestra-boda", "boda-luis-isis"];
+const INVITACIONES = ["mis-xv-dayana", "ana-paula-1", "mis-xv-megan", "nuestra-boda", "boda-angel-isis"];
 
 const CABECERAS_INVITACION = [
   {
@@ -22,6 +22,26 @@ const nextConfig: NextConfig = {
         hostname: "lh3.googleusercontent.com",
       },
     ],
+  },
+  async redirects() {
+    return [
+      // 3-sep-2026: la invitacion paso de /boda-luis-isis a /boda-angel-isis
+      // (el novio es Angel). Los enlaces personalizados por familia YA estaban
+      // repartidos, asi que el slug viejo tiene que seguir resolviendo.
+      // Next conserva el query string, que es donde viajan ?para= y ?pases=.
+      // 307 y no 308 a proposito: un permanente se queda cacheado en el
+      // navegador del invitado y seria dificil de revertir.
+      {
+        source: "/boda-luis-isis",
+        destination: "/boda-angel-isis",
+        permanent: false,
+      },
+      {
+        source: "/boda-luis-isis/:path*",
+        destination: "/boda-angel-isis/:path*",
+        permanent: false,
+      },
+    ];
   },
   async rewrites() {
     return [
