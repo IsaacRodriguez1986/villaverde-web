@@ -8,7 +8,7 @@ UID:boda-luis-isis-20261031@salondefiestasvillaverde.com
 DTSTAMP:20260902T050000Z
 DTSTART:20261031T213000Z
 DTEND:20261101T050000Z
-SUMMARY:Boda de Luis Angel e Isis Alondra
+SUMMARY:Boda de Angel e Isis
 LOCATION:Parroquia San Gregorio Magno\, Av. José María Morelos S/N\, San 
  Gregorio Cuautzingo\, Chalco\, Estado de México
 DESCRIPTION:3:30 PM cita en la parroquia · 4:00 PM misa · 6:00 PM recepci
@@ -19,7 +19,7 @@ URL:https://www.salondefiestasvillaverde.com/boda-luis-isis
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:Mañana es la boda de Luis e Isis
+DESCRIPTION:Mañana es la boda de Angel e Isis
 END:VALARM
 END:VEVENT
 END:VCALENDAR
