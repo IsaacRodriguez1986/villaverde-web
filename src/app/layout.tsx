@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.salondefiestasvillaverde.com",
   },
+  // Rutas fijas en public/ y no la convencion src/app/icon.png: Google pide
+  // que la URL del favicon sea estable, y esa convencion le cuelga un hash
+  // que cambia en cada build. Sin estos archivos Google dibuja el globo gris.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "Salón de Fiestas Villaverde — Desde $420/persona todo incluido",
     description: "Bodas, XV Años y Graduaciones en Chalco. Descorche libre, cortesías exclusivas. Aparta con solo $3,000.",
@@ -45,7 +57,6 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -69,6 +80,7 @@ export default function RootLayout({
               telephone: "+529995485862",
               image:
                 "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/og-cover.jpg",
+              logo: "https://www.salondefiestasvillaverde.com/logo-villaverde.png",
               address: {
                 "@type": "PostalAddress",
                 streetAddress:
