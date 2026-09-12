@@ -4,7 +4,24 @@ import type { NextConfig } from "next";
  *  Alimenta a la vez el rewrite de URL limpia y las cabeceras de privacidad,
  *  para que no se pueda publicar una invitación sin una de las dos cosas
  *  (a /eldiabloviste se le olvidó el rewrite y su URL limpia nunca funcionó). */
-const INVITACIONES = ["mis-xv-dayana", "ana-paula-1", "mis-xv-megan", "nuestra-boda", "boda-angel-isis"];
+const INVITACIONES = [
+  "mis-xv-dayana",
+  "ana-paula-1",
+  "mis-xv-megan",
+  "nuestra-boda",
+  "boda-angel-isis",
+];
+
+/* El comparativo de precios y las fotos de los correos viven en public/brochures/ para
+ * que la secuencia pueda enlazarlos sin la llave de servicio de Supabase. Se sirven, pero
+ * NO se indexan: la lista de precios no tiene por qué salir en una búsqueda ni quedarse
+ * cacheada en Google, donde envejecería mal (los precios se ajustan cada mes). */
+const CABECERAS_FOLLETO = [
+  {
+    key: "X-Robots-Tag",
+    value: "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  },
+];
 
 const CABECERAS_INVITACION = [
   {
@@ -71,6 +88,7 @@ const nextConfig: NextConfig = {
         source: "/informes/:path*",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
+      { source: "/brochures/:path*", headers: CABECERAS_FOLLETO },
       // Cada invitación lleva nombre, dirección y teléfono de una familia real.
       // Se PERMITE el rastreo (para que el crawler lea el noindex y para que
       // funcione el preview de WhatsApp) pero se bloquea el indexado.
