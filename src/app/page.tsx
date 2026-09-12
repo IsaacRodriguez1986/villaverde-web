@@ -126,6 +126,7 @@ function IconStar({ size = 20 }: { size?: number }) {
       fill="currentColor"
       stroke="currentColor"
       strokeWidth="1"
+      aria-hidden="true"
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
@@ -803,7 +804,12 @@ export default function Home() {
   const [currentTesti, setCurrentTesti] = useState(0);
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [testiPlaying, setTestiPlaying] = useState(false);
+  const [testiLoading, setTestiLoading] = useState(false);
+  const [testiHydrated, setTestiHydrated] = useState(false);
   const lightboxRef = useRef<HTMLDivElement>(null);
+  const testiVideoRef = useRef<HTMLVideoElement>(null);
+  const testiPlayBtnRef = useRef<HTMLButtonElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
   const whatsappQuoteUrl =
     "https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20un%20evento%20en%20Villaverde";
@@ -816,6 +822,65 @@ export default function Home() {
       });
     }
   };
+
+  /* El testimonio arranca con un boton propio en vez de los controles nativos: la barra
+   * negra le tapaba el 15% inferior a la caratula y la unica forma de darle play era una
+   * flecha diminuta en la esquina. Los controles nativos aparecen recien empezado el video. */
+  const playTestiVideo = () => {
+    const video = testiVideoRef.current;
+    if (!video || testiLoading) return;
+    setTestiLoading(true);
+    video.play().catch((err: unknown) => {
+      setTestiLoading(false);
+      // Un AbortError no es un fallo de arranque: es una reproduccion que empezo y algo
+      // interrumpio (un segundo toque, un pause). Revertir ahi apagaria controles legitimos.
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      setTestiPlaying(false);
+    });
+  };
+
+  const handleTestiPlaying = () => {
+    /* El foco se traslada ANTES de ocultar el boton. Si React le aplica inert mientras
+     * lo tiene, el navegador bloquea el atributo y avisa: "Blocked aria-hidden on an
+     * element because its descendant retained focus". El efecto de rescate de mas abajo
+     * corre despues del pintado, o sea demasiado tarde para evitar esa ventana. */
+    if (document.activeElement === testiPlayBtnRef.current) {
+      testiVideoRef.current?.focus({ preventScroll: true });
+    }
+    setTestiLoading(false);
+    setTestiPlaying(true);
+  };
+
+  const handleTestiEnded = () => {
+    const video = testiVideoRef.current;
+    const teniaFoco = document.activeElement === video;
+    setTestiPlaying(false);
+    setTestiLoading(false);
+    // load() repinta la caratula; sin el, el video queda congelado en el ultimo fotograma
+    // y el boton reaparece sobre una imagen detenida en vez de sobre el poster.
+    video?.load();
+    if (teniaFoco) {
+      requestAnimationFrame(() =>
+        testiPlayBtnRef.current?.focus({ preventScroll: true }),
+      );
+    }
+  };
+
+  /* Sin JS el boton propio no sirve de nada, asi que el HTML del servidor sale con los
+   * controles nativos puestos y se apagan al hidratar. El primer render del cliente
+   * coincide con el del servidor, de modo que no hay desajuste de hidratacion. */
+  useEffect(() => setTestiHydrated(true), []);
+
+  /* Rescate del foco: si el boton quedo oculto mientras lo tenia, se lo pasamos al video,
+   * que acaba de volverse enfocable al recibir los controles. Sin esto el foco caia a
+   * <body> y el siguiente Tab reiniciaba el recorrido desde el inicio de la pagina. */
+  useEffect(() => {
+    if (!testiPlaying) return;
+    const activo = document.activeElement;
+    if (activo === document.body || activo === testiPlayBtnRef.current) {
+      testiVideoRef.current?.focus({ preventScroll: true });
+    }
+  }, [testiPlaying]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -2072,15 +2137,40 @@ export default function Home() {
               preload="none" + poster: no baja un solo byte del video hasta que alguien le da play,
               así no le cuesta nada al tiempo de carga de la página. */}
           <div className="testi-video reveal">
-            <video
-              className="testi-video-player"
-              src="/testimonio-xv.mp4"
-              poster="/testimonio-xv-poster.jpg"
-              controls
-              playsInline
-              preload="none"
-              aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
-            />
+            <div className="testi-video-frame">
+              <video
+                ref={testiVideoRef}
+                className="testi-video-player"
+                src="/testimonio-xv.mp4"
+                poster="/testimonio-xv-poster.jpg"
+                controls={!testiHydrated || testiPlaying}
+                playsInline
+                preload="none"
+                aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
+                onPlaying={handleTestiPlaying}
+                onEnded={handleTestiEnded}
+              />
+              <button
+                ref={testiPlayBtnRef}
+                type="button"
+                className={`testi-video-play${testiPlaying ? " oculto" : ""}`}
+                onClick={playTestiVideo}
+                aria-label="Reproducir el testimonio en video (14 segundos)"
+                aria-busy={testiLoading}
+                inert={testiPlaying}
+                tabIndex={testiPlaying ? -1 : 0}
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M8 5.5v13l11-6.5z" />
+                </svg>
+              </button>
+            </div>
             <div className="testi-video-caption">
               <div className="testi-video-label">
                 &quot;Mi fiesta en Villaverde&quot;
@@ -2127,6 +2217,7 @@ export default function Home() {
                       {[...Array(5)].map((_, j) => (
                         <IconStar key={j} size={20} />
                       ))}
+                      <span className="sr-only">5 de 5 estrellas</span>
                     </div>
                     <div className="testi-text">&quot;{t.text}&quot;</div>
                     <div className="testi-author">— {t.author}</div>

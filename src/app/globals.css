@@ -13,6 +13,10 @@
   --gris-text: #6b7280;
   --texto: #111827;
   --gold: #ca8a04;
+  /* Dorado para TEXTO sobre fondo claro: #ca8a04 da 2.94:1 y WCAG pide 3:1 minimo
+     para objetos graficos. Este llega a ~4.9:1 y se sigue viendo dorado. El --gold
+     de arriba se queda como esta porque es el acento de marca del paquete Diamante. */
+  --gold-text: #a16207;
   --gold-light: #fde68a;
   --gold-dark: #92400e;
   --esmeralda: #059669;
@@ -670,10 +674,10 @@ button {
   background: linear-gradient(180deg, #fffbeb 0%, white 100%);
 }
 .pkg-diamante .pkg-icon {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .pkg-diamante .pkg-name {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .pkg-diamante .pkg-tag {
   color: var(--gold-dark);
@@ -682,7 +686,7 @@ button {
   background: rgba(202, 138, 4, 0.06);
 }
 .pkg-diamante .pkg-price-label {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .pkg-diamante .pkg-price-num {
   color: var(--gold-dark);
@@ -793,7 +797,7 @@ button {
   color: var(--rosa);
 }
 .compare-table thead th:nth-child(3) {
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .compare-table thead th:nth-child(4) {
   color: var(--esmeralda);
@@ -1237,6 +1241,20 @@ button {
   line-height: 1.6;
 }
 
+/* Texto solo para lectores de pantalla (la calificacion de 5 estrellas, que hoy es
+   puramente grafica). Tecnica estandar: fuera de vista pero dentro del arbol. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ===== TESTIMONIALS ===== */
 .testi-carousel {
   position: relative;
@@ -1278,7 +1296,7 @@ button {
   justify-content: center;
   gap: 2px;
   margin-bottom: 16px;
-  color: var(--gold);
+  color: var(--gold-text);
 }
 .testi-text {
   font-family: var(--font-display);
@@ -1363,12 +1381,70 @@ button {
   border-radius: var(--radius-lg);
   padding: 20px;
 }
+.testi-video-frame {
+  position: relative;
+  display: block;
+}
 .testi-video-player {
   display: block;
   width: 100%;
   aspect-ratio: 9 / 16;
   border-radius: var(--radius-lg);
   background: #000;
+}
+.testi-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: var(--rosa);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: all var(--transition);
+}
+.testi-video-play:hover {
+  background: var(--rosa-dark);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+/* Aro de dos tonos: el blanco contrasta contra el boton rosa y el rosa oscuro contra la
+   caratula, que es una foto clara. Asi el foco se ve pase lo que pase detras. */
+.testi-video-play:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 0;
+  box-shadow: 0 0 0 6px var(--rosa-dark);
+}
+/* Oculto pero MONTADO: desmontarlo mientras tiene el foco lo dejaba huerfano en <body>. */
+.testi-video-play.oculto {
+  opacity: 0;
+  pointer-events: none;
+}
+.testi-video-play[aria-busy="true"] {
+  animation: pulsoPlay 1s ease-in-out infinite;
+}
+@keyframes pulsoPlay {
+  50% {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .testi-video-play {
+    transition: none;
+  }
+  .testi-video-play[aria-busy="true"] {
+    animation: none;
+  }
+  .testi-video-play:hover {
+    transform: translate(-50%, -50%);
+  }
 }
 .testi-video-label {
   font-family: var(--font-display);
@@ -1391,7 +1467,7 @@ button {
     padding: 16px;
     text-align: center;
   }
-  .testi-video-player {
+  .testi-video-frame {
     max-width: 240px;
     margin: 0 auto;
   }
