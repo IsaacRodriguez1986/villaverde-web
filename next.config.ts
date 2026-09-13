@@ -23,6 +23,21 @@ const CABECERAS_FOLLETO = [
   },
 ];
 
+/* La plataforma de informes es la herramienta del vendedor frente al cliente: es la única
+ * superficie que muestra los precios por persona y el salón Gardenia, que no se menciona
+ * en ningún canal automático. No está enlazada desde ninguna página, pero eso no la
+ * protege: basta con que alguien comparta la URL. Se PERMITE el rastreo (para que el
+ * crawler llegue a leer el noindex; un Disallow en robots.txt lo dejaría indexando la URL
+ * a ciegas) y se bloquea el indexado. no-referrer evita filtrar la URL al salir a wa.me. */
+const CABECERAS_INFORMES = [
+  { key: "Cache-Control", value: "no-cache, must-revalidate" },
+  {
+    key: "X-Robots-Tag",
+    value: "noindex, nofollow, noarchive, nosnippet, noimageindex",
+  },
+  { key: "Referrer-Policy", value: "no-referrer" },
+];
+
 const CABECERAS_INVITACION = [
   {
     key: "X-Robots-Tag",
@@ -84,10 +99,8 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      {
-        source: "/informes/:path*",
-        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
-      },
+      { source: "/informes", headers: CABECERAS_INFORMES },
+      { source: "/informes/:path*", headers: CABECERAS_INFORMES },
       { source: "/brochures/:path*", headers: CABECERAS_FOLLETO },
       // Cada invitación lleva nombre, dirección y teléfono de una familia real.
       // Se PERMITE el rastreo (para que el crawler lea el noindex y para que
