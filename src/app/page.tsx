@@ -2127,7 +2127,8 @@ export default function Home() {
       </section>
 
       {/* Testimonios con Avatares */}
-      <section className="section bg-gris">
+      {/* id="testimonios": el botón del correo 3 de la secuencia apunta a /#testimonios. */}
+      <section className="section bg-gris" id="testimonios">
         <div className="section-narrow">
           <h2 className="section-title reveal">
             Lo que dicen nuestras familias
