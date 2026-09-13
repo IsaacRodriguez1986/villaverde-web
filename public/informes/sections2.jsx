@@ -228,7 +228,8 @@ function SecCortesias() {
       <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginTop: 10 }}>
         {VV.CORTESIAS.map(c => {
           const on = fav.has(c.id);
-          const media = [...(c.video ? [{ video: c.video, poster: (c.gallery && c.gallery[0]) || undefined }] : []), ...(c.gallery || [])];
+          const vids = VV.videosDe(c, (c.gallery && c.gallery[0]) || undefined);
+          const media = [...vids, ...(c.gallery || [])];
           const hasMedia = media.length > 0;
           const cover = c.gallery && c.gallery.length ? c.gallery[0] : null;
           return (
@@ -251,10 +252,8 @@ function SecCortesias() {
                 <div style={{ fontSize: 12.5, color: 'var(--vv-muted)', marginTop: 5, textAlign: 'left', lineHeight: 1.4 }}>{c.desc}</div>
                 {hasMedia && (
                   <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 5, fontSize: 11.5, color: 'var(--vv-crimson)', fontWeight: 700 }}>
-                    <Icon name={c.video ? 'play' : 'camera'} size={13} />
-                    {c.video
-                      ? (c.gallery && c.gallery.length ? `Ver video + ${c.gallery.length} foto${c.gallery.length > 1 ? 's' : ''}` : 'Ver video')
-                      : `Ver ${c.gallery.length} foto${c.gallery.length > 1 ? 's' : ''}`}
+                    <Icon name={vids.length ? 'play' : 'camera'} size={13} />
+                    {`Ver ${VV.etiquetaMedia(vids.length, c.gallery ? c.gallery.length : 0)}`}
                   </div>
                 )}
                 <div style={{ marginTop: hasMedia ? 6 : 12, display: 'flex', alignItems: 'center', gap: 6 }}>

@@ -119,15 +119,11 @@ function SecSalon() {
         <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
           {(VV.TEMATICAS || []).map(tm => {
             const cover = tm.cover || (tm.gallery && tm.gallery.length ? tm.gallery[0] : null);
-            const media = [
-              ...(tm.video ? [{ video: tm.video, poster: cover || undefined }] : []),
-              ...(tm.gallery || []),
-            ];
+            const vids = VV.videosDe(tm, cover || undefined);
+            const media = [...vids, ...(tm.gallery || [])];
             const hasMedia = media.length > 0;
             const n = tm.gallery ? tm.gallery.length : 0;
-            const label = tm.video
-              ? (n ? `video + ${n} foto${n > 1 ? 's' : ''}` : 'video')
-              : `${n} foto${n > 1 ? 's' : ''}`;
+            const label = VV.etiquetaMedia(vids.length, n);
             return (
               <button key={tm.id}
                 onClick={() => hasMedia && setTemaOpen(media)}
@@ -141,7 +137,7 @@ function SecSalon() {
                   {!hasMedia && <span className="vv-tema__soon">Próximamente</span>}
                   {hasMedia && (
                     <span className="vv-tema__count">
-                      <Icon name={tm.video ? 'play' : 'camera'} size={13} />
+                      <Icon name={vids.length ? 'play' : 'camera'} size={13} />
                       {label}
                     </span>
                   )}

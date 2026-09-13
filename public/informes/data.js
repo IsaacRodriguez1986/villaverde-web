@@ -83,6 +83,14 @@ VV.PAQUETES = [
   },
 ];
 
+/* Los dos videos del cantante se muestran igual en "qué incluye" y en cortesías,
+   así que la lista vive aquí y no duplicada en cada lugar. El primero es la voz
+   en vivo durante la cena; el segundo, el cantante ranchero en la pista. */
+VV.VIDEOS_CANTANTE = [
+  'assets/cantante-cena.mp4',
+  { src: 'assets/cantante-ranchero.mp4', poster: 'assets/cantante-ranchero-poster.jpg' },
+];
+
 /* ---------- INFO DETALLADA POR ELEMENTO DEL PAQUETE ----------
    Se muestra al dar clic a cada elemento dentro de un paquete.
    go  = id de paso del recorrido al que se puede saltar
@@ -111,7 +119,7 @@ VV.ITEM_INFO = {
   'Grupo versátil 9 integrantes':   { icon: 'mic',    d: 'Grupo versátil completo de 9 integrantes con sección de vientos. Sonido de gran evento que llena la pista toda la noche.', fotos: ['assets/trooncosis-grupo.jpg'], poster: true },
   'Cóctel de bienvenida':           { icon: 'drink',  d: 'Coctelería de bienvenida para recibir a tus invitados: 4 vitroleros de 10 L + 100 micheladas para 100 personas.', fotos: ['assets/coctel-bienvenida.jpg'] },
   'Cabina foto 360 (1 hora)':       { icon: 'camera', d: 'Cabina 360° por una hora: tus invitados se graban en video giratorio y se lo llevan al instante. Siempre es el éxito de la fiesta.' },
-  'Cantante durante la cena':       { icon: 'mic',    d: 'Voz en vivo amenizando la cena con un ambiente elegante e íntimo mientras tus invitados disfrutan los tres tiempos.', go: 'cortesias', cort: 'cantante', video: 'assets/cantante-cena.mp4', fotos: ['assets/cantante-real.jpg', 'assets/mariachi-cena.jpg'] },
+  'Cantante durante la cena':       { icon: 'mic',    d: 'Voz en vivo amenizando la cena con un ambiente elegante e íntimo mientras tus invitados disfrutan los tres tiempos.', go: 'cortesias', cort: 'cantante', video: VV.VIDEOS_CANTANTE, fotos: ['assets/cantante-real.jpg', 'assets/mariachi-cena.jpg'] },
   'LED en cada mesa':               { icon: 'sparkle',d: 'Iluminación LED de color en cada mesa que hace brillar el salón y crea una atmósfera mágica de noche.', go: 'cortesias', cort: 'ledmesas' },
   'Cascada de flores en escalera':  { icon: 'flower', d: 'Una cascada de flores decorando la escalera de entrada: el marco perfecto para la entrada del festejado y las fotos.', go: 'cortesias', cort: 'cascada', fotos: ['assets/cascada/01.jpg', 'assets/cascada/02.jpg', 'assets/cascada/03.jpg', 'assets/cascada/04.jpg'] },
   'Arco de flores':                 { icon: 'arch',   d: 'Arco floral para la entrada o el área de fotos. Un punto focal hermoso que tus invitados no dejarán de fotografiar.', go: 'cortesias', cort: 'arco' },
@@ -166,7 +174,7 @@ VV.CORTESIAS = [
   { id: 'ledmesas', name: 'Iluminación LED en mesas', desc: 'Cada mesa con luz de color.',          icon: 'sparkle',wow: 4,
     gallery: ['assets/mesas-led-rosa.jpg', 'assets/mesas-led-azul.jpg'] },
   { id: 'cantante', name: 'Cantante durante la cena', desc: 'Voz en vivo mientras cenan.',          icon: 'mic',    wow: 4,
-    video: 'assets/cantante-cena.mp4',
+    video: VV.VIDEOS_CANTANTE,
     gallery: ['assets/cantante-real.jpg', 'assets/mariachi-cena.jpg'] },
   { id: 'video',    name: 'Video remembranza',     desc: 'Recuerdos en pantalla gigante.',          icon: 'film',   wow: 3 },
   { id: 'cascada',  name: 'Cascada de flores',      desc: 'Flores en la escalera de entrada.',       icon: 'flower', wow: 4,
@@ -386,6 +394,30 @@ VV.GUION = {
       { q: '“Lo consulto y te aviso.”', a: 'Perfecto. Te aparto la fecha 48h sin compromiso para que la platiquen con calma.' },
     ],
   },
+};
+
+/* ---------- HELPERS DE MEDIA (uno o varios videos) ----------
+   `video` acepta una ruta ('assets/x.mp4') o una lista de rutas, y cada entrada
+   de la lista puede ser una ruta o { src, poster } cuando el video trae su
+   propio póster. Así, sumar un segundo video a una cortesía o a una temática es
+   solo editar este archivo. Lo consumen el visor de galería (cortesías y
+   temáticas) y el panel de detalle de "qué incluye". */
+VV.videosDe = function (item, posterFallback) {
+  var v = item && item.video;
+  if (!v) return [];
+  return (Array.isArray(v) ? v : [v]).map(function (m) {
+    return typeof m === 'string'
+      ? { video: m, poster: posterFallback }
+      : { video: m.src, poster: m.poster || posterFallback };
+  });
+};
+
+/* Contador de una galería: "2 videos + 3 fotos", "video", "4 fotos". */
+VV.etiquetaMedia = function (nVideos, nFotos) {
+  var partes = [];
+  if (nVideos) partes.push(nVideos > 1 ? nVideos + ' videos' : 'video');
+  if (nFotos) partes.push(nFotos + ' foto' + (nFotos > 1 ? 's' : ''));
+  return partes.join(' + ');
 };
 
 /* ---------- HELPERS DE PRECIO Y ESTADO (fuente única de verdad) ---------- */

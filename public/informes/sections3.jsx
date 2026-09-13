@@ -183,6 +183,7 @@ function ItemDetalle({ name, accent, onGo, onClose }) {
   const info = VV.ITEM_INFO[name] || {};
   const cort = info.cort ? VV.CORTESIAS.find(c => c.id === info.cort) : null;
   const fotos = info.fotos ? info.fotos : (cort && cort.gallery ? cort.gallery : null);
+  const videos = VV.videosDe(info, fotos && fotos.length ? fotos[0] : undefined);
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
@@ -212,21 +213,23 @@ function ItemDetalle({ name, accent, onGo, onClose }) {
 
         {info.invitacion && <InvitacionDemo />}
 
-        {info.video && (
-          <div style={{ padding: '18px 24px 4px' }}>
-            <video src={info.video} controls playsInline preload="metadata"
-              style={{ width: '100%', borderRadius: 12, border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000', display: 'block' }} />
+        {videos.length > 0 && (
+          <div style={{ padding: '18px 24px 4px', display: 'grid', gap: 12 }}>
+            {videos.map((v, i) => (
+              <video key={i} src={v.video} poster={v.poster} controls playsInline preload="metadata"
+                style={{ width: '100%', borderRadius: 12, border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000', display: 'block' }} />
+            ))}
           </div>
         )}
 
-        {!info.invitacion && !info.video && fotos && info.poster && (
+        {!info.invitacion && !videos.length && fotos && info.poster && (
           <div style={{ display: 'flex', justifyContent: 'center', padding: '18px 24px 4px' }}>
             <img src={fotos[0]} alt={name} className="vv-zoomable"
               style={{ maxWidth: '320px', width: '100%', borderRadius: 12, cursor: 'zoom-in', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)' }} />
           </div>
         )}
 
-        {!info.invitacion && !info.video && fotos && !info.poster && (
+        {!info.invitacion && !videos.length && fotos && !info.poster && (
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(fotos.length, 3)}, 1fr)`, gap: 10, padding: '18px 24px 4px' }}>
             {fotos.map((src, i) => (
               <img key={i} src={src} alt={name} className="vv-zoomable"
