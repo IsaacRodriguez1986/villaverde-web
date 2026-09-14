@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 // noindex para que las invitaciones no se indexen en buscadores.
 export const metadata: Metadata = {
   robots: { index: false },
+  referrer: "no-referrer",
 };
 
 export default function RSVPLayout({ children }: { children: React.ReactNode }) {
