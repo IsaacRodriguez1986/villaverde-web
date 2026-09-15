@@ -219,12 +219,16 @@ VV.TEMATICAS = [
     // Sin video propio todavía. Cuando tengas el video real de esta temática,
     // ponlo en assets/tematicas/alicia/video.mp4 y agrega aquí:
     // video: 'assets/tematicas/alicia/video.mp4',
-    // Fotos de RELLENO — reemplázalas por las reales (mismos nombres 01..04.jpg).
     gallery: [
       'assets/tematicas/alicia/01.jpg',
       'assets/tematicas/alicia/02.jpg',
       'assets/tematicas/alicia/03.jpg',
       'assets/tematicas/alicia/04.jpg',
+      'assets/tematicas/alicia/05.jpg',
+      'assets/tematicas/alicia/06.jpg',
+      'assets/tematicas/alicia/07.jpg',
+      'assets/tematicas/alicia/08.jpg',
+      'assets/tematicas/alicia/09.jpg',
     ] },
 
   // Ejemplos vacíos: se ven en gris "Próximamente" hasta que tengan fotos.
