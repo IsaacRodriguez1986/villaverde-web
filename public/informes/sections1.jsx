@@ -62,11 +62,13 @@ const SALONES = [
   {
     id: 'villaverde', name: 'Salón Villaverde', tag: 'El íntimo', cap: 250,
     real: 'assets/salon-principal.jpg',
+    video: 'assets/salon-muestra.mp4', poster: 'assets/salon-muestra-poster.jpg',
     desc: 'Nuestro salón clásico: cálido y acogedor, perfecto para una celebración entrañable. Techo entelado, candiles de cristal y pista de espejo.',
   },
   {
     id: 'gardenia', name: 'Salón Gardenia', tag: 'El gran salón', cap: 450,
     real: null, pano: 'assets/gardenia-panorama.jpg',
+    video: 'assets/gardenia-muestra.mp4', poster: 'assets/gardenia-muestra-poster.jpg',
     desc: 'El espacio más amplio de Villaverde: gran capacidad sin perder elegancia, ideal para fiestas en grande con todo el lujo de detalles.',
   },
 ];
@@ -149,7 +151,7 @@ function SecSalon() {
         </div>
       </div>
 
-      {sal.pano ? (
+      {sal.pano && (
         /* Panorámica full-width (Gardenia) */
         <PhotoSlot id="gardenia-pano" src={sal.pano} className="vv-panowrap"
           style={{ aspectRatio: '2560 / 663', width: '100%' }}
@@ -159,11 +161,22 @@ function SecSalon() {
               <div style={{ fontSize: 12.5, opacity: .92 }}>Vista panorámica · hasta {sal.cap} invitados</div>
             </div>
           } />
+      )}
+
+      {sal.pano ? (
+        sal.video && (
+          <div key={sid} style={{ position: 'relative', marginBottom: 18 }}>
+            {/* Video del salón (horizontal, recorrido) */}
+            <video src={sal.video} controls playsInline preload="none" poster={sal.poster}
+              style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 'var(--vv-radius-lg)', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000', display: 'block' }} />
+            <div style={{ position: 'absolute', left: 14, top: 12, color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: 'uppercase', textShadow: '0 1px 6px rgba(0,0,0,.7)', pointerEvents: 'none' }}>{sal.name} · video</div>
+          </div>
+        )
       ) : (
         <div key={sid} style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 300px) 1fr', gap: 18, marginBottom: 18, alignItems: 'start' }}>
           {/* Video del salón (vertical) */}
           <div style={{ position: 'relative' }}>
-            <video src="assets/salon-muestra.mp4" controls playsInline preload="none" poster="assets/salon-muestra-poster.jpg"
+            <video src={sal.video} controls playsInline preload="none" poster={sal.poster}
               style={{ width: '100%', aspectRatio: '9/16', objectFit: 'cover', borderRadius: 'var(--vv-radius-lg)', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000', display: 'block' }} />
             <div style={{ position: 'absolute', left: 14, top: 12, color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: 'uppercase', textShadow: '0 1px 6px rgba(0,0,0,.7)', pointerEvents: 'none' }}>{sal.name} · video</div>
           </div>

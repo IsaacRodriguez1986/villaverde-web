@@ -216,10 +216,9 @@ VV.CORTESIAS = [
    —sin tocar este archivo. Ver assets/tematicas/LEEME.txt. */
 VV.TEMATICAS = [
   { id: 'alicia', name: 'Alicia en el País de las Maravillas',
-    // Video de EJEMPLO (reutiliza un video existente para que veas fotos+video ya funcionando).
-    // Cuando tengas el video real de esta temática, ponlo en assets/tematicas/alicia/video.mp4
-    // y cambia esta ruta por 'assets/tematicas/alicia/video.mp4'.
-    video: 'assets/cantante-cena.mp4',
+    // Sin video propio todavía. Cuando tengas el video real de esta temática,
+    // ponlo en assets/tematicas/alicia/video.mp4 y agrega aquí:
+    // video: 'assets/tematicas/alicia/video.mp4',
     // Fotos de RELLENO — reemplázalas por las reales (mismos nombres 01..04.jpg).
     gallery: [
       'assets/tematicas/alicia/01.jpg',
