@@ -220,6 +220,17 @@ VV.TEMATICAS = [
       'assets/tematicas/azul-rey/01.jpg',
       'assets/tematicas/azul-rey/02.jpg',
       'assets/tematicas/azul-rey/03.jpg',
+      'assets/tematicas/azul-rey/04.jpg',
+      'assets/tematicas/azul-rey/05.jpg',
+    ] },
+  { id: 'dorado', name: 'Dorado',
+    gallery: [
+      'assets/tematicas/dorado/01.jpg',
+      'assets/tematicas/dorado/02.jpg',
+      'assets/tematicas/dorado/03.jpg',
+      'assets/tematicas/dorado/04.jpg',
+      'assets/tematicas/dorado/05.jpg',
+      'assets/tematicas/dorado/06.jpg',
     ] },
   { id: 'rosa-pastel', name: 'Rosa Pastel',
     gallery: [
@@ -245,9 +256,17 @@ VV.TEMATICAS = [
       'assets/tematicas/alicia/09.jpg',
     ] },
 
-  // Ejemplos vacíos: se ven en gris "Próximamente" hasta que tengan fotos.
-  // Renómbralos con tus temáticas reales y llénales la carpeta + gallery.
-  { id: 'glow',   name: 'Glow / Neón',      gallery: [] },
+  { id: 'glow',   name: 'Glow / Neón',
+    gallery: [
+      'assets/tematicas/glow/01.jpg',
+      'assets/tematicas/glow/02.jpg',
+      'assets/tematicas/glow/03.jpg',
+      'assets/tematicas/glow/04.jpg',
+      'assets/tematicas/glow/05.jpg',
+      'assets/tematicas/glow/06.jpg',
+    ] },
+
+  // Ejemplo vacío: se ve en gris "Próximamente" hasta que tenga fotos.
   { id: 'jardin', name: 'Jardín Encantado', gallery: [] },
 ];
 
