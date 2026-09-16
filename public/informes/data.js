@@ -215,6 +215,20 @@ VV.CORTESIAS = [
    Basta sobrescribir los archivos con los mismos nombres para cambiar las fotos
    —sin tocar este archivo. Ver assets/tematicas/LEEME.txt. */
 VV.TEMATICAS = [
+  { id: 'azul-rey', name: 'Azul Rey',
+    gallery: [
+      'assets/tematicas/azul-rey/01.jpg',
+      'assets/tematicas/azul-rey/02.jpg',
+      'assets/tematicas/azul-rey/03.jpg',
+    ] },
+  { id: 'rosa-pastel', name: 'Rosa Pastel',
+    gallery: [
+      'assets/tematicas/rosa-pastel/01.jpg',
+      'assets/tematicas/rosa-pastel/02.jpg',
+      'assets/tematicas/rosa-pastel/03.jpg',
+      'assets/tematicas/rosa-pastel/04.jpg',
+    ] },
+
   { id: 'alicia', name: 'Alicia en el País de las Maravillas',
     // Sin video propio todavía. Cuando tengas el video real de esta temática,
     // ponlo en assets/tematicas/alicia/video.mp4 y agrega aquí:
