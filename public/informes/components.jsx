@@ -27,7 +27,7 @@ function Icon({ name, size = 20, stroke = 2, style, className }) {
     dance:    <g {...P}><circle cx="13" cy="4" r="1.6"/><path d="M13 6c-1 2-3 2.5-4.5 2.5M13 6l2 3.5L12 14l1 7m2-11.5 3 1.5"/></g>,
     mask:     <g {...P}><path d="M4 5c5-1 11-1 16 0 .5 6-1.5 13-8 13S3.5 11 4 5z"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M9.5 14c1.5 1 3.5 1 5 0"/></g>,
     film:     <g {...P}><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="17" y2="20"/><line x1="3" y1="12" x2="21" y2="12"/></g>,
-    star:     <polygon points="12 2.5 15 9 22 9.7 16.8 14.4 18.3 21.3 12 17.6 5.7 21.3 7.2 14.4 2 9.7 9 9" {...P} />,
+    star:     <polygon points="12 2.5 15 9 22 9.7 16.8 14.4 18.3 21.3 12 17.6 5.7 21.3 7.2 14.4 2 9.7 9 9" {...P} fill="currentColor" stroke="none" />,
     users:    <g {...P}><circle cx="9" cy="8" r="3"/><path d="M3 21a6 6 0 0 1 12 0"/><path d="M16 6a3 3 0 0 1 0 5.5M21 21a6 6 0 0 0-4-5.6"/></g>,
     car:      <g {...P}><path d="M5 17h14M3 17l1.5-6a2 2 0 0 1 2-1.5h11a2 2 0 0 1 2 1.5L23 17M3 17v3h3v-3M18 17v3h3v-3"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></g>,
     shield:   <g {...P}><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="9 12 11 14 15 10"/></g>,

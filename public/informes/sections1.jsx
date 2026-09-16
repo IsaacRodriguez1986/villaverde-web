@@ -165,7 +165,7 @@ function SecSalon() {
 
       {sal.pano ? (
         sal.video && (
-          <div key={sid} style={{ position: 'relative', marginBottom: 18 }}>
+          <div key={sid} style={{ position: 'relative', marginBottom: 36 }}>
             {/* Video del salón (horizontal, recorrido) */}
             <video src={sal.video} controls playsInline preload="none" poster={sal.poster}
               style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 'var(--vv-radius-lg)', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000', display: 'block' }} />
@@ -173,7 +173,7 @@ function SecSalon() {
           </div>
         )
       ) : (
-        <div key={sid} style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 300px) 1fr', gap: 18, marginBottom: 18, alignItems: 'start' }}>
+        <div key={sid} style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 300px) 1fr', gap: 18, marginBottom: 36, alignItems: 'start' }}>
           {/* Video del salón (vertical) */}
           <div style={{ position: 'relative' }}>
             <video src={sal.video} controls playsInline preload="none" poster={sal.poster}
@@ -185,14 +185,6 @@ function SecSalon() {
             style={{ minHeight: 320, height: '100%', borderRadius: 'var(--vv-radius-lg)', overflow: 'hidden', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-sm)' }} />
         </div>
       )}
-
-      {/* Galería */}
-      <div key={sid + '-g'} className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 36 }}>
-        {['Jardín & fachada', 'Mesa montada', 'Pista & escenario', 'Detalles'].map((cap, i) => (
-          <PhotoSlot key={i} id={sid + '-gal-' + i} placeholder={cap}
-            style={{ borderRadius: 'var(--vv-radius)', overflow: 'hidden', border: '1px solid var(--vv-line)', aspectRatio: '1/1', boxShadow: 'var(--vv-shadow-sm)' }} />
-        ))}
-      </div>
 
       {/* Plano 3D — solo Villaverde */}
       {sid === 'villaverde' && (

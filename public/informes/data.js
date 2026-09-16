@@ -265,9 +265,6 @@ VV.TEMATICAS = [
       'assets/tematicas/glow/05.jpg',
       'assets/tematicas/glow/06.jpg',
     ] },
-
-  // Ejemplo vacío: se ve en gris "Próximamente" hasta que tenga fotos.
-  { id: 'jardin', name: 'Jardín Encantado', gallery: [] },
 ];
 
 /* ---------- COMPLEMENTA TU EVENTO ---------- */
