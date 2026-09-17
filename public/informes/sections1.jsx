@@ -79,9 +79,8 @@ function SecSalon() {
   const sal = SALONES.find(s => s.id === sid);
   const [temaOpen, setTemaOpen] = useState(null);
   const [vidOpen, setVidOpen] = useState(null);
-  // El tour exterior (jardín/fachada) aplica a ambos salones; el interior real
-  // solo existe para Villaverde por ahora — se agrega cuando ese salón está activo.
-  const tourScenes = sid === 'villaverde' ? [...(VV.TOUR_360 || []), ...(VV.TOUR_360_VILLAVERDE || [])] : (VV.TOUR_360 || []);
+  // Recorrido exterior (jardín/fachada), aplica a ambos salones.
+  const tourScenes = VV.TOUR_360 || [];
   const [tourScene, setTourScene] = useState(() => (tourScenes[0] ? tourScenes[0].id : null));
   const tourViewerRef = useRef(null);
 
@@ -89,13 +88,12 @@ function SecSalon() {
     if (!tourScenes.length || !window.pannellum) return;
     const scenes = {};
     tourScenes.forEach(s => { scenes[s.id] = { type: 'equirectangular', panorama: s.src, autoLoad: true }; });
-    setTourScene(tourScenes[0].id);
     tourViewerRef.current = window.pannellum.viewer('vv-tour360-viewer', {
       default: { firstScene: tourScenes[0].id, sceneFadeDuration: 800, autoLoad: true },
       scenes, compass: false, showZoomCtrl: true, showFullscreenCtrl: true,
     });
     return () => { if (tourViewerRef.current) { tourViewerRef.current.destroy(); tourViewerRef.current = null; } };
-  }, [sid]);
+  }, []);
 
   const goTourScene = (id) => { setTourScene(id); tourViewerRef.current && tourViewerRef.current.loadScene(id); };
 

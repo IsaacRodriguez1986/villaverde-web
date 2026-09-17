@@ -108,23 +108,6 @@ VV.TOUR_360 = [
   { id: 'terraza', name: 'Terraza', src: 'assets/tour-360-terraza.webp' },
 ];
 
-/* Recorrido 360° SOLO del interior del Salón Villaverde (17-sep-2026). Fotos reales
-   retocadas: balance de blancos + limpieza de personas/cajas hecha localmente
-   (recorte → nano_banana_pro → pegado con degradado) para no distorsionar la
-   proyección equirectangular. Se agrega a VV.TOUR_360 solo cuando sid==='villaverde'
-   en SecSalon (sections1.jsx). */
-VV.TOUR_360_VILLAVERDE = [
-  { id: 'sv-general', name: 'Vista general', src: 'assets/salon-360-general.webp' },
-  { id: 'sv-entrada', name: 'Entrada al salón', src: 'assets/salon-360-entrada.webp' },
-  { id: 'sv-completo', name: 'Salón completo', src: 'assets/salon-360-salon-completo.webp' },
-  { id: 'sv-mesa', name: 'Mesa principal', src: 'assets/salon-360-mesa-principal.webp' },
-  { id: 'sv-dj', name: 'Pista y DJ', src: 'assets/salon-360-dj-pista.webp' },
-  { id: 'sv-cabina', name: 'Cabina de DJ', src: 'assets/salon-360-cabina-dj.webp' },
-  { id: 'sv-pista', name: 'Pista LED', src: 'assets/salon-360-pista-azul.webp' },
-  { id: 'sv-mezzanine', name: 'Vista del mezzanine', src: 'assets/salon-360-mezzanine.webp' },
-  { id: 'sv-jardin', name: 'Acceso al jardín', src: 'assets/salon-360-jardin.webp' },
-];
-
 /* ---------- INFO DETALLADA POR ELEMENTO DEL PAQUETE ----------
    Se muestra al dar clic a cada elemento dentro de un paquete.
    go  = id de paso del recorrido al que se puede saltar
