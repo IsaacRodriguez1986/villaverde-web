@@ -79,19 +79,23 @@ function SecSalon() {
   const sal = SALONES.find(s => s.id === sid);
   const [temaOpen, setTemaOpen] = useState(null);
   const [vidOpen, setVidOpen] = useState(null);
-  const [tourScene, setTourScene] = useState(() => (VV.TOUR_360 && VV.TOUR_360[0]) ? VV.TOUR_360[0].id : null);
+  // El tour exterior (jardín/fachada) aplica a ambos salones; el interior real
+  // solo existe para Villaverde por ahora — se agrega cuando ese salón está activo.
+  const tourScenes = sid === 'villaverde' ? [...(VV.TOUR_360 || []), ...(VV.TOUR_360_VILLAVERDE || [])] : (VV.TOUR_360 || []);
+  const [tourScene, setTourScene] = useState(() => (tourScenes[0] ? tourScenes[0].id : null));
   const tourViewerRef = useRef(null);
 
   useEffect(() => {
-    if (!VV.TOUR_360 || !VV.TOUR_360.length || !window.pannellum) return;
+    if (!tourScenes.length || !window.pannellum) return;
     const scenes = {};
-    VV.TOUR_360.forEach(s => { scenes[s.id] = { type: 'equirectangular', panorama: s.src, autoLoad: true }; });
+    tourScenes.forEach(s => { scenes[s.id] = { type: 'equirectangular', panorama: s.src, autoLoad: true }; });
+    setTourScene(tourScenes[0].id);
     tourViewerRef.current = window.pannellum.viewer('vv-tour360-viewer', {
-      default: { firstScene: VV.TOUR_360[0].id, sceneFadeDuration: 800, autoLoad: true },
+      default: { firstScene: tourScenes[0].id, sceneFadeDuration: 800, autoLoad: true },
       scenes, compass: false, showZoomCtrl: true, showFullscreenCtrl: true,
     });
     return () => { if (tourViewerRef.current) { tourViewerRef.current.destroy(); tourViewerRef.current = null; } };
-  }, []);
+  }, [sid]);
 
   const goTourScene = (id) => { setTourScene(id); tourViewerRef.current && tourViewerRef.current.loadScene(id); };
 
@@ -230,7 +234,7 @@ function SecSalon() {
       )}
 
       {/* ---- RECORRIDO VIRTUAL 360° ---- */}
-      {VV.TOUR_360 && VV.TOUR_360.length > 0 && (
+      {tourScenes.length > 0 && (
         <div style={{ margin: '0 0 36px' }}>
           <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
             Recorrido virtual <em>360°</em>
@@ -240,7 +244,7 @@ function SecSalon() {
             <div id="vv-tour360-viewer" style={{ width: '100%', height: '100%' }} />
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 16 }}>
-            {VV.TOUR_360.map(s => (
+            {tourScenes.map(s => (
               <button key={s.id} onClick={() => goTourScene(s.id)}
                 style={{
                   fontSize: 13, fontWeight: 700, padding: '9px 16px', borderRadius: 999, cursor: 'pointer',
