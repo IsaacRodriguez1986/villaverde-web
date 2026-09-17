@@ -91,6 +91,12 @@ VV.VIDEOS_CANTANTE = [
   { src: 'assets/cantante-ranchero.mp4', poster: 'assets/cantante-ranchero-poster.jpg' },
 ];
 
+/* Galería de videos reales del paso "El Salón" (momentos de eventos ya celebrados,
+   no tours del inmueble como sal.video). Agregar más aquí conforme lleguen. */
+VV.VIDEOS_SALON = [
+  { id: 'vals', name: 'El vals', desc: 'Un momento inolvidable bajo la iluminación inteligente', video: 'assets/iluminacion-vals.mp4', poster: 'assets/iluminacion-vals-poster.jpg' },
+];
+
 /* ---------- INFO DETALLADA POR ELEMENTO DEL PAQUETE ----------
    Se muestra al dar clic a cada elemento dentro de un paquete.
    go  = id de paso del recorrido al que se puede saltar
@@ -103,7 +109,7 @@ VV.ITEM_INFO = {
   'Mesas redondas + sillas Tiffany':{ icon: 'sparkle',d: 'Mesas redondas vestidas y elegantes sillas Tiffany con cojín para todos tus invitados. El montaje clásico que se ve espectacular en fotos.', go: 'manteleria', fotos: ['assets/mesa-tiffany-rosa.jpg'] },
   'Meseros con capitán':            { icon: 'users',  d: 'Equipo de meseros profesionales coordinados por un capitán que supervisa el servicio toda la noche para que todo fluya perfecto.', fotos: ['assets/meseros-capitan.jpg'] },
   'DJ + Maestro de Ceremonias':     { icon: 'mic',    d: 'DJ profesional con audio de calidad y un maestro de ceremonias que conduce los momentos clave: entrada, vals, brindis y más.', fotos: ['assets/dj-maestro.jpg'] },
-  'Iluminación inteligente':        { icon: 'sparkle',d: 'Sistema de luces robóticas que cambian de color y ritmo según el momento de la fiesta, del vals romántico al reventón.', fotos: ['assets/iluminacion-inteligente.jpg'], poster: true, video: 'assets/iluminacion-vals.mp4' },
+  'Iluminación inteligente':        { icon: 'sparkle',d: 'Sistema de luces robóticas que cambian de color y ritmo según el momento de la fiesta, del vals romántico al reventón.', fotos: ['assets/iluminacion-inteligente.jpg'], poster: true },
   'Batucada con globos':            { icon: 'bubble', d: 'Show de batucada con tambores y globos que prende la pista y marca el inicio de la fiesta. Energía pura para tus invitados.', fotos: ['assets/batucada-baile.jpg'] },
   '2 camerinos privados':           { icon: 'users',  d: 'Dos camerinos independientes para que la quinceañera/novios y los chambelanes se arreglen con privacidad y comodidad.' },
   'Invitación digital animada':     { icon: 'film',   d: 'Invitación digital animada de regalo, con cuenta regresiva, itinerario, ubicación y confirmación por WhatsApp. Moderna y sin costo de imprenta. Desliza para ver todos sus módulos.', invitacion: true },

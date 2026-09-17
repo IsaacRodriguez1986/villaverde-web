@@ -78,6 +78,7 @@ function SecSalon() {
   useEffect(() => { localStorage.setItem('vv_salon', sid); }, [sid]);
   const sal = SALONES.find(s => s.id === sid);
   const [temaOpen, setTemaOpen] = useState(null);
+  const [vidOpen, setVidOpen] = useState(null);
 
   const amen = [
     { icon: 'users', t: `Hasta ${sal.cap} invitados`, s: 'Capacidad cómoda y holgada' },
@@ -183,6 +184,33 @@ function SecSalon() {
           {/* Foto destacada */}
           <PhotoSlot id={sid + '-feat'} src={sal.real || undefined} placeholder={'Foto de ' + sal.name}
             style={{ minHeight: 320, height: '100%', borderRadius: 'var(--vv-radius-lg)', overflow: 'hidden', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-sm)' }} />
+        </div>
+      )}
+
+      {/* ---- VIDEOS REALES DE NUESTROS EVENTOS ---- */}
+      {vidOpen && <GaleriaLightbox media={vidOpen} onClose={() => setVidOpen(null)} />}
+      {VV.VIDEOS_SALON && VV.VIDEOS_SALON.length > 0 && (
+        <div style={{ margin: '0 0 36px' }}>
+          <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+            Videos reales de <em>nuestros eventos</em>
+          </h2>
+          <p className="vv-lead" style={{ marginBottom: 16 }}>Momentos que hemos vivido aquí. Toca uno para verlo.</p>
+          <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+            {VV.VIDEOS_SALON.map(v => (
+              <button key={v.id}
+                onClick={() => setVidOpen([{ video: v.video, poster: v.poster }])}
+                className="vv-tema"
+                aria-label={`Ver video · ${v.name}`}
+                title={v.desc || v.name}>
+                <span className={'vv-tema__cover' + (v.poster ? '' : ' is-plain')}
+                  style={v.poster ? { backgroundImage: `url(${v.poster})` } : undefined}>
+                  <span className="vv-tema__grad"></span>
+                  <span className="vv-tema__count"><Icon name="play" size={13} /> video</span>
+                </span>
+                <span className="vv-tema__name">{v.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
