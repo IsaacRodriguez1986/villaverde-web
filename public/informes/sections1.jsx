@@ -79,6 +79,21 @@ function SecSalon() {
   const sal = SALONES.find(s => s.id === sid);
   const [temaOpen, setTemaOpen] = useState(null);
   const [vidOpen, setVidOpen] = useState(null);
+  const [tourScene, setTourScene] = useState(() => (VV.TOUR_360 && VV.TOUR_360[0]) ? VV.TOUR_360[0].id : null);
+  const tourViewerRef = useRef(null);
+
+  useEffect(() => {
+    if (!VV.TOUR_360 || !VV.TOUR_360.length || !window.pannellum) return;
+    const scenes = {};
+    VV.TOUR_360.forEach(s => { scenes[s.id] = { type: 'equirectangular', panorama: s.src, autoLoad: true }; });
+    tourViewerRef.current = window.pannellum.viewer('vv-tour360-viewer', {
+      default: { firstScene: VV.TOUR_360[0].id, sceneFadeDuration: 800, autoLoad: true },
+      scenes, compass: false, showZoomCtrl: true, showFullscreenCtrl: true,
+    });
+    return () => { if (tourViewerRef.current) { tourViewerRef.current.destroy(); tourViewerRef.current = null; } };
+  }, []);
+
+  const goTourScene = (id) => { setTourScene(id); tourViewerRef.current && tourViewerRef.current.loadScene(id); };
 
   const amen = [
     { icon: 'users', t: `Hasta ${sal.cap} invitados`, s: 'Capacidad cómoda y holgada' },
@@ -208,6 +223,32 @@ function SecSalon() {
                   <span className="vv-tema__count"><Icon name="play" size={13} /> video</span>
                 </span>
                 <span className="vv-tema__name">{v.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ---- RECORRIDO VIRTUAL 360° ---- */}
+      {VV.TOUR_360 && VV.TOUR_360.length > 0 && (
+        <div style={{ margin: '0 0 36px' }}>
+          <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+            Recorrido virtual <em>360°</em>
+          </h2>
+          <p className="vv-lead" style={{ marginBottom: 16 }}>Arrastra para mirar alrededor, como si ya estuvieras aquí.</p>
+          <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: 'var(--vv-radius-lg)', overflow: 'hidden', border: '1px solid var(--vv-line)', boxShadow: 'var(--vv-shadow-md)', background: '#000' }}>
+            <div id="vv-tour360-viewer" style={{ width: '100%', height: '100%' }} />
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 16 }}>
+            {VV.TOUR_360.map(s => (
+              <button key={s.id} onClick={() => goTourScene(s.id)}
+                style={{
+                  fontSize: 13, fontWeight: 700, padding: '9px 16px', borderRadius: 999, cursor: 'pointer',
+                  border: tourScene === s.id ? '1px solid var(--vv-crimson)' : '1px solid var(--vv-line)',
+                  background: tourScene === s.id ? 'var(--vv-crimson)' : '#fff',
+                  color: tourScene === s.id ? '#fff' : 'var(--vv-ink)',
+                }}>
+                {s.name}
               </button>
             ))}
           </div>

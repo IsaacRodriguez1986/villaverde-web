@@ -97,6 +97,17 @@ VV.VIDEOS_SALON = [
   { id: 'vals', name: 'El vals', desc: 'Un momento inolvidable bajo la iluminación inteligente', video: 'assets/iluminacion-vals.mp4', poster: 'assets/iluminacion-vals-poster.jpg' },
 ];
 
+/* Recorrido virtual 360° del paso "El Salón" (mismas fotos que la landing,
+   copiadas localmente porque informes no depende de Supabase — ver
+   reference-villaverde-web-asset-hosting). Requiere pannellum, cargado en
+   index.html antes de estos scripts. */
+VV.TOUR_360 = [
+  { id: 'fachada', name: 'Fachada y jardín', src: 'assets/tour-360-fachada.webp' },
+  { id: 'entrada', name: 'Entrada y fuente', src: 'assets/tour-360-entrada.webp' },
+  { id: 'vista', name: 'Vista del jardín', src: 'assets/tour-360-vista.webp' },
+  { id: 'terraza', name: 'Terraza', src: 'assets/tour-360-terraza.webp' },
+];
+
 /* ---------- INFO DETALLADA POR ELEMENTO DEL PAQUETE ----------
    Se muestra al dar clic a cada elemento dentro de un paquete.
    go  = id de paso del recorrido al que se puede saltar
