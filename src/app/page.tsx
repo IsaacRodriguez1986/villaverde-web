@@ -796,6 +796,30 @@ const galleryImages = [
   },
 ];
 
+/* Recorrido virtual 360° — fotos panorámicas reales del jardín/entrada (17-sep-2026) */
+const tour360Scenes = [
+  {
+    id: "fachada",
+    name: "Fachada y jardín",
+    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-fachada.webp",
+  },
+  {
+    id: "entrada",
+    name: "Entrada y fuente",
+    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-entrada.webp",
+  },
+  {
+    id: "vista",
+    name: "Vista del jardín",
+    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-vista.webp",
+  },
+  {
+    id: "terraza",
+    name: "Terraza",
+    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-terraza.webp",
+  },
+];
+
 /* ===== COMPONENT ===== */
 
 export default function Home() {
@@ -811,6 +835,62 @@ export default function Home() {
   const testiVideoRef = useRef<HTMLVideoElement>(null);
   const testiPlayBtnRef = useRef<HTMLButtonElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
+  const [tourSceneId, setTourSceneId] = useState(tour360Scenes[0].id);
+  const tourViewerRef = useRef<any>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    function initTour() {
+      if (cancelled || !(window as any).pannellum) return;
+      const scenes: Record<string, any> = {};
+      tour360Scenes.forEach((s) => {
+        scenes[s.id] = { type: "equirectangular", panorama: s.src, autoLoad: true };
+      });
+      tourViewerRef.current = (window as any).pannellum.viewer("tour360-viewer", {
+        default: { firstScene: tour360Scenes[0].id, sceneFadeDuration: 800, autoLoad: true },
+        scenes,
+        compass: false,
+        showZoomCtrl: true,
+        showFullscreenCtrl: true,
+      });
+    }
+
+    if ((window as any).pannellum) {
+      initTour();
+    } else {
+      if (!document.getElementById("pannellum-css")) {
+        const link = document.createElement("link");
+        link.id = "pannellum-css";
+        link.rel = "stylesheet";
+        link.href = "/vendor/pannellum/pannellum.min.css";
+        document.head.appendChild(link);
+      }
+      let script = document.getElementById(
+        "pannellum-js",
+      ) as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement("script");
+        script.id = "pannellum-js";
+        script.src = "/vendor/pannellum/pannellum.min.js";
+        document.body.appendChild(script);
+      }
+      script.addEventListener("load", initTour);
+    }
+
+    return () => {
+      cancelled = true;
+      if (tourViewerRef.current) {
+        tourViewerRef.current.destroy();
+        tourViewerRef.current = null;
+      }
+    };
+  }, []);
+
+  const goToScene = (id: string) => {
+    setTourSceneId(id);
+    tourViewerRef.current?.loadScene(id);
+  };
   const whatsappQuoteUrl =
     "https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20un%20evento%20en%20Villaverde";
 
@@ -1693,6 +1773,29 @@ export default function Home() {
             <a href="#formulario" className="btn-primary">
               Cotiza tu evento gratis <IconChevronRight size={16} />
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="recorrido-360">
+        <div className="section-narrow">
+          <h2 className="section-title reveal">Recorrido virtual 360°</h2>
+          <p className="section-sub reveal">
+            Arrastra para mirar alrededor — como si ya estuvieras aquí
+          </p>
+          <div className="tour360-frame reveal">
+            <div id="tour360-viewer" className="tour360-viewer" />
+          </div>
+          <div className="tour360-scenes reveal">
+            {tour360Scenes.map((s) => (
+              <button
+                key={s.id}
+                className={`tour360-scene-btn ${tourSceneId === s.id ? "is-active" : ""}`}
+                onClick={() => goToScene(s.id)}
+              >
+                {s.name}
+              </button>
+            ))}
           </div>
         </div>
       </section>
