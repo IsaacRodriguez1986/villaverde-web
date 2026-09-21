@@ -1,294 +1,341 @@
-// Secured backend proxy for Eventus Pro.
-// Replaces direct browser->Supabase access (which used the public anon key + open RLS).
-// - Client ops are scoped to a single event "code" (the capability the client holds).
-// - Sensitive columns (activated, invitation_enabled, total_cost, invitation_url) are admin-only.
-// - Admin ops require DASH_PASSWORD (validated here, server-side).
-// Uses the SERVICE key (bypasses RLS) so RLS can be locked down to deny anon entirely.
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || "";
+const ACCESS_SECRET = process.env.EVENTUS_ACCESS_SECRET || SERVICE_KEY;
 const ADMIN_PW = process.env.DASH_PASSWORD || "";
+const ADMIN_COOKIE = "eventus_admin";
+const ADMIN_TTL = 8 * 3600;
+const ACCESS_TTL = 30 * 86400;
+const CODE = /^[A-Za-z0-9_-]{3,64}$/;
+const ID = /^(?:[1-9][0-9]{0,18}|[a-f0-9-]{36})$/i;
 
-const TABLES = ["eventus_events", "eventus_guests", "eventus_payments", "eventus_checklist", "eventus_program"];
-const CHILD = ["eventus_guests", "eventus_payments", "eventus_checklist", "eventus_program"];
+type Row = Record<string, any>;
+type Access = { scope: "event" | "guest" | "admin"; code?: string; guestId?: string; exp: number; nonce: string };
+const COLUMNS: Record<string, string[]> = {
+  eventus_events: "code,name,type,date,hours,total_cost,contract_date,num_mesas,menu_sel,phone,activated,invitation_enabled,invitation_status,invitation_brief,invitation_url,invitation_comments,dress_code,event_time,photo_url,gallery,source,created_at".split(","),
+  eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at".split(","),
+  eventus_payments: "id,event_code,name,amount,due_date,note,paid,paid_at,created_at".split(","),
+  eventus_checklist: "id,event_code,text,done,sort_order".split(","),
+  eventus_program: "id,event_code,name,time,dur,note,sort_order".split(","),
+};
+const CLIENT_WRITE: Record<string, string[]> = {
+  eventus_events: "num_mesas,menu_sel,invitation_brief,invitation_status,invitation_comments,dress_code,event_time,photo_url,gallery".split(","),
+  eventus_guests: "name,companions,mesa,status,wa,arrived,arrived_at".split(","),
+  eventus_checklist: "text,done,sort_order".split(","),
+  eventus_program: "name,time,dur,note,sort_order".split(","),
+};
 
-// Columns a non-admin client may set when PATCHing eventus_events
-const EVENT_PATCH_ALLOW = ["num_mesas", "menu_sel", "invitation_brief", "invitation_status", "invitation_comments", "dress_code", "event_time"];
-// Invitation states a client may move into
-const INV_STATUS_CLIENT = ["en_diseno", "aprobada", "con_cambios"];
-
-function j(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } });
+function j(data: unknown, status = 200, headers: Record<string, string> = {}) {
+  return new Response(JSON.stringify(data), { status, headers: {
+    "Content-Type": "application/json", "Cache-Control": "no-store", "Referrer-Policy": "no-referrer", ...headers,
+  } });
 }
-
-// --- Rate limiting (in-memory, per-instance) — audit 2026-07-22 C1/C2.
-// Mitiga la fuerza bruta de "codes" de ~20 bits y el oráculo de admin password.
-// Limitación conocida: es por instancia de Vercel; el fix robusto es (a) desacoplar el
-// code humano de un token UUID de alta entropía como capacidad, y (b) un store durable
-// (Upstash/tabla Supabase). Esto sube el costo del ataque mientras tanto.
-const RL = new Map<string, { n: number; reset: number }>();
-function rateLimited(key: string, max: number, windowMs: number): boolean {
-  const now = Date.now();
-  const e = RL.get(key);
-  if (!e || now > e.reset) {
-    RL.set(key, { n: 1, reset: now + windowMs });
-    if (RL.size > 5000) RL.forEach((v, k) => { if (now > v.reset) RL.delete(k); });
-    return false;
-  }
-  if (e.n >= max) return true;
-  e.n++;
-  return false;
+function fail(message = "forbidden", status = 403): never { throw Object.assign(new Error(message), { status }); }
+function safeEqual(a: string, b: string) {
+  const x = Buffer.from(a), y = Buffer.from(b);
+  return x.length === y.length && timingSafeEqual(x, y);
 }
-function clientIp(req: Request): string {
-  const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
-  return req.headers.get("x-real-ip") || "unknown";
+function issue(scope: Access["scope"], code?: string, guestId?: string) {
+  const access: Access = { scope, code, guestId, exp: Math.floor(Date.now() / 1000) + (scope === "admin" ? ADMIN_TTL : ACCESS_TTL), nonce: randomBytes(16).toString("base64url") };
+  const payload = Buffer.from(JSON.stringify(access)).toString("base64url");
+  const signature = createHmac("sha256", ACCESS_SECRET).update("eventus-v1." + payload).digest("base64url");
+  return "ev1." + payload + "." + signature;
 }
-
-async function sb(method: string, path: string, body?: unknown) {
-  const r = await fetch(SUPABASE_URL + "/rest/v1/" + path, {
-    method,
-    headers: {
-      apikey: SERVICE_KEY,
-      Authorization: "Bearer " + SERVICE_KEY,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: body != null ? JSON.stringify(body) : undefined,
-  });
-  const txt = await r.text();
-  let json: any = null;
-  try { json = txt ? JSON.parse(txt) : null; } catch { json = null; }
-  return { ok: r.ok, status: r.status, json };
-}
-
-function parseEq(query: string, key: string): string | null {
-  const m = query.match(new RegExp("(?:^|&)" + key + "=eq\\.([^&]+)"));
-  return m ? decodeURIComponent(m[1]) : null;
-}
-
-async function rowEventCode(table: string, id: string): Promise<string | null> {
-  const r = await sb("GET", table + "?id=eq." + encodeURIComponent(id) + "&select=event_code", undefined);
-  return r.ok && Array.isArray(r.json) && r.json[0] ? r.json[0].event_code : null;
-}
-
-/** Fecha válida YYYY-MM-DD dentro de una ventana razonable, o null.
- * Sin esto, el alta pública acepta cualquier cadena como fecha de evento y con ella se puede
- * apartar un día arbitrario del calendario. */
-function fechaEventoValida(raw: any): string | null {
-  const s = String(raw || "");
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
-  const d = new Date(s + "T12:00:00");
-  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== s) return null;
-  const hoy = new Date();
-  const min = new Date(hoy.getTime() - 30 * 864e5).toISOString().slice(0, 10);
-  const max = new Date(hoy.getTime() + 2 * 365 * 864e5).toISOString().slice(0, 10);
-  return s >= min && s <= max ? s : null;
-}
-
-function sanitizeRegister(body: any) {
-  return {
-    code: body.code,
-    name: String(body.name || "").slice(0, 120),
-    type: ["xv", "boda", "graduacion"].includes(body.type) ? body.type : "xv",
-    date: fechaEventoValida(body.date),
-    hours: 7,
-    total_cost: 0,
-    // NUNCA se toma del cliente. `contract_date` es lo que api/lib/sales.js del bot usa para
-    // contar un contrato cerrado: aceptarlo aquí hacía que cada alta pública —incluida una
-    // automatizada— sumara una venta falsa al reporte diario y al de ventas. Un registro que
-    // alguien hace solo desde el portal NO es un contrato firmado; lo pone Isaac desde el CRM.
-    contract_date: null,
-    num_mesas: 20,
-    menu_sel: {},
-    phone: String(body.phone || "").replace(/\D/g, "").slice(0, 15),
-    activated: false,
-    invitation_enabled: false,
-    invitation_status: "sin_brief",
-    // Marca el origen para que el calendario público y las fechas ocupadas que el bot le
-    // dicta a los prospectos NO aparten un día por un registro que nadie ha contratado.
-    // Las filas internas se quedan con source NULL y siguen contando como ocupadas; en
-    // cuanto este evento tenga contrato (total_cost o contract_date), vuelve a contar.
-    source: "self_register",
-  };
-}
-
-// ---- RSVP (guest-facing): GET ?code=&guestId= ; capability = knowing code+guestId ----
-export async function GET(req: Request) {
-  if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
-  if (rateLimited("ev-get:" + clientIp(req), 60, 60_000)) return j({ error: "rate limited" }, 429);
-  const url = new URL(req.url);
-  const code = url.searchParams.get("code");
-  const guestId = url.searchParams.get("guestId");
-  if (!code || !guestId) return j({ error: "missing params" }, 400);
-  const ev = await sb("GET", "eventus_events?code=eq." + encodeURIComponent(code) + "&select=code,name,type,date,event_time,dress_code,invitation_url,invitation_status");
-  if (!ev.ok || !Array.isArray(ev.json) || !ev.json[0]) return j({ error: "not found" }, 404);
-  const g = await sb("GET", "eventus_guests?id=eq." + encodeURIComponent(guestId) + "&event_code=eq." + encodeURIComponent(code) + "&select=id,name,companions,status,mesa");
-  return j({ event: ev.json[0], guest: (Array.isArray(g.json) && g.json[0]) || null });
-}
-
-// ---- RSVP write: PATCH {code, guestId, status} ----
-export async function PATCH(req: Request) {
-  if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
-  if (rateLimited("ev-patch:" + clientIp(req), 60, 60_000)) return j({ error: "rate limited" }, 429);
-  let b: any = {};
-  try { b = await req.json(); } catch { b = {}; }
-  const { code, guestId, status } = b || {};
-  if (!code || !guestId || !["confirmed", "cancelled"].includes(status)) return j({ error: "bad request" }, 400);
-  const g = await sb("GET", "eventus_guests?id=eq." + encodeURIComponent(guestId) + "&event_code=eq." + encodeURIComponent(code) + "&select=id");
-  if (!g.ok || !Array.isArray(g.json) || !g.json[0]) return j({ error: "not found" }, 404);
-  const r = await sb("PATCH", "eventus_guests?id=eq." + encodeURIComponent(guestId), { status });
-  return j(r.ok ? { ok: true } : { error: "update failed" }, r.ok ? 200 : 400);
-}
-
-// ---- Main proxy: POST {op:'auth'} | {op:'db', method, table, query, body, code, adminPw} ----
-export async function POST(req: Request) {
-  if (!SERVICE_KEY) return j({ error: "server not configured" }, 500);
-  const ip = clientIp(req);
-  if (rateLimited("ev-post:" + ip, 90, 60_000)) return j({ error: "rate limited" }, 429);
-  let b: any = {};
-  try { b = await req.json(); } catch { return j({ error: "bad json" }, 400); }
-
-  const isAdmin = !!(b.adminPw && ADMIN_PW && b.adminPw === ADMIN_PW);
-
-  // El límite estricto va sobre CUALQUIER intento fallido de contraseña, no solo sobre
-  // `op:'auth'`. Antes solo lo cubría esa rama, pero `isAdmin` se evalúa igual en `op:'db'`:
-  // se podía adivinar la contraseña mandando `op:'db'` y leyendo si la respuesta venía con
-  // privilegios, a 90 intentos/min en vez de 8. La contraseña es la misma del CRM completo.
-  if (b.adminPw && !isAdmin) {
-    if (rateLimited("ev-auth:" + ip, 8, 60_000)) return j({ error: "rate limited" }, 429);
-  }
-
-  if (b.op === "auth") {
-    if (rateLimited("ev-auth:" + ip, 8, 60_000)) return j({ error: "rate limited" }, 429);
-    return j({ admin: isAdmin });
-  }
-  if (b.op !== "db") return j({ error: "bad op" }, 400);
-
-  const method = String(b.method || "GET").toUpperCase();
-  const table = String(b.table || "");
-  const query = String(b.query || "");
-  const body = b.body ?? null;
-  const cap = b.code || null; // capability: the logged-in event code
-
-  if (!TABLES.includes(table)) return j({ error: "table not allowed" }, 400);
-
-  // ADMIN: full access via service key
-  if (isAdmin) {
-    const path = table + (query ? "?" + query : "");
-    const r = await sb(method, path, body);
-    return j(r.ok ? (r.json ?? []) : { error: "supabase", detail: r.json }, r.ok ? 200 : r.status);
-  }
-
-  // NON-ADMIN: strict allow-list, everything scoped to `cap`
+function verify(token: unknown, scope: Access["scope"]): Access | null {
+  if (typeof token !== "string" || token.length > 2048) return null;
+  const parts = token.split(".");
+  if (parts.length !== 3 || parts[0] !== "ev1" || !/^[A-Za-z0-9_-]+$/.test(parts[1])) return null;
+  const expected = createHmac("sha256", ACCESS_SECRET).update("eventus-v1." + parts[1]).digest("base64url");
+  if (!safeEqual(parts[2], expected)) return null;
   try {
-    return await clientOp(method, table, query, body, cap);
-  } catch (e: any) {
-    return j({ error: e?.message || "forbidden" }, e?.code || 403);
+    const p = JSON.parse(Buffer.from(parts[1], "base64url").toString()) as Access;
+    if (p.scope !== scope || !Number.isInteger(p.exp) || p.exp <= Date.now() / 1000 || typeof p.nonce !== "string") return null;
+    if (scope !== "admin" && (typeof p.code !== "string" || !CODE.test(p.code))) return null;
+    if (scope === "guest" && (typeof p.guestId !== "string" || !ID.test(p.guestId))) return null;
+    return p;
+  } catch { return null; }
+}
+function isAdmin(req: Request) {
+  const token = (req.headers.get("cookie") || "").split(";").map(s => s.trim()).find(s => s.startsWith(ADMIN_COOKIE + "="))?.slice(ADMIN_COOKIE.length + 1);
+  return !!verify(token, "admin");
+}
+function sameOrigin(req: Request) {
+  const origin = req.headers.get("origin");
+  const fetchSite = req.headers.get("sec-fetch-site");
+  if ((origin && origin !== new URL(req.url).origin) || (fetchSite && !["same-origin", "none"].includes(fetchSite))) fail("invalid origin");
+}
+function cookie(req: Request, value: string, maxAge: number) {
+  return `${ADMIN_COOKIE}=${value}; Path=/api/eventus; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${new URL(req.url).protocol === "https:" ? "; Secure" : ""}`;
+}
+// Shared database limiter survives serverless restarts and concurrent instances.
+// Only Vercel's overwritten header is trusted, never the caller's X-Forwarded-For.
+async function limit(req: Request, operation: string, max: number, windowMs: number) {
+  const ip = process.env.VERCEL === "1" ? req.headers.get("x-vercel-forwarded-for") || "unknown" : "local";
+  const key = "eventus:" + operation + ":" + createHmac("sha256", ACCESS_SECRET).update(ip).digest("hex");
+  const result = await sb("POST", "rpc/check_rate_limit", new URLSearchParams(), { p_key: key, p_max: max, p_window_seconds: Math.ceil(windowMs / 1000) });
+  if (result !== true) fail("too many requests", 429);
+}
+async function jsonBody(req: Request) {
+  if (!req.headers.get("content-type")?.startsWith("application/json")) fail("JSON required", 415);
+  if (Number(req.headers.get("content-length") || 0) > 65536) fail("request too large", 413);
+  const raw = await req.text();
+  if (Buffer.byteLength(raw) > 65536) fail("request too large", 413);
+  let b: Row;
+  try { b = JSON.parse(raw); } catch { fail("bad JSON", 400); }
+  if (!b || typeof b !== "object" || Array.isArray(b)) fail("bad request", 400);
+  return b;
+}
+async function sb(method: string, table: string, params: URLSearchParams, body?: unknown) {
+  const r = await fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + params.toString(), {
+    method, cache: "no-store", headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json", Prefer: "return=representation" },
+    body: body == null ? undefined : JSON.stringify(body),
+  });
+  if (!r.ok) fail("database operation failed", 502);
+  const raw = await r.text();
+  return raw ? JSON.parse(raw) : [];
+}
+async function privateImages(value: any, code: string, cache = new Map<string, Promise<string>>()): Promise<any> {
+  if (Array.isArray(value)) return Promise.all(value.map(item => privateImages(item, code, cache)));
+  if (value && typeof value === "object") return Object.fromEntries(await Promise.all(Object.entries(value).map(async ([k, v]) => [k, await privateImages(v, code, cache)])));
+  if (typeof value !== "string") return value;
+  const storagePrefix = "storage://";
+  const httpPrefix = SUPABASE_URL + "/storage/v1/object/";
+  if (!value.startsWith(storagePrefix) && !value.startsWith(httpPrefix)) return value;
+  const path = value.startsWith(storagePrefix)
+    ? value.slice(storagePrefix.length)
+    : value.slice(httpPrefix.length).split("?")[0].replace(/^(public|sign)\//, "");
+  if (!code || !path.startsWith("eventus-photos/" + code + "/") || !/^[A-Za-z0-9_./-]+$/.test(path) || path.includes("..")) return "";
+  if (!cache.has(path)) cache.set(path, (async () => {
+    const r = await fetch(SUPABASE_URL + "/storage/v1/object/sign/" + path, { method: "POST", headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ expiresIn: 3600 }) });
+    if (!r.ok) fail("photo access unavailable", 502);
+    const result = await r.json();
+    const signed = result.signedURL || result.signedUrl;
+    if (typeof signed !== "string" || !signed.startsWith("/object/sign/")) fail("photo access unavailable", 502);
+    return SUPABASE_URL + "/storage/v1" + signed;
+  })());
+  return cache.get(path);
+}
+async function eventExists(code: string) {
+  if (!CODE.test(code)) fail();
+  const rows = await sb("GET", "eventus_events", new URLSearchParams({ code: "eq." + code, select: "code", limit: "2" }));
+  // Older deployments did not enforce unique codes. Never authorize ambiguous rows.
+  if (!Array.isArray(rows) || rows.length !== 1) fail("event unavailable", 404);
+}
+function queryFor(table: string, raw: unknown) {
+  if (raw != null && (typeof raw !== "string" || raw.length > 2048)) fail("invalid query", 400);
+  const input = new URLSearchParams(raw || "");
+  const q = new URLSearchParams();
+  const seen = new Set<string>();
+  for (const [key, value] of input) {
+    if (seen.has(key)) fail("duplicate filter", 400);
+    seen.add(key);
+    if (["code", "event_code", "id"].includes(key)) {
+      if ((key === "code") !== (table === "eventus_events") && key !== "id") fail("invalid filter", 400);
+      const v = value.startsWith("eq.") ? value.slice(3) : "";
+      if (!(key === "id" ? ID : CODE).test(v)) fail("invalid filter", 400);
+      q.set(key, "eq." + v);
+    } else if (key === "select") {
+      const fields = value.split(",");
+      if (!fields.length || fields.some(c => !COLUMNS[table].includes(c))) fail("invalid selection", 400);
+      q.set(key, fields.join(","));
+    } else if (key === "order") {
+      if (!/^[a-z_]+(?:\.(?:asc|desc))?$/.test(value) || !COLUMNS[table].includes(value.split(".")[0])) fail("invalid order", 400);
+      q.set(key, value);
+    } else if (key === "limit") {
+      if (!/^\d{1,4}$/.test(value) || Number(value) < 1 || Number(value) > 1000) fail("invalid limit", 400);
+      q.set(key, value);
+    } else fail("query not allowed", 400);
+  }
+  if (!q.has("select")) q.set("select", COLUMNS[table].join(","));
+  return q;
+}
+function cleanBody(table: string, body: unknown, admin: boolean, creating = false) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) fail("invalid body", 400);
+  const source = body as Row;
+  const allowed = admin ? COLUMNS[table].filter(k => !["id", "created_at", "event_code", "code"].includes(k)) : CLIENT_WRITE[table] || [];
+  const result: Row = {};
+  for (const key of Object.keys(source)) {
+    if (creating && ["code", "event_code"].includes(key)) continue;
+    if (!allowed.includes(key)) fail("field not allowed: " + key);
+    const value = source[key];
+    if (typeof value === "string" && value.length > 8000) fail("field too long", 400);
+    result[key] = value;
+  }
+  if (!admin && table === "eventus_events" && result.invitation_status && !["en_diseno", "aprobada", "con_cambios"].includes(result.invitation_status)) fail("invalid status");
+  if ("status" in result && !["pending", "confirmed", "cancelled"].includes(result.status)) fail("invalid guest status", 400);
+  for (const k of ["companions", "num_mesas", "dur", "sort_order", "amount", "total_cost", "hours"]) {
+    if (k in result && (typeof result[k] !== "number" || !Number.isFinite(result[k]) || result[k] < 0 || result[k] > 10000000)) fail("invalid number", 400);
+  }
+  for (const [key, min, max] of [["num_mesas", 1, 60], ["companions", 0, 100], ["dur", 1, 1440], ["sort_order", 0, 5000], ["hours", 1, 24]] as const) {
+    if (key in result && (!Number.isInteger(result[key]) || result[key] < min || result[key] > max)) fail("invalid " + key, 400);
+  }
+  if ("mesa" in result && result.mesa !== null && (!Number.isInteger(result.mesa) || result.mesa < 1 || result.mesa > 1000)) fail("invalid table number", 400);
+  for (const k of ["paid", "done", "arrived", "activated", "invitation_enabled"]) if (k in result && typeof result[k] !== "boolean") fail("invalid flag", 400);
+  for (const k of ["name", "text", "note", "wa", "invitation_comments", "dress_code", "event_time"]) if (k in result && typeof result[k] !== "string") fail("invalid text", 400);
+  if ("gallery" in result && (!Array.isArray(result.gallery) || result.gallery.length > 12 || result.gallery.some((url: unknown) => typeof url !== "string" || url.length > 3000))) fail("invalid gallery", 400);
+  for (const k of ["photo_url", "invitation_url"]) if (k in result && (typeof result[k] !== "string" || result[k].length > 3000)) fail("invalid image locator", 400);
+  for (const key of ["event_time", "time"]) if (key in result && !/^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(result[key])) fail("invalid time", 400);
+  if ("menu_sel" in result) {
+    const menu = result.menu_sel;
+    if (!menu || typeof menu !== "object" || Array.isArray(menu)) fail("invalid menu", 400);
+    for (const [key, value] of Object.entries(menu)) if (!["entradas", "cremas", "pollo", "cerdo", "guarniciones", "arroz"].includes(key) || typeof value !== "string" || value.length > 120) fail("invalid menu", 400);
+  }
+  if ("invitation_brief" in result && result.invitation_brief !== null) {
+    const brief = result.invitation_brief;
+    if (!brief || typeof brief !== "object" || Array.isArray(brief)) fail("invalid brief", 400);
+    for (const [key, value] of Object.entries(brief)) {
+      if (["photos", "reference_photos", "solo_photos", "carousel_photos"].includes(key)) {
+        if (!Array.isArray(value) || value.length > 7 || value.some(url =>
+          typeof url !== "string" ||
+          url.length > 3000 ||
+          (!/^https:\/\/[^\\s"'<>]+$/.test(url) && !/^storage:\/\/eventus-photos\/[A-Za-z0-9_-]{3,64}\/[a-f0-9]{32}\.(?:png|jpg|webp)$/i.test(url))
+        )) fail("invalid brief photos", 400);
+      } else if (!["song", "colors", "message", "dress_code", "event_time", "venue", "notes"].includes(key) || typeof value !== "string" || value.length > 2000) fail("invalid brief field", 400);
+    }
+  }
+  if (!Object.keys(result).length) fail("empty update", 400);
+  return result;
+}
+async function protectedHandler(action: () => Promise<Response>) {
+  if (!SERVICE_KEY || !ACCESS_SECRET || !SUPABASE_URL) return j({ error: "server not configured" }, 503);
+  try { return await action(); } catch (e) {
+    const err = e as { status?: number; message?: string };
+    return j({ error: err.status ? err.message : "operation failed" }, err.status || 500);
   }
 }
 
-function deny(msg: string) {
-  const e: any = new Error(msg);
-  e.code = 403;
-  return e;
+export async function GET(req: Request) {
+  return protectedHandler(async () => {
+    const token = req.headers.get("authorization")?.replace(/^Bearer /, "");
+    const access = verify(token, "guest");
+    if (!access) fail("valid invitation link required", 401);
+    const url = new URL(req.url);
+    if (url.searchParams.get("code") !== access.code || url.searchParams.get("guestId") !== access.guestId) fail();
+    await eventExists(access.code!);
+    const events = await sb("GET", "eventus_events", new URLSearchParams({ code: "eq." + access.code, select: "code,name,type,date,event_time,dress_code,invitation_url,invitation_status,photo_url,gallery" }));
+    const guests = await sb("GET", "eventus_guests", new URLSearchParams({ id: "eq." + access.guestId, event_code: "eq." + access.code, select: "id,name,companions,status,mesa" }));
+    if (!guests[0]) fail("invitation unavailable", 404);
+    return j({ event: await privateImages(events[0], access.code!), guest: guests[0] });
+  });
+}
+export async function PATCH(req: Request) {
+  return protectedHandler(async () => {
+    sameOrigin(req);
+    const b = await jsonBody(req);
+    const access = verify(req.headers.get("authorization")?.replace(/^Bearer /, ""), "guest");
+    if (!access || b.code !== access.code || String(b.guestId) !== access.guestId) fail("valid invitation link required", 401);
+    if (!["confirmed", "cancelled"].includes(b.status)) fail("invalid status", 400);
+    await eventExists(access.code!);
+    const rows = await sb("PATCH", "eventus_guests", new URLSearchParams({ id: "eq." + access.guestId, event_code: "eq." + access.code, select: "id" }), { status: b.status });
+    if (!rows.length) fail("invitation unavailable", 404);
+    return j({ ok: true });
+  });
 }
 
-async function clientOp(method: string, table: string, query: string, body: any, cap: string | null): Promise<Response> {
-  if (table === "eventus_events") {
-    if (method === "GET") {
-      const qc = parseEq(query, "code");
-      if (qc) {
-        if (!cap || qc !== cap) throw deny("code mismatch");
-        const r = await sb("GET", "eventus_events?code=eq." + encodeURIComponent(qc) + "&select=*");
-        return j(r.json ?? []);
-      }
-      // register dedup by phone -> only return code,name
-      if (/^or=\(phone\.eq\./.test(query)) {
-        const phones = (query.match(/phone\.eq\.([^,)]+)/g) || []).map((s) => decodeURIComponent(s.replace("phone.eq.", "")));
-        if (!phones.length) throw deny("bad dedup");
-        const orExpr = "or=(" + phones.map((p) => "phone.eq." + encodeURIComponent(p)).join(",") + ")";
-        const r = await sb("GET", "eventus_events?" + orExpr + "&select=code,name&limit=1");
-        return j(r.json ?? []);
-      }
-      throw deny("events read not allowed");
+export async function POST(req: Request) {
+  return protectedHandler(async () => {
+    sameOrigin(req);
+    if (req.headers.get("content-type")?.startsWith("multipart/form-data")) return upload(req);
+    const b = await jsonBody(req);
+    const admin = isAdmin(req);
+    if (b.op === "auth") {
+      await limit(req, "login", 10, 15 * 60000);
+      if (!ADMIN_PW || typeof b.adminPw !== "string" || !safeEqual(b.adminPw, ADMIN_PW)) return j({ admin: false }, 401);
+      return j({ admin: true }, 200, { "Set-Cookie": cookie(req, issue("admin"), ADMIN_TTL) });
     }
-    if (method === "POST") {
-      if (!body || !body.code) throw deny("register needs code");
-      const clean = sanitizeRegister(body);
-      // Una fecha inventada aquí aparta un día en el calendario público de /informes y en las
-      // fechas ocupadas que el bot de WhatsApp le dicta a cada prospecto. Sin fecha válida no
-      // se da de alta: es preferible que el cliente la recapture a bloquear un sábado vendible.
-      if (!clean.date) throw deny("fecha de evento inválida");
-      if (!clean.name.trim()) throw deny("falta el nombre");
-      const r = await sb("POST", "eventus_events", clean);
-      return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
+    if (b.op === "logout") return j({ ok: true }, 200, { "Set-Cookie": cookie(req, "", 0) });
+    const access = verify(b.accessToken, "event");
+    if (b.op === "access") {
+      if (!access) fail("valid access link required", 401);
+      await eventExists(access.code!);
+      return j({ code: access.code });
     }
-    if (method === "PATCH") {
-      const qc = parseEq(query, "code");
-      if (!qc || !cap || qc !== cap) throw deny("code mismatch");
-      const clean: any = {};
-      Object.keys(body || {}).forEach((k) => { if (EVENT_PATCH_ALLOW.includes(k)) clean[k] = body[k]; });
-      if ("invitation_status" in clean && !INV_STATUS_CLIENT.includes(clean.invitation_status)) delete clean.invitation_status;
-      if (!Object.keys(clean).length) throw deny("no allowed fields");
-      const r = await sb("PATCH", "eventus_events?code=eq." + encodeURIComponent(qc), clean);
-      return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
+    if (b.op === "issue-access") {
+      if (!admin || typeof b.code !== "string") fail();
+      await eventExists(b.code);
+      return j({ code: b.code, accessToken: issue("event", b.code) });
     }
-    throw deny("events op not allowed");
-  }
+    if (b.op === "guest-token") {
+      const code = String(b.code || ""), guestId = String(b.guestId || "");
+      if ((!admin && access?.code !== code) || !ID.test(guestId)) fail();
+      await eventExists(code);
+      const rows = await sb("GET", "eventus_guests", new URLSearchParams({ id: "eq." + guestId, event_code: "eq." + code, select: "id" }));
+      if (!rows[0]) fail("guest unavailable", 404);
+      return j({ token: issue("guest", code, guestId) });
+    }
+    if (b.op === "register") {
+      await limit(req, "register", 5, 3600000);
+      const body = b.body || {};
+      const name = String(body.name || "").trim().slice(0, 120), phone = String(body.phone || "").replace(/\D/g, "");
+      if (!name || !/^\d{10,15}$/.test(phone) || !/^\d{4}-\d{2}-\d{2}$/.test(body.date || "") || !["xv", "boda", "graduacion"].includes(body.type)) fail("invalid registration", 400);
+      const parsedDate = new Date(body.date + "T12:00:00Z");
+      const now = new Date();
+      const maxDate = new Date(now.getTime() + 2 * 366 * 86400000);
+      if (Number.isNaN(parsedDate.getTime()) || parsedDate < new Date(now.getTime() - 30 * 86400000) || parsedDate > maxDate) fail("invalid registration", 400);
+      const existing = await sb("GET", "eventus_events", new URLSearchParams({ phone: "eq." + phone, select: "code", limit: "1" }));
+      if (existing.length) fail("already registered", 409);
+      const code = "VV-" + randomBytes(16).toString("hex").toUpperCase();
+      const row = { code, name, phone, date: body.date, type: body.type, hours: 7, total_cost: 0, contract_date: null, num_mesas: 20, menu_sel: {}, activated: false, invitation_enabled: false, invitation_status: "sin_brief", source: "self_register" };
+      await sb("POST", "eventus_events", new URLSearchParams({ select: "code" }), row);
+      return j({ code, accessToken: issue("event", code) }, 201);
+    }
+    if (b.op !== "db") fail("invalid operation", 400);
+    const table = String(b.table || ""), method = String(b.method || "GET").toUpperCase();
+    if (!Object.hasOwn(COLUMNS, table) || !["GET", "POST", "PATCH", "DELETE"].includes(method)) fail("operation not allowed", 400);
+    if (!admin && !access) fail("valid access link required", 401);
+    const q = queryFor(table, b.query);
+    const parentKey = table === "eventus_events" ? "code" : "event_code";
+    if (!admin) {
+      await eventExists(access!.code!);
+      if (q.has(parentKey) && q.get(parentKey) !== "eq." + access!.code) fail("event mismatch");
+      q.set(parentKey, "eq." + access!.code);
+      if (table === "eventus_payments" && method !== "GET") fail("payments require admin");
+      if (table === "eventus_events" && ["POST", "DELETE"].includes(method)) fail("event operation requires admin");
+    }
+    let body: unknown;
+    if (["POST", "PATCH"].includes(method)) {
+      if (method === "PATCH" && table !== "eventus_events" && !q.has("id")) fail("row id required", 400);
+      const incoming = Array.isArray(b.body) ? b.body : [b.body];
+      if (!incoming.length || incoming.length > 500 || (method === "PATCH" && incoming.length !== 1)) fail("invalid row count", 400);
+      const rows = incoming.map((row: Row) => {
+        const clean = cleanBody(table, row, admin, method === "POST");
+        if (method === "POST") {
+          const code = row[parentKey];
+          if (typeof code !== "string" || !CODE.test(code) || (!admin && code !== access!.code)) fail("event mismatch");
+          clean[parentKey] = code;
+        }
+        return clean;
+      });
+      body = Array.isArray(b.body) ? rows : rows[0];
+    }
+    if (["PATCH", "DELETE"].includes(method) && !q.has("id") && !q.has(parentKey)) fail("scope required", 400);
+    // Reads and writes use the exact same event predicate; no check-then-write race.
+    const rows = await sb(method, table, q, body);
+    return j(method === "DELETE" ? { ok: true } : await Promise.all(rows.map((row: Row) => privateImages(row, admin ? String(row.code || row.event_code || "") : access!.code!))));
+  });
+}
 
-  if (CHILD.includes(table)) {
-    if (method === "GET") {
-      const ec = parseEq(query, "event_code");
-      if (!ec || !cap || ec !== cap) throw deny("event_code mismatch");
-      const r = await sb("GET", table + "?" + query);
-      return j(r.json ?? []);
-    }
-    if (method === "POST") {
-      if (table === "eventus_payments") throw deny("cannot create payments");
-      if (!body) throw deny("no body");
-      const arr = Array.isArray(body) ? body : [body];
-      for (const row of arr) { if (!cap || row.event_code !== cap) throw deny("event_code mismatch"); }
-      const r = await sb("POST", table, body);
-      return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
-    }
-    if (method === "PATCH") {
-      if (table === "eventus_payments") {
-        // `paid` es la verdad contable del negocio: el cron de cobranza de las 11am consulta
-        // `paid=eq.false`, el calendario pinta el vencido y la cascada de abonos recalcula
-        // sobre él. Dejarlo en manos de quien tiene el código del evento —que se comparte por
-        // WhatsApp y ronda los 20 bits— permitía a un cliente poner su adeudo en cero y dejar
-        // de recibir cobros. Marcar un pago es exclusivo de admin (rama isAdmin, que sí exige
-        // la contraseña); el portal del cliente muestra sus pagos en solo lectura.
-        throw deny("solo el administrador puede modificar pagos");
-      }
-      const id = parseEq(query, "id");
-      if (!id) throw deny("patch needs id");
-      const ec = await rowEventCode(table, id);
-      if (!ec || !cap || ec !== cap) throw deny("row not in your event");
-      const r = await sb("PATCH", table + "?id=eq." + encodeURIComponent(id), body || {});
-      return j(r.ok ? (r.json ?? []) : { error: "supabase" }, r.ok ? 200 : 400);
-    }
-    if (method === "DELETE") {
-      if (table === "eventus_payments") throw deny("cannot delete payments");
-      const id = parseEq(query, "id");
-      const ec0 = parseEq(query, "event_code");
-      if (id) {
-        const ec = await rowEventCode(table, id);
-        if (!ec || !cap || ec !== cap) throw deny("row not in your event");
-        await sb("DELETE", table + "?id=eq." + encodeURIComponent(id));
-        return j({ ok: true });
-      }
-      if (ec0) {
-        if (!cap || ec0 !== cap) throw deny("event_code mismatch");
-        await sb("DELETE", table + "?event_code=eq." + encodeURIComponent(ec0));
-        return j({ ok: true });
-      }
-      throw deny("delete needs id or event_code");
-    }
-  }
-  throw deny("not allowed");
+async function upload(req: Request) {
+  if (Number(req.headers.get("content-length") || 0) > 4 * 1024 * 1024) fail("file too large", 413);
+  const form = await req.formData();
+  const code = String(form.get("code") || ""), access = verify(form.get("accessToken"), "event");
+  if (!isAdmin(req) && access?.code !== code) fail("valid access link required", 401);
+  await eventExists(code);
+  await limit(req, "upload", 40, 3600000);
+  const file = form.get("file");
+  if (!(file instanceof File) || file.size > 3 * 1024 * 1024 || file.size === 0) fail("invalid file", 400);
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const png = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  const jpg = bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+  const webp = bytes.toString("ascii", 0, 4) === "RIFF" && bytes.toString("ascii", 8, 12) === "WEBP";
+  if (!png && !jpg && !webp) fail("use PNG, JPEG or WebP", 400);
+  const ext = png ? "png" : jpg ? "jpg" : "webp", type = png ? "image/png" : jpg ? "image/jpeg" : "image/webp";
+  const path = code + "/" + randomBytes(16).toString("hex") + "." + ext;
+  const r = await fetch(SUPABASE_URL + "/storage/v1/object/eventus-photos/" + path, { method: "POST", headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": type, "x-upsert": "false" }, body: bytes });
+  if (!r.ok) fail("upload failed", 502);
+  return j({ url: "storage://eventus-photos/" + path });
 }

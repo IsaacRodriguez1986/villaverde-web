@@ -497,12 +497,16 @@ export default function RSVPPage({
   const [guest, setGuest] = useState<GuestData | null>(null);
   const [updating, setUpdating] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const accessToken = useRef("");
 
   useEffect(() => {
     async function loadData() {
       try {
+        accessToken.current = new URLSearchParams(window.location.hash.slice(1)).get("token") || "";
+        if (!accessToken.current) throw new Error("Solicita un enlace de invitacion actualizado al organizador");
         const res = await fetch(
-          `${API_BASE}?code=${encodeURIComponent(code)}&guestId=${encodeURIComponent(guestId)}`
+          `${API_BASE}?code=${encodeURIComponent(code)}&guestId=${encodeURIComponent(guestId)}`,
+          { headers: { Authorization: "Bearer " + accessToken.current }, cache: "no-store" }
         );
         if (!res.ok) throw new Error(`API error: ${res.status}`);
         const data = await res.json();
@@ -536,7 +540,7 @@ export default function RSVPPage({
     try {
       const res = await fetch(API_BASE, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + accessToken.current },
         body: JSON.stringify({
           code,
           guestId,
@@ -595,13 +599,13 @@ export default function RSVPPage({
             />
           )}
           {viewState === "confirmed" && event && guest && (
-            <ConfirmedView event={event} guest={guest} code={code} guestId={guestId} theme={theme} />
+            <ConfirmedView event={event} guest={guest} code={code} guestId={guestId} theme={theme} accessToken={accessToken.current} />
           )}
           {viewState === "cancelled" && event && guest && (
             <CancelledView event={event} />
           )}
           {viewState === "already_confirmed" && event && guest && (
-            <AlreadyConfirmedView event={event} guest={guest} code={code} guestId={guestId} theme={theme} />
+            <AlreadyConfirmedView event={event} guest={guest} code={code} guestId={guestId} theme={theme} accessToken={accessToken.current} />
           )}
           {viewState === "already_cancelled" && event && guest && (
             <AlreadyCancelledView event={event} onChangeMind={() => updateStatus("confirmed")} updating={updating} />
@@ -942,12 +946,14 @@ function ConfirmedView({
   code,
   guestId,
   theme,
+  accessToken,
 }: {
   event: EventData;
   guest: GuestData;
   code: string;
   guestId: string;
   theme: ThemeConfig;
+  accessToken: string;
 }) {
   return (
     <div style={{ textAlign: "center" }}>
@@ -986,7 +992,7 @@ function ConfirmedView({
         <Divider />
 
         <a
-          href={`/pase/${code}/${guestId}`}
+          href={`/rsvp/${encodeURIComponent(code)}/${encodeURIComponent(guestId)}#token=${encodeURIComponent(accessToken)}`}
           style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "18px 36px", fontSize: 16, fontWeight: 700,
@@ -998,7 +1004,7 @@ function ConfirmedView({
             transition: "all 0.2s ease",
           }}
         >
-          {"\u{1F3AB}"} Ver mi pase VIP
+          {"\u{1F3AB}"} Ver mi confirmacion
         </a>
       </div>
     </div>
@@ -1041,12 +1047,14 @@ function AlreadyConfirmedView({
   code,
   guestId,
   theme,
+  accessToken,
 }: {
   event: EventData;
   guest: GuestData;
   code: string;
   guestId: string;
   theme: ThemeConfig;
+  accessToken: string;
 }) {
   return (
     <div style={{ textAlign: "center", animation: "fadeInUp 0.8s ease-out" }}>
@@ -1085,7 +1093,7 @@ function AlreadyConfirmedView({
         </p>
 
         <a
-          href={`/pase/${code}/${guestId}`}
+          href={`/rsvp/${encodeURIComponent(code)}/${encodeURIComponent(guestId)}#token=${encodeURIComponent(accessToken)}`}
           style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "18px 36px", fontSize: 16, fontWeight: 700,
@@ -1096,7 +1104,7 @@ function AlreadyConfirmedView({
             boxShadow: "0 6px 24px rgba(201,168,76,0.35)",
           }}
         >
-          {"\u{1F3AB}"} Ver mi pase VIP
+          {"\u{1F3AB}"} Ver mi confirmacion
         </a>
       </div>
     </div>

@@ -1122,6 +1122,7 @@ export default function Home() {
           alt=""
           fill
           priority
+          fetchPriority="high"
           loading="eager"
           sizes="100vw"
         />
@@ -1186,6 +1187,31 @@ export default function Home() {
           <div className="proof-label">Paquetes todo incluido</div>
         </div>
       </div>
+
+      <section className="package-finder" aria-labelledby="package-finder-title">
+        <div className="section-narrow">
+          <div className="package-finder-copy">
+            <span className="package-finder-kicker">Elige en 20 segundos</span>
+            <h2 id="package-finder-title">¿Qué quieres priorizar en tu fiesta?</h2>
+            <p>Ve directo al paquete que mejor encaja contigo. Después puedes confirmar disponibilidad por WhatsApp.</p>
+          </div>
+          <div className="package-finder-grid">
+            <a href="#paquete-premium" className="package-finder-card">
+              <strong>Cuidar el presupuesto</strong>
+              <span>Premium · desde $420 por persona</span>
+            </a>
+            <a href="#paquete-diamante" className="package-finder-card is-featured">
+              <strong>Más ambiente y espectáculo</strong>
+              <span>Diamante · grupo en vivo y pantalla LED</span>
+            </a>
+            <a href="#paquete-esmeralda" className="package-finder-card">
+              <strong>La experiencia más completa</strong>
+              <span>Esmeralda · 8 horas y producción premium</span>
+            </a>
+          </div>
+          <p className="package-finder-note">La cotización no reserva la fecha. Reserva con contrato y $3,000 de anticipo.</p>
+        </div>
+      </section>
 
       {/* Eventos */}
       <section className="section reveal">
@@ -1255,7 +1281,7 @@ export default function Home() {
           </p>
           <div className="pkg-grid">
             {/* Premium */}
-            <div className="pkg pkg-premium reveal">
+            <div className="pkg pkg-premium reveal" id="paquete-premium">
               <div className="pkg-head">
                 <div className="pkg-icon">
                   <IconSparkles size={28} />
@@ -1365,7 +1391,7 @@ export default function Home() {
             </div>
 
             {/* Diamante */}
-            <div className="pkg pkg-diamante reveal">
+            <div className="pkg pkg-diamante reveal" id="paquete-diamante">
               <div className="pkg-head">
                 <div className="pkg-badge">Más Popular</div>
                 <div className="pkg-icon">
@@ -1442,7 +1468,7 @@ export default function Home() {
             </div>
 
             {/* Esmeralda */}
-            <div className="pkg pkg-esmeralda reveal">
+            <div className="pkg pkg-esmeralda reveal" id="paquete-esmeralda">
               <div className="pkg-head">
                 <div className="pkg-badge">La joya de la corona</div>
                 <div className="pkg-icon">
@@ -2653,7 +2679,7 @@ export default function Home() {
             </p>
           </div>
           <div className="footer-links">
-            <h4>Navegación</h4>
+            <h2>Navegación</h2>
             <a href="#inicio">Inicio</a>
             <a href="#paquetes">Paquetes</a>
             <a href="#galeria">Galería</a>
@@ -2662,7 +2688,7 @@ export default function Home() {
             <a href="#contacto">Contacto</a>
           </div>
           <div>
-            <h4>Síguenos</h4>
+            <h2>Síguenos</h2>
             <div className="footer-social">
               <a
                 href="https://wa.me/529995485862"

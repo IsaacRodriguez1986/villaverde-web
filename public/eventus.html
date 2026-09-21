@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <meta name="referrer" content="no-referrer" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eventus Pro 2.0 — Salon de Fiestas Villaverde</title>
@@ -3896,7 +3897,7 @@
               Registrar gratis
             </button>
             <button class="auth-tab" onclick="switchAuth('login', this)">
-              Ya tengo codigo
+              Ya tengo enlace
             </button>
           </div>
 
@@ -3966,11 +3967,11 @@
 
           <div class="auth-panel" id="authLogin">
             <div class="asc">
-              <h3>Entrar con mi codigo</h3>
-              <p>Ingresa el codigo que recibiste al registrar tu evento.</p>
+              <h3>Entrar a mi evento</h3>
+              <p>Pega tu enlace privado. Si solo tienes el codigo anterior, solicita un enlace nuevo al salon.</p>
               <div class="erm" id="lE"></div>
               <div class="fg">
-                <label>Codigo</label
+                <label>Enlace privado</label
                 ><input
                   type="text"
                   class="fi"
@@ -3982,8 +3983,8 @@
                     text-transform: uppercase;
                   "
                   id="lC"
-                  placeholder="VV-XXXX"
-                  maxlength="7"
+                  placeholder="Pega aqui tu enlace"
+                  maxlength="2048" autocomplete="off" autocapitalize="none" spellcheck="false"
                 />
               </div>
               <button class="btn bgr" onclick="logIn()">Entrar</button>
@@ -4257,67 +4258,21 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      /* ─── SUPABASE CONFIG ─── */
-      const SB_URL = "https://gfbixkddumsqlfrfbsmp.supabase.co";
-      const SB_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdmYml4a2RkdW1zcWxmcmZic21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMjU5NDMsImV4cCI6MjA4OTgwMTk0M30.0oMJ8w75vQNJEXwfiKi9fjs3p25-9KEMBtV-Z3A-jiY";
-      const SB_HEADERS = {
-        apikey: SB_KEY,
-        Authorization: "Bearer " + SB_KEY,
-        "Content-Type": "application/json",
-        Prefer: "return=representation",
-      };
-
-      /* Todo el acceso a tablas eventus_* pasa por el backend seguro /api/eventus.
-   La anon key (SB_KEY) se conserva SOLO para subir fotos al Storage (bucket eventus-photos). */
+      /* ─── SECURE EVENTUS API ─── */
       const EVENTUS_API = "/api/eventus";
-      let LOGIN_CODE = null;
-      function capCode() {
-        return typeof E !== "undefined" && E && E.code
-          ? E.code
-          : LOGIN_CODE || null;
-      }
-      function admPw() {
-        try {
-          return sessionStorage.getItem("eventus_adm") || "";
-        } catch (e) {
-          return "";
-        }
-      }
-      async function sbReq(method, table, query, body) {
-        try {
-          const r = await fetch(EVENTUS_API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              op: "db",
-              method: method,
-              table: table,
-              query: query || "",
-              body: body || null,
-              code: capCode(),
-              adminPw: admPw(),
-            }),
-          });
-          if (!r.ok) return method === "GET" ? [] : null;
-          return await r.json();
-        } catch (e) {
-          return method === "GET" ? [] : null;
-        }
-      }
-      async function sbGet(table, query) {
-        const d = await sbReq("GET", table, query, null);
-        return Array.isArray(d) ? d : [];
-      }
-      async function sbPost(table, data) {
-        return sbReq("POST", table, null, data);
-      }
-      async function sbPatch(table, query, data) {
-        return sbReq("PATCH", table, query, data);
-      }
-      async function sbDelete(table, query) {
-        return sbReq("DELETE", table, query, null);
-      }
+      let LOGIN_CODE = null, ACCESS_TOKEN = "";
+      function capCode(){return typeof E!=="undefined"&&E&&E.code?E.code:LOGIN_CODE||null}
+      function admPw(){return ADMIN_VIEW?"active":""}
+      async function apiCall(body){const r=await fetch(EVENTUS_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({accessToken:ACCESS_TOKEN},body))});const data=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(data.error||"No se pudo completar la operacion");return data}
+      async function sbReq(method,table,query,body){try{return await apiCall({op:"db",method:method,table:table,query:query||"",body:body==null?null:body})}catch(e){return method==="GET"?[]:null}}
+      async function sbGet(table,query){const d=await sbReq("GET",table,query,null);return Array.isArray(d)?d:[]}
+      async function sbPost(table,data){return sbReq("POST",table,null,data)}
+      async function sbPatch(table,query,data){return sbReq("PATCH",table,query,data)}
+      async function sbDelete(table,query){return sbReq("DELETE",table,query,null)}
+      function accessLink(token){return location.origin+"/eventus#access="+encodeURIComponent(token)}
+      function tokenFromInput(value){try{if(value.indexOf("#")!==-1)return new URLSearchParams(new URL(value).hash.slice(1)).get("access")||""}catch(e){}return value.trim()}
+      async function authenticateEvent(value){const token=tokenFromInput(value);if(!token.startsWith("ev1."))throw new Error("Solicita al salon tu enlace privado de acceso.");const info=await apiCall({op:"access",accessToken:token});ACCESS_TOKEN=token;sessionStorage.setItem("eventus_access",token);return info.code}
+      async function uploadPrivateImage(file,code){const form=new FormData();form.set("file",file);form.set("code",code);if(ACCESS_TOKEN)form.set("accessToken",ACCESS_TOKEN);const r=await fetch(EVENTUS_API,{method:"POST",body:form});const data=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(data.error||"Error al subir imagen");return data.url}
 
       /* ─── DATA ─── */
       let E = null,
@@ -4434,11 +4389,8 @@
 
       /* ─── HELPERS ─── */
       function gc() {
-        const c = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-        let r = "";
-        for (let i = 0; i < 4; i++)
-          r += c[Math.floor(Math.random() * c.length)];
-        return "VV-" + r;
+        const bytes = crypto.getRandomValues(new Uint8Array(16));
+        return "VV-" + Array.from(bytes, function (b) { return b.toString(16).padStart(2, "0"); }).join("").toUpperCase();
       }
       /* Escapa datos de usuario antes de meterlos a innerHTML (audit 2026-07-22 C6, anti-XSS) */
       function escapeHtml(s) {
@@ -4452,6 +4404,11 @@
           }[c];
         });
       }
+      function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+      function jsArg(value){return esc(JSON.stringify(String(value==null?"":value)))}
+      function safeUrl(value){try{const u=new URL(String(value),location.origin);return u.protocol==="https:"?u.href:""}catch(e){return""}}
+      function imageUrl(value){return safeUrl(String(value||""))}
+      function normalizeBrief(value){if(!value||typeof value!=="object"||Array.isArray(value))return null;const brief={};["song","colors","message","dress_code","event_time","venue","notes"].forEach(function(k){if(typeof value[k]==="string")brief[k]=value[k].slice(0,2000)});["photos","reference_photos","solo_photos","carousel_photos"].forEach(function(k){brief[k]=Array.isArray(value[k])?value[k].filter(function(u){return typeof u==="string"}).slice(0,7):[]});return brief}
       function fmt$(n) {
         return "$" + Number(n).toLocaleString("es-MX");
       }
@@ -4617,7 +4574,7 @@
             hours: ev.hours,
             totalCost: ev.total_cost,
             contractDate: ev.contract_date,
-            numMesas: ev.num_mesas,
+            numMesas: Math.min(60, Math.max(1, Number(ev.num_mesas) || 20)),
             menuSel: ev.menu_sel || {},
             activated: ev.activated || false,
             invitation_enabled: ev.invitation_enabled || false,
@@ -4627,7 +4584,7 @@
             dress_code: ev.dress_code || "Elegante",
             event_time: ev.event_time || "18:00",
             invitation_status: ev.invitation_status || "sin_brief",
-            invitation_brief: ev.invitation_brief || null,
+            invitation_brief: normalizeBrief(ev.invitation_brief),
             invitation_url: ev.invitation_url || "",
             invitation_comments: ev.invitation_comments || "",
             guests: guests.map(function (g) {
@@ -4688,131 +4645,28 @@
       }
 
       /* ─── REGISTER (FREE TIER) ─── */
-      async function reg() {
-        const n = document.getElementById("rN").value.trim(),
-          t = document.getElementById("rT").value,
-          d = document.getElementById("rD").value,
-          phone = document
-            .getElementById("rPhone")
-            .value.trim()
-            .replace(/\D/g, ""),
-          e = document.getElementById("rE");
-        e.style.display = "none";
-        if (!n) {
-          e.textContent = "Escribe el nombre";
-          e.style.display = "block";
-          return;
-        }
-        if (!d) {
-          e.textContent = "Selecciona fecha";
-          e.style.display = "block";
-          return;
-        }
-        if (!phone || phone.length < 10) {
-          e.textContent = "Ingresa tu WhatsApp (10 digitos)";
-          e.style.display = "block";
-          return;
-        }
-        /* ─── Cooldown 24h: max 1 registro por dispositivo ─── */
-        var lastReg = localStorage.getItem("eventus_last_reg");
-        if (lastReg && Date.now() - parseInt(lastReg) < 86400000) {
-          e.textContent =
-            "Ya registraste un evento recientemente. Intenta de nuevo manana o usa tu codigo para entrar.";
-          e.style.display = "block";
-          return;
-        }
-        try {
-          /* ─── Dedup: check if phone already has an event ─── */
-          var cleanPhone = phone.replace(/^521/, "").replace(/^52/, "");
-          var existing = await sbGet(
-            "eventus_events",
-            "or=(phone.eq." +
-              cleanPhone +
-              ",phone.eq." +
-              phone +
-              ")&select=code,name&limit=1",
-          );
-          if (existing && existing.length > 0) {
-            var ex = existing[0];
-            document.getElementById("nC").textContent = ex.code;
-            document.getElementById("regS").style.display = "none";
-            document.getElementById("cR").style.display = "block";
-            document.querySelector("#cR .asc h3").textContent =
-              "Ya tienes un evento";
-            document.querySelector("#cR .cdb p").textContent =
-              "Este telefono ya tiene un evento registrado. Usa este codigo para entrar:";
-            await loadEvent(ex.code);
-            return;
-          }
-          const code = gc(),
-            today = new Date().toISOString().slice(0, 10);
-          const evRes = await sbPost("eventus_events", {
-            code: code,
-            name: n,
-            type: t,
-            date: d,
-            hours: 7,
-            total_cost: 0,
-            contract_date: today,
-            num_mesas: 20,
-            menu_sel: {},
-            phone: cleanPhone,
-            activated: false,
-          });
-          if (!evRes) {
-            e.textContent = "Error al registrar. Intenta de nuevo.";
-            e.style.display = "block";
-            return;
-          }
-          localStorage.setItem("eventus_last_reg", String(Date.now()));
-          document.getElementById("nC").textContent = code;
-          document.getElementById("regS").style.display = "none";
-          document.getElementById("cR").style.display = "block";
-          await loadEvent(code);
-        } catch (err) {
-          e.textContent = "Error de conexion";
-          e.style.display = "block";
-        }
+      async function reg(){
+        const n=document.getElementById("rN").value.trim(),t=document.getElementById("rT").value,d=document.getElementById("rD").value,phone=document.getElementById("rPhone").value.trim().replace(/\D/g,""),e=document.getElementById("rE");e.style.display="none";
+        if(!n||!d||phone.length<10){e.textContent=!n?"Escribe el nombre":!d?"Selecciona fecha":"Ingresa tu WhatsApp (10 digitos)";e.style.display="block";return}
+        const lastReg=localStorage.getItem("eventus_last_reg");if(lastReg&&Date.now()-parseInt(lastReg)<86400000){e.textContent="Ya registraste un evento recientemente. Contacta al salon si necesitas recuperar tu acceso.";e.style.display="block";return}
+        try{const result=await apiCall({op:"register",body:{name:n,type:t,date:d,phone:phone.replace(/^521/,"").replace(/^52/,"")}});ACCESS_TOKEN=result.accessToken;sessionStorage.setItem("eventus_access",ACCESS_TOKEN);history.replaceState(null,"","#access="+encodeURIComponent(ACCESS_TOKEN));localStorage.setItem("eventus_last_reg",String(Date.now()));document.getElementById("nC").textContent="Enlace privado listo";document.getElementById("regS").style.display="none";document.getElementById("cR").style.display="block";await loadEvent(result.code)}
+        catch(err){e.textContent=err&&err.message==="already registered"?"Ese telefono ya esta registrado. Contacta al salon para recuperar tu enlace privado.":"No se pudo registrar. Intenta mas tarde o contacta al salon.";e.style.display="block"}
       }
       function enter() {
         show();
       }
-      function copyCode() {
-        const code = document.getElementById("nC").textContent;
-        navigator.clipboard
-          .writeText(code)
-          .then(function () {
-            toast("Codigo copiado: " + code);
-          })
-          .catch(function () {
-            toast("Error al copiar", 1);
-          });
-      }
+      function copyCode(){navigator.clipboard.writeText(accessLink(ACCESS_TOKEN)).then(function(){toast("Enlace privado copiado")}).catch(function(){toast("Error al copiar",1)})}
 
       /* ─── LOGIN ─── */
-      async function logIn() {
-        const c = document.getElementById("lC").value.trim().toUpperCase(),
-          e = document.getElementById("lE");
-        e.style.display = "none";
-        if (!c || c.length < 6) {
-          e.textContent = "Ingresa un codigo valido";
-          e.style.display = "block";
-          return;
-        }
-        DEMO_MODE = false;
-        const ev = await loadEvent(c);
-        if (ev) {
-          show();
-        } else {
-          e.textContent =
-            "Codigo no encontrado. Registrate o contacta al salon.";
-          e.style.display = "block";
-        }
-      }
+      async function logIn(){const input=document.getElementById("lC").value.trim(),e=document.getElementById("lE");e.style.display="none";try{DEMO_MODE=false;ADMIN_VIEW=false;const code=await authenticateEvent(input);const ev=await loadEvent(code);if(!ev)throw new Error("No se pudo cargar el evento");history.replaceState(null,"",location.pathname);show()}catch(err){e.textContent=err.message||"Enlace no valido. Contacta al salon.";e.style.display="block"}}
 
-      function out() {
+      async function out() {
+        try { await apiCall({ op: "logout" }); } catch (e) {}
+        sessionStorage.removeItem("eventus_access");
+        history.replaceState(null, "", location.pathname);
         E = null;
         LOGIN_CODE = null;
+        ACCESS_TOKEN = "";
         DEMO_MODE = false;
         document.getElementById("wF").style.display = "none";
         document.getElementById("bottomNav").style.display = "none";
@@ -4823,6 +4677,14 @@
         document.getElementById("regS").style.display = "block";
         document.getElementById("cR").style.display = "none";
       }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const token = new URLSearchParams(location.hash.slice(1)).get("access") || sessionStorage.getItem("eventus_access");
+        if (!token) return;
+        const input = document.getElementById("lC");
+        if (input) input.value = token;
+        logIn();
+      });
 
       /* ─── SHOW APP ─── */
       function show() {
@@ -5254,42 +5116,7 @@
       }, 1000);
 
       /* ─── INVITACION TAB ─── */
-      async function uploadFoto(file, path) {
-        const url =
-          SB_URL + "/storage/v1/object/eventus-photos/" + E.code + "/" + path;
-        const r = await fetch(url, {
-          method: "POST",
-          headers: {
-            apikey: SB_KEY,
-            Authorization: "Bearer " + SB_KEY,
-            "Content-Type": file.type,
-            "x-upsert": "true",
-          },
-          body: file,
-        });
-        if (!r.ok) {
-          const url2 =
-            SB_URL + "/storage/v1/object/eventus-photos/" + E.code + "/" + path;
-          const r2 = await fetch(url2, {
-            method: "PUT",
-            headers: {
-              apikey: SB_KEY,
-              Authorization: "Bearer " + SB_KEY,
-              "Content-Type": file.type,
-              "x-upsert": "true",
-            },
-            body: file,
-          });
-          if (!r2.ok) throw new Error("Upload failed");
-        }
-        return (
-          SB_URL +
-          "/storage/v1/object/public/eventus-photos/" +
-          E.code +
-          "/" +
-          path
-        );
-      }
+      async function uploadFoto(file,path){return uploadPrivateImage(file,E.code)}
 
       /* Brief photo temp storage */
       let briefCarouselFiles = [null, null, null, null, null];
@@ -5653,7 +5480,7 @@
           if (E.invitation_comments) {
             h +=
               '<div class="inv-comment-box"><strong>Tu comentario:</strong><br>' +
-              E.invitation_comments +
+              escapeHtml(E.invitation_comments).replace(/\n/g, "<br>") +
               "</div>";
           }
           h +=
@@ -6423,7 +6250,7 @@
 
       /* ─── INVITATION SYSTEM ─── */
       const SITE = "https://salondefiestasvillaverde.com";
-      function showQR(id) {
+      async function showQR(id) {
         if (!(E.activated || E.invitation_enabled) && !ADMIN_VIEW) {
           toast(
             "El servicio de invitacion digital no esta activo en tu evento",
@@ -6450,8 +6277,9 @@
           month: "long",
           day: "numeric",
         });
-        const rsvpLink = SITE + "/rsvp/" + E.code + "/" + g.id;
-        const paseLink = SITE + "/pase/" + E.code + "/" + g.id;
+        const issued = await apiCall({ op: "guest-token", code: E.code, guestId: String(g.id) });
+        const rsvpLink = SITE + "/rsvp/" + encodeURIComponent(E.code) + "/" + encodeURIComponent(g.id) + "#token=" + encodeURIComponent(issued.token);
+        const paseLink = rsvpLink;
         const isConf = g.status === "confirmed";
         modal.innerHTML =
           '<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>Invitacion digital</h3><div class="qr-name">' +
@@ -6501,7 +6329,7 @@
             toast("Error al copiar", 1);
           });
       }
-      function sendInvWA(id) {
+      async function sendInvWA(id) {
         const g = E.guests.find(function (x) {
           return x.id === id;
         });
@@ -6513,7 +6341,8 @@
           month: "long",
           day: "numeric",
         });
-        const rsvpLink = SITE + "/rsvp/" + E.code + "/" + g.id;
+        const issued = await apiCall({ op: "guest-token", code: E.code, guestId: String(g.id) });
+        const rsvpLink = SITE + "/rsvp/" + encodeURIComponent(E.code) + "/" + encodeURIComponent(g.id) + "#token=" + encodeURIComponent(issued.token);
         const msg =
           "*Estas invitad@!*\n\n*" +
           t[E.type] +
@@ -6533,12 +6362,13 @@
           "_blank",
         );
       }
-      function sendPaseWA(id) {
+      async function sendPaseWA(id) {
         const g = E.guests.find(function (x) {
           return x.id === id;
         });
         if (!g) return;
-        const paseLink = SITE + "/pase/" + E.code + "/" + g.id;
+        const issued = await apiCall({ op: "guest-token", code: E.code, guestId: String(g.id) });
+        const paseLink = SITE + "/rsvp/" + encodeURIComponent(E.code) + "/" + encodeURIComponent(g.id) + "#token=" + encodeURIComponent(issued.token);
         const msg =
           "*Gracias por confirmar!*\n\nAqui esta tu pase de acceso para el evento de " +
           E.name +
@@ -6996,9 +6826,7 @@
           alert("Contrasena incorrecta");
           return;
         }
-        try {
-          sessionStorage.setItem("eventus_adm", pwd);
-        } catch (e) {}
+        ADMIN_VIEW = true;
         document.querySelectorAll(".screen").forEach(function (s) {
           s.classList.remove("active");
         });
@@ -7580,31 +7408,18 @@
 
       function admRenderCodigos(t) {
         let h =
-          '<p style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:14px">Codigos de acceso de todos los clientes. Puedes copiarlos o enviarlos por WhatsApp si un cliente olvido su codigo.</p>';
+          '<p style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:14px">Enlaces privados de acceso. Genera uno nuevo para copiarlo o enviarlo por WhatsApp.</p>';
         if (!ADM_EVENTS.length)
           return (
             h +
             '<div class="emp"><div class="ej">&#128273;</div><p>No hay eventos</p></div>'
           );
         ADM_EVENTS.forEach(function (ev) {
-          h +=
-            '<div class="adm-detail"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">' +
-            escapeHtml(ev.name) +
-            '</div><div style="font-size:12px;color:rgba(255,255,255,0.35)">' +
-            (t[ev.type] || ev.type) +
-            " · " +
-            ev.date +
-            '</div></div><div class="adm-ev-code">' +
-            ev.code +
-            '</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="adm-btn adm-btn-code" onclick="admCopyCode(\'' +
-            ev.code +
-            '\')">Copiar codigo</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(\'' +
-            ev.code +
-            "','" +
-            ev.name.replace(/'/g, "\\'") +
-            '\')">Enviar por WhatsApp</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(\'' +
-            ev.code +
-            "')\">Ver evento</button></div></div>";
+          h += '<div class="adm-detail"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85)">' +
+            esc(ev.name) + '</div><div style="font-size:12px;color:rgba(255,255,255,0.35)">' +
+            esc(t[ev.type] || ev.type) + ' · ' + esc(ev.date) +
+            '</div></div><div class="adm-ev-code">' + esc(ev.code) +
+            '</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="adm-btn adm-btn-code" onclick="admCopyCode(' + jsArg(ev.code) + ')">Copiar enlace</button><button class="adm-btn adm-btn-wa" onclick="admSendCode(' + jsArg(ev.code) + ',' + jsArg(ev.name) + ')">Enviar por WhatsApp</button><button class="adm-btn adm-btn-view" onclick="admOpenEvent(' + jsArg(ev.code) + ')">Ver evento</button></div></div>';
         });
         return h;
       }
@@ -7755,16 +7570,9 @@
           admRender();
           toast("Evento creado: " + code);
           if (phone) {
-            const msg =
-              'Hola! Tu evento "' +
-              n +
-              '" ha sido registrado en Eventus Pro.\n\nTu codigo de acceso es: *' +
-              code +
-              "*\n\nIngresa en: salondefiestasvillaverde.com/eventus\n\nCon este codigo podras administrar tu lista de invitados, mesas, menu y mas. Guardalo bien!";
-            window.open(
-              "https://wa.me/521" + phone + "?text=" + encodeURIComponent(msg),
-              "_blank",
-            );
+            const link = await issueEventLink(code);
+            const msg = 'Hola! Tu evento "' + n + '" ha sido registrado en Eventus Pro.\n\nEste es tu enlace privado de acceso:\n' + link + "\n\nGuardalo y no lo compartas publicamente.";
+            window.open("https://wa.me/521" + phone + "?text=" + encodeURIComponent(msg), "_blank");
           }
         } catch (err) {
           e.textContent = "Error de conexion";
@@ -7801,27 +7609,13 @@
         toast("Evento " + code + " eliminado");
       }
 
-      function admCopyCode(code) {
-        navigator.clipboard
-          .writeText(code)
-          .then(function () {
-            toast("Codigo " + code + " copiado");
-          })
-          .catch(function () {
-            toast("Error al copiar", 1);
-          });
-      }
-      function admSendCode(code, name) {
-        const msg =
-          "Hola, tu codigo de acceso para Eventus Pro es: *" +
-          code +
-          "*\n\nEvento: " +
-          name +
-          "\n\nIngresa en: salondefiestasvillaverde.com/eventus\n\nAhi puedes ver y administrar tu lista de invitados!";
-        window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
-      }
+      async function issueEventLink(code){const result=await apiCall({op:"issue-access",code:code});return accessLink(result.accessToken)}
+      async function admCopyCode(code){try{await navigator.clipboard.writeText(await issueEventLink(code));toast("Enlace privado copiado")}catch(e){toast("Error al generar enlace",1)}}
+      async function admSendCode(code,name){try{const link=await issueEventLink(code);const msg="Hola, este es tu enlace privado de acceso a Eventus Pro para "+name+":\n\n"+link+"\n\nGuardalo y no lo compartas publicamente.";window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank")}catch(e){toast("Error al generar enlace",1)}}
       async function admOpenEvent(code) {
         ADMIN_VIEW = true;
+        const issued = await apiCall({ op: "issue-access", code: code });
+        ACCESS_TOKEN = issued.accessToken;
         await loadEvent(code);
         if (E) show();
       }
@@ -7899,7 +7693,7 @@
           );
         sorted.forEach(function (ev) {
           var st = ev.invitation_status || "sin_brief";
-          var brief = ev.invitation_brief || {};
+          var brief = normalizeBrief(ev.invitation_brief) || {};
           var invOn = ev.invitation_enabled;
           h +=
             '<div class="inv-card' +
@@ -8027,12 +7821,11 @@
 
       function admInvBriefSummary(ev, brief) {
         var parts = [];
-        if (brief.song) parts.push("" + brief.song);
-        if (brief.colors) parts.push("" + brief.colors);
+        if (brief.song) parts.push(escapeHtml(brief.song));
+        if (brief.colors) parts.push(escapeHtml(brief.colors));
         if (brief.message)
           parts.push(
-            "" +
-              brief.message.substring(0, 60) +
+            escapeHtml(brief.message.substring(0, 60)) +
               (brief.message.length > 60 ? "..." : ""),
           );
         if (!parts.length)
@@ -8061,24 +7854,20 @@
             "</div>";
         if (brief.dress_code)
           h +=
-            "<div><strong>Dress code:</strong> " + brief.dress_code + "</div>";
+            "<div><strong>Dress code:</strong> " + escapeHtml(brief.dress_code) + "</div>";
         if (brief.event_time)
-          h += "<div><strong>Hora:</strong> " + brief.event_time + "</div>";
+          h += "<div><strong>Hora:</strong> " + escapeHtml(brief.event_time) + "</div>";
         if (brief.venue)
-          h += "<div><strong>Lugar:</strong> " + brief.venue + "</div>";
+          h += "<div><strong>Lugar:</strong> " + escapeHtml(brief.venue) + "</div>";
         if (brief.notes)
-          h += "<div><strong>Notas:</strong> " + brief.notes + "</div>";
+          h += "<div><strong>Notas:</strong> " + escapeHtml(brief.notes) + "</div>";
         h += "</div>";
         var photos = brief.photos || brief.reference_photos || [];
         if (photos.length) {
           h += '<div class="inv-brief-grid">';
           photos.forEach(function (p) {
-            h +=
-              '<img src="' +
-              p +
-              '" onclick="window.open(\'' +
-              p +
-              "','_blank')\" alt=\"Ref\">";
+            var url = safeUrl(p);
+            if (url) h += '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><img src="' + esc(url) + '" alt="Ref"></a>';
           });
           h += "</div>";
         }
@@ -8088,12 +7877,8 @@
             h +=
               '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin:8px 0 4px">Fotos solistas:</div><div class="inv-brief-grid">';
             solos.forEach(function (p) {
-              h +=
-                '<img src="' +
-                p +
-                '" onclick="window.open(\'' +
-                p +
-                "','_blank')\" alt=\"Solo\">";
+              var url = safeUrl(p);
+              if (url) h += '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><img src="' + esc(url) + '" alt="Solo"></a>';
             });
             h += "</div>";
           }
@@ -8104,12 +7889,8 @@
             h +=
               '<div style="font-size:11px;color:rgba(255,255,255,0.4);margin:8px 0 4px">Fotos carrusel:</div><div class="inv-brief-grid">';
             carousels.forEach(function (p) {
-              h +=
-                '<img src="' +
-                p +
-                '" onclick="window.open(\'' +
-                p +
-                "','_blank')\" alt=\"Carrusel\">";
+              var url = safeUrl(p);
+              if (url) h += '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><img src="' + esc(url) + '" alt="Carrusel"></a>';
             });
             h += "</div>";
           }
@@ -8123,67 +7904,7 @@
         admRender();
       }
 
-      async function admUploadInvitation(code) {
-        var input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.onchange = async function () {
-          var file = input.files[0];
-          if (!file) return;
-          toast("Subiendo diseno...");
-          try {
-            var fname =
-              "invitation_" + Date.now() + "." + file.name.split(".").pop();
-            var url =
-              SB_URL +
-              "/storage/v1/object/eventus-photos/" +
-              code +
-              "/" +
-              fname;
-            var r = await fetch(url, {
-              method: "POST",
-              headers: {
-                apikey: SB_KEY,
-                Authorization: "Bearer " + SB_KEY,
-                "Content-Type": file.type,
-                "x-upsert": "true",
-              },
-              body: file,
-            });
-            if (!r.ok) {
-              r = await fetch(url, {
-                method: "PUT",
-                headers: {
-                  apikey: SB_KEY,
-                  Authorization: "Bearer " + SB_KEY,
-                  "Content-Type": file.type,
-                  "x-upsert": "true",
-                },
-                body: file,
-              });
-            }
-            if (!r.ok) throw new Error("Upload failed");
-            var publicUrl =
-              SB_URL +
-              "/storage/v1/object/public/eventus-photos/" +
-              code +
-              "/" +
-              fname;
-            await sbPatch("eventus_events", "code=eq." + code, {
-              invitation_url: publicUrl,
-            });
-            var ev = ADM_EVENTS.find(function (e) {
-              return e.code === code;
-            });
-            if (ev) ev.invitation_url = publicUrl;
-            admRender();
-            toast("Diseno subido correctamente");
-          } catch (e) {
-            toast("Error al subir diseno", 1);
-          }
-        };
-        input.click();
-      }
+      async function admUploadInvitation(code){var input=document.createElement("input");input.type="file";input.accept="image/png,image/jpeg,image/webp";input.onchange=async function(){var file=input.files[0];if(!file)return;toast("Subiendo diseno...");try{var privateUrl=await uploadPrivateImage(file,code);await sbPatch("eventus_events","code=eq."+code,{invitation_url:privateUrl});await admLoadEvents();admRender();toast("Diseno subido correctamente")}catch(e){toast("Error al subir diseno",1)}};input.click()}
 
       async function admSetInvStatus(code, status) {
         try {

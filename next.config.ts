@@ -74,6 +74,15 @@ const CABECERAS_LANDING = [
   },
 ];
 
+const CABECERAS_EVENTUS = [
+  { key: "Cache-Control", value: "no-store" },
+  { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet, noimageindex" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "no-referrer" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+];
+
 const CABECERAS_MEDIA_LANDING = [
   {
     key: "Cache-Control",
@@ -141,6 +150,9 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/", headers: CABECERAS_LANDING },
+      { source: "/eventus", headers: CABECERAS_EVENTUS },
+      { source: "/eventus.html", headers: CABECERAS_EVENTUS },
+      { source: "/api/eventus", headers: CABECERAS_EVENTUS },
       { source: "/testimonio-xv.mp4", headers: CABECERAS_MEDIA_LANDING },
       { source: "/testimonio-xv-poster.jpg", headers: CABECERAS_MEDIA_LANDING },
       { source: "/vendor/:path*", headers: CABECERAS_MEDIA_LANDING },

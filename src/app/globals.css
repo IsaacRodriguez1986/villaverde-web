@@ -455,6 +455,21 @@ button {
   letter-spacing: 0.5px;
 }
 
+/* ===== PACKAGE FINDER ===== */
+.package-finder { padding: 56px 24px; background: #fff; border-bottom: 1px solid var(--gris); }
+.package-finder-copy { max-width: 680px; margin-bottom: 24px; }
+.package-finder-kicker { color: var(--rosa-dark); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.package-finder h2 { margin-top: 8px; font-family: var(--font-display); font-size: clamp(32px, 5vw, 48px); line-height: 1.05; }
+.package-finder p { margin-top: 10px; color: var(--gris-text); }
+.package-finder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.package-finder-card { min-height: 118px; padding: 22px; border: 1px solid var(--gris); border-radius: var(--radius); background: var(--blanco); box-shadow: var(--shadow-sm); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); }
+.package-finder-card:hover { transform: translateY(-3px); border-color: var(--rosa-light); box-shadow: var(--shadow-md); }
+.package-finder-card.is-featured { border-color: rgba(219, 39, 119, .32); background: linear-gradient(145deg, #fff 0%, var(--crema) 100%); }
+.package-finder-card strong,.package-finder-card span { display: block; }
+.package-finder-card strong { font-size: 16px; color: var(--texto); }
+.package-finder-card span { margin-top: 8px; color: var(--gris-text); font-size: 13px; }
+.package-finder-note { font-size: 12px; }
+
 /* ===== EVENTS GRID ===== */
 .events-grid {
   display: grid;
@@ -1715,7 +1730,7 @@ button {
   font-size: 13px;
   line-height: 1.6;
 }
-.footer h4 {
+.footer h2 {
   color: rgba(255, 255, 255, 0.82);
   font-size: 11px;
   font-weight: 700;
@@ -1968,6 +1983,10 @@ button {
 }
 
 @media (max-width: 768px) {
+  .package-finder { padding: 42px 18px; }
+  .package-finder-grid { grid-template-columns: 1fr; }
+  .package-finder-card { min-height: 0; }
+
   .nav-links {
     display: none;
   }
