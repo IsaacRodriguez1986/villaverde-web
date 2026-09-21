@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /* ===== SVG ICON COMPONENTS ===== */
@@ -720,39 +721,6 @@ function IconFlower({ size = 20 }: { size?: number }) {
 
 /* ===== DATA ===== */
 
-const testimonials = [
-  {
-    text: "El salón está hermoso, muy limpio y con un ambiente súper agradable. Celebramos los XV de mi hija y todos quedaron encantados con la atención. Recomendadísimo!",
-    author: "Laura Méndez",
-    event: "XV Años",
-    initials: "LM",
-  },
-  {
-    text: "Hicimos nuestra boda aquí y fue todo lo que soñamos. El paquete Diamante incluye todo, no tuvimos que preocuparnos por nada. El grupo en vivo estuvo increíble.",
-    author: "Carlos y Ana García",
-    event: "Boda",
-    initials: "CG",
-  },
-  {
-    text: "La atención desde el primer momento fue excelente. Nos ayudaron a personalizar todo para la graduación de mi hijo. Los jardines son perfectos para las fotos.",
-    author: "Patricia Hernández",
-    event: "Graduación",
-    initials: "PH",
-  },
-  {
-    text: "Segundo evento que hacemos en Villaverde y no nos cambiamos por nada. El descorche libre es un ahorro enorme y la comida siempre está deliciosa.",
-    author: "Familia Rodríguez",
-    event: "XV Años",
-    initials: "FR",
-  },
-  {
-    text: "Comparamos con otros 5 salones en Chalco y Villaverde fue el mejor en relación calidad-precio. Las cortesías son un detalle que nadie más ofrece.",
-    author: "Mariana López",
-    event: "Boda",
-    initials: "ML",
-  },
-];
-
 const galleryImages = [
   {
     src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/fachada.webp",
@@ -825,21 +793,42 @@ const tour360Scenes = [
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("entradas");
-  const [currentTesti, setCurrentTesti] = useState(0);
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [testiPlaying, setTestiPlaying] = useState(false);
   const [testiLoading, setTestiLoading] = useState(false);
   const [testiHydrated, setTestiHydrated] = useState(false);
   const lightboxRef = useRef<HTMLDivElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const testiVideoRef = useRef<HTMLVideoElement>(null);
   const testiPlayBtnRef = useRef<HTMLButtonElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
   const [tourSceneId, setTourSceneId] = useState(tour360Scenes[0].id);
+  const [tourReady, setTourReady] = useState(false);
+  const tourSectionRef = useRef<HTMLElement>(null);
   const tourViewerRef = useRef<any>(null);
 
+  const menuTabs = ["entradas", "cremas", "pasta", "pollo", "cerdo", "guarn"];
+
   useEffect(() => {
+    const section = tourSectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setTourReady(true);
+        observer.disconnect();
+      },
+      { rootMargin: "400px 0px" },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!tourReady) return;
     let cancelled = false;
+    let script: HTMLScriptElement | null = null;
 
     function initTour() {
       if (cancelled || !(window as any).pannellum) return;
@@ -866,7 +855,7 @@ export default function Home() {
         link.href = "/vendor/pannellum/pannellum.min.css";
         document.head.appendChild(link);
       }
-      let script = document.getElementById(
+      script = document.getElementById(
         "pannellum-js",
       ) as HTMLScriptElement | null;
       if (!script) {
@@ -875,17 +864,18 @@ export default function Home() {
         script.src = "/vendor/pannellum/pannellum.min.js";
         document.body.appendChild(script);
       }
-      script.addEventListener("load", initTour);
+      script.addEventListener("load", initTour, { once: true });
     }
 
     return () => {
       cancelled = true;
+      script?.removeEventListener("load", initTour);
       if (tourViewerRef.current) {
         tourViewerRef.current.destroy();
         tourViewerRef.current = null;
       }
     };
-  }, []);
+  }, [tourReady]);
 
   const goToScene = (id: string) => {
     setTourSceneId(id);
@@ -978,16 +968,20 @@ export default function Home() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    const testiInterval = setInterval(() => {
-      setCurrentTesti((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", handleScroll);
-      clearInterval(testiInterval);
     };
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   // Lightbox keyboard nav
   useEffect(() => {
@@ -1012,28 +1006,65 @@ export default function Home() {
   // Move focus into the lightbox when it opens, restore it to the trigger on close
   useEffect(() => {
     if (lightboxIdx !== null) {
-      lightboxRef.current?.focus();
+      lightboxCloseRef.current?.focus();
     } else {
       lastGalleryFocusRef.current?.focus();
     }
   }, [lightboxIdx]);
 
+  const handleLightboxKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Tab") return;
+    const focusable = lightboxRef.current?.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+    );
+    if (!focusable?.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  const handleMenuTabKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    currentTab: string,
+  ) => {
+    const index = menuTabs.indexOf(currentTab);
+    let nextIndex = index;
+    if (event.key === "ArrowRight") nextIndex = (index + 1) % menuTabs.length;
+    else if (event.key === "ArrowLeft") nextIndex = (index - 1 + menuTabs.length) % menuTabs.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = menuTabs.length - 1;
+    else return;
+    event.preventDefault();
+    const nextTab = menuTabs[nextIndex];
+    setActiveMenu(nextTab);
+    requestAnimationFrame(() => document.getElementById(`menu-tab-${nextTab}`)?.focus());
+  };
+
   return (
     <>
+      <a className="skip-link" href="#contenido-principal">
+        Saltar al contenido principal
+      </a>
       {/* Promo Bar */}
       <div className="promo-bar">
-        Nuevos Paquetes 2026 — Aparta tu fecha con solo $3,000{" "}
+        Nuevos Paquetes 2026 — Reserva con contrato y $3,000 de anticipo{" "}
         <a
           href="https://wa.me/529995485862?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
           target="_blank"
           rel="noopener noreferrer"
         >
-          APARTAR AHORA →
+          CONSULTAR FECHA →
         </a>
       </div>
 
       {/* Nav */}
-      <nav className="nav">
+      <nav className="nav" aria-label="Navegación principal">
         <a href="#inicio" className="nav-logo">
           Villa<span>verde</span>
         </a>
@@ -1042,10 +1073,11 @@ export default function Home() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menú"
           aria-expanded={menuOpen}
+          aria-controls="navegacion-principal"
         >
           {menuOpen ? <IconX size={24} /> : <IconMenu size={24} />}
         </button>
-        <div className={`nav-links${menuOpen ? " open" : ""}`}>
+        <div id="navegacion-principal" className={`nav-links${menuOpen ? " open" : ""}`}>
           <a href="#inicio" onClick={() => setMenuOpen(false)}>
             Inicio
           </a>
@@ -1080,9 +1112,19 @@ export default function Home() {
         </div>
       </nav>
 
+      <main id="contenido-principal">
+
       {/* Hero */}
       <section className="hero" id="inicio">
-        <div className="hero-bg"></div>
+        <Image
+          className="hero-bg"
+          src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/panoramica.webp"
+          alt=""
+          fill
+          priority
+          loading="eager"
+          sizes="100vw"
+        />
         <div className="hero-content">
           <div className="hero-badge">Nuevos Paquetes 2026</div>
           <h1>
@@ -1105,7 +1147,13 @@ export default function Home() {
             </span>
           </div>
           <div className="hero-btns">
-            <a href="#formulario" className="btn-primary">
+            <a
+              href={whatsappQuoteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              onClick={() => trackWhatsAppClick("hero")}
+            >
               <WhatsAppIcon size={18} /> Cotiza gratis en 30 seg
             </a>
             <a href="#paquetes" className="btn-outline">
@@ -1134,8 +1182,8 @@ export default function Home() {
           <div className="proof-label">Capacidad de invitados</div>
         </div>
         <div className="proof-item">
-          <div className="proof-num">4.8</div>
-          <div className="proof-label">Calificación Google</div>
+          <div className="proof-num">3</div>
+          <div className="proof-label">Paquetes todo incluido</div>
         </div>
       </div>
 
@@ -1147,12 +1195,13 @@ export default function Home() {
             <br />
             más importantes de tu vida
           </h2>
-          <p className="section-sub"></p>
           <div className="events-grid">
             <a href="#paquetes" className="event-card">
-              <img
+              <Image
                 src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/xv.webp"
                 alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco"
+                fill
+                sizes="(max-width: 960px) 100vw, 33vw"
               />
               <div className="event-overlay">
                 <h3>XV Años</h3>
@@ -1163,9 +1212,11 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img
+              <Image
                 src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/bodas.webp"
                 alt="Salón para bodas todo incluido en Chalco Estado de México"
+                fill
+                sizes="(max-width: 960px) 100vw, 33vw"
               />
               <div className="event-overlay">
                 <h3>Bodas</h3>
@@ -1176,9 +1227,11 @@ export default function Home() {
               </div>
             </a>
             <a href="#paquetes" className="event-card">
-              <img
+              <Image
                 src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/graduacion.webp"
                 alt="Fiesta de graduación en salón de fiestas Villaverde Chalco"
+                fill
+                sizes="(max-width: 960px) 100vw, 33vw"
               />
               <div className="event-overlay">
                 <h3>Graduaciones</h3>
@@ -1207,7 +1260,7 @@ export default function Home() {
                 <div className="pkg-icon">
                   <IconSparkles size={28} />
                 </div>
-                <div className="pkg-name">Premium</div>
+                <h3 className="pkg-name">Premium</h3>
                 <div className="pkg-tag">La mejor relación valor-precio</div>
               </div>
               <div className="pkg-prices">
@@ -1228,7 +1281,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  6 horas totales (6h evento + 30min recepción + 30min desalojo)
+                  6 horas de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat">
                   <span className="ck">
@@ -1307,7 +1360,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="pkg-btn"
               >
-                Apartar fecha — Premium
+                Consultar fecha — Premium
               </a>
             </div>
 
@@ -1318,7 +1371,7 @@ export default function Home() {
                 <div className="pkg-icon">
                   <IconDiamond size={28} />
                 </div>
-                <div className="pkg-name">Diamante</div>
+                <h3 className="pkg-name">Diamante</h3>
                 <div className="pkg-tag">El paquete estrella de Villaverde</div>
               </div>
               <div className="pkg-prices single">
@@ -1334,7 +1387,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  7 horas totales (7h evento + 30min recepción + 30min desalojo)
+                  7 horas de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1384,7 +1437,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="pkg-btn"
               >
-                Apartar fecha — Diamante
+                Consultar fecha — Diamante
               </a>
             </div>
 
@@ -1395,7 +1448,7 @@ export default function Home() {
                 <div className="pkg-icon">
                   <IconSparkles size={28} />
                 </div>
-                <div className="pkg-name">Esmeralda</div>
+                <h3 className="pkg-name">Esmeralda</h3>
                 <div className="pkg-tag">La fiesta perfecta sin límites</div>
               </div>
               <div className="pkg-prices single">
@@ -1411,7 +1464,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  8 horas totales (8h evento + 30min recepción + 30min desalojo)
+                  8 horas de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1507,7 +1560,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="pkg-btn"
               >
-                Apartar fecha — Esmeralda
+                Consultar fecha — Esmeralda
               </a>
             </div>
           </div>
@@ -1536,7 +1589,7 @@ export default function Home() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Horas totales</td>
+                  <td>Horas de evento</td>
                   <td>6h</td>
                   <td>7h</td>
                   <td>8h</td>
@@ -1596,7 +1649,7 @@ export default function Home() {
           <div className="pkg-note reveal">
             Premium desde 100 invitados · Diamante y Esmeralda desde 150
             <br />
-            <strong>Aparta tu fecha con solo $3,000 de anticipo</strong>
+            <strong>Reserva con contrato y $3,000 de anticipo</strong>
           </div>
         </div>
       </section>
@@ -1608,8 +1661,8 @@ export default function Home() {
             Personaliza tu evento con nuestras cortesías
           </h2>
           <p className="section-sub reveal">
-            Un detalle exclusivo de Villaverde que ningún otro salón en Chalco
-            ofrece. Tú eliges cómo hacer tu fiesta única.
+            Opciones para personalizar tu celebración según el paquete elegido.
+            Tú decides cómo hacer tu fiesta única.
           </p>
           <div className="cort-explain reveal">
             <div className="cort-explain-item">
@@ -1733,40 +1786,35 @@ export default function Home() {
               <video
                 src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/videos/reel-villa.mp4"
                 poster="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/brochures/reel-villa-poster.jpg"
-                autoPlay
-                muted
-                loop
                 playsInline
                 controls
-                preload="metadata"
+                preload="none"
+                aria-label="Video del Salón de Fiestas Villaverde"
               />
             </div>
           </div>
           <div className="gallery-grid reveal">
             {galleryImages.map((img, i) => (
-              <div
+              <button
+                type="button"
                 key={i}
                 className={`gallery-item ${img.className}`}
-                role="button"
-                tabIndex={0}
                 aria-label={`Ampliar foto: ${img.alt}`}
                 onClick={(e) => {
                   lastGalleryFocusRef.current = e.currentTarget;
                   setLightboxIdx(i);
                 }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    lastGalleryFocusRef.current = e.currentTarget;
-                    setLightboxIdx(i);
-                  }
-                }}
               >
-                <img src={img.src} alt={img.alt} loading="lazy" />
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
                 <div className="gallery-zoom">
                   <IconZoomIn size={28} />
                 </div>
-              </div>
+              </button>
             ))}
           </div>
           <div className="gallery-cta reveal">
@@ -1777,7 +1825,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" id="recorrido-360">
+      <section ref={tourSectionRef} className="section" id="recorrido-360">
         <div className="section-narrow">
           <h2 className="section-title reveal">Recorrido virtual 360°</h2>
           <p className="section-sub reveal">
@@ -1792,6 +1840,8 @@ export default function Home() {
                 key={s.id}
                 className={`tour360-scene-btn ${tourSceneId === s.id ? "is-active" : ""}`}
                 onClick={() => goToScene(s.id)}
+                aria-pressed={tourSceneId === s.id}
+                disabled={!tourReady}
               >
                 {s.name}
               </button>
@@ -1810,8 +1860,10 @@ export default function Home() {
           aria-modal="true"
           aria-label="Foto ampliada de la galería"
           tabIndex={-1}
+          onKeyDown={handleLightboxKeyDown}
         >
           <button
+            ref={lightboxCloseRef}
             className="lightbox-close"
             onClick={() => setLightboxIdx(null)}
             aria-label="Cerrar"
@@ -1830,9 +1882,12 @@ export default function Home() {
           >
             <IconChevronLeft size={24} />
           </button>
-          <img
+          <Image
             src={galleryImages[lightboxIdx].src}
             alt={galleryImages[lightboxIdx].alt}
+            width={1600}
+            height={1067}
+            sizes="100vw"
             onClick={(e) => e.stopPropagation()}
           />
           <button
@@ -1882,7 +1937,7 @@ export default function Home() {
               <h3>2 camerinos privados</h3>
               <p>
                 Exclusivo: uno para la quinceañera o novios y otro para
-                chambelanes. Ningún otro salón lo ofrece.
+                chambelanes para preparar cada momento con comodidad.
               </p>
             </div>
             <div className="why-card">
@@ -1892,7 +1947,7 @@ export default function Home() {
               <h3>Cortesías personalizables</h3>
               <p>
                 Tú eliges cómo complementar tu fiesta con nuestro sistema único
-                de cortesías. Solo en Villaverde.
+                de cortesías incluidas en cada paquete.
               </p>
             </div>
             <div className="why-card">
@@ -1931,7 +1986,7 @@ export default function Home() {
             role="tablist"
             aria-label="Menú de Banquete"
           >
-            {["entradas", "cremas", "pasta", "pollo", "cerdo", "guarn"].map(
+            {menuTabs.map(
               (tab) => (
                 <button
                   key={tab}
@@ -1939,8 +1994,10 @@ export default function Home() {
                   role="tab"
                   aria-selected={activeMenu === tab}
                   aria-controls={`menu-panel-${tab}`}
+                  tabIndex={activeMenu === tab ? 0 : -1}
                   className={`menu-tab${activeMenu === tab ? " active" : ""}`}
                   onClick={() => setActiveMenu(tab)}
+                  onKeyDown={(event) => handleMenuTabKeyDown(event, tab)}
                 >
                   {tab === "entradas"
                     ? "Entradas"
@@ -2287,60 +2344,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="testi-carousel reveal">
-            <button
-              className="testi-nav prev"
-              onClick={() =>
-                setCurrentTesti(
-                  (currentTesti - 1 + testimonials.length) %
-                    testimonials.length,
-                )
-              }
-              aria-label="Anterior"
-            >
-              <IconChevronLeft size={20} />
-            </button>
-            <button
-              className="testi-nav next"
-              onClick={() =>
-                setCurrentTesti((currentTesti + 1) % testimonials.length)
-              }
-              aria-label="Siguiente"
-            >
-              <IconChevronRight size={20} />
-            </button>
-            <div
-              className="testi-track"
-              style={{ transform: `translateX(-${currentTesti * 100}%)` }}
-            >
-              {testimonials.map((t, i) => (
-                <div key={i} className="testi-slide">
-                  <div className="testi-card">
-                    <div className="testi-avatar">{t.initials}</div>
-                    <div className="testi-stars">
-                      {[...Array(5)].map((_, j) => (
-                        <IconStar key={j} size={20} />
-                      ))}
-                      <span className="sr-only">5 de 5 estrellas</span>
-                    </div>
-                    <div className="testi-text">&quot;{t.text}&quot;</div>
-                    <div className="testi-author">— {t.author}</div>
-                    <div className="testi-event">{t.event}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="testi-dots">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  className={`testi-dot${currentTesti === i ? " active" : ""}`}
-                  onClick={() => setCurrentTesti(i)}
-                  aria-label={`Testimonio ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          <details className="testi-transcript reveal">
+            <summary>Descripción del testimonio</summary>
+            <p>
+              Una quinceañera comparte, durante su evento, que celebró su fiesta
+              en Villaverde. El video conserva su voz y el ambiente original del
+              salón.
+            </p>
+          </details>
         </div>
       </section>
 
@@ -2453,11 +2464,9 @@ export default function Home() {
                 ¿Cuánto es el anticipo para apartar mi fecha?
               </summary>
               <div className="faq-answer">
-                Puedes apartar tu fecha con solo{" "}
-                <strong>$3,000 MXN de anticipo</strong>. El resto se cubre en
-                pagos cómodos antes del evento. Te recomendamos apartar con
-                anticipación ya que las fechas de fin de semana se agotan
-                rápido.
+                La fecha se reserva al <strong>firmar el contrato</strong> y
+                cubrir el <strong>anticipo de $3,000 MXN</strong>, sujeto a
+                disponibilidad. La cotización por sí sola no reserva la fecha.
               </div>
             </details>
             <details className="faq-item">
@@ -2585,7 +2594,7 @@ export default function Home() {
             compromiso.
           </p>
           <div className="cta-anticipo">
-            Aparta tu fecha con solo $3,000 de anticipo
+            Reserva con contrato y $3,000 de anticipo
           </div>
           <a
             href={whatsappQuoteUrl}
@@ -2626,6 +2635,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="footer">
@@ -2710,9 +2720,15 @@ export default function Home() {
           <div className="sticky-cta-inner">
             <div className="sticky-cta-text">
               <strong>Paquetes desde $420/persona</strong>
-              Aparta con solo $3,000
+              Consulta disponibilidad
             </div>
-            <a href="#formulario" className="sticky-cta-btn">
+            <a
+              href={whatsappQuoteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sticky-cta-btn"
+              onClick={() => trackWhatsAppClick("sticky_mobile")}
+            >
               <WhatsAppIcon size={18} /> Cotizar
             </a>
           </div>

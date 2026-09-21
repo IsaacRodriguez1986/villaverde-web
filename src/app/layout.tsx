@@ -1,10 +1,27 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
+import MetaPixelConsent from "./MetaPixelConsent";
+
+const displayFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-display-loaded",
+  display: "swap",
+});
+
+const bodyFont = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body-loaded",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Salón de Fiestas en Chalco | Bodas, XV Años y Graduaciones — Villaverde",
-  description: "Salón de fiestas en Chalco con paquetes todo incluido desde $420 por persona. Descorche libre, cortesías exclusivas y 10+ años de experiencia. Bodas, XV Años, Graduaciones. Aparta tu fecha con solo $3,000.",
+  metadataBase: new URL("https://www.salondefiestasvillaverde.com"),
+  title: "Salón de Fiestas en Chalco | Villaverde",
+  description: "Paquetes todo incluido desde $420 por persona para bodas, XV años y graduaciones en Chalco. Agenda una visita y consulta disponibilidad.",
   keywords: "salon de fiestas chalco, salon para xv años chalco, salon para bodas chalco, salon villaverde, fiestas chalco, eventos chalco, salon de fiestas estado de mexico, xv años chalco, bodas chalco, graduaciones chalco, salon todo incluido chalco",
   alternates: {
     canonical: "https://www.salondefiestasvillaverde.com",
@@ -23,7 +40,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Salón de Fiestas Villaverde — Desde $420/persona todo incluido",
-    description: "Bodas, XV Años y Graduaciones en Chalco. Descorche libre, cortesías exclusivas. Aparta con solo $3,000.",
+    description: "Paquetes todo incluido para bodas, XV años y graduaciones en Chalco. Consulta disponibilidad y agenda una visita.",
     url: "https://www.salondefiestasvillaverde.com",
     siteName: "Salón de Fiestas Villaverde",
     locale: "es_MX",
@@ -57,16 +74,6 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -94,57 +101,14 @@ export default function RootLayout({
                 latitude: 19.2834655,
                 longitude: -98.8805715,
               },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                reviewCount: "500",
-                bestRating: "5",
-              },
-              review: [
-                {
-                  "@type": "Review",
-                  author: { "@type": "Person", name: "María Guadalupe Hernández" },
-                  datePublished: "2025-11-15",
-                  reviewBody: "Hicimos los XV años de mi hija aquí y fue un sueño hecho realidad. El paquete Diamante incluye todo: cena deliciosa de 3 tiempos, descorche libre, DJ increíble y la batucada fue lo máximo. Las instalaciones son hermosas, los jardines con fuente perfectos para las fotos. El equipo de Villaverde nos hizo sentir en familia. 100% recomendado.",
-                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                },
-                {
-                  "@type": "Review",
-                  author: { "@type": "Person", name: "Carlos y Fernanda Martínez" },
-                  datePublished: "2025-09-22",
-                  reviewBody: "Celebramos nuestra boda en Villaverde y fue perfecto. El salón estilo hacienda es elegante, la cena estuvo exquisita y el descorche libre nos ahorró muchísimo. Los meseros muy atentos, la iluminación tipo antro transformó el ambiente para el baile. La escalera principal fue ideal para las fotos. Nuestros invitados siguen hablando del evento.",
-                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                },
-                {
-                  "@type": "Review",
-                  author: { "@type": "Person", name: "Profesora Leticia Morales" },
-                  datePublished: "2026-01-10",
-                  reviewBody: "Organizamos la graduación de nuestra generación aquí y salió espectacular. El paquete Premium nos dio todo lo que necesitábamos a un precio muy accesible. La comida de 3 tiempos riquísima, el DJ puso excelente ambiente y todos nuestros invitados la pasaron increíble. Definitivamente regresaremos.",
-                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                },
-                {
-                  "@type": "Review",
-                  author: { "@type": "Person", name: "Ana Lucía Ramírez" },
-                  datePublished: "2025-08-05",
-                  reviewBody: "Los XV de mi sobrina quedaron muy bonitos. El salón es amplio y elegante, la comida estuvo bien y el servicio fue bueno. Lo único es que hubiéramos querido un poquito más de tiempo, pero el paquete Premium de 6 horas estuvo bien para el presupuesto. El descorche libre es una gran ventaja contra otros salones de Chalco.",
-                  reviewRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
-                },
-                {
-                  "@type": "Review",
-                  author: { "@type": "Person", name: "Roberto y Diana Sánchez" },
-                  datePublished: "2026-02-14",
-                  reviewBody: "Nuestra boda en Villaverde superó todas las expectativas. Elegimos el paquete Esmeralda y valió cada peso: el grupo en vivo fue increíble, las cortesías como los cabezones y el show de burbujas encantaron a todos, y la cena de 3 tiempos estuvo deliciosa. Los jardines con fuente le dieron un toque mágico a la ceremonia. El mejor salón de Chalco sin duda.",
-                  reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-                },
-              ],
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
                 name: "Paquetes Todo Incluido",
                 itemListElement: [
                   {
                     "@type": "Offer",
-                    name: "Paquete Premium — 6 horas totales",
-                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 6 horas totales de evento.",
+                    name: "Paquete Premium — 6 horas de evento",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 6 horas de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "420",
@@ -161,8 +125,8 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Diamante — 7 horas totales (Más Popular)",
-                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 150 invitados. 7 horas totales de evento.",
+                    name: "Paquete Diamante — 7 horas de evento (Más Popular)",
+                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 150 invitados. 7 horas de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "530",
@@ -179,8 +143,8 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Esmeralda — 8 horas totales (El Más Completo)",
-                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 150 invitados. 8 horas totales de evento.",
+                    name: "Paquete Esmeralda — 8 horas de evento (El Más Completo)",
+                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 150 invitados. 8 horas de evento.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "680",
@@ -254,7 +218,7 @@ export default function RootLayout({
                   name: "¿Cuánto es el anticipo para apartar mi fecha?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Puedes apartar tu fecha con solo $3,000 MXN de anticipo. El resto se cubre en pagos cómodos antes del evento. Te recomendamos apartar con anticipación ya que las fechas de fin de semana se agotan rápido.",
+                    text: "La fecha se reserva al firmar el contrato y cubrir el anticipo de $3,000 MXN, sujeto a disponibilidad. La cotización por sí sola no reserva la fecha.",
                   },
                 },
                 {
@@ -286,7 +250,7 @@ export default function RootLayout({
                   name: "¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "El Premium ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 6 horas totales. El Diamante ($530/pp, desde 150 invitados) es el más popular: agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 7 horas totales. El Esmeralda ($680/pp, desde 150 invitados) es el paquete máximo con show de robot, cabina 360, cantante en cena y todas las cortesías incluidas con 8 horas totales.",
+                    text: "El Premium ($420/pp) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 6 horas de evento. El Diamante ($530/pp, desde 150 invitados) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 7 horas de evento. El Esmeralda ($680/pp, desde 150 invitados) incluye show de robot, cabina 360, cantante en cena y todas las cortesías con 8 horas de evento.",
                   },
                 },
                 {
@@ -302,32 +266,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className={`${displayFont.variable} ${bodyFont.variable}`}>
         {children}
-        {/* Meta Pixel */}
-        <Script id="fb-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '460528009991262');
-            fbq('track', 'PageView');
-          `}
-        </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=460528009991262&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
+        <MetaPixelConsent />
       </body>
     </html>
   );

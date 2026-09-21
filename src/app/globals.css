@@ -19,10 +19,10 @@
   --gold-text: #a16207;
   --gold-light: #fde68a;
   --gold-dark: #92400e;
-  --esmeralda: #059669;
+  --esmeralda: #047857;
   --esmeralda-light: #34d399;
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-display: var(--font-display-loaded), Georgia, serif;
+  --font-body: var(--font-body-loaded), system-ui, sans-serif;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -60,6 +60,64 @@ a {
 }
 button {
   font-family: var(--font-body);
+}
+:focus-visible {
+  outline: 3px solid var(--rosa-dark);
+  outline-offset: 3px;
+}
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto);
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform var(--transition);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.privacy-choice {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10001;
+  width: min(430px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid #d8ddd9;
+  border-radius: 14px;
+  background: #fbfdfb;
+  box-shadow: 0 18px 50px rgba(10, 24, 16, 0.2);
+  color: #17221c;
+}
+.privacy-choice p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.privacy-choice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+.privacy-choice button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #355342;
+  border-radius: 999px;
+  background: transparent;
+  color: #203b2b;
+  font-weight: 700;
+  cursor: pointer;
+}
+.privacy-choice button.is-primary {
+  background: #203b2b;
+  color: #f7fbf8;
 }
 
 /* ===== PROMO BAR ===== */
@@ -166,15 +224,23 @@ button {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(10, 10, 10, 0.3) 0%,
-      rgba(10, 10, 10, 0.55) 50%,
-      rgba(10, 10, 10, 0.85) 100%
-    ),
-    url("https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/panoramica.webp")
-      center/cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.3) 0%,
+    rgba(10, 10, 10, 0.55) 50%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+  pointer-events: none;
 }
 .hero::after {
   content: "";
@@ -186,6 +252,7 @@ button {
     transparent 60%
   );
   pointer-events: none;
+  z-index: 1;
 }
 .hero-content {
   position: relative;
@@ -883,6 +950,12 @@ button {
 .gallery-item {
   border-radius: 12px;
   overflow: hidden;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: inherit;
   cursor: pointer;
   position: relative;
 }
@@ -1503,6 +1576,26 @@ button {
   color: var(--gris-text);
   margin-bottom: 10px;
 }
+.testi-transcript {
+  max-width: 540px;
+  margin: 18px auto 0;
+  border-top: 1px solid var(--gris);
+  color: var(--gris-text);
+  font-size: 14px;
+}
+.testi-transcript summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texto);
+  font-weight: 700;
+  cursor: pointer;
+}
+.testi-transcript p {
+  padding: 0 16px 16px;
+  line-height: 1.65;
+}
 @media (max-width: 640px) {
   .testi-video {
     grid-template-columns: 1fr;
@@ -1552,7 +1645,7 @@ button {
   margin-bottom: 14px;
 }
 .cta-final .cta-sub {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 16px;
   margin-bottom: 8px;
 }
@@ -1568,7 +1661,7 @@ button {
   align-items: center;
   gap: 12px;
   background: #25d366;
-  color: white;
+  color: #073b1d;
   border: none;
   padding: 20px 44px;
   border-radius: 60px;
@@ -1588,7 +1681,7 @@ button {
   height: 24px;
 }
 .cta-contact {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.74);
   font-size: 13px;
   margin-top: 20px;
 }
@@ -1596,7 +1689,7 @@ button {
 /* ===== FOOTER ===== */
 .footer {
   background: #050505;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.72);
   padding: 48px 24px 24px;
 }
 .footer-grid {
@@ -1623,7 +1716,7 @@ button {
   line-height: 1.6;
 }
 .footer h4 {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -1653,7 +1746,7 @@ button {
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
 }
 .footer-social a:hover {
@@ -1707,7 +1800,7 @@ button {
   align-items: center;
   gap: 8px;
   background: #25d366;
-  color: white;
+  color: #073b1d;
   border: none;
   padding: 12px 24px;
   border-radius: 50px;
@@ -2090,6 +2183,9 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {

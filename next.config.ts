@@ -46,9 +46,50 @@ const CABECERAS_INVITACION = [
   { key: "Referrer-Policy", value: "no-referrer" },
 ];
 
+const CABECERAS_LANDING = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "object-src 'none'",
+      "img-src 'self' data: blob: https://gfbixkddumsqlfrfbsmp.supabase.co https://www.facebook.com",
+      "media-src 'self' blob: https://gfbixkddumsqlfrfbsmp.supabase.co",
+      "script-src 'self' 'unsafe-inline' https://connect.facebook.net",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
+      "connect-src 'self' https://gfbixkddumsqlfrfbsmp.supabase.co https://www.facebook.com https://graph.facebook.com",
+      "frame-src https://www.google.com https://maps.google.com",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  },
+];
+
+const CABECERAS_MEDIA_LANDING = [
+  {
+    key: "Cache-Control",
+    value: "public, max-age=86400, stale-while-revalidate=604800",
+  },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+];
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gfbixkddumsqlfrfbsmp.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
@@ -99,6 +140,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      { source: "/", headers: CABECERAS_LANDING },
+      { source: "/testimonio-xv.mp4", headers: CABECERAS_MEDIA_LANDING },
+      { source: "/testimonio-xv-poster.jpg", headers: CABECERAS_MEDIA_LANDING },
+      { source: "/vendor/:path*", headers: CABECERAS_MEDIA_LANDING },
       { source: "/informes", headers: CABECERAS_INFORMES },
       { source: "/informes/:path*", headers: CABECERAS_INFORMES },
       { source: "/brochures/:path*", headers: CABECERAS_FOLLETO },
