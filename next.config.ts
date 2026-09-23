@@ -10,6 +10,7 @@ const INVITACIONES = [
   "mis-xv-megan",
   "nuestra-boda",
   "boda-angel-isis",
+  "mis-xv-karla",
 ];
 
 /* El comparativo de precios y las fotos de los correos viven en public/brochures/ para

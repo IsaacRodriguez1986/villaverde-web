@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Salon de Fiestas Villaverde//Invitacion digital//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:mis-xv-karla-20261107@salondefiestasvillaverde.com
+DTSTAMP:20260922T210000Z
+DTSTART:20261107T220000Z
+DTEND:20261108T060000Z
+SUMMARY:XV Años de Karla Fernanda
+LOCATION:Parroquia San Gregorio Magno\, Av. José María Morelos S/N\, San 
+ Gregorio Cuautzingo\, C.P. 56644\, Chalco\, Estado de México
+DESCRIPTION:4:00 PM misa en la Parroquia San Gregorio Magno · 6:30 PM rece
+ pción en el Salón de Fiestas Villaverde (Carretera México-Cuautla Km 35
+ .5\, Col. Santa Cruz Amalinalco\, Chalco). Invitación: https://www.salond
+ efiestasvillaverde.com/mis-xv-karla
+URL:https://www.salondefiestasvillaverde.com/mis-xv-karla
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana son los XV Años de Karla Fernanda
+END:VALARM
+END:VEVENT
+END:VCALENDAR
