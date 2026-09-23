@@ -449,7 +449,7 @@ body.is-gated{ overflow:hidden; }
 
 /* ============================================================
    REPRODUCTOR DE MÚSICA
-   preload="none": los 2.8 MB solo se descargan si alguien toca play,
+   preload="none": los 4.4 MB solo se descargan si alguien toca play,
    así la página abre igual de rápido para quien no la escucha.
    ============================================================ */
 .eb-music{ padding:var(--eb-section-gap) 0 0; text-align:center; }
@@ -1510,8 +1510,8 @@ body.is-gated{ overflow:hidden; }
 <section class="eb-music eb-rv" id="musica" aria-labelledby="music-h">
   <div class="eb-wrap">
     <p class="eb-eyebrow" id="music-h">Dale play</p>
-    <p class="eb-music__title">Love Me Like You Do</p>
-    <p class="eb-label eb-music__artist">Ellie Goulding</p>
+    <p class="eb-music__title">You Are Not Alone</p>
+    <p class="eb-label eb-music__artist">Michael Jackson</p>
 
     <!-- Sin JS este control nativo es la única forma de reproducir. -->
     <audio id="audio" class="eb-audio-native" src="/mis-xv-karla/assets/cancion.mp3"
@@ -1521,9 +1521,9 @@ body.is-gated{ overflow:hidden; }
       <div class="eb-player__bar">
         <span class="eb-player__time" id="pl-cur">0:00</span>
         <input type="range" class="eb-player__seek" id="pl-seek"
-               min="0" max="180" step="1" value="0"
+               min="0" max="274" step="1" value="0"
                aria-label="Avanzar en la canción">
-        <span class="eb-player__time eb-player__time--end" id="pl-dur">3:00</span>
+        <span class="eb-player__time eb-player__time--end" id="pl-dur">4:34</span>
       </div>
       <!-- Solo controles que HACEN algo: nada de aleatorio/siguiente
            decorativos que el invitado toca y no responden. -->
@@ -2259,7 +2259,7 @@ var RSVP_PHONE = EVENTO.telefono;
 
   function paint() {
     var total = audio.duration;
-    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 180;
+    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 274;
     seek.style.setProperty('--pct', (audio.currentTime / total * 100) + '%');
   }
 
