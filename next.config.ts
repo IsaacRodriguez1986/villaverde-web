@@ -6,6 +6,7 @@ import type { NextConfig } from "next";
  *  (a /eldiabloviste se le olvidó el rewrite y su URL limpia nunca funcionó). */
 const INVITACIONES = [
   "mis-xv-dayana",
+  "mis-xv-dayana-garduno",
   "ana-paula-1",
   "mis-xv-megan",
   "nuestra-boda",

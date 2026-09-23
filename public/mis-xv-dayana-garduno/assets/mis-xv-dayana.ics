@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Villaverde//XV Dayana//ES
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:dayana-garduno-20261219@villaverde
+DTSTAMP:20260923T000000Z
+DTSTART:20261220T010000Z
+SUMMARY:XV años de Dayana Garduño
+LOCATION:Salón Villaverde\, Carretera México-Cuautla Km 35.5\, Chalco
+DESCRIPTION:Entrada a las 7:00 p. m. hora de Ciudad de México.
+END:VEVENT
+END:VCALENDAR
