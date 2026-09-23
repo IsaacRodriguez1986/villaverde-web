@@ -2267,6 +2267,7 @@
 </div>
 
 <script>
+  const MUESTRA = /[?&]muestra=1(?:&|$)/.test(location.search);
   const HOST_WHATSAPP = '5215540362234';
   const URL_INVITACION = 'https://www.salondefiestasvillaverde.com/eldiabloviste';
 
@@ -2347,6 +2348,7 @@
 
   function submitRSVP(e) {
     e.preventDefault();
+    if (MUESTRA) return false;
     const btn = e.target.querySelector('.rsvp-btn');
     const name = document.getElementById('rsvp-name').value.trim();
     const phone = document.getElementById('rsvp-phone').value.trim();
@@ -2419,7 +2421,26 @@
     }
   });
 
-  const eventDate = new Date('2026-05-28T14:00:00-06:00').getTime();
+  /* ---------- VISTA DE MUESTRA (?muestra=1) ----------
+     Así la enseña el vendedor dentro de /informes. El evento ya pasó y la
+     confirmación le llega a gente real, así que en esta vista el formulario
+     queda desactivado y la cuenta regresiva apunta a una fecha futura. */
+  if (MUESTRA) {
+    (function () {
+      var form = document.getElementById('rsvp-form');
+      if (!form) return;
+      form.querySelectorAll('input, select, textarea, button').forEach(function (el) { el.disabled = true; });
+      form.setAttribute('aria-disabled', 'true');
+      form.style.opacity = '.55';
+      form.style.pointerEvents = 'none';
+      var aviso = document.createElement('p');
+      aviso.textContent = 'Vista de muestra · En tu invitación, aquí tus invitados confirman su asistencia';
+      aviso.setAttribute('style', 'display:block;width:fit-content;max-width:90%;margin:0 auto 16px;padding:8px 16px;border-radius:999px;background:rgba(20,14,10,.8);color:#fff;font-size:13px;font-weight:600;line-height:1.4;text-align:center;');
+      form.parentNode.insertBefore(aviso, form);
+    })();
+  }
+
+  const eventDate = MUESTRA ? Date.now() + 45 * 864e5 : new Date('2026-05-28T14:00:00-06:00').getTime();
   const pad = n => n < 10 ? '0' + n : '' + n;
   function tick() {
     const diff = eventDate - Date.now();
@@ -2437,7 +2458,7 @@
   setInterval(tick, 1000);
 
   // MEJORA #5 — RSVP urgency countdown
-  const rsvpDeadline = new Date('2026-05-24T23:59:59-06:00').getTime();
+  const rsvpDeadline = MUESTRA ? Date.now() + 38 * 864e5 : new Date('2026-05-24T23:59:59-06:00').getTime();
   function updateRsvpUrgency() {
     const el = document.getElementById('rsvp-urgency');
     const txt = document.getElementById('rsvp-urgency-text');

@@ -179,6 +179,156 @@ function InvitacionDemo() {
   );
 }
 
+/* Invitación real dentro del celular. La pantalla del celular (268 px) es más angosta que
+   cualquier teléfono, así que la invitación se pinta a 375 px (un iPhone) y se reduce a
+   escala: se ve su diseño móvil real en vez de uno apretado. Va en position:absolute para
+   que su alto nunca cuente en el tamaño del celular: en el flujo, el celular crecía, el
+   ResizeObserver volvía a medir y el celular llegaba a 2,000 px.
+   El sandbox sin allow-popups es la segunda red: aunque algo se escapara del modo muestra,
+   no abre WhatsApp ni mapas. */
+const INVI_ANCHO = 375;
+/* Las capas fijas de algunas invitaciones (el viñeteado de la portada) se dibujan aparte y
+   Chrome no les aplica el border-radius de la pantalla, ni con overflow ni con clip-path:
+   asomaba un cuadro gris en las esquinas. Estas cuatro esquinas del color del marco van
+   encima y tapan lo que se salga, sin depender de cómo dibuje cada navegador. */
+const esquina = (pos, color, fuera = 'transparent') =>
+  // Del radio de la pantalla (32) al borde del marco (~43), con los dos filos del
+  // .vv-phone (#1a120c y #4a372a). Afuera: transparente abajo, para no cortar la sombra
+  // del celular, y el fondo de la ficha arriba, donde la punta del cuadro gris asomaba.
+  `radial-gradient(circle at ${pos}, transparent 31.5px, ${color} 32px, ${color} 37.5px, ` +
+  `#1a120c 38px, #1a120c 40.5px, #4a372a 41px, #4a372a 42.5px, ${fuera} 43px)`;
+const ESQUINAS_PANTALLA = {
+  position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none',
+  backgroundImage: [
+    esquina('100% 100%', '#281b14', 'var(--vv-cream)'), esquina('0 100%', '#231811', 'var(--vv-cream)'),
+    esquina('100% 0', '#1b120d'), esquina('0 0', '#160e0a'),
+  ].join(','),
+  backgroundSize: '43px 43px',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'top left, top right, bottom left, bottom right',
+};
+function InvitacionEnCelular({ inv }) {
+  const screenRef = useRef(null);
+  const [caja, setCaja] = useState(null);
+  useEffect(() => {
+    const el = screenRef.current;
+    if (!el) return;
+    const medir = () => setCaja({ w: el.clientWidth, h: el.clientHeight });
+    medir();
+    const ro = new ResizeObserver(medir);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const escala = caja && caja.w ? caja.w / INVI_ANCHO : 1;
+  return (
+    <div className="vv-phone">
+      <div className="vv-phone__notch" />
+      <div ref={screenRef} className="vv-phone__screen" style={{ overflow: 'hidden', position: 'relative' }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', fontSize: 12.5, fontWeight: 700, color: '#9C6B3F' }}>
+          Cargando invitación…
+        </div>
+        {caja && caja.w > 0 && (
+          <iframe src={inv.src} title={`Invitación de muestra: ${inv.tipo} · ${inv.nombre}`}
+            sandbox="allow-scripts allow-same-origin" allow="autoplay"
+            style={{
+              position: 'absolute', top: 0, left: 0, display: 'block', border: 0,
+              width: INVI_ANCHO, height: caja.h / escala,
+              transform: `scale(${escala})`, transformOrigin: '0 0',
+            }} />
+        )}
+      </div>
+      <div aria-hidden="true" style={ESQUINAS_PANTALLA} />
+    </div>
+  );
+}
+
+/* Qué lleva la invitación: lo fijo en tarjetas con ícono y lo opcional en píldoras. */
+function InvitacionIncluye({ incluye, extras, accent }) {
+  return (
+    <div style={{ flex: '1 1 300px', maxWidth: 440 }}>
+      <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 800, color: 'var(--vv-muted-2)', marginBottom: 6 }}>
+        Todo lo que lleva tu invitación
+      </div>
+      <div style={{ fontFamily: 'var(--vv-display)', fontSize: 22, fontWeight: 700, color: 'var(--vv-ink)', lineHeight: 1.2, marginBottom: 14 }}>
+        Tus invitados la reciben por WhatsApp y la abren como un <em style={{ color: accent }}>sobre</em>
+      </div>
+      <div style={{ display: 'grid', gap: 8 }}>
+        {incluye.map(x => (
+          <div key={x.t} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '9px 12px', borderRadius: 12, background: 'var(--vv-paper)', border: '1px solid var(--vv-line)' }}>
+            <span style={{ flex: 'none', width: 36, height: 36, borderRadius: 999, display: 'grid', placeItems: 'center', background: 'var(--vv-paper-2)', color: accent }}>
+              <Icon name={x.icon} size={18} stroke={1.9} />
+            </span>
+            <span style={{ minWidth: 0 }}>
+              <b style={{ display: 'block', fontSize: 14, color: 'var(--vv-ink)' }}>{x.t}</b>
+              <span style={{ display: 'block', fontSize: 12.5, color: 'var(--vv-muted)', lineHeight: 1.35 }}>{x.s}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+      {extras && extras.length > 0 && (
+        <div style={{ marginTop: 14 }}>
+          <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 800, color: 'var(--vv-muted-2)', marginBottom: 8 }}>
+            Y según tu evento, también puede llevar
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {extras.map(e => (
+              <span key={e} className="vv-chip" style={{ fontSize: 12, padding: '5px 11px' }}>
+                <Icon name="plus" size={11} stroke={2.6} /> {e}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InvitacionesMuestra({ accent, incluye, extras }) {
+  const invs = VV.INVITACIONES_MUESTRA || [];
+  const [sel, setSel] = useState(invs.length ? invs[0].id : 'ejemplo');
+  const inv = invs.find(x => x.id === sel);
+  const opciones = [...invs.map(x => ({ id: x.id, label: x.tipo })), { id: 'ejemplo', label: 'Diseño de ejemplo' }];
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'flex-start', gap: '22px 28px', padding: '18px 24px 0' }}>
+      {incluye && <InvitacionIncluye incluye={incluye} extras={extras} accent={accent} />}
+
+      <div style={{ flex: '0 1 340px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 800, color: 'var(--vv-muted-2)', textAlign: 'center', marginBottom: 10 }}>
+          Invitaciones reales de eventos en Villaverde
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, paddingBottom: 14 }}>
+          {opciones.map(o => {
+            const on = o.id === sel;
+            return (
+              <button key={o.id} type="button" className="vv-chip" aria-pressed={on} onClick={() => setSel(o.id)}
+                style={{
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  ...(on ? { background: accent, borderColor: accent, color: '#fff' } : null),
+                }}>
+                {o.label}
+              </button>
+            );
+          })}
+        </div>
+        {inv ? (
+          <>
+            <InvitacionEnCelular key={inv.id} inv={inv} />
+            <div style={{ fontSize: 12.5, color: 'var(--vv-muted)', marginTop: 12, textAlign: 'center', lineHeight: 1.5 }}>
+              <b style={{ color: 'var(--vv-ink)' }}>{inv.nombre}</b> · evento ya celebrado en Villaverde.
+              Toca la pantalla del celular para abrirla y desliza para recorrerla. En esta muestra la confirmación está desactivada.
+            </div>
+            <a href={inv.src} target="_blank" rel="noopener" style={{ marginTop: 8, fontSize: 12.5, fontWeight: 700, color: accent }}>
+              Ver en pantalla completa
+            </a>
+          </>
+        ) : (
+          <InvitacionDemo />
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ItemDetalle({ name, accent, onGo, onClose }) {
   const info = VV.ITEM_INFO[name] || {};
   const cort = info.cort ? VV.CORTESIAS.find(c => c.id === info.cort) : null;
@@ -189,9 +339,13 @@ function ItemDetalle({ name, accent, onGo, onClose }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
-  return (
+  /* Portal a <body>: el contenedor de cada sección anima su entrada (vvSecFade, fill
+     both) y eso lo vuelve un contexto de apilamiento; dentro de él el z-index 60 de la
+     ficha no le gana al riel lateral (z-index 5) y el riel tapaba el lado izquierdo de
+     la ficha en cualquier pantalla de menos de ~1,180 px de ancho, iPad incluido. */
+  return ReactDOM.createPortal(
     <div className="vv-imodal" onClick={onClose}>
-      <div className="vv-imodal__card" onClick={(e) => e.stopPropagation()}>
+      <div className="vv-imodal__card" style={info.invitacion ? { maxWidth: 900 } : undefined} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '22px 24px 16px' }}>
           <span style={{
             flex: 'none', width: 52, height: 52, borderRadius: 14, display: 'grid', placeItems: 'center',
@@ -211,7 +365,7 @@ function ItemDetalle({ name, accent, onGo, onClose }) {
           {info.d || 'Elemento incluido en el paquete.'}
         </div>
 
-        {info.invitacion && <InvitacionDemo />}
+        {info.invitacion && <InvitacionesMuestra accent={accent} incluye={info.incluye} extras={info.extras} />}
 
         {videos.length > 0 && (
           <div style={{ padding: '18px 24px 4px', display: 'grid', gap: 12 }}>
@@ -249,7 +403,8 @@ function ItemDetalle({ name, accent, onGo, onClose }) {
             onClick={onClose}>Cerrar</button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -361,6 +516,7 @@ function SecPaquetes({ onGo }) {
                   <span style={{ color: p.accent, flex: 'none' }}><Icon name={info.icon || 'check'} size={21} stroke={1.8} /></span>
                   <span style={{ flex: 1, fontWeight: 700, fontSize: 14, color: 'var(--vv-ink)' }}>{x}</span>
                   {hasGal(x) && <span className="vv-pkgitem__cam"><Icon name="camera" size={12} /> fotos</span>}
+                  {info.invitacion && <span className="vv-pkgitem__cam"><Icon name="play" size={12} /> ver ejemplos</span>}
                   <Icon name="right" size={16} stroke={2.4} className="vv-pkgitem__chev" />
                 </button>
               );

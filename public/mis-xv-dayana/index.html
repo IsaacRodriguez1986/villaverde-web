@@ -1413,8 +1413,31 @@ body.is-gated{ overflow:hidden; }
 
 /* Offset -06:00 explícito: la cuenta regresiva marca lo mismo sin
    importar la zona horaria del invitado. Ancla = misa, 3:00 PM. */
-var EVENT_TS   = new Date('2026-08-29T15:00:00-06:00').getTime();
+var MUESTRA = /[?&]muestra=1(?:&|$)/.test(location.search);
+var EVENT_TS   = MUESTRA ? Date.now() + 45 * 864e5 : new Date('2026-08-29T15:00:00-06:00').getTime();
 var RSVP_PHONE = '527203898985';
+
+/* ---------- VISTA DE MUESTRA (?muestra=1) ----------
+   Así la enseña el vendedor dentro de /informes. El evento ya pasó y la
+   confirmación le llega a gente real, así que en esta vista el formulario
+   queda desactivado y la cuenta regresiva apunta a una fecha futura. */
+if (MUESTRA) {
+  (function () {
+    var form = document.getElementById('rsvp');
+    if (!form) return;
+    form.querySelectorAll('input, select, textarea, button').forEach(function (el) { el.disabled = true; });
+    form.setAttribute('aria-disabled', 'true');
+    form.style.opacity = '.55';
+    form.style.pointerEvents = 'none';
+    var aviso = document.createElement('p');
+    aviso.textContent = 'Vista de muestra · En tu invitación, aquí tus invitados confirman su asistencia';
+    aviso.setAttribute('style', 'display:block;width:fit-content;max-width:90%;margin:0 auto 16px;padding:8px 16px;border-radius:999px;background:rgba(20,14,10,.8);color:#fff;font-size:13px;font-weight:600;line-height:1.4;text-align:center;');
+    form.parentNode.insertBefore(aviso, form);
+    /* El enlace directo a WhatsApp vive fuera del formulario. */
+    var directo = document.querySelector('.eb-rsvp__direct');
+    if (directo) directo.style.display = 'none';
+  })();
+}
 
 /* ---------- PORTADA DE ENTRADA ----------
    El click del boton es una interaccion real del usuario, asi que dentro
@@ -1506,6 +1529,7 @@ var RSVP_PHONE = '527203898985';
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (MUESTRA) return;
 
     var n = name.value.trim();
     if (n.length < 3) {

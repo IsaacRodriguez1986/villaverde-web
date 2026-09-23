@@ -12,6 +12,9 @@ const INVITACIONES = [
   "nuestra-boda",
   "boda-angel-isis",
   "mis-xv-karla",
+  // Eventos ya pasados que se enseñan como muestra dentro de /informes.
+  "eldiabloviste",
+  "diadelmaestro",
 ];
 
 /* El comparativo de precios y las fotos de los correos viven en public/brochures/ para

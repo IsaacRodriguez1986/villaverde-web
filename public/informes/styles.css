@@ -816,12 +816,14 @@ image-slot { cursor: zoom-in; }
   position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center;
   background: rgba(40,18,12,.55); backdrop-filter: blur(4px); padding: 24px;
   animation: vvImFade .2s ease;
+  overflow-y: auto; /* la ficha de la invitación no cabe en pantallas bajas */
 }
 @keyframes vvImFade { from { opacity: 0; } to { opacity: 1; } }
 .vv-imodal__card {
   background: var(--vv-cream); border-radius: 20px; max-width: 640px; width: 100%;
   box-shadow: 0 30px 80px -28px rgba(0,0,0,.5); overflow: hidden;
   animation: vvImPop .22s cubic-bezier(.2,.8,.3,1) both;
+  margin: auto; /* centra si cabe; si no, arranca arriba en vez de cortarse */
 }
 @keyframes vvImPop { from { opacity:0; transform: scale(.94) translateY(10px); } to { opacity:1; transform: none; } }
 
@@ -1085,7 +1087,9 @@ html { -webkit-tap-highlight-color: transparent; }
 }
 
 /* — Telefono de invitacion: ancho fluido sin desbordar y conservando proporcion — */
-.vv-phone { max-width: 86vw; aspect-ratio: 290 / 576; height: auto; }
+/* min-height:0: sin él, el tamaño mínimo automático deja que el contenido estire al
+   celular (medía 1,750 px) y la invitación no se deslizaba "dentro del celular". */
+.vv-phone { max-width: 86vw; aspect-ratio: 290 / 576; height: auto; min-height: 0; }
 
 /* ===========================================================
    CALENDARIO

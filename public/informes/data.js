@@ -123,7 +123,20 @@ VV.ITEM_INFO = {
   'Iluminación inteligente':        { icon: 'sparkle',d: 'Sistema de luces robóticas que cambian de color y ritmo según el momento de la fiesta, del vals romántico al reventón.', fotos: ['assets/iluminacion-inteligente.jpg'], poster: true },
   'Batucada con globos':            { icon: 'bubble', d: 'Show de batucada con tambores y globos que prende la pista y marca el inicio de la fiesta. Energía pura para tus invitados.', fotos: ['assets/batucada-baile.jpg'] },
   '2 camerinos privados':           { icon: 'users',  d: 'Dos camerinos independientes para que la quinceañera/novios y los chambelanes se arreglen con privacidad y comodidad.' },
-  'Invitación digital animada':     { icon: 'film',   d: 'Invitación digital animada de regalo, con cuenta regresiva, itinerario, ubicación y confirmación por WhatsApp. Moderna y sin costo de imprenta. Desliza para ver todos sus módulos.', invitacion: true },
+  'Invitación digital animada':     { icon: 'film',   d: 'Invitación digital animada de regalo con tu paquete: se manda por WhatsApp y no tiene costo de imprenta. Aquí ves todo lo que lleva y ejemplos reales de eventos en Villaverde.', invitacion: true,
+    /* Lo que traen TODAS las invitaciones que hemos entregado (8 o 9 de 9). Lo que solo
+       traen algunas va en `extras`: no prometer como fijo algo que no siempre se hace. */
+    incluye: [
+      { icon: 'gift',     t: 'Portada que se abre',        s: 'Tus invitados la abren como un sobre, con animación' },
+      { icon: 'play',     t: 'Tu canción de fondo',        s: 'Suena la canción que elijas al abrirla' },
+      { icon: 'clock',    t: 'Cuenta regresiva en vivo',   s: 'Días, horas y minutos para tu gran día' },
+      { icon: 'calendar', t: 'Itinerario',                 s: 'Ceremonia, recepción, vals y fiesta, hora por hora' },
+      { icon: 'pin',      t: 'Ubicación con mapa',         s: 'Un toque y llegan: iglesia y salón en Google Maps' },
+      { icon: 'chat',     t: 'Confirmación por WhatsApp',  s: 'Tus invitados confirman y te llega directo a ti' },
+      { icon: 'sparkle',  t: 'Código de vestimenta',       s: 'Para que todos lleguen a tono con tu fiesta' },
+      { icon: 'users',    t: 'Se comparte en un enlace',   s: 'Con foto de vista previa en WhatsApp, sin imprenta' },
+    ],
+    extras: ['Galería de fotos', 'Mesa de regalos y datos para transferencia', 'Guardar la fecha en el calendario', 'Video de portada'] },
 
   'Pantalla gigante LED':           { icon: 'film',   d: 'Pantalla LED de gran formato para proyectar el video remembranza, mensajes y visuales en vivo. Se ve increíble desde cualquier mesa.', fotos: ['assets/pantalla-led.jpg'] },
   'Grupo versátil en vivo (5 int.)':{ icon: 'mic',    d: 'Grupo musical versátil de 5 integrantes tocando en vivo los géneros que más le gustan a tu gente. Alterna con el DJ para no parar la fiesta.' },
@@ -146,6 +159,17 @@ VV.ITEM_INFO = {
   'Máquina de burbujas':            { icon: 'bubble', d: 'Máquina de burbujas que llena el aire durante el vals y crea un ambiente de ensueño para las fotos.', go: 'cortesias', cort: 'burbujas', fotos: ['assets/burbujas-real.jpg', 'assets/burbujas-baile.jpg'] },
   'Taxi dancer':                    { icon: 'dance',  d: 'Bailarines profesionales que se mezclan con los invitados y mantienen la pista llena toda la noche.', go: 'cortesias', cort: 'taxi' },
 };
+
+/* ---------- INVITACIONES DE MUESTRA ----------
+   Invitaciones reales de eventos que YA PASARON, para enseñarlas dentro del celular en la
+   ficha de "Invitación digital animada". Se abren con ?muestra=1: esa vista desactiva la
+   confirmación (le llegaría a la familia o al organizador real) y mueve la cuenta regresiva
+   a una fecha futura. Una invitación de un evento que todavía no pasa NO va aquí. */
+VV.INVITACIONES_MUESTRA = [
+  { id: 'mis-xv-dayana', tipo: 'XV Años',         nombre: 'Dayana Yamile',             src: '/mis-xv-dayana/index.html?muestra=1' },
+  { id: 'eldiabloviste', tipo: 'Fiesta temática', nombre: 'El Diablo viste a la moda', src: '/eldiabloviste/index.html?muestra=1' },
+  { id: 'diadelmaestro', tipo: 'Día del Maestro', nombre: 'Delegación Sindical S114',  src: '/diadelmaestro/index.html?muestra=1' },
+];
 
 /* ---------- COMPARATIVO DE PAQUETES ----------
    Valores por paquete: true = incluido (✓), false = no incluido (—), string = detalle */
