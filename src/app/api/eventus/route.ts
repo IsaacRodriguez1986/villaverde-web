@@ -94,9 +94,27 @@ async function sb(method: string, table: string, params: URLSearchParams, body?:
     method, cache: "no-store", headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json", Prefer: "return=representation" },
     body: body == null ? undefined : JSON.stringify(body),
   });
-  if (!r.ok) fail("database operation failed", 502);
   const raw = await r.text();
+  if (!r.ok) fail("database operation failed", 502);
   return raw ? JSON.parse(raw) : [];
+}
+async function coordinationRpc(body: Row) {
+  const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/mutate_event_coordination_task", {
+    method: "POST", cache: "no-store",
+    headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const raw = await r.text();
+  let parsed: any = null;
+  try { parsed = raw ? JSON.parse(raw) : null; } catch { /* handled below */ }
+  if (!r.ok) {
+    if (parsed?.code === "40001" || parsed?.message === "version_conflict") fail("version_conflict", 409);
+    if (parsed?.code === "P0002" || parsed?.message === "task_not_found") fail("task_not_found", 404);
+    if (parsed?.code === "22023") fail("invalid_transition", 400);
+    fail("database operation failed", 502);
+  }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) fail("invalid task response", 502);
+  return parsed as Row;
 }
 async function privateImages(value: any, code: string, cache = new Map<string, Promise<string>>()): Promise<any> {
   if (Array.isArray(value)) return Promise.all(value.map(item => privateImages(item, code, cache)));
@@ -200,6 +218,30 @@ function cleanBody(table: string, body: unknown, admin: boolean, creating = fals
   if (!Object.keys(result).length) fail("empty update", 400);
   return result;
 }
+function coordinationTask(row: Row) {
+  return {
+    id: row.id, eventCode: row.event_code, title: row.title, assigneeRole: row.assignee_role,
+    dueAt: row.due_at ?? null, status: row.status, version: row.version,
+    submittedAt: row.submitted_at ?? null, completedAt: row.completed_at ?? null,
+    cancelledAt: row.cancelled_at ?? null, createdAt: row.created_at, updatedAt: row.updated_at,
+  };
+}
+function coordinationPage(body: Row) {
+  const parsedLimit = Number.parseInt(String(body.limit ?? ""), 10);
+  const limit = Number.isInteger(parsedLimit) && parsedLimit > 0 ? Math.min(parsedLimit, 100) : 50;
+  if (body.cursor == null || body.cursor === "") return { limit, cursor: null as [string, string] | null };
+  if (typeof body.cursor !== "string" || body.cursor.length > 300) fail("invalid cursor", 400);
+  try {
+    const cursor = JSON.parse(Buffer.from(body.cursor, "base64url").toString("utf8"));
+    if (!Array.isArray(cursor) || cursor.length !== 2 || typeof cursor[0] !== "string"
+        || Number.isNaN(Date.parse(cursor[0])) || typeof cursor[1] !== "string"
+        || !/^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(cursor[1])) fail("invalid cursor", 400);
+    return { limit, cursor: cursor as [string, string] };
+  } catch (e) {
+    if ((e as { status?: number }).status) throw e;
+    fail("invalid cursor", 400);
+  }
+}
 async function protectedHandler(action: () => Promise<Response>) {
   if (!SERVICE_KEY || !ACCESS_SECRET || !SUPABASE_URL) return j({ error: "server not configured" }, 503);
   try { return await action(); } catch (e) {
@@ -282,6 +324,44 @@ export async function POST(req: Request) {
       const row = { code, name, phone, date: body.date, type: body.type, hours: 7, total_cost: 0, contract_date: null, num_mesas: 20, menu_sel: {}, activated: false, invitation_enabled: false, invitation_status: "sin_brief", source: "self_register" };
       await sb("POST", "eventus_events", new URLSearchParams({ select: "code" }), row);
       return j({ code, accessToken: issue("event", code) }, 201);
+    }
+    if (b.op === "coordination-list") {
+      if (!access) fail("valid access link required", 401);
+      await eventExists(access.code!);
+      const page = coordinationPage(b);
+      const params = new URLSearchParams({
+        event_code: "eq." + access.code, assignee_role: "eq.client",
+        select: "id,event_code,title,assignee_role,due_at,status,version,submitted_at,completed_at,cancelled_at,created_at,updated_at",
+        order: "created_at.asc,id.asc", limit: String(page.limit + 1),
+      });
+      if (page.cursor) params.set("or", `(created_at.gt.${page.cursor[0]},and(created_at.eq.${page.cursor[0]},id.gt.${page.cursor[1]}))`);
+      const rows = await sb("GET", "event_coordination_tasks", params);
+      const items = Array.isArray(rows) ? rows.slice(0, page.limit) : [];
+      const last = items[items.length - 1];
+      const nextCursor = Array.isArray(rows) && rows.length > page.limit
+        ? Buffer.from(JSON.stringify([last.created_at, last.id])).toString("base64url") : null;
+      return j({ items: items.map(coordinationTask), nextCursor });
+    }
+    if (b.op === "coordination-submit") {
+      if (!access) fail("valid access link required", 401);
+      if (typeof b.id !== "string" || !/^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(b.id)
+          || !Number.isInteger(b.expectedVersion) || b.expectedVersion < 1
+          || (b.comment != null && (typeof b.comment !== "string" || !b.comment.trim() || b.comment.trim().length > 1000))) {
+        fail("invalid task submission", 400);
+      }
+      await eventExists(access.code!);
+      try {
+        const task = await coordinationRpc({
+          p_event_code: access.code, p_operation: "submit", p_task_id: b.id,
+          p_expected_version: b.expectedVersion, p_comment: b.comment?.trim() || null,
+          p_actor_role: "client", p_actor_user_id: null,
+        });
+        return j({ task: coordinationTask(task) });
+      } catch (e) {
+        const err = e as { status?: number; message?: string };
+        if (err.message === "version_conflict") return j({ error: "La tarea cambió; vuelve a cargarla", code: "VERSION_CONFLICT" }, 409);
+        throw e;
+      }
     }
     if (b.op !== "db") fail("invalid operation", 400);
     const table = String(b.table || ""), method = String(b.method || "GET").toUpperCase();

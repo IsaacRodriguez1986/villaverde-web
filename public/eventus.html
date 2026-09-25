@@ -3876,6 +3876,19 @@
           max-width: 720px;
         }
       }
+      /* Coordinacion compartida: deliberadamente separada del checklist personal. */
+      .coord-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+      .coord-head h3{font-family:var(--font-display);font-size:22px;color:var(--text-primary)}
+      .coord-head p{font-size:13px;color:var(--text-muted);margin-top:3px}
+      .coord-list{display:grid;gap:10px}.coord-card{padding:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+      .coord-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.coord-title{font-weight:700;color:var(--text-primary);overflow-wrap:anywhere}
+      .coord-meta{font-size:12px;color:var(--text-muted);margin-top:5px}.coord-state{flex:none;border:1px solid var(--border);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;color:var(--text-secondary)}
+      .coord-state.review{color:#ffd54f;border-color:rgba(255,213,79,.25)}.coord-state.done{color:var(--verde);border-color:rgba(0,230,118,.25)}
+      .coord-comment{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,.035);font-size:12px;color:var(--text-secondary);white-space:pre-wrap;overflow-wrap:anywhere}
+      .coord-form{margin-top:12px;display:grid;gap:8px}.coord-form textarea{min-height:76px;resize:vertical}.coord-btn{border:0;border-radius:10px;min-height:42px;padding:10px 14px;background:linear-gradient(135deg,var(--rosa),var(--rosa-dark));color:white;font-weight:700;cursor:pointer}
+      .coord-btn:disabled{cursor:wait;opacity:.6}.coord-empty,.coord-error{padding:20px 14px;border:1px dashed var(--border);border-radius:var(--radius);text-align:center;color:var(--text-muted)}
+      .coord-error{border-style:solid;border-color:rgba(255,82,82,.25);color:#ff8a80}.coord-spinner{padding:28px;text-align:center;color:var(--text-muted)}
+      @media(max-width:390px){.coord-card{padding:14px}.coord-card-head{flex-direction:column}.coord-state{align-self:flex-start}.coord-btn{width:100%}}
     </style>
   </head>
   <body>
@@ -4135,6 +4148,7 @@
           </div>
           <div class="cll" id="clL"></div>
         </div>
+        <div class="pn" id="p-coordinacion"><div id="coordC"></div></div>
         <div class="pn" id="p-mas"></div>
       </main>
       <div class="foot">
@@ -4263,7 +4277,7 @@
       let LOGIN_CODE = null, ACCESS_TOKEN = "";
       function capCode(){return typeof E!=="undefined"&&E&&E.code?E.code:LOGIN_CODE||null}
       function admPw(){return ADMIN_VIEW?"active":""}
-      async function apiCall(body){const r=await fetch(EVENTUS_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({accessToken:ACCESS_TOKEN},body))});const data=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(data.error||"No se pudo completar la operacion");return data}
+      async function apiCall(body){const r=await fetch(EVENTUS_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({accessToken:ACCESS_TOKEN},body))});const data=await r.json().catch(function(){return{}});if(!r.ok){const err=new Error(data.error||"No se pudo completar la operacion");err.status=r.status;throw err}return data}
       async function sbReq(method,table,query,body){try{return await apiCall({op:"db",method:method,table:table,query:query||"",body:body==null?null:body})}catch(e){return method==="GET"?[]:null}}
       async function sbGet(table,query){const d=await sbReq("GET",table,query,null);return Array.isArray(d)?d:[]}
       async function sbPost(table,data){return sbReq("POST",table,null,data)}
@@ -4279,6 +4293,7 @@
         CF = "all",
         DEMO_MODE = false,
         ADMIN_VIEW = false;
+      let COORD_TASKS = [], COORD_LOADING = false, COORD_ERROR = "";
       const MENU = {
         entradas: [
           "Coctel de frutas con coco",
@@ -4763,6 +4778,7 @@
           p.classList.remove("active");
         });
         document.getElementById("p-" + tab).classList.add("active");
+        if (tab === "coordinacion") loadCoordination();
       }
       function backToMas() {
         document.querySelectorAll(".pn").forEach(function (p) {
@@ -4811,6 +4827,7 @@
         if (tab === "menu") rMenu();
         if (tab === "prog") rProg();
         if (tab === "check") rCL();
+        if (tab === "coordinacion") loadCoordination();
         window.scrollTo(0, 0);
       }
       function contratar() {
@@ -5020,6 +5037,8 @@
           (E.numMesas || 20) +
           " mesas</div></div>";
         if (full) {
+          h +=
+            '<div class="mas-card" onclick="navToSub(\'coordinacion\')"><div class="mas-icon">&#129309;</div><div class="mas-info"><div class="mas-title">Coordinacion</div><div class="mas-desc">Pendientes compartidos con el salon</div></div><div class="mas-arrow">&#8250;</div></div>';
           h +=
             '<div class="qa-card" onclick="goPanel(\'pagos\')"><div class="qa-ico">&#128176;</div><div class="qa-title">Pagos</div><div class="qa-sub">Control de pagos</div></div>';
         } else {
@@ -6081,6 +6100,51 @@
       }
 
       /* ─── CHECKLIST ─── */
+      function coordStatus(status) {
+        return { pending: "Pendiente", submitted: "En revision", done: "Completado", cancelled: "Cancelado" }[status] || "Pendiente";
+      }
+      function coordDate(value) {
+        if (!value) return "Sin fecha";
+        try { return new Intl.DateTimeFormat("es-MX", { day:"numeric", month:"short", year:"numeric", timeZone:"America/Mexico_City" }).format(new Date(value)); }
+        catch (e) { return "Fecha pendiente"; }
+      }
+      async function loadCoordination() {
+        if (!E || ADMIN_VIEW) return;
+        COORD_LOADING = true; COORD_ERROR = ""; rCoordination();
+        try {
+          var result = await apiCall({ op: "coordination-list" });
+          COORD_TASKS = Array.isArray(result) ? result : (Array.isArray(result.items) ? result.items : []);
+        } catch (e) {
+          COORD_ERROR = e.message || "No pudimos cargar los pendientes.";
+        } finally { COORD_LOADING = false; rCoordination(); }
+      }
+      function rCoordination() {
+        var c = document.getElementById("coordC"); if (!c) return;
+        var h = '<button class="sub-back" onclick="backToMas()">&#8592; Volver</button><div class="coord-head"><div><h3>Coordinacion</h3><p>Pendientes que compartes con el salon</p></div></div>';
+        if (COORD_LOADING) { c.innerHTML = h + '<div class="coord-spinner" role="status">Cargando pendientes...</div>'; return; }
+        if (COORD_ERROR) { c.innerHTML = h + '<div class="coord-error" role="alert">' + escapeHtml(COORD_ERROR) + '<br><button class="coord-btn" style="margin-top:12px" onclick="loadCoordination()">Reintentar</button></div>'; return; }
+        if (!COORD_TASKS.length) { c.innerHTML = h + '<div class="coord-empty">El salon aun no te ha asignado pendientes compartidos.</div>'; return; }
+        h += '<div class="coord-list">' + COORD_TASKS.map(function(task) {
+          var stateClass = task.status === "submitted" ? " review" : task.status === "done" ? " done" : "";
+          var owner = task.assigneeRole === "client" ? "Tu" : "Equipo del salon";
+          var action = task.status === "pending" && task.assigneeRole === "client" ? '<form class="coord-form" onsubmit="submitCoordination(event,\'' + task.id + '\',' + Number(task.version) + ')"><label class="sr-only" for="coord-comment-' + task.id + '">Comentario opcional</label><textarea class="fi" id="coord-comment-' + task.id + '" maxlength="1000" placeholder="Comentario para el salon (opcional)"></textarea><button class="coord-btn">Marcar como entregado</button></form>' : '';
+          return '<article class="coord-card"><div class="coord-card-head"><div><div class="coord-title">' + escapeHtml(task.title || "Pendiente") + '</div><div class="coord-meta">' + owner + ' · Limite ' + escapeHtml(coordDate(task.dueAt)) + '</div></div><span class="coord-state' + stateClass + '">' + coordStatus(task.status) + '</span></div>' + action + '</article>';
+        }).join("") + '</div>';
+        c.innerHTML = h;
+      }
+      async function submitCoordination(event, id, version) {
+        event.preventDefault();
+        var form = event.currentTarget, button = form.querySelector("button"), input = form.querySelector("textarea"), comment = input.value.trim();
+        button.disabled = true; button.textContent = "Enviando...";
+        try {
+          await apiCall({ op:"coordination-submit", id:id, comment:comment || undefined, expectedVersion:version });
+          toast("Entrega enviada al salon"); await loadCoordination();
+        } catch (e) {
+          if (e.status === 409) { toast("El pendiente cambio. Revisa la version actual.", 1); await loadCoordination(); }
+          else { toast(e.message || "No se pudo enviar", 1); button.disabled = false; button.textContent = "Marcar como entregado"; }
+        }
+      }
+
       function rCL() {
         const cl = E.checklist || [],
           done = cl.filter(function (c) {
