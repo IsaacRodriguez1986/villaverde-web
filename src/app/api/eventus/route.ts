@@ -18,10 +18,10 @@ type Row = Record<string, any>;
 type Access = { scope: "event" | "guest" | "admin"; code?: string; guestId?: string; exp: number; nonce: string };
 const COLUMNS: Record<string, string[]> = {
   eventus_events: "code,name,type,date,hours,total_cost,contract_date,num_mesas,menu_sel,phone,activated,invitation_enabled,invitation_status,invitation_brief,invitation_url,invitation_comments,dress_code,event_time,photo_url,gallery,source,created_at".split(","),
-  eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at".split(","),
+  eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at,version".split(","),
   eventus_payments: "id,event_code,name,amount,due_date,note,paid,paid_at,created_at".split(","),
   eventus_checklist: "id,event_code,text,done,sort_order".split(","),
-  eventus_program: "id,event_code,name,time,dur,note,sort_order".split(","),
+  eventus_program: "id,event_code,name,time,dur,note,sort_order,responsible,status,version,day_offset".split(","),
 };
 const CLIENT_WRITE: Record<string, string[]> = {
   eventus_events: "num_mesas,menu_sel,invitation_brief,invitation_status,invitation_comments,dress_code,event_time,photo_url,gallery".split(","),
@@ -96,7 +96,14 @@ async function sb(method: string, table: string, params: URLSearchParams, body?:
     body: body == null ? undefined : JSON.stringify(body),
   });
   const raw = await r.text();
-  if (!r.ok) fail("database operation failed", 502);
+  if (!r.ok) {
+    let error: Row = {}; try { error = JSON.parse(raw); } catch {}
+    if (["40001", "40P01"].includes(error.code)) fail("version_conflict", 409);
+    if (error.code === "23514") fail(error.message === "table_full" ? "table_full" : "invalid_data", 409);
+    if (error.code === "P0002") fail("not_found", 404);
+    if (error.code === "22023") fail(error.message || "invalid_data", 400);
+    fail("database operation failed", 502);
+  }
   return raw ? JSON.parse(raw) : [];
 }
 async function coordinationRpc(body: Row) {
@@ -490,6 +497,56 @@ export async function POST(req: Request) {
         ? Buffer.from(JSON.stringify([last.created_at, String(last.id)])).toString("base64url") : null;
       return j({ items: items.map(historyItem), nextCursor });
     }
+    if (["tables-get", "table-save", "guest-seat", "program-save", "program-delete", "guest-checkin", "gallery-get"].includes(b.op)) {
+      if (!admin && !access) fail("valid access link required", 401);
+      const code = admin ? String(b.code || access?.code || "") : access!.code!;
+      if (!CODE.test(code) || (!admin && b.code && b.code !== code)) fail("event mismatch");
+      await eventExists(code);
+      const integer = (value: unknown, min: number, max: number) => typeof value === "number" && Number.isInteger(value) && value >= min && value <= max;
+      const version = () => { if (!integer(b.expectedVersion, 1, 2147483647)) fail("invalid version", 400); };
+      let data: Row = {};
+      if (b.op === "table-save") {
+        if (!integer(b.mesa, 1, 1000) || !integer(b.capacity, 1, 1000) || !integer(b.x, 0, 100) || !integer(b.y, 0, 100) || !integer(b.expectedVersion, 0, 2147483647)) fail("invalid table", 400);
+        data = {mesa:b.mesa,capacity:b.capacity,x:b.x,y:b.y,expectedVersion:b.expectedVersion};
+      }
+      if (b.op === "guest-seat") {
+        version();
+        if (!/^[1-9][0-9]{0,9}$/.test(String(b.guestId)) || (b.mesa !== null && !integer(b.mesa,1,1000))) fail("invalid guest seat",400);
+        data = {guestId:String(b.guestId),mesa:b.mesa,expectedVersion:b.expectedVersion};
+      }
+      if (b.op === "guest-checkin") {
+        if (!admin) fail("reception requires admin",403);
+        let guestId = String(b.guestId || "");
+        if (b.guestToken != null) {
+          const guestAccess = verify(b.guestToken,"guest");
+          if (!guestAccess || guestAccess.code !== code) fail("invalid guest pass",401);
+          guestId = guestAccess.guestId!;
+        }
+        if (!/^[1-9][0-9]{0,9}$/.test(guestId)) fail("invalid guest",400);
+        data = {guestId};
+      }
+      if (["program-save","program-delete"].includes(b.op)) {
+        if (b.id != null || b.op === "program-delete") {
+          if (!/^[1-9][0-9]{0,9}$/.test(String(b.id))) fail("invalid activity",400);
+          version(); data = {id:String(b.id),expectedVersion:b.expectedVersion};
+        }
+        if (b.op === "program-save") {
+          if (typeof b.name !== "string" || !b.name.trim() || b.name.trim().length > 160 || typeof b.time !== "string" || !/^(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/.test(b.time) || !integer(b.dur,1,1440) || typeof b.note !== "string" || b.note.length > 2000 || typeof b.responsible !== "string" || b.responsible.length > 160 || !["pending","in_progress","completed"].includes(b.status) || !integer(b.dayOffset ?? 0,0,1)) fail("invalid activity",400);
+          data = {...data,name:b.name.trim(),time:b.time,dur:b.dur,note:b.note,responsible:b.responsible.trim(),status:b.status,dayOffset:b.dayOffset ?? 0};
+        }
+      }
+      if (b.op === "gallery-get") {
+        let base: URL;
+        try { base = new URL(process.env.EVENTUS_GALLERY_URL || "https://muro-villaverde.vercel.app"); } catch { return j({configured:false,reason:"host_unavailable"}); }
+        if (base.protocol !== "https:" || base.username || base.password || base.pathname !== "/" || base.search || base.hash) return j({configured:false,reason:"host_unavailable"});
+        const rows = await sb("GET","muro_config",new URLSearchParams({event_code:"eq."+code,select:"enabled,opens_at,closes_at,gallery_token",limit:"2"}));
+        if (!Array.isArray(rows) || rows.length !== 1) return j({configured:false,reason:"not_configured"});
+        const config=rows[0], now=Date.now();
+        const windowState=!config.enabled?"deshabilitado":config.opens_at && now<Date.parse(config.opens_at)?"aun_no":config.closes_at && now>Date.parse(config.closes_at)?"cerrado":"abierto";
+        return j({configured:true,windowState,uploadUrl:windowState === "abierto"?new URL("/e/"+encodeURIComponent(code),base).href:null,galleryUrl:config.enabled && typeof config.gallery_token === "string"?new URL("/galeria/"+encodeURIComponent(config.gallery_token),base).href:null});
+      }
+      return j(await sb("POST","rpc/eventus_experience_mutate",new URLSearchParams(),{p_event_code:code,p_operation:b.op,p_data:data}));
+    }
     if (b.op !== "db") fail("invalid operation", 400);
     const table = String(b.table || ""), method = String(b.method || "GET").toUpperCase();
     if (!Object.hasOwn(COLUMNS, table) || !["GET", "POST", "PATCH", "DELETE"].includes(method)) fail("operation not allowed", 400);
@@ -502,6 +559,12 @@ export async function POST(req: Request) {
       q.set(parentKey, "eq." + access!.code);
       if (table === "eventus_payments" && method !== "GET") fail("payments require admin");
       if (table === "eventus_events" && ["POST", "DELETE"].includes(method)) fail("event operation requires admin");
+    }
+    // Dedicated operations enforce versions and staff-only reception.
+    if (table === "eventus_program" && method !== "GET") fail("use program operations",400);
+    if (table === "eventus_guests" && ["POST","PATCH"].includes(method)) {
+      const incoming = Array.isArray(b.body) ? b.body : [b.body];
+      if (incoming.some((row: Row) => row && (["arrived","arrived_at","version"].some(k => k in row) || (method === "PATCH" && "mesa" in row)))) fail("use guest operations",400);
     }
     let body: unknown;
     if (["POST", "PATCH"].includes(method)) {

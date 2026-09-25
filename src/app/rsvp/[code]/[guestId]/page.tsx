@@ -2,6 +2,8 @@
 
 import { use, useEffect, useState, useCallback, useRef } from "react";
 
+import { GuestPass } from "@/features/invitations/GuestPass";
+
 const API_BASE = "/api/eventus";
 
 /* ─── Types ─── */
@@ -991,6 +993,8 @@ function ConfirmedView({
 
         <Divider />
 
+        <GuestPass token={accessToken} code={code} guestId={guestId} />
+
         <a
           href={`/rsvp/${encodeURIComponent(code)}/${encodeURIComponent(guestId)}#token=${encodeURIComponent(accessToken)}`}
           style={{
@@ -1091,6 +1095,8 @@ function AlreadyConfirmedView({
         <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 14, margin: "0 0 32px" }}>
           {formatDateSpanish(event.date)}
         </p>
+
+        <GuestPass token={accessToken} code={code} guestId={guestId} />
 
         <a
           href={`/rsvp/${encodeURIComponent(code)}/${encodeURIComponent(guestId)}#token=${encodeURIComponent(accessToken)}`}

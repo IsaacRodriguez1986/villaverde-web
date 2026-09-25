@@ -3898,6 +3898,7 @@
       .history-list{display:grid;gap:0}.history-item{position:relative;margin-left:6px;padding:0 0 14px 17px;border-left:1px solid var(--border)}.history-item:before{content:"";position:absolute;left:-4px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--rosa)}.history-item:last-child{padding-bottom:0}.history-title{font-size:13px;font-weight:700;color:var(--text-primary)}.history-meta{font-size:11px;color:var(--text-muted);margin-top:2px}.history-comment{font-size:12px;color:var(--text-secondary);margin-top:5px;white-space:pre-wrap;overflow-wrap:anywhere}
       @media(max-width:390px){.coord-card{padding:14px}.coord-card-head{flex-direction:column}.coord-state{align-self:flex-start}.coord-btn{width:100%}}
     </style>
+  <link rel="stylesheet" href="/eventus-experience.css">
   </head>
   <body>
     <div class="bg"></div>
@@ -4542,18 +4543,13 @@
       async function saveGuest(g) {
         syncDot("saving");
         try {
-          await sbPatch("eventus_guests", "id=eq." + g.id, {
-            name: g.name,
-            companions: g.companions,
-            mesa: g.mesa,
-            status: g.status,
-            wa: g.wa,
-            arrived: g.arrived,
-            arrived_at: g.arrivedAt,
-          });
+          const rows = await apiCall({op:"db",method:"PATCH",table:"eventus_guests",query:"id=eq."+g.id,body:{name:g.name,companions:g.companions,status:g.status,wa:g.wa}});
+          if (!Array.isArray(rows) || !rows[0]) throw new Error("No se pudo guardar al invitado");
           syncDot("ok");
+          return rows[0];
         } catch (e) {
           syncDot("err");
+          throw e;
         }
       }
 
@@ -4620,6 +4616,7 @@
                 wa: g.wa || "",
                 arrived: g.arrived || false,
                 arrivedAt: g.arrived_at,
+                version: g.version || 1,
               };
             }),
             payments: payments.map(function (p) {
@@ -4642,6 +4639,10 @@
                 time: p.time ? p.time.slice(0, 5) : "00:00",
                 dur: p.dur || 15,
                 note: p.note || "",
+                responsible: p.responsible || "",
+                status: p.status || "pending",
+                dayOffset: p.day_offset || 0,
+                version: p.version || 1,
               };
             }),
           };
@@ -5586,11 +5587,11 @@
           mesa: mi.value ? parseInt(mi.value) : null,
           status: si.value,
           wa: wi.value.trim() || "",
-          arrived: false,
         });
         if (res && res.length) {
           E.guests.push({
             id: res[0].id,
+            version: res[0].version || 1,
             name: n,
             companions: parseInt(ci.value) || 0,
             mesa: mi.value ? parseInt(mi.value) : null,
@@ -5623,17 +5624,18 @@
         }
       });
 
-      function sS(id, st) {
-        const g = E.guests.find(function (x) {
-          return x.id === id;
-        });
-        if (g) {
-          g.status = st;
-          rG();
-          uS();
-          rInicio();
-          saveGuest(g);
-        }
+      const GUEST_STATUS_BUSY = new Set();
+      async function sS(id, st) {
+        const g = E.guests.find(function (x) { return x.id === id; });
+        if (!g || GUEST_STATUS_BUSY.has(id)) return;
+        GUEST_STATUS_BUSY.add(id);
+        try {
+          const saved = await saveGuest(Object.assign({},g,{status:st}));
+          Object.assign(g,saved,{arrivedAt:saved.arrived_at});
+          rG(); uS(); rInicio();
+        } catch (e) {
+          toast(e.message === "table_full" ? "La mesa no tiene lugares suficientes. Reasigna al invitado antes de confirmar." : e.message,1);
+        } finally { GUEST_STATUS_BUSY.delete(id); }
       }
       async function dG(id) {
         const g = E.guests.find(function (x) {
@@ -5967,6 +5969,7 @@
         if (res && res.length) {
           E.program.push({
             id: res[0].id,
+            version: res[0].version || 1,
             name: n,
             time: t || "00:00",
             dur: d || 15,
@@ -6434,6 +6437,14 @@
         const rsvpLink = SITE + "/rsvp/" + encodeURIComponent(E.code) + "/" + encodeURIComponent(g.id) + "#token=" + encodeURIComponent(issued.token);
         const paseLink = rsvpLink;
         const isConf = g.status === "confirmed";
+        let qrImage = "";
+        try {
+          const qrCode = qrcode(0, "M");
+          qrCode.addData(paseLink); qrCode.make();
+          qrImage = '<img alt="Pase QR de acceso" style="display:block;max-width:100%;width:260px;margin:10px auto" src="' + qrCode.createDataURL(5,20) + '">';
+        } catch (e) {
+          qrImage = '<p>El QR no pudo cargarse. Conserva el enlace del pase; el personal también puede buscar al invitado por nombre.</p>';
+        }
         modal.innerHTML =
           '<div class="qr-modal" onclick="closeQR(event)"><div class="qr-box" onclick="event.stopPropagation()"><h3>Invitacion digital</h3><div class="qr-name">' +
           escapeHtml(g.name) +
@@ -6457,6 +6468,7 @@
           (isConf
             ? '<div style="margin-bottom:16px;padding:14px;background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.12);border-radius:12px;text-align:left">' +
               '<p style="font-size:11px;color:var(--verde);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Paso 2 — Pase de acceso con QR</p>' +
+              qrImage +
               '<p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;word-break:break-all">' +
               paseLink +
               "</p>" +
@@ -7749,17 +7761,16 @@
         )
           return;
         syncDot("saving");
-        await sbDelete("eventus_guests", "event_code=eq." + code);
-        await sbDelete("eventus_payments", "event_code=eq." + code);
-        await sbDelete("eventus_checklist", "event_code=eq." + code);
-        await sbDelete("eventus_program", "event_code=eq." + code);
-        await sbDelete("eventus_events", "code=eq." + code);
-        ADM_EVENTS = ADM_EVENTS.filter(function (e) {
-          return e.code !== code;
-        });
-        syncDot("ok");
-        admRender();
-        toast("Evento " + code + " eliminado");
+        try {
+          await apiCall({op:"db",method:"DELETE",table:"eventus_events",query:"code=eq."+encodeURIComponent(code)});
+          ADM_EVENTS = ADM_EVENTS.filter(function (e) { return e.code !== code; });
+          syncDot("ok");
+          admRender();
+          toast("Evento " + code + " eliminado");
+        } catch (e) {
+          syncDot("err");
+          toast("No se pudo eliminar el evento. Puede tener historial o registros relacionados que deben conservarse.",1);
+        }
       }
 
       async function issueEventLink(code){const result=await apiCall({op:"issue-access",code:code});return accessLink(result.accessToken)}
@@ -8075,5 +8086,7 @@
         }
       }
     </script>
+    <script src="/vendor/qrcode/qrcode-2.0.4.js"></script>
+    <script src="/eventus-experience.js"></script>
   </body>
 </html>

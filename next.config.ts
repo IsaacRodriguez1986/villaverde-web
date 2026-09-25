@@ -155,8 +155,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/", headers: CABECERAS_LANDING },
-      { source: "/eventus", headers: CABECERAS_EVENTUS },
-      { source: "/eventus.html", headers: CABECERAS_EVENTUS },
+      { source: "/eventus", headers: [...CABECERAS_EVENTUS.filter(h => h.key !== "Permissions-Policy"), { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=(), payment=()" }] },
+      { source: "/eventus.html", headers: [...CABECERAS_EVENTUS.filter(h => h.key !== "Permissions-Policy"), { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=(), payment=()" }] },
       { source: "/api/eventus", headers: CABECERAS_EVENTUS },
       { source: "/testimonio-xv.mp4", headers: CABECERAS_MEDIA_LANDING },
       { source: "/testimonio-xv-poster.jpg", headers: CABECERAS_MEDIA_LANDING },
