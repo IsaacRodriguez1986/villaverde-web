@@ -18,7 +18,7 @@ type Row = Record<string, any>;
 type Access = { scope: "event" | "guest" | "admin"; code?: string; guestId?: string; exp: number; nonce: string };
 const COLUMNS: Record<string, string[]> = {
   eventus_events: "code,name,type,date,hours,total_cost,contract_date,num_mesas,menu_sel,phone,activated,invitation_enabled,invitation_status,invitation_brief,invitation_url,invitation_comments,dress_code,event_time,photo_url,gallery,source,created_at".split(","),
-  eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at,version".split(","),
+  eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at,version,seat_slots".split(","),
   eventus_payments: "id,event_code,name,amount,due_date,note,paid,paid_at,created_at".split(","),
   eventus_checklist: "id,event_code,text,done,sort_order".split(","),
   eventus_program: "id,event_code,name,time,dur,note,sort_order,responsible,status,version,day_offset".split(","),
@@ -513,6 +513,10 @@ export async function POST(req: Request) {
         version();
         if (!/^[1-9][0-9]{0,9}$/.test(String(b.guestId)) || (b.mesa !== null && !integer(b.mesa,1,1000))) fail("invalid guest seat",400);
         data = {guestId:String(b.guestId),mesa:b.mesa,expectedVersion:b.expectedVersion};
+        if (b.seatIndex !== undefined) {
+          if (b.mesa === null || !integer(b.seatIndex,1,1000) || !integer(b.personIndex,0,999)) fail("invalid seat",400);
+          data = {...data,seatIndex:b.seatIndex,personIndex:b.personIndex};
+        }
       }
       if (b.op === "guest-checkin") {
         if (!admin) fail("reception requires admin",403);
@@ -564,7 +568,7 @@ export async function POST(req: Request) {
     if (table === "eventus_program" && method !== "GET") fail("use program operations",400);
     if (table === "eventus_guests" && ["POST","PATCH"].includes(method)) {
       const incoming = Array.isArray(b.body) ? b.body : [b.body];
-      if (incoming.some((row: Row) => row && (["arrived","arrived_at","version"].some(k => k in row) || (method === "PATCH" && "mesa" in row)))) fail("use guest operations",400);
+      if (incoming.some((row: Row) => row && (["arrived","arrived_at","version","seat_slots"].some(k => k in row) || (method === "PATCH" && "mesa" in row)))) fail("use guest operations",400);
     }
     let body: unknown;
     if (["POST", "PATCH"].includes(method)) {

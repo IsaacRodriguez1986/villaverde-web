@@ -23,3 +23,9 @@ const gallery=await (await post({op:'gallery-get',accessToken:token('event')})).
 assert.equal(gallery.uploadUrl,'https://muro-villaverde.vercel.app/e/AAA'); assert.equal(gallery.galleryUrl,'https://muro-villaverde.vercel.app/galeria/gallery-only');
 assert.ok(calls.find(c=>c.url.includes('muro_config')).url.includes('event_code=eq.AAA')); assert.ok(!calls.find(c=>c.url.includes('muro_config')).url.includes('screen_token'));
 console.log('Eventus API: admin-only reception, altered/cross-event tokens, scope, dedicated mutations and gallery projection passed');
+const exactSeat={op:'guest-seat',accessToken:token('event'),guestId:1,mesa:1,expectedVersion:2,seatIndex:8,personIndex:1};
+assert.equal((await post(exactSeat)).status,200);
+assert.deepEqual(calls.at(-1).body.p_data,{guestId:'1',mesa:1,expectedVersion:2,seatIndex:8,personIndex:1});
+for(const invalid of [{seatIndex:0},{seatIndex:1.5},{personIndex:-1},{personIndex:null},{mesa:null}])assert.equal((await post({...exactSeat,...invalid})).status,400);
+assert.equal((await post({op:'db',table:'eventus_guests',method:'PATCH',query:'id=eq.1',body:{seat_slots:[8]},accessToken:token('event')})).status,400);
+console.log('Exact seat API: indexes validated and generic writes blocked');
