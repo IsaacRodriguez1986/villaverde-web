@@ -5,7 +5,8 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '../public');
 function bootstrap() {
   window.addEventListener('load', () => {
-    const guests = [{id:1,name:'Ana · ejemplo',companions:2,mesa:null,status:'confirmed',version:1},{id:2,name:'Luis · ejemplo',companions:1,mesa:1,status:'confirmed',version:1},{id:3,name:'María · ejemplo',companions:0,mesa:2,status:'confirmed',version:1}];
+    const guests = [{id:1,name:'Ana Martínez',companions:2,mesa:null,status:'confirmed',version:1},{id:2,name:'Luis Torres',companions:1,mesa:1,status:'confirmed',version:1},{id:3,name:'María López',companions:0,mesa:2,status:'confirmed',version:1}];
+    guests.push(...[{id:4,name:'Sofía Ramos',companions:1,mesa:1},{id:5,name:'Diego Pérez',companions:0,mesa:1},{id:6,name:'Elena Ruiz',companions:2,mesa:2},{id:7,name:'Carlos Vega',companions:1,mesa:3},{id:8,name:'Valeria Luna',companions:0,mesa:4},{id:9,name:'Andrés Castro',companions:1,mesa:null}].map(g=>({...g,status:'confirmed',version:1})));
     const tables = Array.from({length:6}, (_,i)=>({mesa:i+1,capacity:10,x:(i%3)*35,y:Math.floor(i/3)*40,version:1}));
     const program = [{id:1,name:'Recepción',time:'18:00',dur:30,note:'Bienvenida a los invitados',responsible:'Equipo del salón',status:'pending',day_offset:0,version:1},{id:2,name:'Cena',time:'19:00',dur:60,note:'',responsible:'Coordinación',status:'pending',day_offset:0,version:1}];
     apiCall = async b => {

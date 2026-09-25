@@ -17,7 +17,7 @@ test('Eventus desktop and mobile experience with isolated fixtures', async()=>{
   page.on('pageerror',e=>console.error(e.message));
   const calls=[]; let failNext=false, failProgram=true;
   const guests=[{id:1,name:'Ana Fixture',companions:1,mesa:null,status:'confirmed',version:1},{id:2,name:'Luis Fixture',companions:0,mesa:2,status:'confirmed',version:1}];
-  const tables=[{mesa:1,capacity:4,x:20,y:20,version:1},{mesa:2,capacity:1,x:28,y:20,version:1}];
+  const tables=[{mesa:1,capacity:4,x:0,y:0,version:1},{mesa:2,capacity:1,x:45,y:0,version:1}];
   await page.route('**/api/eventus',async route=>{const b=route.request().postDataJSON();calls.push(b);let result={};let status=200;
     if(b.op==='tables-get')result={tables};
     if(b.op==='db') {result=guests;if(b.method==='DELETE' || b.method==='PATCH'){status=409;result={error:'table_full'};}}
@@ -43,21 +43,56 @@ test('Eventus desktop and mobile experience with isolated fixtures', async()=>{
   await page.locator('[data-seat="1"]').selectOption('1');
   await page.getByText('Asignación guardada.',{exact:true}).waitFor();
   assert.equal(await page.locator('[data-seat="1"]').inputValue(),'1');
+  await page.getByText('Capacidad y posición',{exact:true}).click();
   await page.locator('#table-form input[name=x]').fill('100');
   await page.getByRole('button',{name:'Guardar mesa',exact:true}).click();
   await page.getByText('Mesa guardada.',{exact:true}).waitFor();
   assert.equal(tables[0].x,100);
   if(width===1280){
     await page.locator('#table-select').selectOption('2');
+    await page.getByText('Capacidad y posición',{exact:true}).click();
     await page.locator('#table-form input[name=capacity]').fill('4');
     await page.getByRole('button',{name:'Guardar mesa',exact:true}).click();
     await page.getByText('Mesa guardada.',{exact:true}).waitFor();
     await page.locator('#table-select').selectOption('1');
+    await page.getByText('Capacidad y posición',{exact:true}).click();
+    await page.locator('#table-form input[name=x]').fill('0');
+    await page.getByRole('button',{name:'Guardar mesa',exact:true}).click();
+    await page.getByText('Mesa guardada.',{exact:true}).waitFor();
     await page.setViewportSize({width:1280,height:1900});
-    await page.locator('[data-guest="1"]').dragTo(page.locator('[data-table="2"]'),{sourcePosition:{x:15,y:15}});
+    await page.locator('.exp-person[data-guest="1"]').first().dragTo(page.locator('[data-table="2"]'),{sourcePosition:{x:15,y:15}});
     await page.getByText('Asignación guardada.',{exact:true}).waitFor();
     assert.equal(guests[0].mesa,2,'drag persists guest assignment');
     await page.setViewportSize({width,height:900});
+  }
+  if(width===390){
+    tables[0].x=0;tables[1].capacity=4;
+    await page.evaluate(()=>rT());
+    await page.getByRole('button',{name:'Alejar plano',exact:true}).click();
+    await page.getByRole('button',{name:'Alejar plano',exact:true}).click();
+    await page.locator('.exp-plan-viewport').scrollIntoViewIfNeeded();
+    const client=await page.context().newCDPSession(page);
+    async function touchDrag(from,to){
+      await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:from.x,y:from.y}]});
+      for(let n=1;n<=8;n++)await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:from.x+(to.x-from.x)*n/8,y:from.y+(to.y-from.y)*n/8}]});
+      await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    }
+    const source=await page.locator('.exp-person[data-guest="1"]').first().boundingBox(),target=await page.locator('[data-table="2"]').boundingBox();
+    await touchDrag({x:source.x+source.width/2,y:source.y+source.height/2},{x:target.x+target.width/2,y:target.y+target.height/2-8});
+    await page.getByText('Asignación guardada.',{exact:true}).waitFor();
+    assert.equal(guests[0].mesa,2,'finger drag moves group across tables');
+    assert.equal(guests[0].companions,1,'finger drag preserves companions');
+    const tableHandle=await page.locator('[data-move-table="1"]').boundingBox();
+    await touchDrag({x:tableHandle.x+tableHandle.width/2,y:tableHandle.y+tableHandle.height/2},{x:tableHandle.x+tableHandle.width/2+45,y:tableHandle.y+tableHandle.height/2+35});
+    await page.getByText('Mesa guardada.',{exact:true}).waitFor();
+    assert.ok(tables[0].x>0&&tables[0].y>0,'touch table movement saves normalized coordinates');
+    await page.locator('#table-select').selectOption('2');
+    await page.locator('.exp-table-inspector [data-pick-guest="1"]').click();
+    await page.locator('#move-destination').selectOption('');
+    await page.getByRole('button',{name:'Mover grupo',exact:true}).click();
+    await page.getByText('Asignación guardada.',{exact:true}).waitFor();
+    assert.equal(guests[0].mesa,null,'tap and destination control can unassign group');
+    await client.detach();
   }
   await page.screenshot({path:'/tmp/eventus-seating-'+width+'.png',fullPage:true});
   const horizontal=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
