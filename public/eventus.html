@@ -3888,6 +3888,14 @@
       .coord-form{margin-top:12px;display:grid;gap:8px}.coord-form textarea{min-height:76px;resize:vertical}.coord-btn{border:0;border-radius:10px;min-height:42px;padding:10px 14px;background:linear-gradient(135deg,var(--rosa),var(--rosa-dark));color:white;font-weight:700;cursor:pointer}
       .coord-btn:disabled{cursor:wait;opacity:.6}.coord-empty,.coord-error{padding:20px 14px;border:1px dashed var(--border);border-radius:var(--radius);text-align:center;color:var(--text-muted)}
       .coord-error{border-style:solid;border-color:rgba(255,82,82,.25);color:#ff8a80}.coord-spinner{padding:28px;text-align:center;color:var(--text-muted)}
+      .coord-section{margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}.coord-section:first-of-type{margin-top:0;padding-top:0;border-top:0}
+      .coord-section-title{font-size:16px;color:var(--text-primary);margin-bottom:4px}.coord-section-copy{font-size:12px;color:var(--text-muted);margin-bottom:12px}
+      .request-create{display:grid;gap:10px;padding:16px;margin-bottom:14px;border:1px solid rgba(232,21,110,.25);border-radius:var(--radius);background:linear-gradient(145deg,rgba(232,21,110,.08),rgba(255,255,255,.025))}
+      .request-create label{font-size:11px;font-weight:700;color:var(--text-secondary)}.request-create .fi{margin-top:5px}.request-count{text-align:right;font-size:11px;color:var(--text-muted)}
+      .request-warning{padding:10px 12px;border-radius:10px;background:rgba(255,213,79,.07);border:1px solid rgba(255,213,79,.18);font-size:12px;color:#ffe082;line-height:1.5}
+      .request-response{margin-top:10px;padding:10px;border-radius:10px;background:rgba(0,230,118,.055);border-left:2px solid var(--verde-dark);font-size:12px;color:var(--text-secondary);white-space:pre-wrap;overflow-wrap:anywhere}
+      .request-actions{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}.request-cancel{min-height:36px;padding:7px 11px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);font-weight:700;cursor:pointer}
+      .history-list{display:grid;gap:0}.history-item{position:relative;margin-left:6px;padding:0 0 14px 17px;border-left:1px solid var(--border)}.history-item:before{content:"";position:absolute;left:-4px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--rosa)}.history-item:last-child{padding-bottom:0}.history-title{font-size:13px;font-weight:700;color:var(--text-primary)}.history-meta{font-size:11px;color:var(--text-muted);margin-top:2px}.history-comment{font-size:12px;color:var(--text-secondary);margin-top:5px;white-space:pre-wrap;overflow-wrap:anywhere}
       @media(max-width:390px){.coord-card{padding:14px}.coord-card-head{flex-direction:column}.coord-state{align-self:flex-start}.coord-btn{width:100%}}
     </style>
   </head>
@@ -4293,7 +4301,7 @@
         CF = "all",
         DEMO_MODE = false,
         ADMIN_VIEW = false;
-      let COORD_TASKS = [], COORD_LOADING = false, COORD_ERROR = "";
+      let COORD_TASKS = [], CHANGE_REQUESTS = [], COORD_HISTORY = [], COORD_HISTORY_LABEL = "", COORD_HISTORY_CURSOR = null, COORD_HISTORY_ENTITY = null, REQUEST_IDEMPOTENCY = null, COORD_LOADING = false, COORD_ERROR = "";
       const MENU = {
         entradas: [
           "Coctel de frutas con coco",
@@ -5069,6 +5077,8 @@
         h += '<div class="mas-grid">';
 
         if (full) {
+          h +=
+            '<div class="mas-card" onclick="navToSub(\'coordinacion\')"><div class="mas-icon">&#129309;</div><div class="mas-info"><div class="mas-title">Coordinacion</div><div class="mas-desc">Solicitudes, pendientes e historial con el salon</div></div><div class="mas-arrow">&#8250;</div></div>';
           h +=
             '<div class="mas-card" onclick="navToSub(\'menu\')"><div class="mas-icon">&#127869;</div><div class="mas-info"><div class="mas-title">Menu</div><div class="mas-desc">Elige tu menu de 3 tiempos</div></div><div class="mas-arrow">&#8250;</div></div>';
           h +=
@@ -6112,25 +6122,104 @@
         if (!E || ADMIN_VIEW) return;
         COORD_LOADING = true; COORD_ERROR = ""; rCoordination();
         try {
-          var result = await apiCall({ op: "coordination-list" });
-          COORD_TASKS = Array.isArray(result) ? result : (Array.isArray(result.items) ? result.items : []);
+          var results = await Promise.all([
+            apiCall({ op: "coordination-list" }),
+            apiCall({ op: "change-request-list", limit: 50 })
+          ]);
+          COORD_TASKS = Array.isArray(results[0]) ? results[0] : (Array.isArray(results[0].items) ? results[0].items : []);
+          CHANGE_REQUESTS = Array.isArray(results[1]) ? results[1] : (Array.isArray(results[1].items) ? results[1].items : []);
         } catch (e) {
-          COORD_ERROR = e.message || "No pudimos cargar los pendientes.";
+          COORD_ERROR = e.message || "No pudimos cargar la coordinacion.";
         } finally { COORD_LOADING = false; rCoordination(); }
+      }
+      function requestCategory(value) { return { menu:"Menu", guests:"Invitados", program:"Programa", other:"Otro" }[value] || "Otro"; }
+      function requestStatus(value) { return { pending:"Pendiente", approved:"Aprobada", rejected:"Rechazada", cancelled:"Cancelada" }[value] || value; }
+      function historyLabel(item) {
+        var subject = item.entityType === "request" ? "Solicitud" : "Pendiente";
+        var status = item.toStatus ? (requestStatus(item.toStatus) || coordStatus(item.toStatus)) : item.action;
+        return subject + " · " + status;
       }
       function rCoordination() {
         var c = document.getElementById("coordC"); if (!c) return;
-        var h = '<button class="sub-back" onclick="backToMas()">&#8592; Volver</button><div class="coord-head"><div><h3>Coordinacion</h3><p>Pendientes que compartes con el salon</p></div></div>';
-        if (COORD_LOADING) { c.innerHTML = h + '<div class="coord-spinner" role="status">Cargando pendientes...</div>'; return; }
+        var h = '<button class="sub-back" onclick="backToMas()">&#8592; Volver</button><div class="coord-head"><div><h3>Coordinacion</h3><p>Solicitudes, pendientes e historial con el salon</p></div></div>';
+        if (COORD_LOADING) { c.innerHTML = h + '<div class="coord-spinner" role="status">Cargando coordinacion...</div>'; return; }
         if (COORD_ERROR) { c.innerHTML = h + '<div class="coord-error" role="alert">' + escapeHtml(COORD_ERROR) + '<br><button class="coord-btn" style="margin-top:12px" onclick="loadCoordination()">Reintentar</button></div>'; return; }
-        if (!COORD_TASKS.length) { c.innerHTML = h + '<div class="coord-empty">El salon aun no te ha asignado pendientes compartidos.</div>'; return; }
-        h += '<div class="coord-list">' + COORD_TASKS.map(function(task) {
+
+        h += '<section class="coord-section" aria-labelledby="requests-title"><h4 class="coord-section-title" id="requests-title">Solicitar un cambio</h4><p class="coord-section-copy">Describe lo que necesitas. El salon te respondera aqui.</p>' +
+          '<form class="request-create" onsubmit="createChangeRequest(event)"><label for="request-category">Categoria<select class="fi" id="request-category" required><option value="menu">Menu</option><option value="guests">Invitados</option><option value="program">Programa</option><option value="other">Otro</option></select></label><label for="request-description">Descripcion<textarea class="fi" id="request-description" minlength="10" maxlength="2000" required rows="4" oninput="updateRequestCount(this)" placeholder="Explica con detalle el cambio que necesitas"></textarea></label><div class="request-count" id="request-count">0 / 2000</div><div class="request-warning">La solicitud no modifica automaticamente tu contrato, precio, pagos, fecha ni paquete. El salon debe revisarla y responder.</div><button class="coord-btn">Enviar solicitud</button></form>';
+        if (!CHANGE_REQUESTS.length) h += '<div class="coord-empty">Aun no has enviado solicitudes de cambio.</div>';
+        else h += '<div class="coord-list">' + CHANGE_REQUESTS.map(function(request) {
+          var stateClass = request.status === "pending" ? " review" : request.status === "approved" ? " done" : "";
+          var response = request.response ? '<div class="request-response"><strong>Respuesta del salon</strong><br>' + escapeHtml(request.response) + '</div>' : '';
+          var cancel = request.status === "pending" ? '<button class="request-cancel" onclick="cancelChangeRequest(\'' + request.id + '\',' + Number(request.version) + ')">Cancelar solicitud</button>' : '';
+          var requestHistory = '<button class="request-cancel" onclick="loadEntityHistory(\'request\',\'' + request.id + '\',\'' + escapeHtml(requestCategory(request.category)) + '\')">Ver historial</button>';
+          return '<article class="coord-card"><div class="coord-card-head"><div><div class="coord-title">' + escapeHtml(requestCategory(request.category)) + '</div><div class="coord-meta">Enviada ' + escapeHtml(coordDate(request.createdAt)) + '</div></div><span class="coord-state' + stateClass + '">' + escapeHtml(requestStatus(request.status)) + '</span></div><div class="coord-comment">' + escapeHtml(request.description) + '</div>' + response + '<div class="request-actions">' + requestHistory + cancel + '</div></article>';
+        }).join("") + '</div>';
+        h += '</section>';
+
+        h += '<section class="coord-section" aria-labelledby="tasks-title"><h4 class="coord-section-title" id="tasks-title">Pendientes compartidos</h4><p class="coord-section-copy">Entregables que el salon asigna para preparar tu evento.</p>';
+        if (!COORD_TASKS.length) h += '<div class="coord-empty">El salon aun no te ha asignado pendientes compartidos.</div>';
+        else h += '<div class="coord-list">' + COORD_TASKS.map(function(task) {
           var stateClass = task.status === "submitted" ? " review" : task.status === "done" ? " done" : "";
           var owner = task.assigneeRole === "client" ? "Tu" : "Equipo del salon";
           var action = task.status === "pending" && task.assigneeRole === "client" ? '<form class="coord-form" onsubmit="submitCoordination(event,\'' + task.id + '\',' + Number(task.version) + ')"><label class="sr-only" for="coord-comment-' + task.id + '">Comentario opcional</label><textarea class="fi" id="coord-comment-' + task.id + '" maxlength="1000" placeholder="Comentario para el salon (opcional)"></textarea><button class="coord-btn">Marcar como entregado</button></form>' : '';
-          return '<article class="coord-card"><div class="coord-card-head"><div><div class="coord-title">' + escapeHtml(task.title || "Pendiente") + '</div><div class="coord-meta">' + owner + ' · Limite ' + escapeHtml(coordDate(task.dueAt)) + '</div></div><span class="coord-state' + stateClass + '">' + coordStatus(task.status) + '</span></div>' + action + '</article>';
+          var taskHistory = '<div class="request-actions"><button class="request-cancel" onclick="loadEntityHistory(\'task\',\'' + task.id + '\',\'Pendiente compartido\')">Ver historial</button></div>';
+          return '<article class="coord-card"><div class="coord-card-head"><div><div class="coord-title">' + escapeHtml(task.title || "Pendiente") + '</div><div class="coord-meta">' + owner + ' · Limite ' + escapeHtml(coordDate(task.dueAt)) + '</div></div><span class="coord-state' + stateClass + '">' + coordStatus(task.status) + '</span></div>' + action + taskHistory + '</article>';
         }).join("") + '</div>';
+        h += '</section>';
+
+        h += '<section class="coord-section" aria-labelledby="history-title"><h4 class="coord-section-title" id="history-title">Historial' + (COORD_HISTORY_LABEL ? ': ' + escapeHtml(COORD_HISTORY_LABEL) : '') + '</h4><p class="coord-section-copy">Registro compartido de lo que ha ocurrido.</p>';
+        if (!COORD_HISTORY_LABEL) h += '<div class="coord-empty">Elige “Ver historial” en una solicitud o pendiente.</div>';
+        else if (!COORD_HISTORY.length) h += '<div class="coord-empty">Aun no hay movimientos para este elemento.</div>';
+        else h += '<ol class="history-list">' + COORD_HISTORY.map(function(item) {
+          return '<li class="history-item"><div class="history-title">' + escapeHtml(historyLabel(item)) + '</div><div class="history-meta">' + (item.actorRole === "client" ? "Tu" : "Equipo del salon") + ' · ' + escapeHtml(coordDate(item.createdAt)) + '</div>' + (item.comment ? '<div class="history-comment">' + escapeHtml(item.comment) + '</div>' : '') + '</li>';
+        }).join("") + '</ol>' + (COORD_HISTORY_CURSOR ? '<button class="coord-btn" onclick="loadMoreEntityHistory()">Ver movimientos anteriores</button>' : '');
+        h += '</section>';
         c.innerHTML = h;
+      }
+      function updateRequestCount(input) {
+        var counter = document.getElementById("request-count");
+        if (counter) counter.textContent = input.value.length + " / 2000";
+      }
+      async function loadEntityHistory(entityType, id, label) {
+        COORD_HISTORY_LABEL = label; COORD_HISTORY = []; COORD_HISTORY_CURSOR = null; COORD_HISTORY_ENTITY = { entityType:entityType, id:id }; rCoordination();
+        try {
+          var result = await apiCall({ op:"coordination-history", entityType:entityType, id:id, limit:50 });
+          COORD_HISTORY = Array.isArray(result) ? result : (Array.isArray(result.items) ? result.items : []);
+          COORD_HISTORY_CURSOR = result && result.nextCursor ? result.nextCursor : null;
+          rCoordination();
+          setTimeout(function(){var title=document.getElementById("history-title");if(title)title.scrollIntoView({behavior:"smooth",block:"start"})},0);
+        } catch (e) { toast(e.message || "No se pudo cargar el historial", 1); }
+      }
+      async function loadMoreEntityHistory() {
+        if (!COORD_HISTORY_ENTITY || !COORD_HISTORY_CURSOR) return;
+        try {
+          var result = await apiCall({ op:"coordination-history", entityType:COORD_HISTORY_ENTITY.entityType, id:COORD_HISTORY_ENTITY.id, cursor:COORD_HISTORY_CURSOR, limit:50 });
+          COORD_HISTORY = COORD_HISTORY.concat(Array.isArray(result.items) ? result.items : []);
+          COORD_HISTORY_CURSOR = result.nextCursor || null; rCoordination();
+        } catch (e) { toast(e.message || "No se pudo cargar mas historial", 1); }
+      }
+      async function createChangeRequest(event) {
+        event.preventDefault();
+        var form = event.currentTarget, button = form.querySelector("button.coord-btn"), category = document.getElementById("request-category").value, description = document.getElementById("request-description").value.trim();
+        if (description.length < 10) { toast("Describe el cambio con al menos 10 caracteres", 1); return; }
+        var fingerprint = category + "\n" + description;
+        if (!REQUEST_IDEMPOTENCY || REQUEST_IDEMPOTENCY.fingerprint !== fingerprint) REQUEST_IDEMPOTENCY = { fingerprint:fingerprint, key:crypto.randomUUID() };
+        button.disabled = true; button.textContent = "Enviando...";
+        try {
+          await apiCall({ op:"change-request-create", category:category, description:description, idempotencyKey:REQUEST_IDEMPOTENCY.key });
+          REQUEST_IDEMPOTENCY = null; toast("Solicitud enviada al salon"); await loadCoordination();
+        } catch (e) { toast(e.message || "No se pudo enviar la solicitud", 1); button.disabled = false; button.textContent = "Enviar solicitud"; }
+      }
+      async function cancelChangeRequest(id, version) {
+        if (!confirm("Cancelar esta solicitud pendiente?")) return;
+        try {
+          await apiCall({ op:"change-request-cancel", id:id, expectedVersion:version });
+          toast("Solicitud cancelada"); await loadCoordination();
+        } catch (e) {
+          if (e.status === 409) { toast("La solicitud cambio. Actualizamos su estado.", 1); await loadCoordination(); }
+          else toast(e.message || "No se pudo cancelar", 1);
+        }
       }
       async function submitCoordination(event, id, version) {
         event.preventDefault();

@@ -12,6 +12,7 @@ const ADMIN_TTL = 8 * 3600;
 const ACCESS_TTL = 30 * 86400;
 const CODE = /^[A-Za-z0-9_-]{3,64}$/;
 const ID = /^(?:[1-9][0-9]{0,18}|[a-f0-9-]{36})$/i;
+const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
 
 type Row = Record<string, any>;
 type Access = { scope: "event" | "guest" | "admin"; code?: string; guestId?: string; exp: number; nonce: string };
@@ -114,6 +115,24 @@ async function coordinationRpc(body: Row) {
     fail("database operation failed", 502);
   }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) fail("invalid task response", 502);
+  return parsed as Row;
+}
+async function changeRequestRpc(body: Row) {
+  const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/mutate_event_change_request", {
+    method: "POST", cache: "no-store",
+    headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const raw = await r.text();
+  let parsed: any = null;
+  try { parsed = raw ? JSON.parse(raw) : null; } catch { /* handled below */ }
+  if (!r.ok) {
+    if (parsed?.code === "40001" || parsed?.message === "version_conflict") fail("version_conflict", 409);
+    if (parsed?.code === "P0002" || parsed?.message === "request_not_found") fail("request_not_found", 404);
+    if (parsed?.code === "22023") fail(parsed?.message || "invalid_request", 400);
+    fail("database operation failed", 502);
+  }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) fail("invalid request response", 502);
   return parsed as Row;
 }
 async function privateImages(value: any, code: string, cache = new Map<string, Promise<string>>()): Promise<any> {
@@ -226,6 +245,21 @@ function coordinationTask(row: Row) {
     cancelledAt: row.cancelled_at ?? null, createdAt: row.created_at, updatedAt: row.updated_at,
   };
 }
+function changeRequest(row: Row) {
+  return {
+    id: row.id, eventCode: row.event_code, category: row.category, description: row.description,
+    status: row.status, response: row.response ?? null, version: row.version,
+    createdAt: row.created_at, resolvedAt: row.resolved_at ?? null, updatedAt: row.updated_at,
+  };
+}
+function historyItem(row: Row) {
+  return {
+    entityType: row.task_id ? "task" : "request", action: row.action,
+    fromStatus: row.from_status ?? null, toStatus: row.to_status, actorRole: row.actor_role,
+    comment: row.comment ?? null, version: row.task_version ?? row.request_version,
+    createdAt: row.created_at,
+  };
+}
 function coordinationPage(body: Row) {
   const parsedLimit = Number.parseInt(String(body.limit ?? ""), 10);
   const limit = Number.isInteger(parsedLimit) && parsedLimit > 0 ? Math.min(parsedLimit, 100) : 50;
@@ -237,6 +271,21 @@ function coordinationPage(body: Row) {
         || Number.isNaN(Date.parse(cursor[0])) || typeof cursor[1] !== "string"
         || !/^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(cursor[1])) fail("invalid cursor", 400);
     return { limit, cursor: cursor as [string, string] };
+  } catch (e) {
+    if ((e as { status?: number }).status) throw e;
+    fail("invalid cursor", 400);
+  }
+}
+function historyPage(body: Row) {
+  const parsed = coordinationPage({ ...body, cursor: null });
+  if (body.cursor == null || body.cursor === "") return { limit: parsed.limit, cursor: null as [string, string] | null };
+  if (typeof body.cursor !== "string" || body.cursor.length > 300) fail("invalid cursor", 400);
+  try {
+    const cursor = JSON.parse(Buffer.from(body.cursor, "base64url").toString("utf8"));
+    if (!Array.isArray(cursor) || cursor.length !== 2 || typeof cursor[0] !== "string"
+        || Number.isNaN(Date.parse(cursor[0])) || typeof cursor[1] !== "string"
+        || !/^[1-9][0-9]{0,18}$/.test(cursor[1])) fail("invalid cursor", 400);
+    return { limit: parsed.limit, cursor: cursor as [string, string] };
   } catch (e) {
     if ((e as { status?: number }).status) throw e;
     fail("invalid cursor", 400);
@@ -362,6 +411,84 @@ export async function POST(req: Request) {
         if (err.message === "version_conflict") return j({ error: "La tarea cambió; vuelve a cargarla", code: "VERSION_CONFLICT" }, 409);
         throw e;
       }
+    }
+    if (b.op === "change-request-list") {
+      if (!access) fail("valid access link required", 401);
+      await eventExists(access.code!);
+      const page = coordinationPage(b);
+      const params = new URLSearchParams({
+        event_code: "eq." + access.code,
+        select: "id,event_code,category,description,status,response,version,created_at,resolved_at,updated_at",
+        order: "created_at.asc,id.asc", limit: String(page.limit + 1),
+      });
+      if (page.cursor) params.set("or", `(created_at.gt.${page.cursor[0]},and(created_at.eq.${page.cursor[0]},id.gt.${page.cursor[1]}))`);
+      const rows = await sb("GET", "event_change_requests", params);
+      const items = Array.isArray(rows) ? rows.slice(0, page.limit) : [];
+      const last = items[items.length - 1];
+      const nextCursor = Array.isArray(rows) && rows.length > page.limit
+        ? Buffer.from(JSON.stringify([last.created_at, last.id])).toString("base64url") : null;
+      return j({ items: items.map(changeRequest), nextCursor });
+    }
+    if (b.op === "change-request-create") {
+      if (!access) fail("valid access link required", 401);
+      const description = typeof b.description === "string" ? b.description.trim() : "";
+      if (!["menu", "guests", "program", "other"].includes(b.category)
+          || description.length < 10 || description.length > 2000
+          || typeof b.idempotencyKey !== "string" || !UUID.test(b.idempotencyKey)) {
+        fail("invalid change request", 400);
+      }
+      await eventExists(access.code!);
+      const request = await changeRequestRpc({
+        p_event_code: access.code, p_operation: "create", p_category: b.category,
+        p_description: description, p_idempotency_key: b.idempotencyKey,
+        p_actor_role: "client", p_actor_user_id: null,
+      });
+      return j({ request: changeRequest(request) }, 201);
+    }
+    if (b.op === "change-request-cancel") {
+      if (!access) fail("valid access link required", 401);
+      if (typeof b.id !== "string" || !UUID.test(b.id)
+          || !Number.isInteger(b.expectedVersion) || b.expectedVersion < 1) {
+        fail("invalid change request cancellation", 400);
+      }
+      await eventExists(access.code!);
+      try {
+        const request = await changeRequestRpc({
+          p_event_code: access.code, p_operation: "cancel", p_request_id: b.id,
+          p_expected_version: b.expectedVersion, p_actor_role: "client", p_actor_user_id: null,
+        });
+        return j({ request: changeRequest(request) });
+      } catch (e) {
+        const err = e as { status?: number; message?: string };
+        if (err.message === "version_conflict") return j({ error: "La solicitud cambió; vuelve a cargarla", code: "VERSION_CONFLICT" }, 409);
+        throw e;
+      }
+    }
+    if (b.op === "coordination-history") {
+      if (!access) fail("valid access link required", 401);
+      if (!['task', 'request'].includes(b.entityType) || typeof b.id !== "string" || !UUID.test(b.id)) {
+        fail("invalid history query", 400);
+      }
+      await eventExists(access.code!);
+      const parentTable = b.entityType === "task" ? "event_coordination_tasks" : "event_change_requests";
+      const parentParams = new URLSearchParams({ id: "eq." + b.id, event_code: "eq." + access.code, select: "id", limit: "1" });
+      if (b.entityType === "task") parentParams.set("assignee_role", "eq.client");
+      const parent = await sb("GET", parentTable, parentParams);
+      if (!Array.isArray(parent) || !parent[0]) fail("history unavailable", 404);
+      const page = historyPage(b);
+      const key = b.entityType === "task" ? "task_id" : "request_id";
+      const params = new URLSearchParams({
+        event_code: "eq." + access.code, [key]: "eq." + b.id,
+        select: "id,task_id,request_id,action,from_status,to_status,actor_role,comment,task_version,request_version,created_at",
+        order: "created_at.asc,id.asc", limit: String(page.limit + 1),
+      });
+      if (page.cursor) params.set("or", `(created_at.gt.${page.cursor[0]},and(created_at.eq.${page.cursor[0]},id.gt.${page.cursor[1]}))`);
+      const rows = await sb("GET", "event_coordination_history", params);
+      const items = Array.isArray(rows) ? rows.slice(0, page.limit) : [];
+      const last = items[items.length - 1];
+      const nextCursor = Array.isArray(rows) && rows.length > page.limit
+        ? Buffer.from(JSON.stringify([last.created_at, String(last.id)])).toString("base64url") : null;
+      return j({ items: items.map(historyItem), nextCursor });
     }
     if (b.op !== "db") fail("invalid operation", 400);
     const table = String(b.table || ""), method = String(b.method || "GET").toUpperCase();
