@@ -12,8 +12,9 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
   const restante = total - anticipo;
   const fmt = (n) => '$' + n.toLocaleString('es-MX');
 
-  const hoy = new Date();
-  const fechaHoy = hoy.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+  const [hoy] = React.useState(() => new Date());
+  const validity = VVQuotePolicy.validity(hoy);
+  const fechaHoy = validity.issuedLabel;
   const folio = 'VV-' + hoy.getFullYear().toString().slice(2) +
     String(hoy.getMonth() + 1).padStart(2, '0') + String(hoy.getDate()).padStart(2, '0');
 
@@ -76,7 +77,8 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
         <div className="vv-ps__doc">
           <div className="vv-ps__doctitle">Cotización</div>
           <div className="vv-ps__folio">Folio {folio}</div>
-          <div className="vv-ps__date">{fechaHoy}</div>
+          <div className="vv-ps__date">Emitida: {fechaHoy}</div>
+          <div className="vv-ps__date">Válida hasta: {validity.expiresLabel}</div>
         </div>
       </header>
 
@@ -156,7 +158,7 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
             <div className="vv-ps__pay-tot"><span>Restante</span><b>{fmt(restante)}</b></div>
           </div>
           <div className="vv-ps__pay-note">
-            Formas de pago: transferencia, tarjeta de débito o efectivo (no se acepta tarjeta de crédito) · Apartamos tu fecha tentativa 48 h sin compromiso.
+            Formas de pago: transferencia, tarjeta de débito o efectivo (no se acepta tarjeta de crédito).
           </div>
         </div>
       </section>
@@ -173,7 +175,7 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
             <b>WhatsApp {VV.CONTACTO.whats}</b> · {VV.CONTACTO.web} · {VV.CONTACTO.instagram}
           </div>
           <div className="vv-ps__legal">
-            {VV.CONTACTO.horario} · Precios sujetos a disponibilidad de fecha · Cotización válida 15 días naturales.
+            Válida hasta el {validity.expiresLabel} (15 días naturales desde su emisión). {VVQuotePolicy.terms}
           </div>
           <div className="vv-ps__signs">
             <div className="vv-ps__sign"><div className="vv-ps__signline"></div>Asesor Villaverde</div>

@@ -844,7 +844,7 @@ function SecFechas() {
           </div>
           <div style={{ marginTop: 14, fontSize: 13, color: 'var(--vv-muted)', display: 'flex', gap: 9, lineHeight: 1.5 }}>
             <Icon name="clock" size={17} style={{ color: 'var(--vv-gold)', flex: 'none', marginTop: 1 }} />
-            Te aparto la fecha tentativa hasta por 48 h sin compromiso mientras lo platican.
+            La fecha se reserva al firmar el contrato y cubrir el anticipo de $3,000, sujeto a disponibilidad.
           </div>
 
           {/* Fechas ya apartadas (reales del CRM) — visibles sin tener que navegar de mes */}
@@ -907,7 +907,8 @@ function SecCierre({ onGo }) {
     const favNames = VV.CORTESIAS.filter(c => favIds.includes(c.id)).map(c => c.name);
     let menuSel = {}; try { menuSel = JSON.parse(localStorage.getItem('vv_menu') || '{}'); } catch (e) {}
     const menuLines = Object.entries(menuSel).filter(([k, v]) => v).map(([k, v]) => `${k}: ${v}`);
-    const L = ['*Cotización Villaverde*'];
+    const validity = VVQuotePolicy.validity();
+    const L = ['*Cotización Villaverde*', 'Emitida: ' + validity.issuedLabel, 'Válida hasta: ' + validity.expiresLabel + ' (15 días naturales)'];
     if (cliente) L.push('A nombre de: ' + cliente);
     if (evento) L.push('Evento: ' + evento);
     L.push('Fecha: ' + fecha);
@@ -916,6 +917,7 @@ function SecCierre({ onGo }) {
     if (mantel) L.push('Mantelería: ' + mantel.name);
     L.push(`*Total: ${fmt(total)}* (todo incluido)`);
     L.push('Anticipo para apartar: $3,000');
+    L.push(VVQuotePolicy.terms);
     if (favNames.length) L.push('Cortesías: ' + favNames.join(', '));
     if (menuLines.length) L.push('Menú: ' + menuLines.join(' · '));
     L.push('');
@@ -936,7 +938,7 @@ function SecCierre({ onGo }) {
         <div className="vv-flourish"><Icon name="diamond" size={20} /></div>
         <p className="vv-eyebrow" style={{ justifyContent: 'center' }}>El momento es ahora</p>
         <h1 className="vv-h1" style={{ fontSize: 'clamp(44px,5.2vw,64px)' }}>Hagamos tu fiesta <em>realidad</em></h1>
-        <p className="vv-lead" style={{ margin: '0 auto 30px' }}>Con solo <b style={{ color: 'var(--vv-crimson)' }}>$3,000 de anticipo</b> apartas tu fecha y congelas el precio 2026. Esto es lo que diseñamos juntos:</p>
+        <p className="vv-lead" style={{ margin: '0 auto 30px' }}>Con solo <b style={{ color: 'var(--vv-crimson)' }}>$3,000 de anticipo</b> y la firma del contrato aseguras tu fecha y el precio del paquete acordado. Esto es lo que diseñamos juntos:</p>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 14, maxWidth: 880, margin: '0 auto 26px' }}>

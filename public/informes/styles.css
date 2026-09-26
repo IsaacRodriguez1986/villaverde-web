@@ -1118,7 +1118,7 @@ html { -webkit-tap-highlight-color: transparent; }
   @page { size: letter; margin: 16mm; }
 
   html, body { background: #fff !important; height: auto !important; }
-  .vv-app, .twk-panel { display: none !important; }
+  #root, .vv-app, .twk-panel { display: none !important; }
 
   .vv-ps {
     display: block;

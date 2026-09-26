@@ -457,15 +457,15 @@ VV.GUION = {
     say: '«Estas son las fechas que me quedan. Las de temporada alta vuelan… ¿cuál te late?»',
     tips: ['Muestra el calendario; señala fechas “pocas disponibles”.', 'La urgencia es real: temporada de XV y bodas se llena.', 'Conduce hacia el anticipo de $3,000.'],
     obj_handling: [
-      { q: '“Aún no tengo la fecha exacta.”', a: 'Aparta la tentativa con $3,000; es reembolsable/movible según política. Mejor asegurarla.' },
+      { q: '“Aún no tengo la fecha exacta.”', a: 'Confirmemos la fecha y su disponibilidad antes de firmar el contrato y cubrir el anticipo de $3,000. Consulta las condiciones de cambios en el contrato.' },
     ],
   },
   cierre: {
-    obj: 'Cerrar: apartar la fecha con $3,000 de anticipo.',
-    say: '«Con solo $3,000 apartas tu fecha y congelas el precio. ¿Te ayudo a dejarla apartada hoy mismo?»',
+    obj: 'Cerrar: firmar el contrato y cubrir el anticipo de $3,000 para reservar la fecha.',
+    say: '«Al firmar el contrato y cubrir el anticipo de $3,000 apartas tu fecha y garantizas el precio del paquete acordado. ¿Te ayudo a dejarla apartada hoy mismo?»',
     tips: ['Pide la decisión de forma directa y cálida.', 'Resume todo lo que se llevan por su inversión.', 'Ten lista la forma de pago y el contrato.'],
     obj_handling: [
-      { q: '“Lo consulto y te aviso.”', a: 'Perfecto. Te aparto la fecha 48h sin compromiso para que la platiquen con calma.' },
+      { q: '“Lo consulto y te aviso.”', a: 'Perfecto. Tu cotización tiene vigencia de 15 días naturales desde su emisión, pero no reserva la fecha. Revisemos su vencimiento y la disponibilidad cuando estén listos.' },
     ],
   },
 };
