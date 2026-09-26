@@ -9,9 +9,9 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js" integrity="sha384-fCAW/rDWORTbQXSiB7mOg0QtQ5c+r0f544y6XoKjuVva0nMBlCpNUjiFeG5iMdS3" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js" integrity="sha384-tTkFttkBclaU1cloKwOi9xk3pbao3VZxTjLNBt8iFABWDBQibbAbWpVmO28zMuxq" crossorigin="anonymous"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap");
       :root {
@@ -4278,7 +4278,7 @@
       </svg>
     </div>
     <div id="qrModal"></div>
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
       /* ─── SECURE EVENTUS API ─── */
@@ -4286,7 +4286,7 @@
       let LOGIN_CODE = null, ACCESS_TOKEN = "";
       function capCode(){return typeof E!=="undefined"&&E&&E.code?E.code:LOGIN_CODE||null}
       function admPw(){return ADMIN_VIEW?"active":""}
-      async function apiCall(body){const r=await fetch(EVENTUS_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({accessToken:ACCESS_TOKEN},body))});const data=await r.json().catch(function(){return{}});if(!r.ok){const err=new Error(data.error||"No se pudo completar la operacion");err.status=r.status;throw err}return data}
+      async function apiCall(body){let r;try{r=await fetch(EVENTUS_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.assign({accessToken:ACCESS_TOKEN},body))})}catch(_){const err=new Error("network");err.status=0;throw err}const data=await r.json().catch(function(){return{}});if(!r.ok){const err=new Error(data.error||"No se pudo completar la operacion");err.status=r.status;throw err}return data}
       async function sbReq(method,table,query,body){try{return await apiCall({op:"db",method:method,table:table,query:query||"",body:body==null?null:body})}catch(e){return method==="GET"?[]:null}}
       async function sbGet(table,query){const d=await sbReq("GET",table,query,null);return Array.isArray(d)?d:[]}
       async function sbPost(table,data){return sbReq("POST",table,null,data)}
@@ -4558,7 +4558,8 @@
         t.textContent = msg;
         t.className = "toast" + (err ? " error" : "");
         t.classList.add("show");
-        setTimeout(() => t.classList.remove("show"), 2400);
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(() => t.classList.remove("show"), err ? 5000 : 2400);
       }
 
       /* ─── LOAD FROM SUPABASE ─── */
@@ -4569,10 +4570,13 @@
           const evs = await sbGet("eventus_events", "code=eq." + code);
           if (!evs.length) return null;
           const ev = evs[0];
-          const guests = await sbGet(
-            "eventus_guests",
-            "event_code=eq." + code + "&order=created_at",
-          );
+          const guests = await apiCall({
+            op: "db",
+            method: "GET",
+            table: "eventus_guests",
+            query: "event_code=eq." + code + "&order=created_at",
+          });
+          if (!Array.isArray(guests)) throw new Error("guests unavailable");
           const payments = await sbGet(
             "eventus_payments",
             "event_code=eq." + code + "&order=id",
@@ -4594,6 +4598,7 @@
             totalCost: ev.total_cost,
             contractDate: ev.contract_date,
             numMesas: Math.min(60, Math.max(1, Number(ev.num_mesas) || 20)),
+            salon: ev.salon || "villaverde",
             menuSel: ev.menu_sel || {},
             activated: ev.activated || false,
             invitation_enabled: ev.invitation_enabled || false,
@@ -6690,6 +6695,10 @@
           toast("No hay invitados", 1);
           return;
         }
+        if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF.API.autoTable !== "function") {
+          toast("No se pudo cargar el generador de PDF. Revisa tu conexión y recarga la página.", 1);
+          return;
+        }
         var jsPDF = window.jspdf.jsPDF;
         var doc = new jsPDF({
           orientation: "portrait",
@@ -6811,10 +6820,12 @@
         });
         y = doc.lastAutoTable.finalY + 10;
         if (E.numMesas && E.numMesas > 0) {
-          var mesaData = {};
+          var mesaData = {},
+            mesaPeople = {};
           gs.forEach(function (g) {
             if (g.mesa && g.status !== "cancelled") {
               if (!mesaData[g.mesa]) mesaData[g.mesa] = [];
+              mesaPeople[g.mesa] = (mesaPeople[g.mesa] || 0) + 1 + (g.companions || 0);
               mesaData[g.mesa].push(
                 g.name + (g.companions ? " (+" + g.companions + ")" : ""),
               );
@@ -6837,7 +6848,7 @@
               return [
                 "Mesa " + m,
                 mesaData[m].join(", "),
-                String(mesaData[m].length),
+                String(mesaPeople[m]),
               ];
             });
             doc.autoTable({
@@ -7010,7 +7021,7 @@
             "eventus_guests",
             "event_code=eq." +
               ADM_EVENTS[i].code +
-              "&select=id,name,companions,status,arrived",
+              "&select=id,name,companions,status,arrived,arrived_at,mesa,seat_slots",
           );
           ADM_EVENTS[i]._guests = gs;
         }
@@ -7457,6 +7468,7 @@
               escapeHtml(g.name) +
               '</div><div class="gm">' +
               (g.companions ? "<span>+" + g.companions + "</span>" : "") +
+              (g.mesa ? "<span>Mesa " + Number(g.mesa) + "</span>" : "<span>Sin mesa</span>") +
               '</div></div><button class="adm-btn adm-btn-checkin" onclick="admCheckinGuest(' +
               g.id +
               ')">Llego</button></div>';
@@ -7483,6 +7495,7 @@
                 '<div class="arrival-item"><span>' +
                 escapeHtml(g.name) +
                 (g.companions ? " (+" + g.companions + ")" : "") +
+                (g.mesa ? " · Mesa " + Number(g.mesa) : "") +
                 '</span><span class="ai-time">' +
                 time +
                 "</span></div>";

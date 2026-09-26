@@ -17,7 +17,7 @@ const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-
 type Row = Record<string, any>;
 type Access = { scope: "event" | "guest" | "admin"; code?: string; guestId?: string; exp: number; nonce: string };
 const COLUMNS: Record<string, string[]> = {
-  eventus_events: "code,name,type,date,hours,total_cost,contract_date,num_mesas,menu_sel,phone,activated,invitation_enabled,invitation_status,invitation_brief,invitation_url,invitation_comments,dress_code,event_time,photo_url,gallery,source,created_at".split(","),
+  eventus_events: "code,name,type,date,hours,total_cost,contract_date,num_mesas,salon,menu_sel,phone,activated,invitation_enabled,invitation_status,invitation_brief,invitation_url,invitation_comments,dress_code,event_time,photo_url,gallery,source,created_at".split(","),
   eventus_guests: "id,event_code,name,companions,mesa,status,wa,arrived,arrived_at,created_at,version,seat_slots".split(","),
   eventus_payments: "id,event_code,name,amount,due_date,note,paid,paid_at,created_at".split(","),
   eventus_checklist: "id,event_code,text,done,sort_order".split(","),
@@ -90,7 +90,7 @@ async function jsonBody(req: Request) {
   if (!b || typeof b !== "object" || Array.isArray(b)) fail("bad request", 400);
   return b;
 }
-async function sb(method: string, table: string, params: URLSearchParams, body?: unknown) {
+async function sb(method: string, table: string, params: URLSearchParams, body?: unknown, retried = false): Promise<any> {
   const r = await fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + params.toString(), {
     method, cache: "no-store", headers: { apikey: SERVICE_KEY, Authorization: "Bearer " + SERVICE_KEY, "Content-Type": "application/json", Prefer: "return=representation" },
     body: body == null ? undefined : JSON.stringify(body),
@@ -98,8 +98,10 @@ async function sb(method: string, table: string, params: URLSearchParams, body?:
   const raw = await r.text();
   if (!r.ok) {
     let error: Row = {}; try { error = JSON.parse(raw); } catch {}
+    // Row lock vs event lock taken in opposite order: Postgres rolled back the loser, so one retry is safe.
+    if (error.code === "40P01" && !retried) return sb(method, table, params, body, true);
     if (["40001", "40P01"].includes(error.code)) fail("version_conflict", 409);
-    if (error.code === "23514") fail(error.message === "table_full" ? "table_full" : "invalid_data", 409);
+    if (error.code === "23514") fail(["table_full", "seat_occupied"].includes(error.message) ? error.message : "invalid_data", 409);
     if (error.code === "P0002") fail("not_found", 404);
     if (error.code === "22023") fail(error.message || "invalid_data", 400);
     fail("database operation failed", 502);
@@ -328,7 +330,14 @@ export async function PATCH(req: Request) {
     if (!access || b.code !== access.code || String(b.guestId) !== access.guestId) fail("valid invitation link required", 401);
     if (!["confirmed", "cancelled"].includes(b.status)) fail("invalid status", 400);
     await eventExists(access.code!);
-    const rows = await sb("PATCH", "eventus_guests", new URLSearchParams({ id: "eq." + access.guestId, event_code: "eq." + access.code, select: "id" }), { status: b.status });
+    const target = () => new URLSearchParams({ id: "eq." + access.guestId, event_code: "eq." + access.code, select: "id" });
+    let rows: Row[];
+    try {
+      rows = await sb("PATCH", "eventus_guests", target(), { status: b.status });
+    } catch (err: any) {
+      if (err?.message !== "table_full" || b.status !== "confirmed") throw err;
+      rows = await sb("PATCH", "eventus_guests", target(), { status: "confirmed", mesa: null });
+    }
     if (!rows.length) fail("invitation unavailable", 404);
     return j({ ok: true });
   });
@@ -506,16 +515,22 @@ export async function POST(req: Request) {
       const version = () => { if (!integer(b.expectedVersion, 1, 2147483647)) fail("invalid version", 400); };
       let data: Row = {};
       if (b.op === "table-save") {
-        if (!integer(b.mesa, 1, 1000) || !integer(b.capacity, 1, 1000) || !integer(b.x, 0, 100) || !integer(b.y, 0, 100) || !integer(b.expectedVersion, 0, 2147483647)) fail("invalid table", 400);
+        if (!integer(b.mesa, 1, 1000) || !integer(b.capacity, 1, 16) || !integer(b.x, 0, 100) || !integer(b.y, 0, 100) || !integer(b.expectedVersion, 0, 2147483647)) fail("invalid table", 400);
         data = {mesa:b.mesa,capacity:b.capacity,x:b.x,y:b.y,expectedVersion:b.expectedVersion};
       }
       if (b.op === "guest-seat") {
         version();
-        if (!/^[1-9][0-9]{0,9}$/.test(String(b.guestId)) || (b.mesa !== null && !integer(b.mesa,1,1000))) fail("invalid guest seat",400);
+        if (!/^[1-9][0-9]{0,8}$/.test(String(b.guestId)) || (b.mesa !== null && !integer(b.mesa,1,1000))) fail("invalid guest seat",400);
         data = {guestId:String(b.guestId),mesa:b.mesa,expectedVersion:b.expectedVersion};
         if (b.seatIndex !== undefined) {
           if (b.mesa === null || !integer(b.seatIndex,1,1000) || !integer(b.personIndex,0,999)) fail("invalid seat",400);
           data = {...data,seatIndex:b.seatIndex,personIndex:b.personIndex};
+          // Who the client saw in that chair (null = empty): the RPC refuses a swap based on a stale view.
+          if (b.expectedOccupant !== undefined) {
+            const o = b.expectedOccupant;
+            if (o !== null && (typeof o !== "object" || !/^[1-9][0-9]{0,8}$/.test(String(o.guestId)) || !integer(o.personIndex,0,999))) fail("invalid seat",400);
+            data = {...data,expectedOccupant:o === null ? null : {guestId:String(o.guestId),personIndex:o.personIndex}};
+          }
         }
       }
       if (b.op === "guest-checkin") {
@@ -526,7 +541,7 @@ export async function POST(req: Request) {
           if (!guestAccess || guestAccess.code !== code) fail("invalid guest pass",401);
           guestId = guestAccess.guestId!;
         }
-        if (!/^[1-9][0-9]{0,9}$/.test(guestId)) fail("invalid guest",400);
+        if (!/^[1-9][0-9]{0,8}$/.test(guestId)) fail("invalid guest",400);
         data = {guestId};
       }
       if (["program-save","program-delete"].includes(b.op)) {

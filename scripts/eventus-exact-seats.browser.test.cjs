@@ -14,19 +14,21 @@ test('chosen chair persists, swaps and supports touch without moving companions 
    const a=await source.boundingBox(),b=await target.boundingBox(),client=await page.context().newCDPSession(page);
    const from={x:a.x+a.width/2,y:a.y+a.height/2},to={x:b.x+b.width/2,y:b.y+b.height/2};
    await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[from]});
+   await page.waitForTimeout(450); // long press lifts the person before dragging
    for(let n=1;n<=8;n++)await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:from.x+(to.x-from.x)*n/8,y:from.y+(to.y-from.y)*n/8}]});
    await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await client.detach();
   }
-  await page.getByText('Silla 8 guardada.',{exact:true}).waitFor();
+  await page.locator('#seat-message',{hasText:'Silla 8 guardada.'}).waitFor();
   assert.equal(await source.getAttribute('data-chair'),'8');
   await page.reload();await source.waitFor();assert.equal(await source.getAttribute('data-chair'),'8','chair survives full reload');
+  if(width===390){await source.click();assert.equal(await page.locator('#move-destination').count(),0,'on a small plan the first tap zooms in instead of picking');}
   await source.click();await page.locator('#move-destination').selectOption('1');await page.locator('#move-chair').selectOption('3');await page.locator('#move-picked').click();
-  await page.getByText('Silla 3 guardada.',{exact:true}).waitFor();
+  await page.locator('#seat-message',{hasText:'Silla 3 guardada.'}).waitFor();
   assert.equal(await source.getAttribute('data-chair'),'3');
   assert.equal(await page.locator('.exp-person[data-guest="4"][data-person-index="0"]').getAttribute('data-chair'),'8','occupied chair swaps');
   await page.locator('.exp-person[data-guest="2"][data-person-index="1"]').click();
   await page.locator('#move-chair').selectOption('10');await page.locator('#move-picked').click();
-  await page.getByText('Silla 10 guardada.',{exact:true}).waitFor();
+  await page.locator('#seat-message',{hasText:'Silla 10 guardada.'}).waitFor();
   assert.equal(await page.locator('.exp-person[data-guest="2"][data-person-index="1"]').getAttribute('data-chair'),'10');
   assert.equal(await source.getAttribute('data-chair'),'3','holder remains seated while companion moves');
   await page.close();
