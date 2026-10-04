@@ -1,0 +1,29 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Villaverde//XV Alina Fernanda//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:alina-fernanda-misa-20261128@salondefiestasvillaverde.com
+DTSTAMP:20261003T000000Z
+DTSTART:20261128T214500Z
+SUMMARY:Mis XV años de Alina Fernanda - Misa
+LOCATION:San José Obrero\, C. San José Obrero S/N\, Col. Jiménez Cantú\
+ , Ixtapaluca
+DESCRIPTION:Misa a las 3:45 p. m. (hora de Ciudad de México). Recepción a
+  las 6:00 p. m. en Salón Villaverde.\nVestimenta: elegante sport. Azul ci
+ elo reservado para la quinceañera.
+URL:https://www.salondefiestasvillaverde.com/mis-xv-alina-fernanda
+END:VEVENT
+BEGIN:VEVENT
+UID:alina-fernanda-recepcion-20261128@salondefiestasvillaverde.com
+DTSTAMP:20261003T000000Z
+DTSTART:20261129T000000Z
+SUMMARY:Mis XV años de Alina Fernanda - Recepción
+LOCATION:Salón Villaverde\, Carretera México-Cuautla Km 35.5\, Santa Cruz
+  Amalinalco\, C.P. 56609\, Chalco\, Estado de México
+DESCRIPTION:Recepción a las 6:00 p. m. (hora de Ciudad de México).\nVesti
+ menta: elegante sport. Azul cielo reservado para la quinceañera.
+URL:https://www.salondefiestasvillaverde.com/mis-xv-alina-fernanda
+END:VEVENT
+END:VCALENDAR

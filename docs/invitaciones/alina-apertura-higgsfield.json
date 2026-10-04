@@ -1,0 +1,63 @@
+{
+  "created": "2026-10-03",
+  "provider": "Higgsfield",
+  "status": "validated_locally",
+  "validation": {
+    "browser_tests_passed": 9,
+    "viewports": ["1440x900", "390x900", "320x900", "354x574"],
+    "video_decode": "ffmpeg complete decode without errors",
+    "browser_flow": "Verified real video playback, ended transition, skip, Escape, failures, reduced motion and data saver",
+    "deployed": false
+  },
+  "image": {
+    "job_id": "8747d7d1-d209-4ef2-9532-37191106527f",
+    "model": "gpt_image_2_5",
+    "aspect_ratio": "9:16",
+    "count": 1,
+    "prompt": "Create one spectacular cinematic opening keyframe for a refined quinceanera digital invitation, a magical princess fairytale feature-film aesthetic, luxurious and elegant rather than cartoon or toy. Vertical 9:16. A CLOSED ivory handmade-paper envelope with delicate embossed baroque gold filigree, fine gold-edged triangular flap, and a small antique gold wax seal clearly embossed only with the intertwined initials AF. The envelope floats gently upright in the CENTER, full envelope visible, viewed almost straight on with subtle cinematic depth. Envelope occupies 65% of frame width and 26% of frame height, centered at x50%, y53%. Artful peach and ivory roses and muted sage foliage cradle the lower left and upper right envelope corners, with an airy pale peach silk ribbon. Behind it: dreamy softly blurred ivory palace conservatory, delicate sunlit arches, champagne mist, tiny gold fairy dust suspended in warm light, romantic dimensional cinematic lighting, realistic tactile paper and petals, fine film quality. Palette warm ivory #FFF8EE, champagne #F5E8D6, peach #E8B49B, terracotta accents #914126, antique gold and sage. Keep TOP 30% and BOTTOM 18% visually calm soft ivory/champagne negative space, since name and opening button will be laid on top in HTML. The seal and flap remain fully closed. Balanced sophisticated portrait composition. No people, no face, no hands, no characters, no text other than small AF on seal, no dates, no logo or watermark. No saturated purple/blue, no dark scene, no castle silhouettes or imitation logos. A film still ready to be animated into an envelope opening."
+  },
+  "video": {
+    "job_id": "729b5750-7b54-4109-a849-92c398cc7450",
+    "model": "seedance_2_5",
+    "mode": "omni_reference",
+    "aspect_ratio": "9:16",
+    "duration": 6,
+    "resolution": "720p",
+    "generate_audio": false,
+    "count": 1,
+    "medias": [
+      {
+        "role": "start_image",
+        "value": "8747d7d1-d209-4ef2-9532-37191106527f"
+      }
+    ],
+    "prompt": "A cinematic product animation of the decorative paper envelope in the supplied reference image. A single continuous shot in the same warm ivory and gold conservatory, preserving the exact envelope, flowers and palette. The gold AF wax seal softly glows, releases, then the triangular paper flap hinges upward naturally. A blank ivory card gently rises out of the envelope while a few fine gold particles drift in the warm light. Silk ribbons move softly. The camera slowly pushes toward the blank card until its ivory surface fills the frame; finish on a uniform warm ivory background for a website transition. Smooth elegant movement, realistic paper mechanics and dimensional lighting. No people, no added writing, no speech, no music. Six seconds, vertical composition."
+  },
+  "estimated_credits": {
+    "image": 0.25,
+    "video": 42
+  },
+  "notes": [
+    "El usuario pidió un sobre cinematográfico generado en Higgsfield y un video de apertura integrado a la invitación.",
+    "Sin publicación ni cambios de producción.",
+    "Canción definitiva pendiente; apertura sin audio."
+  ],
+  "previous_video_attempt": {
+    "job_id": "2085f1ef-11b3-4f87-a5fe-1040471744b0",
+    "status": "nsfw",
+    "prompt": "Animate the supplied first frame into a single continuous six-second cinematic opening for an elegant quinceanera invitation. Preserve this exact ivory and gold envelope, its embossed AF wax seal, peach roses, sage foliage and warm palace conservatory composition. Magical princess fairytale feature-film mood, graceful physically coherent movement, highly polished realistic materials. TIMELINE: 0.0-1.0s a slow delicate camera push-in, tiny golden fairy dust curls toward the AF seal and it softly glows; silk ribbons and rose petals barely sway. 1.0-2.2s the wax seal gently detaches and dissolves into a few elegant golden particles, the envelope's triangular top flap naturally hinges upwards at its top edge. 2.2-4.0s a beautiful BLANK ivory invitation card rises smoothly out of the opening; warm golden light shines gently from inside the envelope. 4.0-5.3s the camera glides forward toward the blank card as soft luminous motes flow past, roses stay elegant at the edges. 5.3-6.0s the blank card's ivory surface fills the whole frame and dissolves to a smooth pale warm ivory #FFF8EE luminous background, preparing a seamless transition into a website. Keep the complete envelope visible until the deliberate final push-in. Fluid restrained magical movement and soft sun rays, not explosion, not flashing strobe. NO people, hands, added words, titles, dates, logos, or new letters; only original AF seal until it dissolves. No jump cuts, no black frames, no distorted melting envelope, no extra flaps, no shaking camera. Silent output, no music or voice."
+  },
+  "delivery": {
+    "poster": "public/mis-xv-alina-fernanda/assets/sobre-princesa-poster.webp",
+    "video": "public/mis-xv-alina-fernanda/assets/apertura-sobre.mp4",
+    "codec": "H.264",
+    "pixel_format": "yuv420p",
+    "width": 720,
+    "height": 1280,
+    "frame_rate": 24,
+    "duration_seconds": 6.041667,
+    "bytes": 1362351,
+    "audio_streams": 0,
+    "processing": "Recodificación H.264 con faststart y fundido a #FFF8EE de 5.55 a 6.0 segundos."
+  }
+}
