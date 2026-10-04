@@ -7,6 +7,7 @@ import type { NextConfig } from "next";
 const INVITACIONES = [
   "mis-xv-dayana",
   "mis-xv-dayana-garduno",
+  "mis-xv-alina-fernanda",
   "ana-paula-1",
   "mis-xv-megan",
   "nuestra-boda",
