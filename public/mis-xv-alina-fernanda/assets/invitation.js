@@ -286,6 +286,8 @@
     introVideo.playsInline = true;
     // No video src or preload is set until this explicit guest gesture.
     introVideo.src = videoSource;
+    introVideo.defaultPlaybackRate = 1.3;
+    introVideo.playbackRate = 1.3;
     introLoadTimer = setTimeout(() => finishIntro({ fallback: true }), 3500);
     try {
       Promise.resolve(introVideo.play()).catch(() => finishIntro({ fallback: true }));
