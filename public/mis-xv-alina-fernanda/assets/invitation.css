@@ -701,7 +701,12 @@ body.motion-paused .text-motion, body.motion-paused .text-motion.waiting-entry, 
 .event-place { max-width: 100%; margin-top: 16px; }
 .event-location address { margin-bottom: 29px; }
 .venue-photos { position: relative; gap: 27px; }
-.venue-photos a { padding: 9px; border-color: #a4834861; background: #fffbf3; box-shadow: 0 8px 20px #653f300c; }
+.venue-photos a { position: relative; padding: 9px; border-color: #a4834861; background: #fffbf3; box-shadow: 0 8px 20px #653f300c; }
+.venue-photos a::before, .venue-photos a::after { content: ''; position: absolute; z-index: 1; aspect-ratio: 3 / 4; background: url('flores-esquina.webp') center / contain no-repeat; pointer-events: none; }
+.venue-photos a::before { width: clamp(46px, 30%, 96px); top: -9px; left: -9px; }
+.venue-photos a::after { width: clamp(40px, 24%, 78px); bottom: -7px; right: -8px; transform: rotate(180deg); }
+.venue-photos figure:nth-child(2) a::before { left: auto; right: -9px; transform: scaleX(-1); }
+.venue-photos figure:nth-child(2) a::after { right: auto; left: -8px; transform: rotate(180deg) scaleX(-1); }
 .venue-photos figcaption { color: var(--sage-ink); font-style: italic; }
 .venue-photos figcaption::after { content: ''; display: block; width: 28px; height: 1px; margin: 13px auto 0; background: #a4834873; }
 .dress-section { padding-inline: 26px; }
