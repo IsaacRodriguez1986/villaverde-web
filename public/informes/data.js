@@ -36,11 +36,11 @@ VV.PAQUETES = [
     id: 'premium', name: 'Premium', accent: 'var(--vv-crimson)',
     tag: 'La mejor relación valor-precio', tone: 'crimson',
     horas: '6 horas totales', horasDet: '6h evento + 30 min recepción + 30 min desalojo',
-    priceMain: 420, priceFrom: 470,
-    priceNote: '150+ invitados', priceNote2: '$470 pp · 100–149 invitados',
+    priceMain: 420, priceFrom: null, minPax: 150,
+    priceNote: 'Desde 150 invitados', priceNote2: null,
     cortesias: 1,
     incluye: [
-      'Cena formal de 3 tiempos', 'Refresco y hielo ilimitado',
+      'Cena formal de 3 tiempos', 'Refresco ilimitado (2 sabores) y hielo',
       'Descorche libre', 'Botella de 3/4 por mesa',
       'Mesas redondas + sillas Tiffany', 'Meseros con capitán',
       'DJ + Maestro de Ceremonias', 'Iluminación inteligente',
@@ -53,8 +53,8 @@ VV.PAQUETES = [
     id: 'diamante', name: 'Diamante', accent: 'var(--vv-gold)',
     tag: 'El favorito para XV Años', tone: 'gold', popular: true,
     horas: '7 horas totales', horasDet: '7h evento + 30 min recepción + 30 min desalojo',
-    priceMain: 530, priceFrom: null,
-    priceNote: '150+ invitados', priceNote2: null,
+    priceMain: 530, priceFrom: null, minPax: 170,
+    priceNote: 'Desde 170 invitados', priceNote2: null,
     cortesias: 2,
     incluye: [
       'Pantalla gigante LED', 'Grupo versátil en vivo (5 int.)',
@@ -67,8 +67,8 @@ VV.PAQUETES = [
     id: 'esmeralda', name: 'Esmeralda', accent: 'var(--vv-emerald)',
     tag: 'La joya de la corona', tone: 'emerald',
     horas: '8 horas totales', horasDet: '8h evento + 30 min recepción + 30 min desalojo',
-    priceMain: 680, priceFrom: null,
-    priceNote: '150+ invitados', priceNote2: null,
+    priceMain: 680, priceFrom: null, minPax: 170,
+    priceNote: 'Desde 170 invitados', priceNote2: null,
     cortesias: 'Todas',
     incluye: [
       'Show de robot', 'Grupo versátil 9 integrantes',
@@ -176,6 +176,7 @@ VV.INVITACIONES_MUESTRA = [
 VV.COMPARA = [
   { t: 'Duración del evento',          premium: '6 h',  diamante: '7 h',  esmeralda: '8 h' },
   { t: 'Precio por persona (desde)',   premium: '$420', diamante: '$530', esmeralda: '$680' },
+  { t: 'Invitados (mínimo)',           premium: '150',  diamante: '170',  esmeralda: '170' },
   { t: 'Cortesías incluidas',          premium: '1',    diamante: '2',    esmeralda: 'Todas' },
   { t: 'Cena de gala de 3 tiempos',    premium: true,   diamante: true,   esmeralda: true },
   { t: 'DJ + Maestro de Ceremonias',   premium: true,   diamante: true,   esmeralda: true },
@@ -202,7 +203,7 @@ VV.MENU = {
     { t: 'Guarniciones', icon: 'leaf',  ops: ['Puré de papa', 'Ensalada de manzana', 'Papas a la mantequilla'] },
   ],
   madrugada: ['Torna fiesta de chilaquiles', 'Café de olla'],
-  bebidas: ['Refresco y hielo ilimitado', 'Descorche libre', 'Botella de 3/4 por mesa'],
+  bebidas: ['Refresco ilimitado (2 sabores) y hielo', 'Descorche libre', 'Botella de 3/4 por mesa'],
 };
 
 /* ---------- CORTESÍAS A ELEGIR (reales, 12) ---------- */
@@ -415,7 +416,7 @@ VV.GUION = {
   menu: {
     obj: 'Vender la experiencia gastronómica: cena de gala, no “comida de salón”.',
     say: '«Es una cena formal de 3 tiempos servida a la mesa, con capitán de meseros. Y a la madrugada… chilaquiles para revivir a todos.»',
-    tips: ['Resalta “servido a la mesa”, no buffet.', 'Menciona refresco y hielo ilimitado + descorche libre.', 'El menú es personalizable; ofrece degustación.'],
+    tips: ['Resalta “servido a la mesa”, no buffet.', 'Menciona refresco ilimitado (2 sabores) y hielo + descorche libre.', 'El menú es personalizable; ofrece degustación.'],
     obj_handling: [
       { q: '“¿Y si tengo invitados veganos?”', a: 'Adaptamos platillos sin costo extra. Lo dejamos anotado en tu contrato.' },
     ],
@@ -496,7 +497,7 @@ VV.etiquetaMedia = function (nVideos, nFotos) {
 
 /* ---------- HELPERS DE PRECIO Y ESTADO (fuente única de verdad) ---------- */
 VV.priceFor = function (pkgId, guests) {
-  if (pkgId === 'premium') return guests < 150 ? 470 : 420;
+  if (pkgId === 'premium') return 420;
   if (pkgId === 'diamante') return 530;
   return 680;
 };

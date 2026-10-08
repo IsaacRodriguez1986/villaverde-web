@@ -1289,14 +1289,9 @@ export default function Home() {
                 <h3 className="pkg-name">Premium</h3>
                 <div className="pkg-tag">La mejor relación valor-precio</div>
               </div>
-              <div className="pkg-prices">
+              <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">100–149 inv.</div>
-                  <div className="pkg-price-num">$470</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">150+ inv.</div>
+                  <div className="pkg-price-label">Desde 150 inv.</div>
                   <div className="pkg-price-num">$420</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1319,7 +1314,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  Refresco y hielo ilimitado todo el evento
+                  Refresco ilimitado (2 sabores) y hielo todo el evento
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1402,7 +1397,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 150 inv.</div>
+                  <div className="pkg-price-label">Desde 170 inv.</div>
                   <div className="pkg-price-num">$530</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1479,7 +1474,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 150 inv.</div>
+                  <div className="pkg-price-label">Desde 170 inv.</div>
                   <div className="pkg-price-num">$680</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1627,6 +1622,12 @@ export default function Home() {
                   <td>$680/pp</td>
                 </tr>
                 <tr>
+                  <td>Invitados (mínimo)</td>
+                  <td>150</td>
+                  <td>170</td>
+                  <td>170</td>
+                </tr>
+                <tr>
                   <td>Descorche libre</td>
                   <td className="compare-check">Incluido</td>
                   <td className="compare-check">Incluido</td>
@@ -1673,7 +1674,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Premium desde 100 invitados · Diamante y Esmeralda desde 150
+            Premium desde 150 invitados · Diamante y Esmeralda desde 170
             <br />
             <strong>Reserva con contrato y $3,000 de anticipo</strong>
           </div>
@@ -2477,8 +2478,8 @@ export default function Home() {
               </summary>
               <div className="faq-answer">
                 Nuestros paquetes para XV años incluyen: salón con capacidad de
-                100 a 450 invitados, cena formal de 3 tiempos, refresco
-                ilimitado, descorche libre (trae tus bebidas sin cargo), DJ y
+                150 a 450 invitados, cena formal de 3 tiempos, refresco
+                ilimitado (2 sabores), descorche libre (trae tus bebidas sin cargo), DJ y
                 Maestro de Ceremonias, iluminación tipo antro, batucada con
                 globos, 2 camerinos privados e invitación digital animada. Los
                 paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla
@@ -2506,7 +2507,8 @@ export default function Home() {
                 </strong>
                 . Puedes traer tus propias bebidas alcohólicas sin ningún cargo
                 adicional. Además, cada paquete incluye botella ¾ por mesa y
-                refresco con hielo ilimitado durante todo el evento.
+                refresco ilimitado (2 sabores) con hielo ilimitado durante todo
+                el evento.
               </div>
             </details>
             <details className="faq-item">
@@ -2515,7 +2517,7 @@ export default function Home() {
               </summary>
               <div className="faq-answer">
                 El Salón de Fiestas Villaverde tiene capacidad para{" "}
-                <strong>100 a 450 invitados</strong>. Contamos con mesas
+                <strong>150 a 450 invitados</strong>. Contamos con mesas
                 redondas, sillas Tiffany y amplios jardines con fuente para la
                 recepción.
               </div>
@@ -2540,11 +2542,11 @@ export default function Home() {
                 Esmeralda?
               </summary>
               <div className="faq-answer">
-                El <strong>Premium</strong> ($420/pp) incluye todo lo esencial:
+                El <strong>Premium</strong> ($420/pp, desde 150 invitados) incluye todo lo esencial:
                 cena, descorche libre, DJ y 1 cortesía. El{" "}
-                <strong>Diamante</strong> ($530/pp) agrega grupo versátil en
+                <strong>Diamante</strong> ($530/pp, desde 170 invitados) agrega grupo versátil en
                 vivo, pantalla LED, chilaquiles y 2 cortesías. El{" "}
-                <strong>Esmeralda</strong> ($680/pp) es el paquete máximo con
+                <strong>Esmeralda</strong> ($680/pp, desde 170 invitados) es el paquete máximo con
                 show de robot, cabina 360, cantante en cena y todas las
                 cortesías incluidas.
               </div>
