@@ -53,8 +53,8 @@ export default function AgentSidebar({ isOpen, onClose }: AgentSidebarProps) {
             onChange={(e) => setPaquete(Number(e.target.value))}
           >
             <option value={420}>Premium ($420 - desde 150)</option>
-            <option value={530}>Diamante ($530 - desde 170)</option>
-            <option value={680}>Esmeralda ($680 - desde 170)</option>
+            <option value={530}>Diamante ($530 - desde 150)</option>
+            <option value={680}>Esmeralda ($680 - desde 200)</option>
           </select>
         </div>
 

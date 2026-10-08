@@ -38,7 +38,7 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-body">
             <h4>Incluye</h4>
-            <div className="pkg-feat"><span className="ck"><IconCheck /></span> 6 horas totales</div>
+            <div className="pkg-feat"><span className="ck"><IconCheck /></span> 8 horas totales</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> Cena formal de 3 tiempos</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> Refresco ilimitado (2 sabores) y hielo</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Descorche libre</div>
@@ -56,14 +56,14 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">Desde 170 inv.</div>
+              <div className="pkg-price-label">Desde 150 inv.</div>
               <div className="pkg-price-num">$530</div>
               <div className="pkg-price-unit">por persona</div>
             </div>
           </div>
           <div className="pkg-body">
             <h4>Todo lo del Premium más</h4>
-            <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> 7 horas totales (+1 hr)</div>
+            <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> 9 horas totales (+1 hr)</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Grupo versátil (5 int.)</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> Pantalla gigante LED</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Chilaquiles de madrugada</div>
@@ -79,14 +79,14 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">Desde 170 inv.</div>
+              <div className="pkg-price-label">Desde 200 inv.</div>
               <div className="pkg-price-num">$680</div>
               <div className="pkg-price-unit">por persona</div>
             </div>
           </div>
           <div className="pkg-body">
             <h4>Todo lo del Diamante más</h4>
-            <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> 8 horas totales</div>
+            <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> 9 horas totales</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Grupo versátil 9 int.</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> Cabina foto 360 (1 hr)</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Show de robot</div>

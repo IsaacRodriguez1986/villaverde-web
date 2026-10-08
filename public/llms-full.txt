@@ -35,7 +35,7 @@
 ## 3. Capacidad e Instalaciones
 
 ### Capacidad
-- **Mínimo**: 150 invitados (con el Paquete Premium; Diamante y Esmeralda requieren mínimo 170)
+- **Mínimo**: 150 invitados (Premium y Diamante desde 150; Esmeralda requiere mínimo 200)
 - **Máximo**: 450 invitados
 
 ### Instalaciones
@@ -79,10 +79,10 @@ Fiestas de cumpleaños para todas las edades, desde infantiles hasta celebracion
 
 ## 5. Paquetes Todo Incluido
 
-Todos los precios son por persona e incluyen IVA. El número de horas indicado son las horas TOTALES del evento (incluye montaje, recepción, evento y desmontaje del cliente).
+Todos los precios son por persona e incluyen IVA. El número de horas indicado son las horas TOTALES (30 min de recepción + horas de evento + 30 min de desalojo).
 
-### Paquete Premium — 7 horas totales
-Disponible desde 150 invitados. Es el único paquete para eventos de 150 a 169 invitados.
+### Paquete Premium — 8 horas totales
+Disponible desde 150 invitados. 7 horas de evento + 30 min de recepción + 30 min de desalojo.
 | Invitados | Precio por persona |
 |---|---|
 | 150 o más | $420 MXN |
@@ -103,11 +103,11 @@ Disponible desde 150 invitados. Es el único paquete para eventos de 150 a 169 i
 - Meseros profesionales
 - Mesas redondas y sillas Tiffany
 
-### Paquete Diamante — 8 horas totales (MAS POPULAR)
-Disponible solo desde 170 invitados.
+### Paquete Diamante — 9 horas totales (MAS POPULAR)
+Disponible desde 150 invitados. 8 horas de evento + 30 min de recepción + 30 min de desalojo.
 | Invitados | Precio por persona |
 |---|---|
-| 170 o más | $530 MXN |
+| 150 o más | $530 MXN |
 
 **Cortesías**: Elige 2 cortesías de la lista
 
@@ -118,10 +118,10 @@ Disponible solo desde 170 invitados.
 - 1 hora adicional de evento
 
 ### Paquete Esmeralda — 9 horas totales (EL MAS COMPLETO)
-Disponible solo desde 170 invitados.
+Disponible solo desde 200 invitados. 8 horas de evento + 30 min de recepción + 30 min de desalojo.
 | Invitados | Precio por persona |
 |---|---|
-| 170 o más | $680 MXN |
+| 200 o más | $680 MXN |
 
 **Cortesías**: TODAS las cortesías incluidas
 
@@ -129,7 +129,7 @@ Disponible solo desde 170 invitados.
 - Show de robot
 - Cabina 360
 - Cantante en cena
-- 1 hora adicional más (total 9h)
+- Mismas 9 horas totales que Diamante
 - Todas las cortesías sin excepción
 
 ---
@@ -187,7 +187,7 @@ Todos los paquetes incluyen cena formal de 3 tiempos servida por meseros profesi
 
 ---
 
-## 9. Timeline Ejemplo de un Evento (Paquete Diamante, 8 horas)
+## 9. Timeline Ejemplo de un Evento (Paquete Diamante, 9 horas totales)
 
 Este es un ejemplo de cómo se estructura un evento típico de XV años con el Paquete Diamante:
 
@@ -202,7 +202,7 @@ Este es un ejemplo de cómo se estructura un evento típico de XV años con el P
 | 9:00 PM | Grupo versátil en vivo |
 | 10:00 PM | Cortesías y shows especiales |
 | 11:00 PM | Chilaquiles + cierre de pista |
-| 12:00 AM | Fin del evento |
+| 12:30 AM | Fin del evento (desalojo hasta la 1:00 AM) |
 
 *Los horarios son flexibles y se adaptan a las necesidades del cliente.*
 
@@ -259,7 +259,7 @@ Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado 
 Sí, con cita previa de lunes a sábado en horarios de 10am-12pm y 3pm-6pm. Agenda por WhatsApp al 999 548 5862. La visita es sin compromiso.
 
 **¿Qué diferencia hay entre los paquetes?**
-Premium ($420/pp, desde 150 invitados): esencial + 1 cortesía, 7 horas. Diamante ($530/pp, desde 170 invitados): grupo en vivo, pantalla LED + 2 cortesías, 8 horas. Esmeralda ($680/pp, desde 170 invitados): paquete máximo con todas las cortesías, 9 horas.
+Premium ($420/pp, desde 150 invitados): esencial + 1 cortesía, 8 horas totales. Diamante ($530/pp, desde 150 invitados): grupo en vivo, pantalla LED + 2 cortesías, 9 horas totales. Esmeralda ($680/pp, desde 200 invitados): paquete máximo con todas las cortesías, 9 horas totales.
 
 **¿Puedo personalizar mi paquete?**
 Los paquetes están diseñados para incluir todo lo necesario, pero puedes agregar servicios adicionales. Consulta disponibilidad por WhatsApp.

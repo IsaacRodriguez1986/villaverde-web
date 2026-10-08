@@ -1206,7 +1206,7 @@ export default function Home() {
             </a>
             <a href="#paquete-esmeralda" className="package-finder-card">
               <strong>La experiencia más completa</strong>
-              <span>Esmeralda · 8 horas y producción premium</span>
+              <span>Esmeralda · 9 horas y producción premium</span>
             </a>
           </div>
           <p className="package-finder-note">La cotización no reserva la fecha. Reserva con contrato y $3,000 de anticipo.</p>
@@ -1302,7 +1302,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  6 horas de evento + 30min recepción + 30min desalojo
+                  8 horas totales: 7h de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat">
                   <span className="ck">
@@ -1397,7 +1397,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 170 inv.</div>
+                  <div className="pkg-price-label">Desde 150 inv.</div>
                   <div className="pkg-price-num">$530</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1408,7 +1408,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  7 horas de evento + 30min recepción + 30min desalojo
+                  9 horas totales: 8h de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1474,7 +1474,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 170 inv.</div>
+                  <div className="pkg-price-label">Desde 200 inv.</div>
                   <div className="pkg-price-num">$680</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1485,7 +1485,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  8 horas de evento + 30min recepción + 30min desalojo
+                  9 horas totales: 8h de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1610,10 +1610,10 @@ export default function Home() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Horas de evento</td>
-                  <td>6h</td>
-                  <td>7h</td>
+                  <td>Horas totales</td>
                   <td>8h</td>
+                  <td>9h</td>
+                  <td>9h</td>
                 </tr>
                 <tr>
                   <td>Precio desde</td>
@@ -1624,8 +1624,8 @@ export default function Home() {
                 <tr>
                   <td>Invitados (mínimo)</td>
                   <td>150</td>
-                  <td>170</td>
-                  <td>170</td>
+                  <td>150</td>
+                  <td>200</td>
                 </tr>
                 <tr>
                   <td>Descorche libre</td>
@@ -1674,7 +1674,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Premium desde 150 invitados · Diamante y Esmeralda desde 170
+            Premium y Diamante desde 150 invitados · Esmeralda desde 200
             <br />
             <strong>Reserva con contrato y $3,000 de anticipo</strong>
           </div>
@@ -2544,9 +2544,9 @@ export default function Home() {
               <div className="faq-answer">
                 El <strong>Premium</strong> ($420/pp, desde 150 invitados) incluye todo lo esencial:
                 cena, descorche libre, DJ y 1 cortesía. El{" "}
-                <strong>Diamante</strong> ($530/pp, desde 170 invitados) agrega grupo versátil en
+                <strong>Diamante</strong> ($530/pp, desde 150 invitados) agrega grupo versátil en
                 vivo, pantalla LED, chilaquiles y 2 cortesías. El{" "}
-                <strong>Esmeralda</strong> ($680/pp, desde 170 invitados) es el paquete máximo con
+                <strong>Esmeralda</strong> ($680/pp, desde 200 invitados) es el paquete máximo con
                 show de robot, cabina 360, cantante en cena y todas las
                 cortesías incluidas.
               </div>

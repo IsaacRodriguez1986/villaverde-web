@@ -107,8 +107,8 @@ export default function RootLayout({
                 itemListElement: [
                   {
                     "@type": "Offer",
-                    name: "Paquete Premium — 6 horas de evento",
-                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 6 horas de evento.",
+                    name: "Paquete Premium — 8 horas totales",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. Desde 150 invitados. 8 horas totales (7h de evento + 30 min de recepción + 30 min de desalojo).",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "420",
@@ -125,8 +125,8 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Diamante — 7 horas de evento (Más Popular)",
-                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 170 invitados. 7 horas de evento.",
+                    name: "Paquete Diamante — 9 horas totales (Más Popular)",
+                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 150 invitados. 9 horas totales (8h de evento + 30 min de recepción + 30 min de desalojo).",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "530",
@@ -136,15 +136,15 @@ export default function RootLayout({
                     },
                     eligibleQuantity: {
                       "@type": "QuantitativeValue",
-                      minValue: 170,
+                      minValue: 150,
                       maxValue: 450,
                       unitText: "invitados",
                     },
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Esmeralda — 8 horas de evento (El Más Completo)",
-                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 170 invitados. 8 horas de evento.",
+                    name: "Paquete Esmeralda — 9 horas totales (El Más Completo)",
+                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 200 invitados. 9 horas totales (8h de evento + 30 min de recepción + 30 min de desalojo).",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "680",
@@ -154,7 +154,7 @@ export default function RootLayout({
                     },
                     eligibleQuantity: {
                       "@type": "QuantitativeValue",
-                      minValue: 170,
+                      minValue: 200,
                       maxValue: 450,
                       unitText: "invitados",
                     },
@@ -250,7 +250,7 @@ export default function RootLayout({
                   name: "¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "El Premium ($420/pp, desde 150 invitados) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 6 horas de evento. El Diamante ($530/pp, desde 170 invitados) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 7 horas de evento. El Esmeralda ($680/pp, desde 170 invitados) incluye show de robot, cabina 360, cantante en cena y todas las cortesías con 8 horas de evento.",
+                    text: "El Premium ($420/pp, desde 150 invitados) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir, con 8 horas totales. El Diamante ($530/pp, desde 150 invitados) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías, con 9 horas totales. El Esmeralda ($680/pp, desde 200 invitados) incluye show de robot, cabina 360, cantante en cena y todas las cortesías, con 9 horas totales.",
                   },
                 },
                 {
