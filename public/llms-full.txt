@@ -35,7 +35,7 @@
 ## 3. Capacidad e Instalaciones
 
 ### Capacidad
-- **Mínimo**: 100 invitados (solo con el Paquete Premium; Diamante y Esmeralda requieren mínimo 150)
+- **Mínimo**: 150 invitados (con el Paquete Premium; Diamante y Esmeralda requieren mínimo 170)
 - **Máximo**: 450 invitados
 
 ### Instalaciones
@@ -82,18 +82,17 @@ Fiestas de cumpleaños para todas las edades, desde infantiles hasta celebracion
 Todos los precios son por persona e incluyen IVA. El número de horas indicado son las horas TOTALES del evento (incluye montaje, recepción, evento y desmontaje del cliente).
 
 ### Paquete Premium — 7 horas totales
-Único paquete disponible para eventos de 100 a 149 invitados.
+Disponible desde 150 invitados. Es el único paquete para eventos de 150 a 169 invitados.
 | Invitados | Precio por persona |
 |---|---|
 | 150 o más | $420 MXN |
-| 100 a 149 | $470 MXN |
 
 **Cortesías**: Elige 1 cortesía de la lista
 
 **Incluye**:
 - Cena formal de 3 tiempos
 - Descorche libre
-- Refresco con hielo ilimitado
+- Refresco ilimitado (solo 2 sabores) y hielo ilimitado
 - Botella ¾ por mesa
 - DJ profesional
 - Maestro de Ceremonias
@@ -105,10 +104,10 @@ Todos los precios son por persona e incluyen IVA. El número de horas indicado s
 - Mesas redondas y sillas Tiffany
 
 ### Paquete Diamante — 8 horas totales (MAS POPULAR)
-Disponible solo desde 150 invitados.
+Disponible solo desde 170 invitados.
 | Invitados | Precio por persona |
 |---|---|
-| 150 o más | $530 MXN |
+| 170 o más | $530 MXN |
 
 **Cortesías**: Elige 2 cortesías de la lista
 
@@ -119,10 +118,10 @@ Disponible solo desde 150 invitados.
 - 1 hora adicional de evento
 
 ### Paquete Esmeralda — 9 horas totales (EL MAS COMPLETO)
-Disponible solo desde 150 invitados.
+Disponible solo desde 170 invitados.
 | Invitados | Precio por persona |
 |---|---|
-| 150 o más | $680 MXN |
+| 170 o más | $680 MXN |
 
 **Cortesías**: TODAS las cortesías incluidas
 
@@ -170,7 +169,7 @@ Todos los paquetes incluyen cena formal de 3 tiempos servida por meseros profesi
 - Opciones mixtas
 
 ### Bebidas incluidas
-- Refresco ilimitado con hielo
+- Refresco ilimitado (solo 2 sabores) con hielo ilimitado
 - Botella ¾ de licor por mesa
 - Descorche libre — los clientes pueden traer sus propias bebidas alcohólicas sin cargo
 - Agua fresca
@@ -237,10 +236,10 @@ El precio por persona incluye todo lo listado en el paquete. Aparte, el estacion
 
 ### Servicios
 **¿Qué incluye un paquete todo incluido para XV años?**
-Salón con capacidad de 100 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado, descorche libre, DJ y MC, iluminación inteligente, batucada, 2 camerinos e invitación digital. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED y más.
+Salón con capacidad de 150 a 450 invitados, cena formal de 3 tiempos, refresco ilimitado (2 sabores), descorche libre, DJ y MC, iluminación inteligente, batucada, 2 camerinos e invitación digital. Los paquetes Diamante y Esmeralda agregan grupo en vivo, pantalla LED y más.
 
 **¿El salón permite descorche libre?**
-Sí, en TODOS los paquetes. Trae tus bebidas alcohólicas sin cargo. Además incluye botella ¾ por mesa y refresco ilimitado.
+Sí, en TODOS los paquetes. Trae tus bebidas alcohólicas sin cargo. Además incluye botella ¾ por mesa y refresco ilimitado (2 sabores).
 
 **¿La cena es de cuántos tiempos?**
 3 tiempos: entrada, plato fuerte y postre. Servida por meseros profesionales.
@@ -250,7 +249,7 @@ Contamos con estacionamiento propio (45 cajones). Tiene un costo de $50 por auto
 
 ### Capacidad y Ubicación
 **¿Cuántos invitados caben en el salón?**
-De 100 a 450 invitados. Contamos con mesas redondas, sillas Tiffany y jardines amplios.
+De 150 a 450 invitados. Contamos con mesas redondas, sillas Tiffany y jardines amplios.
 
 **¿Dónde se encuentra?**
 Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado de México. Sobre la carretera principal con fácil acceso.
@@ -260,7 +259,7 @@ Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado 
 Sí, con cita previa de lunes a sábado en horarios de 10am-12pm y 3pm-6pm. Agenda por WhatsApp al 999 548 5862. La visita es sin compromiso.
 
 **¿Qué diferencia hay entre los paquetes?**
-Premium ($420/pp): esencial + 1 cortesía, 7 horas. Diamante ($530/pp): grupo en vivo, pantalla LED + 2 cortesías, 8 horas. Esmeralda ($680/pp): paquete máximo con todas las cortesías, 9 horas.
+Premium ($420/pp, desde 150 invitados): esencial + 1 cortesía, 7 horas. Diamante ($530/pp, desde 170 invitados): grupo en vivo, pantalla LED + 2 cortesías, 8 horas. Esmeralda ($680/pp, desde 170 invitados): paquete máximo con todas las cortesías, 9 horas.
 
 **¿Puedo personalizar mi paquete?**
 Los paquetes están diseñados para incluir todo lo necesario, pero puedes agregar servicios adicionales. Consulta disponibilidad por WhatsApp.
