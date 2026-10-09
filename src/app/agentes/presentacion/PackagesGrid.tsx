@@ -56,7 +56,7 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">Desde 150 inv.</div>
+              <div className="pkg-price-label">Desde 170 inv.</div>
               <div className="pkg-price-num">$530</div>
               <div className="pkg-price-unit">por persona</div>
             </div>
