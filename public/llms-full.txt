@@ -35,7 +35,7 @@
 ## 3. Capacidad e Instalaciones
 
 ### Capacidad
-- **Mínimo**: 150 invitados (con el Paquete Premium; Diamante y Esmeralda requieren mínimo 170)
+- **Mínimo**: 150 invitados (Premium y Diamante; Esmeralda requiere mínimo 200)
 - **Máximo**: 450 invitados
 
 ### Instalaciones
@@ -82,7 +82,7 @@ Fiestas de cumpleaños para todas las edades, desde infantiles hasta celebracion
 Todos los precios son por persona e incluyen IVA. El número de horas indicado son las horas TOTALES del evento (incluye montaje, recepción, evento y desmontaje del cliente).
 
 ### Paquete Premium — 7 horas totales
-Disponible desde 150 invitados. Es el único paquete para eventos de 150 a 169 invitados.
+Disponible desde 150 invitados.
 | Invitados | Precio por persona |
 |---|---|
 | 150 o más | $420 MXN |
@@ -104,10 +104,10 @@ Disponible desde 150 invitados. Es el único paquete para eventos de 150 a 169 i
 - Mesas redondas y sillas Tiffany
 
 ### Paquete Diamante — 8 horas totales (MAS POPULAR)
-Disponible solo desde 170 invitados.
+Disponible solo desde 150 invitados.
 | Invitados | Precio por persona |
 |---|---|
-| 170 o más | $530 MXN |
+| 150 o más | $530 MXN |
 
 **Cortesías**: Elige 2 cortesías de la lista
 
@@ -118,10 +118,10 @@ Disponible solo desde 170 invitados.
 - 1 hora adicional de evento
 
 ### Paquete Esmeralda — 9 horas totales (EL MAS COMPLETO)
-Disponible solo desde 170 invitados.
+Disponible solo desde 200 invitados.
 | Invitados | Precio por persona |
 |---|---|
-| 170 o más | $680 MXN |
+| 200 o más | $680 MXN |
 
 **Cortesías**: TODAS las cortesías incluidas
 
@@ -259,7 +259,7 @@ Carretera México-Cuautla, Km. 35.5, Col. Santa Cruz Amalinalco, Chalco, Estado 
 Sí, con cita previa de lunes a sábado en horarios de 10am-12pm y 3pm-6pm. Agenda por WhatsApp al 999 548 5862. La visita es sin compromiso.
 
 **¿Qué diferencia hay entre los paquetes?**
-Premium ($420/pp, desde 150 invitados): esencial + 1 cortesía, 7 horas. Diamante ($530/pp, desde 170 invitados): grupo en vivo, pantalla LED + 2 cortesías, 8 horas. Esmeralda ($680/pp, desde 170 invitados): paquete máximo con todas las cortesías, 9 horas.
+Premium ($420/pp, desde 150 invitados): esencial + 1 cortesía, 7 horas. Diamante ($530/pp, desde 150 invitados): grupo en vivo, pantalla LED + 2 cortesías, 8 horas. Esmeralda ($680/pp, desde 200 invitados): paquete máximo con todas las cortesías, 9 horas.
 
 **¿Puedo personalizar mi paquete?**
 Los paquetes están diseñados para incluir todo lo necesario, pero puedes agregar servicios adicionales. Consulta disponibilidad por WhatsApp.

@@ -1397,7 +1397,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 170 inv.</div>
+                  <div className="pkg-price-label">Desde 150 inv.</div>
                   <div className="pkg-price-num">$530</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1474,7 +1474,7 @@ export default function Home() {
               </div>
               <div className="pkg-prices single">
                 <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 170 inv.</div>
+                  <div className="pkg-price-label">Desde 200 inv.</div>
                   <div className="pkg-price-num">$680</div>
                   <div className="pkg-price-unit">por persona</div>
                 </div>
@@ -1624,8 +1624,8 @@ export default function Home() {
                 <tr>
                   <td>Invitados (mínimo)</td>
                   <td>150</td>
-                  <td>170</td>
-                  <td>170</td>
+                  <td>150</td>
+                  <td>200</td>
                 </tr>
                 <tr>
                   <td>Descorche libre</td>
@@ -1674,7 +1674,7 @@ export default function Home() {
           </div>
 
           <div className="pkg-note reveal">
-            Premium desde 150 invitados · Diamante y Esmeralda desde 170
+            Premium y Diamante desde 150 invitados · Esmeralda desde 200
             <br />
             <strong>Reserva con contrato y $3,000 de anticipo</strong>
           </div>
@@ -2544,9 +2544,9 @@ export default function Home() {
               <div className="faq-answer">
                 El <strong>Premium</strong> ($420/pp, desde 150 invitados) incluye todo lo esencial:
                 cena, descorche libre, DJ y 1 cortesía. El{" "}
-                <strong>Diamante</strong> ($530/pp, desde 170 invitados) agrega grupo versátil en
+                <strong>Diamante</strong> ($530/pp, desde 150 invitados) agrega grupo versátil en
                 vivo, pantalla LED, chilaquiles y 2 cortesías. El{" "}
-                <strong>Esmeralda</strong> ($680/pp, desde 170 invitados) es el paquete máximo con
+                <strong>Esmeralda</strong> ($680/pp, desde 200 invitados) es el paquete máximo con
                 show de robot, cabina 360, cantante en cena y todas las
                 cortesías incluidas.
               </div>
