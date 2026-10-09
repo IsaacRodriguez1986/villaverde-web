@@ -252,7 +252,7 @@ test('countdown and calendars preserve the confirmed Mexico City ceremony and re
 });
 
 test('personalized invitations safely handle guest names and pass limits while missing music and RSVP stay honest', async t => {
-  const { page, blocked, load, open } = await fixture(t);
+  const { page, blocked, load, open } = await fixture(t, { config: { music: { src: null, title: null } } });
   const name = '<img src=x onerror="window.__ALINA_XSS__=true">';
   await load(`?${new URLSearchParams({ para: name, pases: '2', music: 'https://example.test/song.mp3', phone: '525500000000' })}`);
   await open();
@@ -340,7 +340,7 @@ function silentWav() {
   return bytes;
 }
 
-test('a future local song plays from the opening gesture, pauses, resumes, and reports loading errors', async t => {
+test('a configured local song plays from the opening gesture, pauses, resumes, and reports loading errors', async t => {
   const config = { music: { src: 'assets/acceptance-tone.wav', title: 'Audio sintético de prueba' } };
   const good = await fixture(t, { config, audio: silentWav() });
   await good.load();

@@ -542,7 +542,7 @@ function SecPaquetes({ onGo }) {
       </div>
 
       <div className="vv-grid--3" style={{ marginTop: 22, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
-        {[{ i: 'users', t: 'Mínimo 100 invitados' }, { i: 'car', t: 'Estacionamiento 45 autos' }, { i: 'badge', t: 'Calidad garantizada' }].map((x, k) => (
+        {[{ i: 'users', t: 'Mínimo 150 invitados' }, { i: 'car', t: 'Estacionamiento 45 autos' }, { i: 'badge', t: 'Calidad garantizada' }].map((x, k) => (
           <div key={k} className="vv-card" style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 12, fontSize: 13.5, fontWeight: 700, color: 'var(--vv-muted)' }}>
             <span style={{ color: 'var(--vv-gold)' }}><Icon name={x.i} size={22} /></span>{x.t}
           </div>
@@ -620,8 +620,8 @@ function SecCotizador() {
   const anticipo = 3000;
   const restante = total - anticipo;
   const fmt = (n) => '$' + n.toLocaleString('es-MX');
-  const minWarn = pkgId !== 'premium' && guests < 150;
-  const minPax = pkgId === 'premium' ? 100 : 150;
+  const minPax = pkg.minPax;
+  const minWarn = guests < minPax;
   useEffect(() => { if (guests < minPax) setGuests(minPax); }, [minPax]);
   const pct = Math.max(0, Math.min(100, Math.round((guests - minPax) / (400 - minPax) * 100)));
 
@@ -662,15 +662,7 @@ function SecCotizador() {
             </div>
             {minWarn && (
               <div style={{ marginTop: 14, fontSize: 13, color: 'var(--vv-crimson)', display: 'flex', gap: 8, alignItems: 'center', fontWeight: 700 }}>
-                <Icon name="shield" size={16} /> {pkg.name} aplica desde 150 invitados. Premium desde 100.
-              </div>
-            )}
-            {pkgId === 'premium' && guests < 150 && (
-              <div className="vv-upsell">
-                <span className="vv-upsell__ic"><Icon name="sparkle" size={17} /></span>
-                <span>Con <b>150 invitados</b> el precio baja a <b>$420</b> por persona (de $470). Tu total sería <b>{fmt(420 * 150)}</b> — menos que con 149.
-                  <button type="button" className="vv-upsell__cta" onClick={() => setGuests(150)}>Subir a 150</button>
-                </span>
+                <Icon name="shield" size={16} /> {pkg.name} aplica desde {minPax} invitados.
               </div>
             )}
           </div>

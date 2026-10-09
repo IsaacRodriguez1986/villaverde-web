@@ -29,14 +29,9 @@ export default function PackagesGrid() {
             <div className="pkg-name">Premium</div>
             <div className="pkg-tag">La mejor relación valor-precio</div>
           </div>
-          <div className="pkg-prices">
+          <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">100–149 inv.</div>
-              <div className="pkg-price-num">$470</div>
-              <div className="pkg-price-unit">por persona</div>
-            </div>
-            <div className="pkg-price-box">
-              <div className="pkg-price-label">150+ inv.</div>
+              <div className="pkg-price-label">Desde 150 inv.</div>
               <div className="pkg-price-num">$420</div>
               <div className="pkg-price-unit">por persona</div>
             </div>
@@ -45,7 +40,7 @@ export default function PackagesGrid() {
             <h4>Incluye</h4>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> 6 horas totales</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> Cena formal de 3 tiempos</div>
-            <div className="pkg-feat"><span className="ck"><IconCheck /></span> Refresco y hielo ilimitado</div>
+            <div className="pkg-feat"><span className="ck"><IconCheck /></span> Refresco ilimitado (2 sabores) y hielo</div>
             <div className="pkg-feat hi"><span className="ck"><IconCheck /></span> Descorche libre</div>
             <div className="pkg-feat"><span className="ck"><IconCheck /></span> DJ + Iluminación</div>
             <div className="pkg-cort">1 cortesía a elegir</div>
@@ -61,7 +56,7 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">Desde 150 inv.</div>
+              <div className="pkg-price-label">Desde 170 inv.</div>
               <div className="pkg-price-num">$530</div>
               <div className="pkg-price-unit">por persona</div>
             </div>
@@ -84,7 +79,7 @@ export default function PackagesGrid() {
           </div>
           <div className="pkg-prices single">
             <div className="pkg-price-box">
-              <div className="pkg-price-label">Desde 150 inv.</div>
+              <div className="pkg-price-label">Desde 200 inv.</div>
               <div className="pkg-price-num">$680</div>
               <div className="pkg-price-unit">por persona</div>
             </div>

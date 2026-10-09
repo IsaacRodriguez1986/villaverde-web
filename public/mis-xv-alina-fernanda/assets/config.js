@@ -11,6 +11,6 @@ window.ALINA_EVENT = Object.freeze({
   }),
   // Pendiente del número que recibirá las confirmaciones (52 + 10 dígitos).
   rsvpPhone: null,
-  // La familia entregará la canción después. Ejemplo de src: assets/cancion.mp3.
-  music: Object.freeze({ src: null, title: null }),
+  // Archivo de audio entregado por el usuario para esta invitación.
+  music: Object.freeze({ src: 'assets/cancion.mp3', title: 'If Only · Dove Cameron' }),
 });

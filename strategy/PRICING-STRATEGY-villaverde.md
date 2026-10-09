@@ -2,8 +2,9 @@
 
 ## Escalera vigente
 - Premium: desde $420 por persona para 150 o más invitados.
-- Diamante: $530 por persona desde 150 invitados.
-- Esmeralda: $680 por persona desde 150 invitados.
+- Diamante: $530 por persona desde 170 invitados.
+- Esmeralda: $680 por persona desde 200 invitados.
+- Mínimo de la casa: 150 invitados. Refresco ilimitado de solo 2 sabores.
 
 ## Papel de cada paquete
 - Premium: entrada con control de presupuesto.

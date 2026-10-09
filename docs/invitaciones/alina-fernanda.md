@@ -15,6 +15,9 @@ flores en acuarela, marco fino y nombre caligráfico. La variante juvenil no fue
 - Joana Sánchez, presentada como «Con el cariño de», sin añadir otro progenitor.
 - Padrinos: Madelin Sánchez y David Rendón.
 - Vestimenta: elegante sport. Azul cielo reservado exclusivamente para la quinceañera.
+- Música: «If Only», de Dove Cameron. MP3 entregado por el usuario el 9 de octubre
+  de 2026 y copiado íntegro a `assets/cancion.mp3` (3:42). Empieza al abrir la
+  invitación y conserva los controles de pausa y reproducción.
 
 ## Funciones
 
@@ -75,14 +78,12 @@ de movimiento reducido que los textos.
 
 ## Datos pendientes
 
-1. Canción: el usuario indicó que la dará después. No se copió música de otra festejada.
-   Guardar el archivo autorizado en `assets/cancion.mp3` y completar `music.src`
-   y `music.title` en `assets/config.js`.
-2. WhatsApp receptor: completar `rsvpPhone` en `assets/config.js` con `52` + 10 dígitos,
+1. WhatsApp receptor: completar `rsvpPhone` en `assets/config.js` con `52` + 10 dígitos,
    una vez confirmado. No reutilizar teléfonos de otras invitaciones.
-3. Trivia solicitada: requiere respuestas de Alina y persistencia compartida para
-   que todos vean el mismo ranking. No presentar un ranking en localStorage como
-   clasificación compartida. Aún no hay motor de trivia ni base de datos para ella.
+2. Trivia solicitada: recibidas ocho respuestas de Alina; faltan las preguntas 6 y 10.
+   Requiere persistencia compartida para que todos vean el mismo ranking. No presentar
+   un ranking en localStorage como clasificación compartida. Aún no hay motor de
+   trivia ni base de datos para ella.
 
 ## Preguntas propuestas para la trivia
 
@@ -100,6 +101,24 @@ de movimiento reducido que los textos.
 Propuesta: cuatro opciones y una correcta por pregunta, 100 puntos por acierto;
 nombre/apodo, puntos y posición en el marcador, con empates compartiendo lugar.
 Las opciones incorrectas se prepararán al recibir las respuestas correctas.
+
+### Respuestas confirmadas el 9 de octubre de 2026
+
+| Número | Tema | Respuesta correcta |
+| --- | --- | --- |
+| 1 | Color favorito | Rosa |
+| 2 | Comida favorita | Chilaquiles |
+| 3 | Postre favorito | Uvas |
+| 4 | Cantante o grupo favorito | Charles Ans |
+| 5 | Canción favorita | Visita (Enjambre) |
+| 6 | Película o serie favorita | Pendiente |
+| 7 | Actividad en el tiempo libre | Ver videos |
+| 8 | Animal favorito | Cerditos |
+| 9 | País que le gustaría conocer | Suiza |
+| 10 | Salida perfecta con amigos | Pendiente |
+
+Las respuestas 6 y 10 llegaron vacías. Conservarlas como pendientes hasta que
+el usuario las confirme; no deducirlas de las otras respuestas.
 
 ## Revisión local
 
