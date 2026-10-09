@@ -53,8 +53,8 @@ VV.PAQUETES = [
     id: 'diamante', name: 'Diamante', accent: 'var(--vv-gold)',
     tag: 'El favorito para XV Años', tone: 'gold', popular: true,
     horas: '7 horas totales', horasDet: '7h evento + 30 min recepción + 30 min desalojo',
-    priceMain: 530, priceFrom: null, minPax: 170,
-    priceNote: 'Desde 170 invitados', priceNote2: null,
+    priceMain: 530, priceFrom: null, minPax: 150,
+    priceNote: 'Desde 150 invitados', priceNote2: null,
     cortesias: 2,
     incluye: [
       'Pantalla gigante LED', 'Grupo versátil en vivo (5 int.)',
@@ -67,8 +67,8 @@ VV.PAQUETES = [
     id: 'esmeralda', name: 'Esmeralda', accent: 'var(--vv-emerald)',
     tag: 'La joya de la corona', tone: 'emerald',
     horas: '8 horas totales', horasDet: '8h evento + 30 min recepción + 30 min desalojo',
-    priceMain: 680, priceFrom: null, minPax: 170,
-    priceNote: 'Desde 170 invitados', priceNote2: null,
+    priceMain: 680, priceFrom: null, minPax: 200,
+    priceNote: 'Desde 200 invitados', priceNote2: null,
     cortesias: 'Todas',
     incluye: [
       'Show de robot', 'Grupo versátil 9 integrantes',
@@ -176,7 +176,7 @@ VV.INVITACIONES_MUESTRA = [
 VV.COMPARA = [
   { t: 'Duración del evento',          premium: '6 h',  diamante: '7 h',  esmeralda: '8 h' },
   { t: 'Precio por persona (desde)',   premium: '$420', diamante: '$530', esmeralda: '$680' },
-  { t: 'Invitados (mínimo)',           premium: '150',  diamante: '170',  esmeralda: '170' },
+  { t: 'Invitados (mínimo)',           premium: '150',  diamante: '150',  esmeralda: '200' },
   { t: 'Cortesías incluidas',          premium: '1',    diamante: '2',    esmeralda: 'Todas' },
   { t: 'Cena de gala de 3 tiempos',    premium: true,   diamante: true,   esmeralda: true },
   { t: 'DJ + Maestro de Ceremonias',   premium: true,   diamante: true,   esmeralda: true },
