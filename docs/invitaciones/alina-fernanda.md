@@ -47,6 +47,15 @@ flores en acuarela, marco fino y nombre caligráfico. La variante juvenil no fue
   Son personalización visual, no boletos autenticados ni control de acceso.
 - Formulario de RSVP que abrirá WhatsApp; no guarda confirmaciones en base de datos
   ni envía mensajes automáticamente. Se habilita sólo con un destinatario confirmado.
+- Trivia activa con las ocho respuestas confirmadas, cuatro opciones por pregunta
+  y 100 puntos por acierto. El invitado elige un nombre o apodo que aparecerá en el
+  marcador compartido. Las respuestas se califican en `/api/alina-trivia`; el navegador
+  no recibe la clave de respuestas ni decide los puntos.
+  Supabase guarda cada intento una sola vez en `alina_trivia_results`, con acceso
+  reservado al servidor. El marcador muestra los primeros 20 participantes, el total
+  de invitados y empates que comparten lugar. Los reintentos de conexión reutilizan
+  el identificador del intento; sessionStorage conserva sólo sus respuestas para
+  recuperarlo desde el servidor, nunca un ranking local.
 - Vista previa social propia, URL limpia y cabeceras `noindex` y `no-referrer`.
 
 ## Dirección visual y recursos
@@ -80,10 +89,9 @@ de movimiento reducido que los textos.
 
 1. WhatsApp receptor: completar `rsvpPhone` en `assets/config.js` con `52` + 10 dígitos,
    una vez confirmado. No reutilizar teléfonos de otras invitaciones.
-2. Trivia solicitada: recibidas ocho respuestas de Alina; faltan las preguntas 6 y 10.
-   Requiere persistencia compartida para que todos vean el mismo ranking. No presentar
-   un ranking en localStorage como clasificación compartida. Aún no hay motor de
-   trivia ni base de datos para ella.
+2. Trivia: faltan las respuestas de las preguntas 6 y 10. Se omiten del juego actual,
+   que tiene ocho preguntas y un máximo de 800 puntos. Al completarlas, versionar
+   el cuestionario y su marcador para no mezclar resultados de ocho y diez preguntas.
 
 ## Preguntas propuestas para la trivia
 
@@ -98,9 +106,9 @@ de movimiento reducido que los textos.
 9. ¿Qué país te gustaría conocer?
 10. ¿Cuál sería tu salida perfecta con amigos?
 
-Propuesta: cuatro opciones y una correcta por pregunta, 100 puntos por acierto;
+El juego usa cuatro opciones y una correcta por pregunta, 100 puntos por acierto;
 nombre/apodo, puntos y posición en el marcador, con empates compartiendo lugar.
-Las opciones incorrectas se prepararán al recibir las respuestas correctas.
+Las opciones incorrectas son distractores del juego, no preferencias atribuidas a Alina.
 
 ### Respuestas confirmadas el 9 de octubre de 2026
 

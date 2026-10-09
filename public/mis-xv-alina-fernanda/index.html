@@ -24,8 +24,10 @@
   <link rel="preload" href="assets/fonts/great-vibes.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/invitation.css">
+  <link rel="stylesheet" href="assets/trivia.css">
   <script src="assets/config.js" defer></script>
   <script src="assets/invitation.js" defer></script>
+  <script src="assets/trivia.js" defer></script>
 </head>
 <body>
   <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -273,8 +275,54 @@
       <section id="trivia" class="section trivia-section reveal" aria-labelledby="trivia-title">
         <p class="eyebrow">Un juego entre nosotros</p>
         <h2 id="trivia-title">¿Qué tanto conoces a Alina?</h2>
-        <p class="section-intro">Pronto podrás poner a prueba<br>qué tanto me conoces.</p>
-        <p class="trivia-note">10 preguntas · una sorpresa por descubrir</p>
+        <p class="section-intro">Mis gustos, mis canciones, mis pequeños favoritos.<br>¿Cuántos conoces?</p>
+        <div class="trivia-paper">
+          <img class="trivia-flower" src="assets/flores-esquina.webp" alt="" width="1536" height="1536" loading="lazy" aria-hidden="true">
+          <div class="trivia-card-header" aria-hidden="true"><span>Entre amigos</span><svg><use href="#sprig"/></svg></div>
+          <p class="trivia-rules">8 preguntas <span aria-hidden="true">·</span> 100 puntos por acierto</p>
+          <div id="trivia-game">
+            <form id="trivia-start-form" class="trivia-start-form">
+              <label for="trivia-name">¿Cómo te llamas?</label>
+              <input id="trivia-name" name="name" type="text" autocomplete="nickname" minlength="2" maxlength="32" placeholder="Tu nombre o apodo" aria-describedby="trivia-name-note" required>
+              <p id="trivia-name-note" class="trivia-small">Tu nombre o apodo aparecerá en el marcador.</p>
+              <button id="trivia-start" class="button button-primary" type="submit" disabled>Comenzar la trivia <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></button>
+            </form>
+            <form id="trivia-question-form" class="trivia-question-form" hidden>
+              <div class="trivia-progress-label"><span id="trivia-progress-label">Pregunta 1 de 8</span><span id="trivia-player"></span></div>
+              <progress id="trivia-progress" max="8" value="1" aria-label="Progreso de la trivia"></progress>
+              <fieldset class="trivia-question-fieldset">
+                <legend id="trivia-question-title" tabindex="-1"></legend>
+                <div id="trivia-options" class="trivia-options"></div>
+              </fieldset>
+              <button id="trivia-next" class="button button-primary" type="submit" disabled>Siguiente pregunta <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></button>
+            </form>
+            <div id="trivia-result" class="trivia-result" hidden aria-labelledby="trivia-result-title">
+              <p class="trivia-result-eyebrow">Un recuerdo más entre nosotros</p>
+              <h3 id="trivia-result-title" tabindex="-1">¡Gracias por jugar!</h3>
+              <p id="trivia-result-name" class="trivia-result-name"></p>
+              <p class="trivia-score"><span id="trivia-result-score">0</span><span>puntos</span></p>
+              <p id="trivia-result-detail" class="trivia-result-detail"></p>
+              <p id="trivia-result-rank" class="trivia-result-rank"></p>
+              <p class="trivia-small">Tu resultado ya está en el marcador compartido.</p>
+            </div>
+          </div>
+          <p id="trivia-status" class="trivia-status" role="status" aria-live="polite">La trivia estará lista al llegar a esta sección.</p>
+          <button id="trivia-retry" class="trivia-retry" type="button" hidden>Intentar de nuevo</button>
+          <noscript><p class="trivia-small">Activa JavaScript para jugar y consultar el marcador.</p></noscript>
+        </div>
+        <div class="trivia-leaderboard" aria-labelledby="trivia-leaderboard-title">
+          <div class="trivia-board-heading"><h3 id="trivia-leaderboard-title">El círculo de Alina</h3><svg aria-hidden="true"><use href="#sprig"/></svg></div>
+          <p class="trivia-board-intro">Así vamos entre todos los invitados.</p>
+          <p id="trivia-board-status" class="trivia-small" role="status">Los empates comparten lugar.</p>
+          <div id="trivia-board-table-wrap" class="trivia-board-table-wrap" hidden>
+            <table class="trivia-board-table">
+              <caption class="trivia-sr-only">Marcador compartido de la trivia de Alina. Los empates comparten lugar.</caption>
+              <thead><tr><th scope="col">Lugar</th><th scope="col">Nombre</th><th scope="col">Puntos</th></tr></thead>
+              <tbody id="trivia-board-rows"></tbody>
+            </table>
+          </div>
+          <div class="trivia-board-footer"><p id="trivia-total-players" class="trivia-small"></p><button id="trivia-refresh" class="trivia-retry" type="button">Actualizar marcador</button></div>
+        </div>
       </section>
 
       <section class="closing section reveal" aria-labelledby="closing-title">

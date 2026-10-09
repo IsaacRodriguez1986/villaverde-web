@@ -1,5 +1,6 @@
 /*
- * Acceptance against the real Next server; all external/API traffic is blocked.
+ * Acceptance against the real Next server; external and real API traffic is blocked.
+ * The trivia's read-only GET uses a synthetic board; all API writes remain blocked.
  * Start the server separately, then run:
  * NODE_PATH=../bot-villaverde/node_modules node --test scripts/alina-invitation.browser.test.cjs
  * Optional: ALINA_BASE_URL (default http://127.0.0.1:3028), ALINA_SCREENSHOT_DIR.
@@ -13,6 +14,16 @@ const { chromium } = require('playwright');
 const base = new URL(process.env.ALINA_BASE_URL || 'http://127.0.0.1:3028');
 const slug = '/mis-xv-alina-fernanda';
 const invitationURL = new URL(slug, base).href;
+const triviaQuestions = [
+  ['1', '¿Cuál es el color favorito de Alina?', [['azul', 'Azul'], ['rosa', 'Rosa'], ['verde', 'Verde'], ['lila', 'Lila']]],
+  ['2', '¿Cuál es su comida favorita?', [['pizza', 'Pizza'], ['sushi', 'Sushi'], ['chilaquiles', 'Chilaquiles'], ['tacos', 'Tacos']]],
+  ['3', '¿Cuál es su postre favorito?', [['uvas', 'Uvas'], ['helado', 'Helado'], ['pastel', 'Pastel de chocolate'], ['fresas', 'Fresas']]],
+  ['4', '¿Quién es su cantante o grupo favorito?', [['billie-eilish', 'Billie Eilish'], ['bad-bunny', 'Bad Bunny'], ['taylor-swift', 'Taylor Swift'], ['charles-ans', 'Charles Ans']]],
+  ['5', '¿Cuál es su canción favorita?', [['enchanted', 'Enchanted (Taylor Swift)'], ['visita', 'Visita (Enjambre)'], ['perfect', 'Perfect (Ed Sheeran)'], ['rosa-pastel', 'Rosa pastel (Belanova)']]],
+  ['7', '¿Qué le gusta hacer en su tiempo libre?', [['leer', 'Leer'], ['bailar', 'Bailar'], ['videos', 'Ver videos'], ['dibujar', 'Dibujar']]],
+  ['8', '¿Cuál es su animal favorito?', [['cerditos', 'Cerditos'], ['gatitos', 'Gatitos'], ['perritos', 'Perritos'], ['conejos', 'Conejos']]],
+  ['9', '¿Qué país le gustaría conocer?', [['japon', 'Japón'], ['italia', 'Italia'], ['canada', 'Canadá'], ['suiza', 'Suiza']]],
+].map(([id, text, options]) => ({ id, text, options: options.map(([id, text]) => ({ id, text })) }));
 let browser;
 
 before(async () => {
@@ -36,6 +47,13 @@ async function fixture(t, {
   const blocked = [];
   await context.route('**/*', async route => {
     const url = new URL(route.request().url());
+    if (url.origin === base.origin && url.pathname === '/api/alina-trivia' && route.request().method() === 'GET') {
+      await route.fulfill({ status: 200, json: {
+        version: 'alina-8-v1', questions: triviaQuestions, pointsPerCorrect: 100,
+        leaderboard: [], totalPlayers: 0,
+      } });
+      return;
+    }
     if (url.origin !== base.origin || /^\/api(?:\/|$)/.test(url.pathname)) {
       blocked.push(url.href);
       await route.abort('blockedbyclient');
