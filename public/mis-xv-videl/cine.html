@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7e4e9">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+  <meta name="referrer" content="no-referrer">
+  <title>Videl · Mis quince años · Una invitación de película</title>
+  <meta name="description" content="Una invitación de película para los XV años de Videl, el 21 de noviembre de 2026 en Salón Villa Verde.">
+  <link rel="stylesheet" href="/mis-xv-videl/assets/cinema.css">
+  <link rel="stylesheet" href="/mis-xv-videl/assets/music.css">
+  <script src="/mis-xv-videl/assets/cinema.js" defer></script>
+  <script src="/mis-xv-videl/assets/music.js" defer></script>
+</head>
+<body>
+  <div class="cinema-gate" id="cinema-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-hint" hidden>
+    <div class="gate-film" aria-hidden="true">
+      <img src="/mis-xv-videl/assets/sobre-cerrado.webp" class="gate-poster" width="752" height="1344" alt="" fetchpriority="high">
+      <video id="intro-video" data-src="/mis-xv-videl/assets/apertura-sobre.mp4" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+    </div>
+    <div class="gate-envelope-area"><button class="gate-envelope-hit" id="envelope-open" type="button" aria-label="Abrir sobre" aria-describedby="gate-hint" data-music-start></button></div>
+    <div class="gate-heading"><p class="eyebrow">Una invitación para ti</p><h1 class="script" id="gate-title">Videl</h1><p class="gate-sub">Mis quince años</p></div>
+    <div class="gate-controls"><p class="gate-date">21 · NOVIEMBRE · 2026</p><button class="pill primary" id="open-invitation" type="button" data-music-start>Abrir invitación <span aria-hidden="true">↗</span></button><p class="gate-hint" id="gate-hint">Toca el sobre. Comienza una historia.</p></div>
+    <button class="music-toggle gate-music" type="button" data-music-toggle aria-label="Reproducir música" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 8l11-2" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="6" cy="18" rx="3" ry="2" fill="currentColor"/><ellipse cx="17" cy="16" rx="3" ry="2" fill="currentColor"/></svg></button>
+    <p class="intro-status" id="intro-status" role="status" hidden></p>
+    <button class="pill intro-skip" id="skip-intro" type="button" data-music-start hidden>Saltar intro <span aria-hidden="true">→</span></button>
+  </div>
+
+  <main class="cinema-app" id="cinema-app" aria-label="Invitación de Videl en capítulos">
+    <header class="cinema-toolbar">
+      <a class="wordmark" href="/mis-xv-videl" aria-label="Videl, versión original">VIDEL <span>XV</span></a>
+      <p class="toolbar-date">21.11.26</p>
+      <button class="music-toggle toolbar-music" type="button" data-music-toggle aria-label="Reproducir música" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 8l11-2" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="6" cy="18" rx="3" ry="2" fill="currentColor"/><ellipse cx="17" cy="16" rx="3" ry="2" fill="currentColor"/></svg></button>
+      <div class="menu-wrap"><button class="icon-button" id="options-toggle" type="button" aria-expanded="false" aria-controls="options-menu" aria-label="Opciones de la invitación"><span aria-hidden="true">···</span></button>
+        <div class="options-menu" id="options-menu" hidden>
+          <button id="motion-toggle" type="button" aria-pressed="false">Ver sin animación</button>
+          <a href="https://www.youtube.com/watch?v=eFWUnHJWwCg" target="_blank" rel="noopener noreferrer">Te Regalo · Carla Morrison ↗</a>
+          <a href="/mis-xv-videl">Versión original ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <noscript><p class="no-script">Esta es una prueba de la invitación en capítulos. Activa JavaScript para avanzar con un toque; aquí puedes leer todos los datos.</p><audio class="music-noscript" controls preload="none" src="/mis-xv-videl/assets/te-regalo-carla-morrison.mp3" aria-label="Te Regalo, Carla Morrison"></audio></noscript>
+    <div class="cinema-stage" id="cinema-stage">
+      <section class="scene video-scene" id="chapter-01" data-title="Videl" data-stem="01-portada" aria-labelledby="title-01">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/01-portada.jpg" width="720" height="1280" alt="Retrato de Videl con fondo blanco y marco rosa y plata" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/01-portada.mp4" poster="/mis-xv-videl/assets/cinema/01-portada.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Con ilusión, te invito a celebrar</p><h2 class="script" id="title-01" tabindex="-1">Videl</h2><p class="scene-subtitle">Mis quince años</p><p>21 de noviembre de 2026<br>Salón Villa Verde · 6:30 p. m.</p></div>
+      </section>
+      <section class="scene video-scene" id="chapter-02" data-title="Mi historia" data-stem="02-historia" aria-labelledby="title-02">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/02-historia.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/02-historia.mp4" poster="/mis-xv-videl/assets/cinema/02-historia.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Una nueva etapa</p><h2 class="script" id="title-02" tabindex="-1">Mi historia</h2><p>Con la bendición de Dios Padre y el amor que mi familia me ha dado, me siento feliz de llegar a este momento de mi vida.</p><p>El día en que dejaré atrás mi infancia y comenzará un nuevo viaje. Porque son parte de mi vida, es mi deseo que compartan conmigo la alegría de mis quince años.</p></div>
+      </section>
+      <section class="scene video-scene" id="chapter-03" data-title="Mis padres" data-stem="03-padres" aria-labelledby="title-03">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/03-padres.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/03-padres.mp4" poster="/mis-xv-videl/assets/cinema/03-padres.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Con el amor de mis padres</p><h2 class="script" id="title-03" tabindex="-1">Mi familia</h2><p class="parents-names">Claudia Antunez Zamacona</p><p class="ampersand">y</p><p class="parents-names">Luis Enrique Rocha Romero</p></div>
+      </section>
+      <section class="scene video-scene" id="chapter-04" data-title="La invitación" data-stem="04-invitacion" aria-labelledby="title-04">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/04-invitacion.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/04-invitacion.mp4" poster="/mis-xv-videl/assets/cinema/04-invitacion.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Están cordialmente invitados</p><h2 class="script" id="title-04" tabindex="-1">Mis 15 años</h2><p>Me encantaría compartir este momento con las personas que más quiero, por tal motivo te hago llegar mi invitación a esta celebración tan importante para mí.</p></div>
+      </section>
+      <section class="scene video-scene" id="chapter-05" data-title="La fecha" data-stem="05-fecha" aria-labelledby="title-05">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/05-fecha.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/05-fecha.mp4" poster="/mis-xv-videl/assets/cinema/05-fecha.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Con la bendición de Dios y mi familia</p><h2 class="script" id="title-05" tabindex="-1">La cita es…</h2><time datetime="2026-11-21T18:30:00-06:00"><span class="date-number">21</span>Sábado · Noviembre · 2026<br>6:30 p. m.</time><p class="small-note">Hora de Ciudad de México</p></div>
+        <div class="scene-action date-action"><dl class="mini-countdown" aria-label="Cuenta regresiva para el evento"><div><dt id="days">—</dt><dd>Días</dd></div><div><dt id="hours">—</dt><dd>Horas</dd></div><div><dt id="minutes">—</dt><dd>Min.</dd></div><div><dt id="seconds">—</dt><dd>Seg.</dd></div></dl><a class="pill translucent" href="/mis-xv-videl/assets/videl.ics" download="XV-Videl.ics">Guardar fecha <span aria-hidden="true">↗</span></a></div>
+      </section>
+      <section class="scene video-scene" id="chapter-06" data-title="Recepción" data-stem="06-recepcion" aria-labelledby="title-06">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/06-recepcion.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/06-recepcion.mp4" poster="/mis-xv-videl/assets/cinema/06-recepcion.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Una noche para recordar</p><h2 class="script" id="title-06" tabindex="-1">Recepción</h2><p class="scene-subtitle">Salón Villa Verde</p><p>Carretera México-Cuautla, Km 35.5<br>Col. Santa Cruz Amalinalco, C.P. 56609<br>Chalco, Estado de México</p></div>
+        <div class="scene-action"><a class="pill translucent" href="https://maps.app.goo.gl/WiNBbqdBas4L6RDt6" target="_blank" rel="noopener noreferrer">Cómo llegar <span aria-hidden="true">↗</span></a></div>
+      </section>
+      <section class="scene video-scene" id="chapter-07" data-title="Los detalles" data-stem="07-detalles" aria-labelledby="title-07">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/07-detalles.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/07-detalles.mp4" poster="/mis-xv-videl/assets/cinema/07-detalles.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Pequeños detalles, grandes recuerdos</p><h2 class="script" id="title-07" tabindex="-1">Para la noche</h2><p class="scene-subtitle">Lluvia de sobres</p><p>Tu presencia es el mejor regalo.</p><p class="scene-subtitle">Formal y elegante</p><p>Se reservan los colores rosa y plata para la quinceañera.</p></div>
+      </section>
+
+      <section class="scene interactive-scene registration-scene" id="chapter-08" data-title="Tu asistencia" aria-labelledby="title-08">
+        <div class="interactive-scroll"><p class="eyebrow">Quiero celebrar contigo</p><h2 class="script" id="title-08" tabindex="-1">¿Me acompañas?</h2><p class="interactive-intro">Prepara tu confirmación para<br><strong>Claudia Antunez</strong> · <a href="tel:+525548614656">55 4861 4656</a></p>
+          <form id="rsvp-form">
+            <label for="guest-name">Tu nombre</label><input id="guest-name" name="nombre" autocomplete="name" maxlength="90" required placeholder="Nombre y apellido">
+            <fieldset class="attendance-options"><legend>¿Nos acompañas?</legend><label><input type="radio" name="asistencia" value="si" checked> Sí, ahí estaré</label><label><input type="radio" name="asistencia" value="no"> No podré asistir</label></fieldset>
+            <div id="guest-count-wrap"><label for="guest-count">Número de personas, incluyéndote</label><input id="guest-count" name="personas" type="number" min="1" max="30" step="1" value="1" inputmode="numeric" required></div>
+            <button class="pill primary form-submit" type="submit">Preparar confirmación <span aria-hidden="true">→</span></button>
+            <p class="small-note prototype-note">Tu confirmación se completa al enviar el mensaje en WhatsApp.</p>
+          </form>
+          <noscript><style>#rsvp-form,#trivia-form{display:none}</style><a class="pill primary" href="https://wa.me/525548614656" target="_blank" rel="noopener noreferrer">Confirmar con Claudia en WhatsApp ↗</a></noscript>
+          <div class="confirmation-preview" id="confirmation-preview" hidden><p class="eyebrow">Tu mensaje está listo</p><p id="confirmation-message"></p><a class="pill primary" id="whatsapp-confirm" href="https://wa.me/525548614656" target="_blank" rel="noopener noreferrer">Continuar en WhatsApp <span aria-hidden="true">↗</span></a><p class="small-note">Se abrirá un borrador. Tú decides si lo envías.</p><button class="text-button" id="edit-confirmation" type="button">Editar mis datos</button></div>
+        </div>
+      </section>
+
+      <section class="scene interactive-scene trivia-scene" id="chapter-09" data-title="La trivia" aria-labelledby="title-09">
+        <div class="interactive-scroll"><p class="eyebrow">Un pequeño juego antes de la fiesta</p><h2 class="script" id="title-09" tabindex="-1">¿Conoces a Videl?</h2><p class="interactive-intro">10 preguntas sobre sus favoritos.<br>¿Cuánto sabes de ella?</p>
+          <div id="quiz-start">
+            <form id="quiz-start-form"><label for="quiz-name">Tu nombre o apodo</label><input id="quiz-name" name="nombre" autocomplete="nickname" maxlength="50" required placeholder="¿Cómo te llamas?"><p class="quiz-ranking-notice">Tu nombre aparecerá en la clasificación.<br>Sólo tu primer intento cuenta. En empate, queda primero quien terminó antes.</p><button class="pill primary form-submit" id="quiz-start-button" type="submit">Comenzar trivia <span aria-hidden="true">→</span></button></form>
+            <p class="small-note quiz-identity-note" id="quiz-identity-note" role="status" hidden></p><button class="pill leaderboard-open" id="quiz-start-save-retry" type="button" hidden>Reintentar guardar mi primer resultado ↻</button><button class="pill leaderboard-open" id="quiz-start-ranking" type="button">Ver top 20 <span aria-hidden="true">↗</span></button><button class="text-button" id="quiz-start-other-guest" type="button">Cambiar invitado</button>
+          </div>
+          <form id="trivia-form" hidden><p class="quiz-attempt-mode" id="quiz-attempt-mode">Intento oficial</p><p class="quiz-counter" id="quiz-counter">Pregunta 1 de 10</p><fieldset id="quiz-question"><legend id="quiz-prompt">¿Cuáles son sus colores favoritos?</legend><div id="quiz-answers"><label><input type="radio" name="trivia" value="0" required> Azul, morado y rojo</label><label><input type="radio" name="trivia" value="1"> Negro, blanco y verde</label><label><input type="radio" name="trivia" value="2"> Rosa, amarillo y naranja</label></div></fieldset><p class="quiz-feedback" id="quiz-feedback" role="status" hidden></p><button class="pill primary form-submit" id="quiz-submit" type="submit">Comprobar respuesta <span aria-hidden="true">→</span></button></form>
+          <div class="quiz-result" id="quiz-result" hidden><p class="quiz-result-label">Este intento</p><p class="score-script" id="quiz-score"></p><p id="quiz-summary"></p><div class="quiz-standing"><p id="quiz-position"></p><p id="quiz-participants" class="small-note"></p></div><p class="small-note quiz-save-status" id="quiz-save-status" role="status" aria-live="polite"></p><button class="pill" id="quiz-save-retry" type="button" hidden>Reintentar guardar <span aria-hidden="true">↻</span></button><button class="pill primary leaderboard-open" id="quiz-result-ranking" type="button">Ver top 20 <span aria-hidden="true">↗</span></button><button class="text-button" id="quiz-restart" type="button">Jugar de práctica ↻</button><button class="text-button" id="quiz-other-guest" type="button">Cambiar invitado</button></div>
+          <section class="leaderboard-panel" id="quiz-leaderboard" aria-labelledby="ranking-title" hidden><div class="ranking-heading"><h3 id="ranking-title">La clasificación</h3><span class="ranking-top-label">TOP 20</span></div><p class="ranking-total" id="ranking-total"></p><p class="small-note ranking-rule">Más puntos, mejor lugar. En empate, quien terminó antes.</p><div class="ranking-controls"><button class="pill" id="ranking-refresh" type="button">Actualizar ↻</button><button class="pill" id="ranking-close" type="button">Volver a la trivia ←</button></div><button class="text-button" id="ranking-other-guest" type="button">Cambiar invitado</button><p class="ranking-status" id="ranking-status" role="status" aria-live="polite" aria-atomic="true"></p><div class="leaderboard-table-wrap" id="ranking-table-wrap" hidden><table class="leaderboard-table"><caption class="sr-only">Los 20 mejores resultados oficiales de la trivia de Videl</caption><thead><tr><th scope="col">Lugar</th><th scope="col">Invitado</th><th scope="col">Puntos</th></tr></thead><tbody id="ranking-rows"></tbody></table></div><div class="ranking-me" id="ranking-me" hidden><p class="eyebrow">Tu resultado oficial</p><p class="ranking-me-name" id="ranking-me-name"></p><p class="ranking-me-position" id="ranking-me-position"></p><p class="small-note" id="ranking-me-score"></p></div><p class="small-note" id="ranking-no-result" hidden>Completa tu primer intento para aparecer en la clasificación.</p></section>
+          <noscript><style>#quiz-start{display:none}</style><p class="small-note">Activa JavaScript para jugar las 10 preguntas y ver la clasificación de invitados.</p></noscript>
+        </div>
+      </section>
+
+      <section class="scene video-scene" id="chapter-10" data-title="Con cariño" data-stem="08-despedida" aria-labelledby="title-10">
+        <img class="scene-still" src="/mis-xv-videl/assets/cinema/08-despedida.jpg" width="720" height="1280" alt="" loading="lazy">
+        <video aria-hidden="true" class="scene-video" data-src="/mis-xv-videl/assets/cinema/08-despedida.mp4" poster="/mis-xv-videl/assets/cinema/08-despedida.jpg" muted playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+        <div class="scene-transcript"><p class="eyebrow">Gracias por acompañarnos</p><h2 class="script" id="title-10" tabindex="-1">Con cariño, Videl</h2><p>21 de noviembre de 2026<br>Mis quince años</p><p>Confirmaciones con Claudia Antunez<br>55 4861 4656</p></div>
+      </section>
+      <button class="screen-tap" id="screen-next" type="button" aria-label="Ir al siguiente capítulo" hidden></button>
+      <div class="playback-controls" id="playback-controls" hidden><button class="playback-button" id="pause-video" type="button" aria-label="Pausar video"><span aria-hidden="true">Ⅱ</span></button><button class="playback-button" id="replay-video" type="button" aria-label="Repetir video"><span aria-hidden="true">↻</span></button></div>
+      <p class="playback-status" id="playback-status" role="status" hidden></p>
+    </div>
+    <nav class="cinema-navigation" aria-label="Navegación de los capítulos" hidden>
+      <div class="chapter-meta"><p class="chapter-label" id="chapter-label">Videl</p><ol class="chapter-progress" id="chapter-progress" aria-label="Progreso de la invitación"></ol><span class="chapter-counter" id="chapter-counter">01 / 10</span></div>
+      <div class="chapter-buttons"><button class="pill back-button" id="previous-chapter" type="button"><span aria-hidden="true">←</span> Anterior</button><button class="pill primary next-button" id="next-chapter" type="button">Siguiente <span aria-hidden="true">→</span></button></div>
+      <p class="tap-hint" id="tap-hint">Toca la invitación para continuar</p>
+    </nav>
+    <p class="chapter-announcement sr-only" id="chapter-announcement" role="status"></p>
+  </main>
+  <audio id="invitation-music" data-src="/mis-xv-videl/assets/te-regalo-carla-morrison.mp3" loop preload="none"></audio>
+  <p class="music-status" id="music-status" role="status" hidden></p>
+</body>
+</html>
