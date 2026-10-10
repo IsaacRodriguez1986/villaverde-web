@@ -58,6 +58,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // El formato vertical vuelve a ser la invitación activa. Conservamos
+      // el enlace ya compartido; un 307 evita fijar la prueba de cine en caché.
+      { source: "/mis-xv-videl/cine.html", destination: "/mis-xv-videl", permanent: false },
+      { source: "/mis-xv-videl/cine", destination: "/mis-xv-videl", permanent: false },
       // 3-sep-2026: la invitacion paso de /boda-luis-isis a /boda-angel-isis
       // (el novio es Angel). Los enlaces personalizados por familia YA estaban
       // repartidos, asi que el slug viejo tiene que seguir resolviendo.
