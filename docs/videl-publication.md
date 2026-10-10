@@ -2,7 +2,7 @@
 
 Guardado el 9 de octubre de 2026, por petición del usuario.
 
-- Invitación pública: https://www.salondefiestasvillaverde.com/mis-xv-videl/cine.html
+- Invitación pública: https://www.salondefiestasvillaverde.com/mis-xv-videl
 - Proyecto Vercel: `villaverde-web`.
 - Código publicado: `5b0f50b8706a045fa7c39d582416f2ffaffd057c`.
 - Base que ya estaba en producción: `706114b07b19a6c09c8c51f9576f8e0d9517e29d`.
@@ -33,3 +33,16 @@ Validación de la publicación: 17 pruebas Node, TypeScript sin errores, apertur
 del sobre, video y música en reproducción real, navegación por clic,
 confirmación con el teléfono correcto, top 20 y cabeceras de privacidad.
 Recibo y captura en `C:/claude/villaverde-crm/.context/audits/videl/`.
+
+## Restauración del diseño vertical
+
+El 9 de octubre de 2026, el usuario eligió regresar al diseño anterior completo
+con desplazamiento vertical. `index.html` vuelve a ser la invitación activa.
+Los enlaces `/mis-xv-videl/cine.html` y `/mis-xv-videl/cine` redirigen con 307 a
+`/mis-xv-videl`, conservando parámetros. El sobre animado, las mariposas, los
+títulos y la canción funcionan en esa página original.
+
+La prueba cinematográfica y su trivia permanecen en el historial y en el
+respaldo completo guardado. Los identificadores de despliegue listados arriba
+corresponden a aquella publicación; la restauración se registra por separado
+en `.context/audits/videl/vertical-restoration-receipt.json`.
