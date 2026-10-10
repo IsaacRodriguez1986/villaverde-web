@@ -8,6 +8,7 @@ const INVITACIONES = [
   "mis-xv-dayana",
   "ana-paula-1",
   "mis-xv-megan",
+  "mis-xv-videl",
   "nuestra-boda",
   "boda-angel-isis",
 ];

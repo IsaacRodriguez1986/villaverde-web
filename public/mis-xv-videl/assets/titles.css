@@ -1,0 +1,91 @@
+/* The complete word stays together, preserving the script font's ligatures. */
+.videl-title-ink {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: baseline;
+  overflow: visible;
+  transform-origin: 50% 65%;
+}
+
+.videl-title-active > .videl-title-ink {
+  animation:
+    videl-title-arrival var(--videl-title-entry, 1.75s) cubic-bezier(.18,.75,.25,1) var(--videl-title-delay, 0s) both,
+    videl-title-rose-light 3.35s ease-in-out var(--videl-title-delay, 0s) both;
+}
+
+#gate-title.videl-title-active { --videl-title-entry: 1.55s; }
+.hero-subtitle.videl-title-active { --videl-title-delay: .16s; }
+.rsvp-section .videl-title-ink { --videl-title-glow: #ffdeec; }
+
+.videl-title-ink::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  width: clamp(9px, .22em, 18px);
+  height: clamp(9px, .22em, 18px);
+  left: 74%;
+  top: 14%;
+  background: #fff4f8;
+  clip-path: polygon(50% 0, 60% 38%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 38%);
+  filter: drop-shadow(0 0 5px #eeb7d3);
+  opacity: 0;
+  transform: scale(.2) rotate(-20deg);
+}
+
+.videl-title-active > .videl-title-ink::after {
+  animation: videl-title-stardust 2.55s ease-in-out calc(var(--videl-title-delay, 0s) + .4s) both;
+}
+
+@keyframes videl-title-arrival {
+  0% { opacity: .06; transform: translateY(16px) scale(.94) rotate(-1deg); filter: blur(1.4px); }
+  52% { opacity: 1; filter: blur(0); }
+  80% { transform: translateY(-1px) scale(1.008) rotate(.15deg); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes videl-title-rose-light {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  35% { text-shadow: 0 0 7px var(--videl-title-glow, #e9a5c3), 0 0 19px #e9a5c340; }
+  65% { text-shadow: 0 0 3px var(--videl-title-glow, #e9a5c3), 0 0 9px #e9a5c320; }
+}
+
+@keyframes videl-title-stardust {
+  0%, 100% { opacity: 0; transform: scale(.2) rotate(-20deg); }
+  28% { opacity: .95; transform: scale(1.1) rotate(12deg); }
+  50% { opacity: .75; transform: scale(.8) rotate(28deg); }
+  72% { opacity: 0; transform: scale(.25) rotate(45deg); }
+}
+
+/* Pausing restores complete text instead of freezing its entrance half way. */
+html[data-videl-motion-paused="true"] .videl-title-ink {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+html[data-videl-motion-paused="true"] .videl-title-ink::after {
+  animation: none !important;
+  opacity: 0 !important;
+}
+html[data-videl-motion-paused="true"] .hero-scroll svg {
+  animation: none !important;
+  transform: none !important;
+}
+html[data-videl-motion-paused="true"] .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .videl-title-ink {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
+  .videl-title-ink::after { animation: none !important; opacity: 0 !important; }
+}

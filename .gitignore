@@ -9,3 +9,6 @@ next-env.d.ts
 # graphify (grafo de conocimiento regenerable)
 graphify-out/
 .env*
+
+# Durable local-only development trivia records; never commit participant data.
+.local/

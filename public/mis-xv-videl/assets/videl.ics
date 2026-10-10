@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Villaverde//XV de Videl//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:videl-xv-20261121@salondefiestasvillaverde.com
+DTSTAMP:20261009T120000Z
+DTSTART:20261122T003000Z
+SUMMARY:Mis quince años de Videl
+LOCATION:Salón Villa Verde\, Carretera México-Cuautla Km 35.5\, Chalco
+DESCRIPTION:Formal y elegante. Rosa y plata reservados para la
+ quinceañera.
+URL:https://www.salondefiestasvillaverde.com/mis-xv-videl
+END:VEVENT
+END:VCALENDAR
