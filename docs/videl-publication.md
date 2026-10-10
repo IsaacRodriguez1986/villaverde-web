@@ -63,3 +63,30 @@ Validación: 17 pruebas de API, prueba aislada de UI con 26 participantes,
 TypeScript, sintaxis y comprobación visual local y pública. Recibo y capturas
 en `.context/audits/videl/vertical-photo-trivia-receipt.json` y los archivos
 `vertical-foto-publicada.png` y `vertical-trivia-publicada.png`.
+
+## Flores y detalles de princesa
+
+El 9 de octubre de 2026, el usuario pidió más flores y detalles de princesa,
+con una referencia visual de TikTok, y solicitó GPT Image 2 para los diseños.
+La invitación vertical incorpora rosas y peonías rosas, hojas plateadas,
+perlas, coronas, filigranas y destellos suaves. El retrato tiene un marco
+exterior con flores; fecha, confirmación, foto, música y trivia siguen usando
+los datos y módulos existentes.
+
+El recurso `assets/princess-gpt-image-2.webp` procede del modelo verificado
+`gpt_image_2` (OpenAI mediante Higgsfield), 2048 × 2048, calidad alta, trabajo
+`1fd2c010-cdf2-4355-9630-2b994b11759a`. El original PNG tiene fondo blanco,
+sin alfa; `mix-blend-mode: multiply` lo integra sobre el papel rosa. La
+conversión a WebP reduce su tamaño a 410274 bytes. Las coronas y filigranas
+son SVG y la composición está en `assets/princess.css`.
+
+Las decoraciones no reciben clics y permanecen detrás del contenido. Los
+destellos respetan la pausa global, la apertura del sobre y la preferencia
+de movimiento reducido. Las pruebas móviles conservan el desplazamiento
+vertical, la reproducción del retrato y el acceso al Top 20 sin escribir
+participaciones de prueba en producción.
+
+El PNG original y el registro del modelo se conservan en
+`.context/audits/videl/princess-art/` del repositorio raíz. La publicación,
+sus comprobaciones y capturas se registran en
+`.context/audits/videl/princess-publication-receipt.json`.
