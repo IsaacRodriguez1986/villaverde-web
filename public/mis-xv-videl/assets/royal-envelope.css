@@ -1,0 +1,49 @@
+/* A soft princess glow accompanies the real opening film, never its text. */
+.gate-princess { background: #fff4f6; }
+.gate-princess .gate-cinema::before { background-image: url('/mis-xv-videl/assets/royal-envelope-princess-v2-poster.webp'); opacity: .6; filter: blur(28px); }
+.gate-princess .intro-poster,.gate-princess .intro-video { object-fit: contain; object-position: center; }
+.gate-princess .intro-video { transition: opacity 420ms ease-out; }
+.gate-princess .gate-envelope-area { aspect-ratio: 9/16; width: min(100%,calc(100svh * .5625)); }
+.gate-princess .gate-envelope-hit { left: 8%; top: 43%; width: 84%; height: 32%; }
+.gate-princess .gate-heading,.gate-princess .gate-controls { transition: opacity 350ms ease-out; }
+.gate-princess .gate-heading { text-shadow: 0 1px 9px #fff,0 0 22px #fff7f5; }
+.gate-princess .gate-sub { color: #80566b; font-size: 16px; letter-spacing: .17em; }
+.gate-princess .gate-controls .btn { border-color: #aa6c88; background: linear-gradient(140deg,#a15477,#85415f); border-radius: 28px; box-shadow: inset 0 1px 0 #fff6,0 7px 27px #87435e25; }
+.gate-princess .gate-hint { color: #785466; }
+.gate-princess .intro-skip { border-color: #d6b3c4; background: #fffaf7ec; box-shadow: 0 3px 20px #76435e14; font-size: 11px; }
+.gate-princess .intro-status { bottom: max(80px,10svh); padding: 9px 16px; left: 50%; right: auto; transform: translateX(-50%); width: max-content; max-width: calc(100% - 48px); border-radius: 24px; background: #fffaf4de; box-shadow: 0 3px 18px #87435e12; color: #79425d; }
+.gate-royal-light { position: absolute; inset: 0; z-index: 2; overflow: hidden; contain: layout style paint; pointer-events: none; isolation: isolate; }
+.gate-royal-halo { position: absolute; top: 50%; left: 50%; width: min(96vw,600px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle,transparent 30%,#fff8da20 44%,#fff8ec75 54%,#f0b9ce14 66%,transparent 74%); opacity: 0; transform: translate(-50%,-50%) scale(.8); }
+.gate-royal-light i,.gate-royal-light b { position: absolute; opacity: 0; pointer-events: none; }
+.gate-royal-light i { width: 12px; height: 12px; background: #fffef9; clip-path: polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); filter: drop-shadow(0 0 4px #fff4d5); }
+.gate-royal-light i:nth-of-type(1) { left: 14%; top: 24%; --envelope-delay: 0s; }
+.gate-royal-light i:nth-of-type(2) { right: 13%; top: 30%; --envelope-delay: .7s; }
+.gate-royal-light i:nth-of-type(3) { left: 9%; top: 58%; --envelope-delay: 1.2s; }
+.gate-royal-light i:nth-of-type(4) { right: 10%; top: 68%; --envelope-delay: .3s; }
+.gate-royal-light i:nth-of-type(5) { left: 22%; top: 77%; --envelope-delay: 1.7s; }
+.gate-royal-light i:nth-of-type(6) { right: 22%; top: 18%; --envelope-delay: 2s; }
+.gate-royal-light b { width: 5px; height: 5px; border-radius: 50%; background: radial-gradient(circle,#fffaf2 12%,#fff5eab3 35%,#fff4e700 75%); box-shadow: 0 0 10px 2px #fff4d559; }
+.gate-royal-light b:nth-of-type(1) { left: 18%; top: 85%; --envelope-delay: -.8s; --envelope-drift: 9px; }
+.gate-royal-light b:nth-of-type(2) { left: 9%; top: 55%; --envelope-delay: -2.2s; --envelope-drift: 5px; }
+.gate-royal-light b:nth-of-type(3) { right: 15%; top: 70%; --envelope-delay: -.3s; --envelope-drift: -10px; }
+.gate-royal-light b:nth-of-type(4) { right: 8%; top: 40%; --envelope-delay: -1.7s; --envelope-drift: -7px; }
+.gate-royal-light b:nth-of-type(5) { left: 22%; top: 35%; --envelope-delay: -2.9s; --envelope-drift: 12px; }
+.gate-royal-light b:nth-of-type(6) { right: 22%; top: 23%; --envelope-delay: -1.2s; --envelope-drift: -11px; }
+.gate-royal-light b:nth-of-type(7) { left: 12%; top: 16%; --envelope-delay: -3.1s; --envelope-drift: 7px; }
+.gate-royal-light b:nth-of-type(8) { right: 12%; top: 89%; --envelope-delay: -.5s; --envelope-drift: -8px; }
+.gate-princess.intro-running .gate-royal-halo { animation: royal-envelope-halo 5s ease-in-out both; }
+.gate-princess.intro-playing .gate-royal-light i { animation: royal-envelope-spark 2.8s ease-in-out var(--envelope-delay) infinite; }
+.gate-princess.intro-playing .gate-royal-light b { animation: royal-envelope-dust 4.5s ease-out var(--envelope-delay) infinite; }
+.gate-princess.is-opening { opacity: 0; visibility: visible; pointer-events: none; transition: opacity 650ms cubic-bezier(.25,.65,.3,1); }
+.gate-princess.is-opening .gate-royal-halo { animation: royal-envelope-release 650ms ease-out both; }
+.gate-princess:not(.intro-running) .gate-envelope-hit::after { content: ''; position: absolute; left: 50%; top: 59%; width: 34px; height: 34px; transform: translate(-50%,-50%); border-radius: 50%; box-shadow: 0 0 15px 4px #fff5dd80,0 0 38px 7px #fff0e52e; pointer-events: none; animation: royal-envelope-seal 3s ease-in-out infinite; }
+.gate-princess .gate-envelope-hit:focus-visible { outline: 2px solid #fff8f5; outline-offset: -8px; box-shadow: 0 0 0 3px #a8587970; }
+@supports(width:1cqw) { .gate-princess .gate-envelope-area { width: min(100cqw,calc(100cqh * .5625)); } }
+@keyframes royal-envelope-seal { 0%,100% { opacity: .28; } 50% { opacity: .75; } }
+@keyframes royal-envelope-halo { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.72); } 40% { opacity: .55; } 100% { opacity: .1; transform: translate(-50%,-55%) scale(1.3); } }
+@keyframes royal-envelope-spark { 0%,100% { opacity: 0; transform: translateY(8px) scale(.45) rotate(-10deg); } 40% { opacity: .75; transform: translateY(-4px) scale(1.05) rotate(9deg); } 75% { opacity: .16; } }
+@keyframes royal-envelope-dust { 0% { opacity: 0; transform: translate(0,12px) scale(.5); } 22% { opacity: .6; } 70% { opacity: .35; } 100% { opacity: 0; transform: translate(var(--envelope-drift),-80px) scale(.8); } }
+@keyframes royal-envelope-release { 0% { opacity: .1; transform: translate(-50%,-50%) scale(1); } 32% { opacity: .7; } 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.75); } }
+html[data-videl-motion-paused="true"] .gate-royal-light *,html[data-videl-motion-paused="true"] .gate-envelope-hit::after { animation-play-state: paused !important; }
+@media(max-height:570px) { .gate-princess .gate-sub { font-size: 13px; } .gate-princess .intro-status { bottom: 68px; font-size: 10px; } }
+@media(prefers-reduced-motion:reduce) { .gate-royal-light,.gate-envelope-hit::after { display: none !important; } .gate-princess .intro-video,.gate-princess.is-opening { transition: none !important; } }

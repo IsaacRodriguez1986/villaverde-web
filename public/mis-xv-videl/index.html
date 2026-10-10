@@ -75,6 +75,7 @@
   <link rel="stylesheet" href="/mis-xv-videl/assets/royal-design.css">
   <link rel="stylesheet" href="/mis-xv-videl/assets/royal-magic.css">
   <script src="/mis-xv-videl/assets/royal-magic.js" defer></script>
+  <link rel="stylesheet" href="/mis-xv-videl/assets/royal-envelope.css">
 </head>
 <body>
   <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -87,11 +88,12 @@
     <symbol id="princess-crown" viewBox="0 0 72 44"><path d="m12 15 7 21h34l7-21-15 10L36 9l-9 16-15-10Zm8 26h32M20 32h32"/><circle cx="11" cy="12" r="3"/><circle cx="36" cy="5" r="3"/><circle cx="61" cy="12" r="3"/></symbol>
     <symbol id="princess-corner" viewBox="0 0 120 120"><path d="M8 112V24C8 15 15 8 24 8h88M17 96V31c0-8 6-14 14-14h65M14 64c0-21 26-17 26-4 0 9-12 11-13 3m37-49c-21 0-17 26-4 26 9 0 11-12 3-13M18 18l27 27m-9-26c3 12 11 13 19 10-3-8-10-11-19-10ZM19 36c12 3 13 11 10 19-8-3-11-10-10-19ZM43 43c5-2 10 0 12 5-5 5-10 4-12-5Z"/></symbol>
   </defs></svg>
-  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-hint">
+  <div class="gate gate-princess" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-hint">
     <div class="gate-cinema" aria-hidden="true">
-      <img class="intro-poster" id="intro-poster" src="/mis-xv-videl/assets/sobre-cerrado.webp" alt="" width="752" height="1344" fetchpriority="high">
-      <video class="intro-video" id="intro-video" data-src="/mis-xv-videl/assets/apertura-sobre.mp4" preload="none" muted playsinline tabindex="-1" disablepictureinpicture></video>
+      <img class="intro-poster" id="intro-poster" src="/mis-xv-videl/assets/royal-envelope-princess-v2-poster.webp" alt="" width="1080" height="1912" fetchpriority="high">
+      <video class="intro-video" id="intro-video" data-src="/mis-xv-videl/assets/royal-envelope-princess-v2.mp4" preload="none" muted playsinline tabindex="-1" disablepictureinpicture></video>
     </div>
+    <div class="gate-royal-light" aria-hidden="true"><span class="gate-royal-halo"></span><i></i><i></i><i></i><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
     <div class="gate-envelope-area"><button class="gate-envelope-hit" id="envelope-open" type="button" aria-label="Abrir sobre" aria-describedby="gate-hint" data-music-start></button></div>
     <div class="gate-card">
       <div class="gate-heading">
@@ -340,13 +342,52 @@
     let opening = false;
     let introFinishing = false;
     let invitationRevealed = false;
-    let introLoadTimer = 0;
-    let introStallTimer = 0;
-    let introDeadlineTimer = 0;
+    const introWatchdogs = new Map();
     let introRevealTimer = 0;
+    let introPausedForVisibility = false;
+    let introDeferredFinish = null;
     const saveDataEnabled = () => Boolean(navigator.connection?.saveData);
+    function cancelIntroWatchdog(name) {
+      const watch = introWatchdogs.get(name);
+      if (!watch) return;
+      window.clearTimeout(watch.timer);
+      introWatchdogs.delete(name);
+    }
+    function runIntroWatchdog(name, watch) {
+      if (introWatchdogs.get(name) !== watch) return;
+      watch.timer = 0;
+      if (document.hidden) { watch.remaining = 1; return; }
+      introWatchdogs.delete(name);
+      watch.callback();
+    }
+    function scheduleIntroWatchdog(name, delay, callback) {
+      cancelIntroWatchdog(name);
+      const watch = { remaining: delay, startedAt: 0, timer: 0, callback };
+      introWatchdogs.set(name, watch);
+      if (!document.hidden) {
+        watch.startedAt = performance.now();
+        watch.timer = window.setTimeout(() => runIntroWatchdog(name, watch), watch.remaining);
+      }
+    }
+    function pauseIntroWatchdogs() {
+      const now = performance.now();
+      introWatchdogs.forEach(watch => {
+        if (!watch.timer) return;
+        watch.remaining = Math.max(1, watch.remaining - (now - watch.startedAt));
+        window.clearTimeout(watch.timer);
+        watch.timer = 0;
+      });
+    }
+    function resumeIntroWatchdogs() {
+      introWatchdogs.forEach((watch, name) => {
+        if (watch.timer) return;
+        watch.startedAt = performance.now();
+        watch.timer = window.setTimeout(() => runIntroWatchdog(name, watch), watch.remaining);
+      });
+    }
     function clearIntroTimers() {
-      [introLoadTimer, introStallTimer, introDeadlineTimer, introRevealTimer].forEach(timer => window.clearTimeout(timer));
+      Array.from(introWatchdogs.keys()).forEach(cancelIntroWatchdog);
+      window.clearTimeout(introRevealTimer);
     }
     function stopIntroVideo() {
       introVideo.pause();
@@ -357,6 +398,11 @@
     }
     function revealInvitation() {
       if (invitationRevealed) return;
+      if (document.hidden) {
+        introDeferredFinish = { immediate: true };
+        clearIntroTimers();
+        return;
+      }
       invitationRevealed = true;
       clearIntroTimers();
       stopIntroVideo();
@@ -370,6 +416,13 @@
     }
     function finishIntro({ immediate = false, fallback = false } = {}) {
       if (invitationRevealed || (introFinishing && !immediate)) return;
+      if (document.hidden) {
+        // An end or genuine media failure waits for visibility before releasing the gate.
+        introDeferredFinish = { immediate, fallback };
+        clearIntroTimers();
+        introVideo.pause();
+        return;
+      }
       introFinishing = true;
       clearIntroTimers();
       if (immediate || reducedMotion.matches || saveDataEnabled()) {
@@ -382,7 +435,17 @@
       }
       introStatus.hidden = true;
       gate.classList.add('is-opening');
-      introRevealTimer = window.setTimeout(revealInvitation, 300);
+      introRevealTimer = window.setTimeout(revealInvitation, 650);
+    }
+    function playIntroVideo() {
+      try {
+        Promise.resolve(introVideo.play()).catch(() => {
+          if (document.hidden && introPausedForVisibility) return;
+          finishIntro({ fallback: true });
+        });
+      } catch {
+        finishIntro({ fallback: true });
+      }
     }
     function openInvitation() {
       if (opening || gate.hidden) return;
@@ -396,20 +459,16 @@
       gate.classList.add('intro-running');
       skipButton.hidden = false;
       skipButton.focus({ preventScroll: true });
-      introStatus.textContent = 'Preparando un momento especial…';
+      introStatus.textContent = 'La magia está por comenzar…';
       introStatus.hidden = false;
       // El archivo se descarga sólo después de este gesto; el poster permanece hasta playing.
-      introDeadlineTimer = window.setTimeout(() => finishIntro({ immediate: true }), 9000);
-      introLoadTimer = window.setTimeout(() => finishIntro({ fallback: true }), 3000);
+      scheduleIntroWatchdog('deadline', 17000, () => finishIntro({ immediate: true }));
+      scheduleIntroWatchdog('load', 5000, () => finishIntro({ fallback: true }));
       introVideo.muted = true;
       introVideo.defaultMuted = true;
       introVideo.playsInline = true;
       introVideo.src = introVideo.dataset.src;
-      try {
-        Promise.resolve(introVideo.play()).catch(() => finishIntro({ fallback: true }));
-      } catch {
-        finishIntro({ fallback: true });
-      }
+      playIntroVideo();
     }
     function skipIntro() {
       opening = true;
@@ -417,17 +476,25 @@
     }
     introVideo.addEventListener('playing', () => {
       if (introFinishing || invitationRevealed) return;
-      window.clearTimeout(introLoadTimer);
-      window.clearTimeout(introStallTimer);
+      if (document.hidden) {
+        introPausedForVisibility = true;
+        introVideo.pause();
+        return;
+      }
+      cancelIntroWatchdog('load');
+      cancelIntroWatchdog('stall');
+      // A ten-second film gets time to finish; a stalled decoder still releases the gate.
+      const filmDuration = Number.isFinite(introVideo.duration) && introVideo.duration > 0 ? introVideo.duration : 10;
+      const filmRemaining = Math.max(0, filmDuration - introVideo.currentTime);
+      scheduleIntroWatchdog('playback', Math.min(filmRemaining + 2, 14) * 1000, () => finishIntro({ immediate: true }));
       gate.classList.add('intro-playing');
       introStatus.hidden = true;
     });
     function onIntroStall() {
-      if (!opening || introFinishing || !gate.classList.contains('intro-playing')) return;
-      window.clearTimeout(introStallTimer);
+      if (!opening || introFinishing || document.hidden || !gate.classList.contains('intro-playing')) return;
       introStatus.textContent = 'Enseguida abrimos la invitación…';
       introStatus.hidden = false;
-      introStallTimer = window.setTimeout(() => finishIntro({ fallback: true }), 3000);
+      scheduleIntroWatchdog('stall', 3500, () => finishIntro({ fallback: true }));
     }
     introVideo.addEventListener('waiting', onIntroStall);
     introVideo.addEventListener('stalled', onIntroStall);
@@ -441,6 +508,26 @@
     });
     navigator.connection?.addEventListener?.('change', () => {
       if (saveDataEnabled() && opening) finishIntro({ immediate: true });
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (!opening || invitationRevealed) return;
+      if (document.hidden) {
+        introPausedForVisibility = !introFinishing;
+        pauseIntroWatchdogs();
+        introVideo.pause();
+        return;
+      }
+      if (introDeferredFinish) {
+        const deferred = introDeferredFinish;
+        introDeferredFinish = null;
+        finishIntro({ ...deferred, immediate: true });
+        return;
+      }
+      resumeIntroWatchdogs();
+      if (introPausedForVisibility && !introFinishing) {
+        introPausedForVisibility = false;
+        playIntroVideo();
+      }
     });
     document.addEventListener('keydown', (event) => {
       if (gate.hidden) return;

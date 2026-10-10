@@ -144,3 +144,25 @@ Validación final: escritura real por trazos, destello sobre la punta, títulos
 accesibles, posición estable y sin desbordamiento a 320/390/620 px. Pasan
 apertura, pausa, pestaña oculta, movimiento reducido, ahorro de datos y
 carga fallida o lenta de SVG/fuente. Sin JavaScript el texto sigue completo.
+
+## Apertura de princesa
+
+La apertura conserva el gesto de tocar el sobre. El nuevo arte de GPT Image 2
+muestra papel rosa nacarado, filigrana de plata, un sello con corona, perlas,
+flores y un fondo de cuento. La película hace emerger una hoja con “Videl”
+entre luz suave, mariposas y polvo de estrellas. El póster se extrae del
+primer fotograma del MP4 final para mantener la misma imagen al reproducir.
+
+La película es vertical, silenciosa y se descarga después del clic. La música
+de la invitación continúa por separado. El gate oculta sus textos durante el
+video y se desvanece al terminar; sus plazos de carga y reproducción admiten
+el nuevo metraje y se suspenden al ocultar la pestaña. Se mantienen Saltar intro, Escape, salida ante errores,
+movimiento reducido y ahorro de datos. El resto de la invitación permanece
+con el diseño floral, foto, escritura de títulos, confirmación y trivia actual.
+
+El MP4 final de Kling 3.0 Pro conserva 1080×1912 px, 24 fps y 10.04 segundos,
+usa H264 sin audio y faststart, y pesa 4.09 MB. El póster WebP pesa 191.6 KB.
+La hoja conserva “Videl” y “Mis quince años” legibles en su salida y al final.
+
+Originales, parámetros y comprobaciones de esta apertura se conservan en
+`.context/audits/videl/princess-envelope-v2/` y su comprobante de publicación.
