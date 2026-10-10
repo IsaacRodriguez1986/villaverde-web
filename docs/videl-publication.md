@@ -121,3 +121,26 @@ de pausa y 20 filas entre 28 participantes simulados únicamente en lectura GET.
 Se publica un solo artefacto preparado y se promueve ese mismo despliegue.
 Originales PNG, registros del modelo y evidencia se conservan en
 `.context/audits/videl/royal-art/` y `royal-publication-receipt.json` en la raíz.
+
+## Caligrafía y títulos mágicos
+
+El usuario aprobó escritura mágica para “Videl”, entrada suave de los títulos
+y un brillo plateado con mariposas al terminar. Se conserva la tipografía
+cursiva y los textos reales. El nombre incorpora una capa SVG decorativa
+basada en Great Vibes, con máscaras que revelan los trazos de la pluma.
+Los títulos aparecen al entrar en pantalla, conservando sus ligaduras.
+El brillo y las mariposas se reproducen una vez por título.
+
+`titles.js/css` coordinan estos efectos con el sobre y la pausa general.
+Al pausar, ocultar la pestaña, activar movimiento reducido o ahorrar datos,
+las frases se presentan completas. El texto permanece disponible cuando
+el SVG o JavaScript no carga. La foto, la música, los paneles florales y
+la trivia mantienen el diseño y comportamiento publicados.
+
+Las comprobaciones y capturas se conservan en
+`.context/audits/videl/letter-motion/` y `letter-motion-publication-receipt.json`.
+
+Validación final: escritura real por trazos, destello sobre la punta, títulos
+accesibles, posición estable y sin desbordamiento a 320/390/620 px. Pasan
+apertura, pausa, pestaña oculta, movimiento reducido, ahorro de datos y
+carga fallida o lenta de SVG/fuente. Sin JavaScript el texto sigue completo.
