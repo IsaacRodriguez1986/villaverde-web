@@ -27,6 +27,10 @@
   <script src="/mis-xv-videl/assets/butterflies.js" defer></script>
   <link rel="stylesheet" href="/mis-xv-videl/assets/titles.css">
   <script src="/mis-xv-videl/assets/titles.js" defer></script>
+  <link rel="stylesheet" href="/mis-xv-videl/assets/portrait.css">
+  <script src="/mis-xv-videl/assets/portrait.js" defer></script>
+  <link rel="stylesheet" href="/mis-xv-videl/assets/trivia.css">
+  <script src="/mis-xv-videl/assets/trivia.js" defer></script>
   <style>
     @font-face{font-family:VidelScript;src:url('/mis-xv-videl/assets/fonts/great-vibes.woff2') format('woff2');font-display:swap}
     @font-face{font-family:VidelSerif;src:url('/mis-xv-videl/assets/fonts/cormorant-garamond.woff2') format('woff2');font-display:swap;font-weight:300 700}
@@ -108,9 +112,21 @@
         <div class="hero-rule" aria-hidden="true"></div>
         <p class="hero-date">21 · 11 · 2026</p>
         <p class="hero-bottom">SALÓN VILLA VERDE · 6:30 P. M.</p>
-        <a class="hero-scroll" href="#mi-historia">Descubre la invitación<svg aria-hidden="true"><use href="#arrow"/></svg></a>
+        <a class="hero-scroll" href="#retrato-videl">Descubre la invitación<svg aria-hidden="true"><use href="#arrow"/></svg></a>
       </div>
     </header>
+    <section class="content-section portrait-section" id="retrato-videl" aria-labelledby="portrait-title">
+      <div class="section-inner reveal">
+        <p class="eyebrow">Un recuerdo para siempre</p>
+        <h2 class="script section-title" id="portrait-title">Un momento para soñar</h2>
+        <figure class="portrait-film">
+          <img src="/mis-xv-videl/assets/cinema/01-portada.jpg" width="720" height="1280" alt="Videl en un marco rosa y plata con mariposas sobre fondo blanco" loading="lazy" decoding="async">
+          <video id="portrait-video" data-src="/mis-xv-videl/assets/cinema/01-portada.mp4" poster="/mis-xv-videl/assets/cinema/01-portada.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
+        </figure>
+        <p class="portrait-caption">Quiero compartir esta alegría contigo.</p>
+        <div class="portrait-controls"><button class="btn light" id="portrait-toggle" type="button" aria-pressed="false" hidden>Reproducir video</button></div>
+      </div>
+    </section>
     <section class="music-section" aria-labelledby="music-title">
       <div class="section-inner reveal">
         <p class="eyebrow">La canción de esta celebración</p>
@@ -192,6 +208,69 @@
         <p>Será una alegría compartir esta noche contigo.<br>Favor de confirmar tu asistencia con<br><strong id="rsvp-contact">Claudia Antunez</strong>.</p>
         <a class="btn" id="rsvp-link" href="https://wa.me/525548614656?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Videl%20el%2021%20de%20noviembre%20de%202026.%20Mi%20nombre%20es%3A%20" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#envelope"/></svg>Confirmar por WhatsApp</a>
         <a class="rsvp-phone" id="phone-link" href="tel:+525548614656">55 4861 4656</a>
+      </div>
+    </section>
+    <section class="content-section trivia-section" id="videl-trivia" aria-labelledby="trivia-title">
+      <div class="section-inner reveal">
+        <p class="eyebrow">¿Qué tanto me conoces?</p>
+        <h2 class="script section-title" id="trivia-title">La trivia de Videl</h2>
+        <p class="trivia-intro">Diez preguntas, un poquito de mí y un reto para mis invitados.</p>
+        <div class="trivia-card">
+          <div id="quiz-start">
+            <form id="quiz-start-form">
+              <label for="quiz-name">Tu nombre o apodo</label>
+              <input id="quiz-name" name="nombre" autocomplete="nickname" maxlength="50" required placeholder="¿Cómo te llamas?">
+              <p class="quiz-ranking-notice">Tu nombre aparecerá en la clasificación.<br>Sólo tu primer intento cuenta. En empate, queda primero quien terminó antes.</p>
+              <button class="pill primary form-submit" id="quiz-start-button" type="submit">Comenzar trivia <span aria-hidden="true">→</span></button>
+            </form>
+            <p class="small-note quiz-identity-note" id="quiz-identity-note" role="status" hidden></p>
+            <button class="pill leaderboard-open" id="quiz-start-save-retry" type="button" hidden>Reintentar guardar mi primer resultado ↻</button>
+            <button class="pill leaderboard-open" id="quiz-start-ranking" type="button">Ver top 20 <span aria-hidden="true">↗</span></button>
+            <button class="text-button" id="quiz-start-other-guest" type="button">Cambiar invitado</button>
+          </div>
+          <form id="trivia-form" hidden>
+            <p class="quiz-attempt-mode" id="quiz-attempt-mode">Intento oficial</p>
+            <p class="quiz-counter" id="quiz-counter">Pregunta 1 de 10</p>
+            <fieldset id="quiz-question">
+              <legend id="quiz-prompt">¿Cuáles son sus colores favoritos?</legend>
+              <div id="quiz-answers">
+                <label><input type="radio" name="trivia" value="0" required> Azul, morado y rojo</label>
+                <label><input type="radio" name="trivia" value="1"> Negro, blanco y verde</label>
+                <label><input type="radio" name="trivia" value="2"> Rosa, amarillo y naranja</label>
+              </div>
+            </fieldset>
+            <p class="quiz-feedback" id="quiz-feedback" role="status" hidden></p>
+            <button class="pill primary form-submit" id="quiz-submit" type="submit">Comprobar respuesta <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="quiz-result" id="quiz-result" hidden>
+            <p class="quiz-result-label">Este intento</p><p class="score-script" id="quiz-score"></p><p id="quiz-summary"></p>
+            <div class="quiz-standing"><p id="quiz-position"></p><p id="quiz-participants" class="small-note"></p></div>
+            <p class="small-note quiz-save-status" id="quiz-save-status" role="status" aria-live="polite"></p>
+            <button class="pill" id="quiz-save-retry" type="button" hidden>Reintentar guardar <span aria-hidden="true">↻</span></button>
+            <button class="pill primary leaderboard-open" id="quiz-result-ranking" type="button">Ver top 20 <span aria-hidden="true">↗</span></button>
+            <button class="text-button" id="quiz-restart" type="button">Jugar de práctica ↻</button>
+            <button class="text-button" id="quiz-other-guest" type="button">Cambiar invitado</button>
+          </div>
+          <section class="leaderboard-panel" id="quiz-leaderboard" aria-labelledby="ranking-title" hidden>
+            <div class="ranking-heading"><h3 id="ranking-title">La clasificación</h3><span class="ranking-top-label">TOP 20</span></div>
+            <p class="ranking-total" id="ranking-total"></p>
+            <p class="small-note ranking-rule">Más puntos, mejor lugar. En empate, quien terminó antes.</p>
+            <div class="ranking-controls"><button class="pill" id="ranking-refresh" type="button">Actualizar ↻</button><button class="pill" id="ranking-close" type="button">Volver a la trivia ←</button></div>
+            <button class="text-button" id="ranking-other-guest" type="button">Cambiar invitado</button>
+            <p class="ranking-status" id="ranking-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div class="leaderboard-table-wrap" id="ranking-table-wrap" hidden>
+              <table class="leaderboard-table">
+                <caption class="sr-only">Los 20 mejores resultados oficiales de la trivia de Videl</caption>
+                <thead><tr><th scope="col">Lugar</th><th scope="col">Invitado</th><th scope="col">Puntos</th></tr></thead><tbody id="ranking-rows"></tbody>
+              </table>
+            </div>
+            <div class="ranking-me" id="ranking-me" hidden>
+              <p class="eyebrow">Tu resultado oficial</p><p class="ranking-me-name" id="ranking-me-name"></p><p class="ranking-me-position" id="ranking-me-position"></p><p class="small-note" id="ranking-me-score"></p>
+            </div>
+            <p class="small-note" id="ranking-no-result" hidden>Completa tu primer intento para aparecer en la clasificación.</p>
+          </section>
+          <noscript><style>#quiz-start{display:none}</style><p class="small-note">Activa JavaScript para jugar las 10 preguntas y ver la clasificación de invitados.</p></noscript>
+        </div>
       </div>
     </section>
     <footer class="closing"><p class="script">Con cariño, Videl</p><p class="eyebrow">21 de noviembre de 2026 · Mis quince años</p></footer>

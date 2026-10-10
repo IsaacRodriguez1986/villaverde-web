@@ -46,3 +46,20 @@ La prueba cinematográfica y su trivia permanecen en el historial y en el
 respaldo completo guardado. Los identificadores de despliegue listados arriba
 corresponden a aquella publicación; la restauración se registra por separado
 en `.context/audits/videl/vertical-restoration-receipt.json`.
+
+## Foto y trivia en la versión vertical
+
+El mismo 9 de octubre, el usuario pidió conservar también la foto y la trivia.
+`index.html` incluye el retrato enmarcado después de la portada, con el video
+existente `01-portada.mp4`, imagen alternativa y control de pausa. Respeta el
+movimiento reducido, ahorro de datos, pestaña oculta y pausa global.
+
+La trivia aparece después de la confirmación, con diez preguntas, el API
+existente, primer intento oficial, Top 20 y puesto propio entre todos los
+participantes. No carga la navegación por capítulos ni bloquea el desplazamiento.
+Los módulos aislados son `portrait.js/css` y `trivia.js/css`.
+
+Validación: 17 pruebas de API, prueba aislada de UI con 26 participantes,
+TypeScript, sintaxis y comprobación visual local y pública. Recibo y capturas
+en `.context/audits/videl/vertical-photo-trivia-receipt.json` y los archivos
+`vertical-foto-publicada.png` y `vertical-trivia-publicada.png`.
