@@ -90,3 +90,34 @@ El PNG original y el registro del modelo se conservan en
 `.context/audits/videl/princess-art/` del repositorio raíz. La publicación,
 sus comprobaciones y capturas se registran en
 `.context/audits/videl/princess-publication-receipt.json`.
+
+## Rediseño completo de princesa
+
+El 9 de octubre de 2026, el usuario pidió acercar mucho más toda la composición
+a su ejemplo de TikTok. La portada ahora presenta un marco rococó de plata con
+tiara, perlas y grandes ramos. Cada sección tiene una guirnalda de rosas, papel
+marfil enmarcado y ramos inferiores. Regalos y vestimenta tienen sus propias
+secciones; esta última incorpora la ilustración de un vestido de gala marfil
+y un esmoquin negro. Las coronas de fecha y trivia se sustituyen por la nueva
+tiara de plata. Se mantiene el rosa y la plata solicitados para Videl.
+
+Los cuatro recursos nuevos proceden de `gpt_image_2` (OpenAI mediante Higgsfield),
+resolución 2k y calidad alta:
+
+- Portada: `royal-hero-gpt2.webp`, trabajo `97e4a94e-9682-42e0-a8ae-3181f7b10dc4`.
+- Guirnalda: `royal-garland-gpt2.webp`, trabajo `c3799d31-23fe-4405-bad9-08929ad8b882`.
+- Vestimenta: `royal-dress-code-gpt2.webp`, trabajo `2c2e9534-8960-4b95-be56-c39c0ffab648`.
+- Tiara: `royal-tiara-gpt2.webp`, trabajo `ec740130-34ac-4d4c-9dee-c03a462562a5`.
+
+La composición vive en `assets/royal-design.css`; `royal-magic.js/css` agrega
+destellos, luz de perlas y pétalos en los márgenes. Respeta la apertura del sobre,
+la pausa general, movimiento reducido, ahorro de datos y pestaña oculta. La foto
+conserva su video original completo en 9:16, con marco rectangular sin recorte.
+Fecha, música, confirmación y trivia mantienen sus datos y lógica existentes.
+
+Validación local: TypeScript, sintaxis, identificadores HTML únicos, ausencia de
+desbordamiento a 320/390/620/1280, apertura del sobre, video y música, controles
+de pausa y 20 filas entre 28 participantes simulados únicamente en lectura GET.
+Se publica un solo artefacto preparado y se promueve ese mismo despliegue.
+Originales PNG, registros del modelo y evidencia se conservan en
+`.context/audits/videl/royal-art/` y `royal-publication-receipt.json` en la raíz.

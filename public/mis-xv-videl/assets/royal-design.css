@@ -1,0 +1,113 @@
+/* Original princess artwork generated with GPT Image 2; live text stays accessible. */
+:root{--royal-ink:#653348;--royal-rose:#873752;--royal-silver:#c0aab9}
+body{background:radial-gradient(ellipse at 50% 5%,#f9e7ef,#e1bfce 75%);color:var(--royal-ink)}
+.page-shell{max-width:620px;container-type:inline-size;box-shadow:0 0 90px #77405a29;background:#fff9f8}
+.hero{display:block;width:100%;height:720px;height:max(720px,176.8421cqw);aspect-ratio:auto;min-height:0;background:#fcf4f4;overflow:hidden}
+.hero::before{z-index:-2;background:url('/mis-xv-videl/assets/royal-hero-gpt2.webp') center/100% 100% no-repeat;opacity:1}
+.hero::after{display:none}
+.hero-inner{position:absolute;left:18%;width:64%;top:29%;padding:0;z-index:2}
+.hero .eyebrow{font-size:8px;line-height:1.7;letter-spacing:.18em;margin:0;color:#744255}
+.hero h1{font-size:clamp(86px,24cqw,152px);line-height:1.12;padding:0 .04em .07em;margin:7px 0 0;color:#8d3c5e;text-shadow:0 2px 0 #fff,0 6px 20px #bc759230}
+.hero-subtitle{font-size:clamp(16px,3.6cqw,22px);line-height:1.45;letter-spacing:.13em}
+.hero-rule{width:57px;margin:13px auto 11px;background:linear-gradient(90deg,transparent,#c091a5,transparent)}
+.hero-date{font-size:clamp(20px,4.5cqw,27px);line-height:1.4;letter-spacing:.025em}
+.hero-bottom{font-size:8px;line-height:1.8;letter-spacing:.08em;margin-top:9px}
+.hero-scroll{font-size:8px;letter-spacing:.14em;margin-top:18px;gap:6px}
+.hero-scroll svg{width:19px;height:19px}
+.hero-inner .videl-flight-control{min-height:44px;margin-top:8px;font-size:8px;padding:8px 11px;background:#fff9f8d9}
+.content-section,.rsvp-section{padding:155px 37px 170px;overflow:clip;isolation:isolate;background:radial-gradient(ellipse at 50% 25%,#fffdfb 5%,#fff6f6 52%,#f5dfe7 100%);color:var(--royal-ink)}
+.content-section::before,.rsvp-section::before{content:'';position:absolute;inset:21px 17px;z-index:0;border:1px solid #b29ba9;border-radius:52px 52px 18px 18px;box-shadow:inset 0 0 0 4px #fffdf9b3,inset 0 0 0 5px #d8bbc86e,0 0 0 4px #fffaf770;pointer-events:none}
+.content-section::after,.rsvp-section::after{content:'';position:absolute;inset:33px 27px;z-index:0;border:1px solid #cba8ba85;border-radius:43px 43px 12px 12px;background:radial-gradient(circle,#fffdfa 1.5px,#c8b5c3b3 2px,transparent 3px) left center/6px 10px repeat-y,radial-gradient(circle,#fffdfa 1.5px,#c8b5c3b3 2px,transparent 3px) right center/6px 10px repeat-y;pointer-events:none}
+.royal-canopy{position:absolute;inset:0 0 auto;height:245px;background:url('/mis-xv-videl/assets/royal-garland-gpt2.webp') top center/130% auto no-repeat;mix-blend-mode:multiply;pointer-events:none;user-select:none;z-index:3}
+.princess-flowers{position:absolute;display:block;width:clamp(280px,66cqw,410px);aspect-ratio:1;background:url('/mis-xv-videl/assets/princess-gpt-image-2.webp') center/contain no-repeat;mix-blend-mode:multiply;pointer-events:none;user-select:none;z-index:3}
+.flower-top-left,.flower-top-right{display:none}
+.flower-bottom-left{left:-31px;bottom:-14px}
+.flower-bottom-right{right:-31px;bottom:-14px;transform:scaleX(-1)}
+.content-section>.section-inner,.rsvp-section>.section-inner{position:relative;max-width:540px;z-index:2}
+.royal-panel{padding:35px 27px 40px;border:1px solid #c8acba;border-radius:48px 48px 22px 22px;background:linear-gradient(135deg,#fffefaed,#fff8f6f2 57%,#faedf0f0);box-shadow:0 0 0 5px #fffdfa99,0 0 0 6px #d9c2cd8c,0 18px 40px #a7587514,inset 0 0 24px #f3d7e32b}
+.content-section:not(.venue-section)>.section-inner::before,.content-section:not(.venue-section)>.section-inner::after{width:56px;height:56px;border-color:#c7a8b988;box-shadow:none}
+.content-section:not(.venue-section)>.section-inner::before{inset:9px auto auto 9px;border-radius:34px 0 0 0}
+.content-section:not(.venue-section)>.section-inner::after{inset:auto 9px 9px auto;border-radius:0 0 20px 0}
+.content-section p.eyebrow,.rsvp-section p.eyebrow{font:9px/1.8 VidelSans,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8c5c6e}
+.section-title{font-size:clamp(43px,9cqw,58px);line-height:1.35;color:var(--royal-rose)}
+.section-crown{display:block;width:175px;height:auto;margin:-12px auto 7px;mix-blend-mode:multiply}
+.divider{margin:18px auto 22px}
+.divider::before,.divider::after{display:none}
+.royal-divider{display:block;width:min(100%,280px);height:44px;filter:drop-shadow(0 2px 1px #a46e841c)}
+.blessing{font-size:22px;line-height:1.65}
+.blessing strong{font:43px/1.3 VidelScript,cursive;letter-spacing:0;margin-top:22px;color:var(--royal-rose)}
+.parents-label{font-size:21px;margin-top:33px;line-height:1.5}
+.parents{font-size:29px;line-height:1.35;margin-top:18px}
+.parents .amp{font-size:37px;line-height:1.4}
+.quote-section p:not(.eyebrow){font-size:23px;line-height:1.7}
+.quote-section .section-title{margin:15px auto 20px}
+.portrait-section{padding:150px 33px 152px}
+.portrait-section>.royal-panel{padding:34px 17px 30px}
+.portrait-section .section-title{font-size:clamp(40px,9.5cqw,56px);line-height:1.35;margin:12px auto 0}
+.princess-portrait-frame{position:relative;width:min(100%,410px);margin:24px auto 38px;padding:8px;border:1px solid #bba5b6;border-radius:12px;background:linear-gradient(135deg,#fffdf9,#c1b0c2 18%,#fffdfa 38%,#d9c2cf 75%,#fff);box-shadow:0 0 0 4px #fffaf9,0 0 0 5px #dac4cd,0 18px 45px #943e601c}
+.princess-portrait-frame::before{content:'';position:absolute;inset:3px;border:2px dotted #fffaf8;border-radius:inherit;pointer-events:none}
+.princess-portrait-frame .portrait-film{width:100%;max-width:none;border:0;border-radius:5px;aspect-ratio:9/16;box-shadow:none}
+.portrait-caption{position:relative;z-index:4;font-size:22px;line-height:1.5;max-width:270px;margin:23px auto 0}
+.portrait-controls .btn{border-radius:28px}
+.music-section{padding:30px 44px 33px;background:linear-gradient(#fff9f8,#fbeaf0,#fff9f8)}
+.music-section .section-inner{padding-top:25px;border-color:#c6a3b4;max-width:430px}
+.music-name{font-size:33px;color:var(--royal-rose)}
+.music-full{border-radius:30px;border:1px solid #cbaaba;background:#fff9f8}
+.date-kicker{font-size:21px;line-height:1.5;margin-top:18px}
+.date-display{gap:13px;margin:28px 0 16px}
+.date-side{font-size:15px;width:86px;letter-spacing:0;padding:8px 0}
+.date-day{font-size:94px}
+.date-year{font-size:27px}
+.event-time{font-size:11px}
+.countdown-label{font-size:23px;margin-top:33px}
+.countdown{margin:16px -12px 29px;padding:16px 1px}
+.countdown dt{font-size:39px}
+.countdown dd{font-size:8px;letter-spacing:.05em}
+.btn{border-radius:28px}
+.date-section .btn{font-size:9px;letter-spacing:.06em;padding-inline:16px}
+.venue-photo{border-radius:14px;margin:28px auto 28px;padding:6px;border-color:#bfa1b3;box-shadow:0 0 0 4px #fffaf8,0 0 0 5px #d9c4cf,0 15px 30px #943e6014}
+.venue-photo img{border-radius:8px;height:240px;object-fit:cover}
+.venue-photo .butterfly{width:48px;height:43px;right:-12px;top:12px}
+.venue-name{font-size:32px;line-height:1.3}
+.venue-address{font-size:19px;line-height:1.6}
+.detail-grid{grid-template-columns:1fr;gap:24px}
+.detail-block{padding:9px 0 13px}
+.detail-block+.detail-block{border-left:0;border-top:1px solid #d1b1c1;padding:34px 0 6px}
+.line-icon{width:48px;height:48px;margin-bottom:16px}
+.detail-block h2{font-size:51px}
+.royal-dress-code{display:block;width:100%;height:auto;margin:17px auto 24px;mix-blend-mode:multiply}
+.dress-section .detail-block h2{font-size:48px;line-height:1.35;margin-top:12px}
+.detail-main{font-size:27px;line-height:1.4;margin:16px auto}
+.detail-note{font-size:22px;line-height:1.6}
+.color-dots span{width:24px;height:24px;box-shadow:0 0 0 3px #fff,0 0 0 4px #d6beca}
+.color-dots{gap:15px;margin:25px auto 8px}
+.rsvp-section .section-title{font-size:clamp(43px,9cqw,58px);color:var(--royal-rose)}
+.rsvp-section p:not(.eyebrow){font-size:22px;line-height:1.55;margin:17px auto 24px}
+.rsvp-section .butterfly{color:#ba7493}
+.rsvp-section .btn{background:var(--royal-rose);border-color:var(--royal-rose);color:#fff9f8;font-size:9px;letter-spacing:.045em;padding-inline:17px}
+.rsvp-section .btn:hover{background:#713049}
+.rsvp-section a:focus-visible{outline-color:var(--royal-rose)}
+.rsvp-phone{font-size:12px;letter-spacing:.08em}
+#videl-trivia{padding:155px 31px 168px}
+#videl-trivia>.section-inner{max-width:540px;padding:32px 17px 25px}
+#videl-trivia .section-title{font-size:clamp(44px,10cqw,58px);line-height:1.35}
+#videl-trivia .trivia-intro{font-size:21px;line-height:1.5}
+#videl-trivia .trivia-card{background:#fffaf9;padding:25px 20px;border:1px solid #cfafc0;border-radius:17px;box-shadow:0 0 0 4px #fffdf8,0 0 0 5px #dcc6d0,0 14px 28px #943e6010}
+#videl-trivia .pill{border-radius:23px}
+#videl-trivia .rank-actions{flex-wrap:wrap}
+.closing{padding:55px 32px 60px;background:linear-gradient(#fff9f8,#f5dbe6);border-top:1px solid #d8b3c24d}
+.closing .script{font-size:59px}
+.closing .eyebrow{font-size:8px;line-height:1.9}
+.princess-sparkles{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.princess-sparkles i{position:absolute;width:4px;height:4px;background:#fff;box-shadow:0 0 10px 3px #fffaf3;border-radius:50%;animation:princess-glimmer 4.8s ease-in-out infinite}
+.princess-sparkles i:nth-child(1){left:18%;top:28%}
+.princess-sparkles i:nth-child(2){left:79%;top:33%;animation-delay:-1.8s}
+.princess-sparkles i:nth-child(3){left:32%;top:17%;animation-delay:-3.2s}
+.princess-sparkles i:nth-child(4){left:73%;top:67%;animation-delay:-.7s}
+.princess-sparkles i:nth-child(5){left:13%;top:59%;animation-delay:-2.5s}
+.princess-sparkles i:nth-child(6){left:86%;top:75%;animation-delay:-4s}
+@keyframes princess-glimmer{0%,100%{opacity:.2;transform:scale(.6)}45%{opacity:.9;transform:scale(1.1)}65%{opacity:.35;transform:scale(.8)}}
+html[data-videl-motion-paused="true"] .princess-sparkles i,body.locked .princess-sparkles i{animation-play-state:paused}
+@media(min-width:700px){body{padding:35px 0}.hero-inner{top:31%}.hero .eyebrow{font-size:11px}.hero-bottom{font-size:11px}.hero-rule{margin:24px auto 20px}.hero-scroll{font-size:10px;margin-top:30px}.hero-inner .videl-flight-control{font-size:10px;margin-top:18px}.content-section,.rsvp-section{padding:200px 58px 225px}.royal-canopy{height:365px}.royal-panel{padding:42px 38px 47px}.blessing{font-size:26px}.parents{font-size:34px}.parents-label{font-size:24px}.quote-section p:not(.eyebrow){font-size:27px}.portrait-section{padding:200px 53px 220px}.portrait-section>.royal-panel{padding:40px 30px 36px}.venue-photo img{height:290px}#videl-trivia{padding:200px 48px 225px}#videl-trivia>.section-inner{padding:40px 30px 34px}}
+@media(max-width:350px){.hero{height:max(670px,176.8421cqw)}.hero-inner{left:17%;width:66%}.hero h1{font-size:clamp(74px,24cqw,90px)}.hero .eyebrow{font-size:7px}.hero-subtitle{font-size:14px}.hero-date{font-size:18px}.hero-bottom{font-size:7px}.content-section,.rsvp-section{padding-inline:29px}.royal-panel{padding-inline:21px}.parents{font-size:26px}.date-side{font-size:13px;width:73px}.date-day{font-size:83px}.countdown dt{font-size:34px}.rsvp-section .btn{font-size:8px;padding-inline:11px;gap:7px}#videl-trivia{padding-inline:24px}#videl-trivia .trivia-card{padding-inline:15px}}
+@media(prefers-reduced-motion:reduce){.princess-sparkles i{animation:none;opacity:.45}}
