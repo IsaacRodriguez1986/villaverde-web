@@ -1053,7 +1053,7 @@ body.is-gated{ overflow:hidden; }
   color:var(--eb-on-surface-variant); max-width:34ch; margin:0 auto;
 }
 
-/* ---------- Escudo XV ---------- */
+/* ---------- Retrato XV ---------- */
 .eb-crest{ padding:var(--eb-section-gap) 0 0; text-align:center; }
 .eb-crest__name{
   font-family:var(--eb-font-script); font-weight:400;
@@ -1063,8 +1063,12 @@ body.is-gated{ overflow:hidden; }
   margin-top:4px; font-size:var(--eb-label); font-weight:600; letter-spacing:.24em;
   text-transform:uppercase; color:var(--eb-on-surface-variant);
 }
-.eb-crest__shield{ position:relative; width:min(340px,76vw); margin:var(--eb-s3) auto 0; }
-.eb-crest__shield img{ width:100%; height:auto; }
+.eb-crest__shield{
+  position:relative; width:min(340px,76vw); margin:var(--eb-s3) auto 0;
+  padding:var(--eb-s1); border:1px solid var(--eb-hairline);
+  background:var(--eb-primary-container); border-radius:var(--eb-r-md);
+}
+.eb-crest__shield img{ width:100%; height:auto; border-radius:var(--eb-r-sm); }
 .eb-crest__label{
   margin-top:var(--eb-s2);
   font-family:var(--eb-font-display); font-weight:500;
@@ -1130,6 +1134,7 @@ body.is-gated{ overflow:hidden; }
   display:block; width:100%; height:auto; aspect-ratio:2/3; object-fit:cover;
   border-radius:50% 50% var(--eb-r) var(--eb-r) / 34% 34% var(--eb-r) var(--eb-r);
 }
+.eb-story__item--hoy img{ object-position:center top; }
 .eb-story__cap{ margin-top:var(--eb-s2); }
 .eb-story__when{
   display:block; font-family:var(--eb-font-script); font-weight:400; line-height:1.1;
@@ -1444,8 +1449,8 @@ body.is-gated{ overflow:hidden; }
 
 <!-- ==================== PORTADA ====================
      Bodegón generado con Higgsfield (satén, tiara y zapatillas del cambio
-     de zapatilla). La foto de Karla va en el escudo, NO aquí: Isaac la
-     quitó de la portada el 22-sep y pidió dejarla como estaba.
+     de zapatilla). El retrato de Karla aparece debajo de su nombre,
+     en la sección siguiente; se conserva esta portada decorativa.
      ================================================= -->
 <header class="eb-cover" id="inicio">
   <div class="eb-cover__media">
@@ -1483,22 +1488,19 @@ body.is-gated{ overflow:hidden; }
 </section>
 
 
-<!-- ==================== ESCUDO ====================
-     Retrato de Karla DENTRO del escudo (pedido de Isaac, 22-sep): su foto
-     recortada, encajada en la forma exacta del hueco (medida por relleno
-     desde el centro sobre el alfa + el lavado blanco del interior), con el
-     marco y las flores encima. Una sola imagen ya compuesta.
-     ================================================ -->
+<!-- ==================== RETRATO XV ====================
+     Retrato de Karla en el jardín, con un marco rosa y dorado sutil.
+     ==================================================== -->
 <section class="eb-crest eb-rv" aria-labelledby="crest-name">
   <div class="eb-wrap">
     <p class="eb-crest__name" id="crest-name">Karla Fernanda</p>
     <p class="eb-crest__surname">Vergara Flores</p>
     <div class="eb-crest__shield">
-      <img src="/mis-xv-karla/assets/escudo-karla.webp"
-           srcset="/mis-xv-karla/assets/escudo-karla.webp 520w, /mis-xv-karla/assets/escudo-karla@2x.webp 800w"
-           sizes="(max-width:480px) 76vw, 340px"
-           width="520" height="681"
-           alt="Retrato de Karla Fernanda dentro de un escudo dorado adornado con rosas y peonías"
+      <img src="/mis-xv-karla/assets/retrato-jardin-01.webp"
+           srcset="/mis-xv-karla/assets/retrato-jardin-01.webp 540w, /mis-xv-karla/assets/retrato-jardin-01@2x.webp 960w"
+           sizes="(max-width:447px) calc(76vw - 18px), 322px"
+           width="540" height="720"
+           alt="Retrato de Karla Fernanda con vestido rosa y flores en un jardín"
            loading="lazy" decoding="async">
     </div>
     <p class="eb-crest__label">Quinceañera</p>
@@ -1510,20 +1512,19 @@ body.is-gated{ overflow:hidden; }
 <section class="eb-music eb-rv" id="musica" aria-labelledby="music-h">
   <div class="eb-wrap">
     <p class="eb-eyebrow" id="music-h">Dale play</p>
-    <p class="eb-music__title">Love Me Like You Do</p>
-    <p class="eb-label eb-music__artist">Ellie Goulding</p>
+    <p class="eb-music__title">Moonlight</p>
 
     <!-- Sin JS este control nativo es la única forma de reproducir. -->
-    <audio id="audio" class="eb-audio-native" src="/mis-xv-karla/assets/cancion.mp3?v=2"
+    <audio id="audio" class="eb-audio-native" src="/mis-xv-karla/assets/moonlight.mp3"
            preload="none" loop controls></audio>
 
     <div class="eb-player" id="player">
       <div class="eb-player__bar">
         <span class="eb-player__time" id="pl-cur">0:00</span>
         <input type="range" class="eb-player__seek" id="pl-seek"
-               min="0" max="252" step="1" value="0"
+               min="0" max="202" step="1" value="0"
                aria-label="Avanzar en la canción">
-        <span class="eb-player__time eb-player__time--end" id="pl-dur">4:12</span>
+        <span class="eb-player__time eb-player__time--end" id="pl-dur">3:22</span>
       </div>
       <!-- Solo controles que HACEN algo: nada de aleatorio/siguiente
            decorativos que el invitado toca y no responden. -->
@@ -1569,10 +1570,8 @@ body.is-gated{ overflow:hidden; }
 
 
 <!-- ==================== MI HISTORIA ====================
-     Ayer y hoy (pedido de Isaac, 22-sep): Karla de niña vestida de
-     princesa + Karla con su ramo y corona. Fotos de ~/Downloads
-     (nina.png y "quinse 2.png"), recortadas para centrar la cara en
-     el arco.
+     Ayer y hoy: se conserva el retrato de infancia y se presenta a Karla
+     con su vestido rosa en el jardín dentro del arco de Hoy.
      ======================================================= -->
 <section class="eb-story eb-rv" id="historia" aria-labelledby="story-h">
   <div class="eb-wrap">
@@ -1597,11 +1596,11 @@ body.is-gated{ overflow:hidden; }
 
       <figure class="eb-story__item eb-story__item--hoy">
         <div class="eb-story__frame">
-          <img src="/mis-xv-karla/assets/historia-hoy.webp"
-               srcset="/mis-xv-karla/assets/historia-hoy.webp 400w, /mis-xv-karla/assets/historia-hoy@2x.webp 800w"
+          <img src="/mis-xv-karla/assets/retrato-jardin-02.webp"
+               srcset="/mis-xv-karla/assets/retrato-jardin-02.webp 540w, /mis-xv-karla/assets/retrato-jardin-02@2x.webp 960w"
                sizes="(max-width:680px) 44vw, 300px"
-               width="400" height="600"
-               alt="Karla con su vestido de XV años rosa, corona y un ramo de rosas, junto a un lago"
+               width="540" height="720"
+               alt="Karla Fernanda con vestido rosa y una mano bajo la barbilla, rodeada de flores en un jardín"
                loading="lazy" decoding="async">
         </div>
         <figcaption class="eb-story__cap">
@@ -1777,8 +1776,8 @@ body.is-gated{ overflow:hidden; }
         <h3 class="eb-card__name">Vestimenta</h3>
         <p class="eb-card__dress">Casual / Formal</p>
         <p class="eb-card__note">
-          Con mucho cariño les pedimos reservar el <strong>rosa muy bajito</strong>
-          y el <strong>blanco</strong>, que están destinados a la Quinceañera.
+          Con mucho cariño les pedimos reservar el <strong>rosa muy bajito</strong>,
+          que está destinado a la Quinceañera.
         </p>
         <div class="eb-card__spacer"></div>
       </article>
@@ -1811,15 +1810,15 @@ body.is-gated{ overflow:hidden; }
           <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M7 10.6V19"/><path d="M4.5 19h5"/><path d="M14 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M17 10.6V19"/><path d="M14.5 19h5"/></svg></span>
         </li>
         <li class="eb-step">
-          <span class="eb-step__text"><span class="eb-step__name">Cena</span><span class="eb-step__time eb-step__time--tbd">Por confirmar</span></span>
+          <span class="eb-step__text"><span class="eb-step__name">Cena</span></span>
           <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12.5" cy="12" r="5.5"/><circle cx="12.5" cy="12" r="3"/><path d="M3 4v4.5a1.5 1.5 0 0 0 3 0V4"/><path d="M4.5 10v10"/><path d="M21 4c-1.4 1.4-2 3.8-2 6.5h2V20"/></svg></span>
         </li>
         <li class="eb-step">
-          <span class="eb-step__text"><span class="eb-step__name">Vals</span><span class="eb-step__time eb-step__time--tbd">Por confirmar</span></span>
+          <span class="eb-step__text"><span class="eb-step__name">Vals</span></span>
           <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 18.5h17"/><path d="M4.5 18.5 3 9.5l4.8 3.6L12 5.5l4.2 7.6L21 9.5l-1.5 9"/><circle cx="12" cy="4" r="1"/><circle cx="3" cy="8.2" r=".8"/><circle cx="21" cy="8.2" r=".8"/></svg></span>
         </li>
         <li class="eb-step">
-          <span class="eb-step__text"><span class="eb-step__name">Fiesta</span><span class="eb-step__time eb-step__time--tbd">Por confirmar</span></span>
+          <span class="eb-step__text"><span class="eb-step__name">Fiesta</span></span>
           <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
         </li>
       </ol>
@@ -2259,7 +2258,7 @@ var RSVP_PHONE = EVENTO.telefono;
 
   function paint() {
     var total = audio.duration;
-    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 252;
+    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 202;
     seek.style.setProperty('--pct', (audio.currentTime / total * 100) + '%');
   }
 
@@ -2313,57 +2312,6 @@ var RSVP_PHONE = EVENTO.telefono;
     audio.currentTime = Number(seek.value);
     seek.dataset.dragging = '0';
   });
-
-  /* Arranque automático, en cascada de tres intentos.
-
-     Los navegadores rechazan reproducir audio CON SONIDO mientras el
-     visitante no haya interactuado con la página (iOS es el más estricto).
-     No se puede desactivar: play() devuelve una promesa rechazada. Pero sí
-     dejan reproducir audio EN SILENCIO. Se aprovecha eso:
-
-       1. Intento con sonido. Si pasa, listo.
-       2. Si lo bloquean, arranco la pista silenciada — esto casi nunca
-          falla — de modo que el reproductor ya está corriendo.
-       3. Al primer gesto del invitado (toque, tecla o scroll) le quito el
-          silencio y la rebobino al inicio, para que la escuche completa
-          y no entrando a mitad.
-
-     Resultado: suena en cuanto rozan la pantalla, sin que tengan que
-     buscar ningún botón. */
-  (function autoStart() {
-    var EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
-    var armed = false;
-
-    function unlock() {
-      if (!armed) return;
-      armed = false;
-      EVENTS.forEach(function (e) { window.removeEventListener(e, unlock); });
-
-      audio.muted = false;
-      audio.currentTime = 0;
-      audio.play().catch(function () {});
-      sync();
-    }
-
-    function arm() {
-      if (armed) return;
-      armed = true;
-      EVENTS.forEach(function (e) {
-        window.addEventListener(e, unlock, { passive: true });
-      });
-    }
-
-    var p = audio.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch(function () {
-        audio.muted = true;                 // silenciada sí la dejan sonar
-        audio.play().catch(function () {});
-        arm();
-      });
-    } else {
-      arm();                                // navegadores viejos: play() sin promesa
-    }
-  })();
 
   sync();
   paint();
