@@ -474,7 +474,7 @@ function SecPaquetes({ onGo }) {
               </div>
               <div style={{ fontFamily: 'var(--vv-display)', fontStyle: 'italic', fontSize: 17, color: 'var(--vv-muted)', marginTop: 7 }}>{p.tag}</div>
               <div style={{ fontSize: 12.5, color: 'var(--vv-muted-2)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600 }}>
-                <Icon name="clock" size={14} /> {p.horasDet}
+                <Icon name="clock" size={14} /> {p.horas} · {p.horasDet}
               </div>
             </div>
           </div>
@@ -605,8 +605,9 @@ function ComparaTabla({ activeId, onPick }) {
 /* ---------------- 7 · COTIZADOR ---------------- */
 function ppFor(pkgId, guests) { return VV.priceFor(pkgId, guests); }   // fuente única: VV.priceFor (data.js)
 function SecCotizador() {
-  const [pkgId, setPkgId] = useState(() => localStorage.getItem('vv_pkg') || 'diamante');
-  const [guests, setGuests] = useState(() => +(localStorage.getItem('vv_guests') || 150));
+  // Mismo criterio que la barra de resumen: el paquete cotizado o, si aún no se cotiza, la pestaña que se estaba viendo.
+  const [pkgId, setPkgId] = useState(() => localStorage.getItem('vv_pkg') || localStorage.getItem('vv_pkgview') || 'diamante');
+  const [guests, setGuests] = useState(() => Math.max(+(localStorage.getItem('vv_guests') || 0), (VV.PAQUETES.find(p => p.id === pkgId) || VV.PAQUETES[0]).minPax));
   const [cliente, setCliente] = useState(() => localStorage.getItem('vv_cliente') || '');
   const [evento, setEvento] = useState(() => localStorage.getItem('vv_evento') || '');
   useEffect(() => { localStorage.setItem('vv_pkg', pkgId); VV.notifyStore(); }, [pkgId]);
@@ -623,7 +624,7 @@ function SecCotizador() {
   const minPax = pkg.minPax;
   const minWarn = guests < minPax;
   useEffect(() => { if (guests < minPax) setGuests(minPax); }, [minPax]);
-  const pct = Math.max(0, Math.min(100, Math.round((guests - minPax) / (400 - minPax) * 100)));
+  const pct = Math.max(0, Math.min(100, Math.round((guests - minPax) / (450 - minPax) * 100)));
 
   return (
     <div className="vv-section">
@@ -653,12 +654,12 @@ function SecCotizador() {
               <span key={guests} className="vv-pop" style={{ fontFamily: 'var(--vv-display)', fontSize: 52, fontWeight: 700, color: 'var(--vv-crimson)', lineHeight: 1 }}>{guests}</span>
               <span style={{ fontSize: 13, color: 'var(--vv-muted)', fontWeight: 700 }}>invitados</span>
             </div>
-            <input type="range" min={minPax} max="400" step="10" value={guests}
+            <input type="range" min={minPax} max="450" step="10" value={guests}
               onChange={e => setGuests(+e.target.value)} className="vv-range"
               aria-label="Número de invitados" aria-valuetext={guests + ' invitados'}
               style={{ background: `linear-gradient(90deg, var(--vv-crimson) 0%, var(--vv-crimson-soft) ${pct}%, var(--vv-line) ${pct}%, var(--vv-line) 100%)` }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--vv-muted-2)', marginTop: 6 }}>
-              <span>{minPax}</span><span>400</span>
+              <span>{minPax}</span><span>450</span>
             </div>
             {minWarn && (
               <div style={{ marginTop: 14, fontSize: 13, color: 'var(--vv-crimson)', display: 'flex', gap: 8, alignItems: 'center', fontWeight: 700 }}>
@@ -880,9 +881,10 @@ function SecFechas() {
 
 /* ---------------- 10 · CIERRE ---------------- */
 function SecCierre({ onGo }) {
-  const pkgId = localStorage.getItem('vv_pkg') || 'diamante';
-  const pkg = VV.PAQUETES.find(p => p.id === pkgId);
-  const guests = +(localStorage.getItem('vv_guests') || 150);
+  const pkgId = localStorage.getItem('vv_pkg') || localStorage.getItem('vv_pkgview') || 'diamante';
+  const pkg = VV.PAQUETES.find(p => p.id === pkgId) || VV.PAQUETES[0];
+  // Nunca por debajo del mínimo del paquete (quien salta al cierre sin pasar por el cotizador).
+  const guests = Math.max(+(localStorage.getItem('vv_guests') || 0), pkg.minPax);
   const mantel = VV.MANTELES.find(m => m.id === (localStorage.getItem('vv_mantel') || ''));
   const fecha = localStorage.getItem('vv_fecha') || 'Por definir';
   const pp = ppFor(pkgId, guests);

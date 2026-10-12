@@ -62,7 +62,8 @@ function App() {
   const rPkgId = (cur.id === 'paquetes' && localStorage.getItem('vv_pkgview'))
     || localStorage.getItem('vv_pkg') || localStorage.getItem('vv_pkgview') || 'diamante';
   const rPkg = VV.PAQUETES.find(p => p.id === rPkgId) || VV.PAQUETES[0];
-  const rGuests = +(localStorage.getItem('vv_guests') || 150);
+  // Nunca por debajo del mínimo del paquete: "Esmeralda · 150 inv." es una combinación que no existe.
+  const rGuests = Math.max(+(localStorage.getItem('vv_guests') || 0), rPkg.minPax);
   const rTotalNum = VV.priceFor(rPkgId, rGuests) * rGuests;
   const showResumen = idx >= steps.findIndex(s => s.id === 'paquetes');
 

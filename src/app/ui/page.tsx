@@ -20,7 +20,7 @@ export default function UiKitPage() {
       ))}</div></section>
       <section><h2>Tipografía</h2><div className="ui-type"><h3>Una celebración que sí se siente tuya</h3><p>Texto claro para explicar precios, condiciones y el siguiente paso.</p></div></section>
       <section><h2>Acciones</h2><div className="ui-row"><button className="ui-primary">Cotizar por WhatsApp</button><button className="ui-secondary">Ver paquetes</button><button className="ui-disabled" disabled>No disponible</button></div></section>
-      <section><h2>Tarjeta comercial</h2><article className="ui-card"><small>Más popular</small><h3>Diamante</h3><p>Grupo en vivo, pantalla LED y siete horas de evento.</p><strong>$530 por persona</strong><button className="ui-primary">Consultar fecha</button></article></section>
+      <section><h2>Tarjeta comercial</h2><article className="ui-card"><small>Más popular</small><h3>Diamante</h3><p>Grupo en vivo, pantalla LED y ocho horas totales.</p><strong>$530 por persona</strong><button className="ui-primary">Consultar fecha</button></article></section>
       <section><h2>Estados</h2><div className="ui-states"><p className="ok">Guardado correctamente</p><p className="warning">La cotización no reserva la fecha</p><p className="error">No pudimos enviar la solicitud</p></div></section>
     </main>
   );

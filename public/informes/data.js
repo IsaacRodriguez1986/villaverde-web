@@ -35,7 +35,7 @@ VV.PAQUETES = [
   {
     id: 'premium', name: 'Premium', accent: 'var(--vv-crimson)',
     tag: 'La mejor relación valor-precio', tone: 'crimson',
-    horas: '6 horas totales', horasDet: '6h evento + 30 min recepción + 30 min desalojo',
+    horas: '7 horas totales', horasDet: '6h evento + 30 min recepción + 30 min desalojo',
     priceMain: 420, priceFrom: null, minPax: 150,
     priceNote: 'Desde 150 invitados', priceNote2: null,
     cortesias: 1,
@@ -52,7 +52,7 @@ VV.PAQUETES = [
   {
     id: 'diamante', name: 'Diamante', accent: 'var(--vv-gold)',
     tag: 'El favorito para XV Años', tone: 'gold', popular: true,
-    horas: '7 horas totales', horasDet: '7h evento + 30 min recepción + 30 min desalojo',
+    horas: '8 horas totales', horasDet: '7h evento + 30 min recepción + 30 min desalojo',
     priceMain: 530, priceFrom: null, minPax: 170,
     priceNote: 'Desde 170 invitados', priceNote2: null,
     cortesias: 2,
@@ -66,7 +66,7 @@ VV.PAQUETES = [
   {
     id: 'esmeralda', name: 'Esmeralda', accent: 'var(--vv-emerald)',
     tag: 'La joya de la corona', tone: 'emerald',
-    horas: '8 horas totales', horasDet: '8h evento + 30 min recepción + 30 min desalojo',
+    horas: '9 horas totales', horasDet: '8h evento + 30 min recepción + 30 min desalojo',
     priceMain: 680, priceFrom: null, minPax: 200,
     priceNote: 'Desde 200 invitados', priceNote2: null,
     cortesias: 'Todas',
@@ -114,7 +114,7 @@ VV.TOUR_360 = [
    cort = id de cortesía (para reusar su galería de fotos) */
 VV.ITEM_INFO = {
   'Cena formal de 3 tiempos':       { icon: 'plate',  d: 'Entrada, plato fuerte y postre servidos a la mesa por meseros con capitán. No es buffet: es una cena de gala. El menú es personalizable y adaptamos platillos especiales (veganos, alergias) sin costo extra.', go: 'menu', fotos: ['assets/menu-carne-v2.jpg', 'assets/menu-pasta-v2.jpg', 'assets/menu-crema-v2.jpg'] },
-  'Refresco y hielo ilimitado':     { icon: 'drink',  d: 'Refresco de las marcas principales y hielo sin límite durante todo tu evento. Nadie se queda con el vaso vacío.', fotos: ['assets/mesero-refresco.jpg'] },
+  'Refresco ilimitado (2 sabores) y hielo': { icon: 'drink',  d: 'Refresco de las marcas principales (solo 2 sabores) y hielo sin límite durante todo tu evento. Nadie se queda con el vaso vacío.', fotos: ['assets/mesero-refresco.jpg'] },
   'Descorche libre':                { icon: 'drink',  d: 'Trae tu propio licor sin pagar descorche. Tú decides qué se sirve en tu fiesta y te ahorras ese costo extra que otros salones cobran.', fotos: ['assets/descorche-vino.jpg'] },
   'Botella de 3/4 por mesa':        { icon: 'drink',  d: 'Incluimos una botella de 3/4 de litro por cada mesa para que tus invitados arranquen la celebración.' },
   'Mesas redondas + sillas Tiffany':{ icon: 'sparkle',d: 'Mesas redondas vestidas y elegantes sillas Tiffany con cojín para todos tus invitados. El montaje clásico que se ve espectacular en fotos.', go: 'manteleria', fotos: ['assets/mesa-tiffany-rosa.jpg'] },
@@ -174,7 +174,7 @@ VV.INVITACIONES_MUESTRA = [
 /* ---------- COMPARATIVO DE PAQUETES ----------
    Valores por paquete: true = incluido (✓), false = no incluido (—), string = detalle */
 VV.COMPARA = [
-  { t: 'Duración del evento',          premium: '6 h',  diamante: '7 h',  esmeralda: '8 h' },
+  { t: 'Horas totales',                premium: '7 h',  diamante: '8 h',  esmeralda: '9 h' },
   { t: 'Precio por persona (desde)',   premium: '$420', diamante: '$530', esmeralda: '$680' },
   { t: 'Invitados (mínimo)',           premium: '150',  diamante: '170',  esmeralda: '200' },
   { t: 'Cortesías incluidas',          premium: '1',    diamante: '2',    esmeralda: 'Todas' },
@@ -331,7 +331,7 @@ VV.CONTACTO = {
   whatsIntl: '525517340226',   // formato internacional para links wa.me
   web: 'salondefiestasvillaverde.com',
   instagram: '@salon.villaverde',
-  horario: 'Visitas: Lun–Sáb · 10am–12pm y 3pm–6pm',
+  horario: 'Visitas: Lun–Sáb · 8am–12pm y 3pm–7pm',
   anticipo: 3000,
 };
 

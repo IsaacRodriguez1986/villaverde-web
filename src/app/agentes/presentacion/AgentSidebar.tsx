@@ -11,7 +11,10 @@ export default function AgentSidebar({ isOpen, onClose }: AgentSidebarProps) {
   const [invitados, setInvitados] = useState<number>(170);
   const [paquete, setPaquete] = useState<number>(530); // Diamante by default
 
-  const total = invitados * paquete;
+  // Cada paquete tiene su mínimo y la casa admite hasta 450: el total nunca se calcula fuera de eso.
+  const minimo = paquete === 680 ? 200 : paquete === 530 ? 170 : 150;
+  const cotizados = Math.min(450, Math.max(invitados || 0, minimo));
+  const total = cotizados * paquete;
   const anticipo = 3000;
   const resto = total - anticipo;
 
@@ -38,7 +41,8 @@ export default function AgentSidebar({ isOpen, onClose }: AgentSidebarProps) {
             className="agent-input" 
             value={invitados} 
             onChange={(e) => setInvitados(Number(e.target.value))}
-            min={100}
+            min={150}
+            max={450}
             step={10}
           />
         </div>
@@ -59,7 +63,7 @@ export default function AgentSidebar({ isOpen, onClose }: AgentSidebarProps) {
         </div>
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: "14px", color: "white" }}>Total Evento:</span>
+          <span style={{ fontSize: "14px", color: "white" }}>Total Evento{cotizados !== invitados ? ` (${cotizados} inv.)` : ""}:</span>
           <span className="agent-calc-result">${total.toLocaleString()}</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>

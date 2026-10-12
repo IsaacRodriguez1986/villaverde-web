@@ -107,8 +107,8 @@ export default function RootLayout({
                 itemListElement: [
                   {
                     "@type": "Offer",
-                    name: "Paquete Premium — 6 horas de evento",
-                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 6 horas de evento.",
+                    name: "Paquete Premium — 7 horas totales",
+                    description: "Paquete todo incluido con cena formal de 3 tiempos, descorche libre, DJ, iluminación inteligente, batucada, camerinos, invitación digital y 1 cortesía a elegir. 7 horas totales.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "420",
@@ -125,8 +125,8 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Diamante — 7 horas de evento (Más Popular)",
-                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 170 invitados. 7 horas de evento.",
+                    name: "Paquete Diamante — 8 horas totales (Más Popular)",
+                    description: "El paquete más elegido. Todo lo del Premium más grupo versátil en vivo, pantalla LED gigante, chilaquiles y 2 cortesías a elegir. Disponible desde 170 invitados. 8 horas totales.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "530",
@@ -143,8 +143,8 @@ export default function RootLayout({
                   },
                   {
                     "@type": "Offer",
-                    name: "Paquete Esmeralda — 8 horas de evento (El Más Completo)",
-                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 200 invitados. 8 horas de evento.",
+                    name: "Paquete Esmeralda — 9 horas totales (El Más Completo)",
+                    description: "El paquete máximo con TODO incluido: grupo en vivo, pantalla LED, show de robot, cabina 360, cantante en cena y TODAS las cortesías. Disponible desde 200 invitados. 9 horas totales.",
                     priceSpecification: {
                       "@type": "PriceSpecification",
                       minPrice: "680",
@@ -250,7 +250,7 @@ export default function RootLayout({
                   name: "¿Qué diferencia hay entre los paquetes Premium, Diamante y Esmeralda?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "El Premium ($420/pp, desde 150 invitados) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 6 horas de evento. El Diamante ($530/pp, desde 170 invitados) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 7 horas de evento. El Esmeralda ($680/pp, desde 200 invitados) incluye show de robot, cabina 360, cantante en cena y todas las cortesías con 8 horas de evento.",
+                    text: "El Premium ($420/pp, desde 150 invitados) incluye todo lo esencial: cena, descorche libre, DJ y 1 cortesía a elegir con 7 horas totales. El Diamante ($530/pp, desde 170 invitados) agrega grupo versátil en vivo, pantalla LED, chilaquiles y 2 cortesías con 8 horas totales. El Esmeralda ($680/pp, desde 200 invitados) incluye show de robot, cabina 360, cantante en cena y todas las cortesías con 9 horas totales.",
                   },
                 },
                 {
@@ -258,7 +258,7 @@ export default function RootLayout({
                   name: "¿Puedo agendar una visita para conocer el salón?",
                   acceptedAnswer: {
                     "@type": "Answer",
-                    text: "Por supuesto. Las visitas son con cita previa de lunes a sábado en horarios de 10am a 12pm y de 3pm a 6pm. Puedes agendar por WhatsApp al 9995485862 y te mostraremos las instalaciones completas: salón, jardines, camerinos, cocina y todo lo que incluyen nuestros paquetes. Las fotos no le hacen justicia, te invitamos a conocernos en persona.",
+                    text: "Por supuesto. Las visitas son con cita previa de lunes a sábado en horarios de 8am a 12pm y de 3pm a 7pm. Puedes agendar por WhatsApp al 9995485862 y te mostraremos las instalaciones completas: salón, jardines, camerinos, cocina y todo lo que incluyen nuestros paquetes. Las fotos no le hacen justicia, te invitamos a conocernos en persona.",
                   },
                 },
               ],

@@ -1206,7 +1206,7 @@ export default function Home() {
             </a>
             <a href="#paquete-esmeralda" className="package-finder-card">
               <strong>La experiencia más completa</strong>
-              <span>Esmeralda · 8 horas y producción premium</span>
+              <span>Esmeralda · 9 horas y producción premium</span>
             </a>
           </div>
           <p className="package-finder-note">La cotización no reserva la fecha. Reserva con contrato y $3,000 de anticipo.</p>
@@ -1302,7 +1302,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  6 horas de evento + 30min recepción + 30min desalojo
+                  7 horas totales: 6 de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat">
                   <span className="ck">
@@ -1408,7 +1408,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  7 horas de evento + 30min recepción + 30min desalojo
+                  8 horas totales: 7 de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1485,7 +1485,7 @@ export default function Home() {
                   <span className="ck">
                     <IconCheck size={10} />
                   </span>{" "}
-                  8 horas de evento + 30min recepción + 30min desalojo
+                  9 horas totales: 8 de evento + 30min recepción + 30min desalojo
                 </div>
                 <div className="pkg-feat hi">
                   <span className="ck">
@@ -1610,10 +1610,10 @@ export default function Home() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Horas de evento</td>
-                  <td>6h</td>
+                  <td>Horas totales</td>
                   <td>7h</td>
                   <td>8h</td>
+                  <td>9h</td>
                 </tr>
                 <tr>
                   <td>Precio desde</td>
