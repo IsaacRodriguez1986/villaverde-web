@@ -998,7 +998,7 @@ function SecCierre({ onGo }) {
           <span style={{ color: 'var(--vv-crimson)', flex: 'none' }}><Icon name="clock" size={24} /></span>
           <div>
             <div style={{ fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--vv-muted)', fontWeight: 800 }}>Horario</div>
-            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--vv-ink)' }}>Lun–Sáb · 10–12 y 3–6 pm</div>
+            <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--vv-ink)' }}>{VV.CONTACTO.horario.replace('Visitas: ', '')}</div>
           </div>
         </div>
       </div>

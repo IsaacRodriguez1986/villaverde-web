@@ -94,7 +94,7 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
           <div className="vv-ps__eyebrow vv-ps__eyebrow--gold">Paquete seleccionado</div>
           <div className="vv-ps__pkgname">{pkg.name}</div>
           <div className="vv-ps__pkgtag">{pkg.tag}</div>
-          <div className="vv-ps__pkgmeta">{salonName} · {pkg.horas}{pkg.horasDet ? ' (' + pkg.horasDet + ')' : ''}</div>
+          <div className="vv-ps__pkgmeta">{salonName} · {pkg.horas}</div>
         </div>
         <div className="vv-ps__hero-r">
           <div className="vv-ps__pp">
