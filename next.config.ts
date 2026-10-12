@@ -9,6 +9,7 @@ const INVITACIONES = [
   "mis-xv-dayana-garduno",
   "ana-paula-1",
   "mis-xv-megan",
+  "mis-xv-videl",
   "nuestra-boda",
   "boda-angel-isis",
   "mis-xv-karla",
@@ -112,6 +113,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Conserva los enlaces de la prueba de cine en la invitación vertical.
+      { source: "/mis-xv-videl/cine.html", destination: "/mis-xv-videl", permanent: false },
+      { source: "/mis-xv-videl/cine", destination: "/mis-xv-videl", permanent: false },
       // 3-sep-2026: la invitacion paso de /boda-luis-isis a /boda-angel-isis
       // (el novio es Angel). Los enlaces personalizados por familia YA estaban
       // repartidos, asi que el slug viejo tiene que seguir resolviendo.

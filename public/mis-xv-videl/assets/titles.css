@@ -1,0 +1,71 @@
+/* Whole words keep their cursive ligatures; the accessible text never disappears. */
+.videl-title-ink { position: relative; display: inline-block; max-width: 100%; vertical-align: baseline; overflow: visible; }
+.videl-title-word { display: inline-block; max-width: 100%; vertical-align: baseline; transform-origin: 50% 75%; }
+.videl-title-active .videl-title-word { animation: videl-title-letter-reveal var(--title-word-duration, 1.2s) cubic-bezier(.18,.7,.26,1) var(--title-word-delay, 0s) both; }
+.videl-title-sheen { position: absolute; inset: 0; display: block; pointer-events: none; user-select: none; color: transparent; -webkit-text-fill-color: transparent; background: linear-gradient(110deg, transparent 39%, #b6a6b7 43%, #fbffff 48%, #bcb8c9 52%, #fff 55%, transparent 61%) 180% 0 / 280% 100% no-repeat; -webkit-background-clip: text; background-clip: text; opacity: 0; }
+.videl-title-active .videl-title-sheen { animation: videl-title-silver-sweep 1.1s ease-in-out var(--title-complete, 1.7s) both; }
+.videl-title-butterfly { position: absolute; top: -.3em; right: .04em; width: clamp(24px, .62em, 36px); height: clamp(21px, .55em, 32px); pointer-events: none; opacity: 0; transform-origin: 50% 70%; color: #b38aa5; }
+.videl-title-butterfly svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 1px 1px #fff); }
+.videl-title-active .videl-title-butterfly { animation: videl-title-butterfly-arrival 1.65s ease-out calc(var(--title-complete, 1.7s) - .15s) both; }
+.videl-title-active .videl-title-butterfly svg { animation: videl-title-wing 340ms ease-in-out calc(var(--title-complete, 1.7s) - .15s) 4; }
+.videl-title-stars { position: absolute; inset: -.22em -.06em -.08em; pointer-events: none; overflow: visible; }
+.videl-title-stars i { position: absolute; width: clamp(5px, .16em, 10px); height: clamp(5px, .16em, 10px); opacity: 0; background: #fcffff; clip-path: polygon(50% 0, 60% 39%, 100% 50%, 60% 61%, 50% 100%, 40% 61%, 0 50%, 40% 39%); filter: drop-shadow(0 0 3px #bea5bb); }
+.videl-title-stars i:nth-child(1) { left: 4%; top: 32%; --star-delay: 0s; }
+.videl-title-stars i:nth-child(2) { left: 31%; top: 4%; --star-delay: .17s; }
+.videl-title-stars i:nth-child(3) { left: 71%; top: 19%; --star-delay: .31s; }
+.videl-title-stars i:nth-child(4) { left: 91%; top: 68%; --star-delay: .1s; }
+.videl-title-stars i:nth-child(5) { left: 62%; top: 90%; --star-delay: .23s; }
+.videl-title-active .videl-title-stars i { animation: videl-title-silver-star 1.2s ease-in-out calc(var(--title-complete, 1.7s) + var(--star-delay)) both; }
+
+/* The original name still determines size and its accessible name. */
+.videl-signature-svg { position: absolute; pointer-events: none; overflow: visible; opacity: 0; max-width: none; }
+.videl-signature-ready > .videl-title-ink > .videl-title-word { color: transparent; text-shadow: none; animation: none; }
+.videl-signature-ready .videl-signature-svg { opacity: 1; }
+#videl-name.videl-signature-ready:not(.videl-title-active) #videl-signature-ink > path { mask: none; }
+.videl-signature-stroke { stroke-dasharray: var(--signature-length); stroke-dashoffset: 0; }
+.videl-signature-ready.videl-title-active .videl-signature-stroke { animation: videl-signature-write var(--draw-duration) linear var(--draw-delay) both; }
+.videl-signature-penlight { opacity: 0; pointer-events: none; offset-distance: 0%; offset-rotate: 0deg; }
+.videl-signature-ready.videl-title-active .videl-signature-penlight { animation: videl-signature-pen-travel var(--draw-duration) linear var(--draw-delay) both; }
+.videl-signature-ready .videl-title-sheen { display: none; }
+.videl-signature-sheen { opacity: 0; pointer-events: none; }
+.videl-signature-ready.videl-title-active .videl-signature-sheen { animation: videl-signature-silver-finish 1.1s ease-in-out var(--title-complete, 3.8s) both; }
+
+@keyframes videl-title-letter-reveal {
+  0% { opacity: .08; clip-path: inset(-.3em 102% -.35em -.16em); transform: translateY(.08em); }
+  24% { opacity: .7; }
+  75% { opacity: 1; }
+  100% { opacity: 1; clip-path: inset(-.3em -.18em -.35em -.16em); transform: none; }
+}
+@keyframes videl-title-silver-sweep { 0% { opacity: 0; background-position: 180% 0; } 12% { opacity: .85; } 85% { opacity: .85; } 100% { opacity: 0; background-position: -80% 0; } }
+@keyframes videl-title-butterfly-arrival { 0% { opacity: 0; transform: translate(-.3em,.12em) rotate(-18deg) scale(.65); } 30% { opacity: .9; } 58% { opacity: .75; transform: translate(.02em,-.1em) rotate(7deg) scale(1); } 100% { opacity: 0; transform: translate(.25em,-.34em) rotate(19deg) scale(.75); } }
+@keyframes videl-title-wing { 0%,100% { transform: scaleX(.66); } 50% { transform: scaleX(1); } }
+@keyframes videl-title-silver-star { 0%,100% { opacity: 0; transform: scale(.25) rotate(-10deg); } 35% { opacity: .95; transform: scale(1.2) rotate(8deg); } 65% { opacity: .45; transform: scale(.7) rotate(28deg); } }
+@keyframes videl-signature-write { from { stroke-dashoffset: var(--signature-length); } to { stroke-dashoffset: 0; } }
+@keyframes videl-signature-pen-travel { 0% { offset-distance: 0%; opacity: 0; } 7% { opacity: .9; } 92% { opacity: .9; } 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes videl-signature-silver-finish { 0%,100% { opacity: 0; } 30% { opacity: .9; } 64% { opacity: .3; } }
+
+/* Every stop condition completes the entire phrase rather than freezing a mask. */
+html[data-videl-motion-paused="true"] .videl-title-word,
+body.locked .videl-title-word { animation: none !important; opacity: 1 !important; transform: none !important; clip-path: none !important; }
+html[data-videl-motion-paused="true"] .videl-signature-stroke,
+body.locked .videl-signature-stroke { animation: none !important; stroke-dashoffset: 0 !important; }
+html[data-videl-motion-paused="true"] #videl-signature-ink > path,
+body.locked #videl-signature-ink > path { mask: none !important; }
+html[data-videl-motion-paused="true"] .videl-title-sheen,
+html[data-videl-motion-paused="true"] .videl-title-butterfly,
+html[data-videl-motion-paused="true"] .videl-title-stars i,
+html[data-videl-motion-paused="true"] .videl-signature-penlight,
+html[data-videl-motion-paused="true"] .videl-signature-sheen,
+body.locked .videl-title-sheen,
+body.locked .videl-title-butterfly,
+body.locked .videl-title-stars i,
+body.locked .videl-signature-penlight,
+body.locked .videl-signature-sheen { animation: none !important; opacity: 0 !important; }
+html[data-videl-motion-paused="true"] .hero-scroll svg { animation: none !important; transform: none !important; }
+html[data-videl-motion-paused="true"] .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .videl-title-word { animation: none !important; opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .videl-signature-stroke { animation: none !important; stroke-dashoffset: 0 !important; }
+  #videl-signature-ink > path { mask: none !important; }
+  .videl-title-sheen,.videl-title-butterfly,.videl-title-stars i,.videl-signature-penlight,.videl-signature-sheen { animation: none !important; opacity: 0 !important; }
+}

@@ -1,0 +1,95 @@
+/* Pearl light, four-point glints and rose petals stay at the invitation edges. */
+.videl-royal-magic {
+  position: fixed;
+  inset: 0 auto 0 50%;
+  width: min(100%, 620px);
+  transform: translateX(-50%);
+  z-index: 7;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout style paint;
+  isolation: isolate;
+}
+.videl-royal-magic[hidden],
+body.locked .videl-royal-magic { display: none !important; }
+.videl-royal-magic > span {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  backface-visibility: hidden;
+}
+.videl-royal-glint {
+  top: var(--royal-y);
+  left: var(--royal-x);
+  width: var(--royal-size);
+  height: var(--royal-size);
+  opacity: 0;
+  animation: videl-royal-twinkle var(--royal-duration) ease-in-out var(--royal-delay) infinite;
+}
+.videl-royal-glint::before,
+.videl-royal-glint::after { content: ''; position: absolute; }
+.videl-royal-glint::before {
+  inset: 0;
+  background: linear-gradient(135deg, #fffef7 9%, #fff4db 36%, #fff 53%, #dfccd5 83%);
+  clip-path: polygon(50% 0, 59% 40%, 100% 50%, 59% 60%, 50% 100%, 41% 60%, 0 50%, 41% 40%);
+  filter: drop-shadow(0 0 3px #fff7dc);
+}
+.videl-royal-glint::after {
+  inset: -55%;
+  background: radial-gradient(circle, #fff7e563 0, #fff9ed2b 20%, #fff8ee00 64%);
+}
+.videl-royal-bokeh {
+  top: var(--royal-y);
+  left: var(--royal-x);
+  width: var(--royal-size);
+  height: var(--royal-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 31%, #fffdf7 0, #fff8e99c 22%, #edb6c55e 47%, #ebc3d000 72%);
+  filter: blur(1px);
+  opacity: 0;
+  animation: videl-royal-light var(--royal-duration) ease-in-out var(--royal-delay) infinite;
+}
+.videl-royal-petal {
+  top: -28px;
+  left: var(--royal-x);
+  width: var(--royal-size);
+  height: calc(var(--royal-size) * 1.45);
+  border-radius: 85% 12% 75% 24%;
+  background: linear-gradient(145deg, #fff3f1 8%, #f3c3d0 29%, #db8fab 74%, #fbe2e7 100%);
+  box-shadow: inset 1px 1px 1px #fff8f67d, inset -1px -1px 2px #ac517629;
+  opacity: 0;
+  transform-origin: 40% 80%;
+  animation: videl-royal-petal-fall var(--royal-duration) linear var(--royal-delay) infinite;
+}
+html[data-videl-motion-paused="true"] .videl-royal-magic > span,
+.videl-royal-magic[data-paused="true"] > span { animation-play-state: paused !important; }
+@keyframes videl-royal-twinkle {
+  0%, 100% { opacity: 0; transform: translate3d(0, 9px, 0) scale(.55) rotate(-9deg); }
+  23% { opacity: .18; }
+  45% { opacity: .85; transform: translate3d(2px, -3px, 0) scale(1.04) rotate(4deg); }
+  64% { opacity: .32; }
+  79% { opacity: 0; transform: translate3d(-2px, -12px, 0) scale(.74) rotate(10deg); }
+}
+@keyframes videl-royal-light {
+  0%, 100% { opacity: 0; transform: translate3d(0, 28px, 0) scale(.8); }
+  37% { opacity: .17; }
+  61% { opacity: .11; transform: translate3d(var(--royal-drift), -26px, 0) scale(1.12); }
+  83% { opacity: 0; transform: translate3d(0, -58px, 0) scale(.9); }
+}
+@keyframes videl-royal-petal-fall {
+  0% { opacity: 0; transform: translate3d(0, -3vh, 0) rotate(-28deg) rotateY(12deg); }
+  7% { opacity: .58; }
+  24% { transform: translate3d(var(--royal-drift), 25vh, 0) rotate(20deg) rotateY(47deg); }
+  48% { transform: translate3d(calc(var(--royal-drift) * -.65), 53vh, 0) rotate(-17deg) rotateY(4deg); }
+  72% { transform: translate3d(var(--royal-drift), 79vh, 0) rotate(34deg) rotateY(52deg); }
+  92% { opacity: .4; }
+  100% { opacity: 0; transform: translate3d(0, 112vh, 0) rotate(65deg) rotateY(13deg); }
+}
+@media (max-width: 380px) {
+  .videl-royal-glint { width: calc(var(--royal-size) * .85); height: calc(var(--royal-size) * .85); }
+  .videl-royal-petal { width: calc(var(--royal-size) * .8); height: calc(var(--royal-size) * 1.16); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .videl-royal-magic { display: none !important; }
+  .videl-royal-magic > span { animation: none !important; }
+}

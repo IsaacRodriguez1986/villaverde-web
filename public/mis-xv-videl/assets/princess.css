@@ -1,0 +1,108 @@
+/* Floral artwork: GPT Image 2. White artwork blends into the pearl-pink paper. */
+.princess-flowers{position:absolute;display:block;width:clamp(180px,27vw,390px);aspect-ratio:1;background:url('/mis-xv-videl/assets/princess-gpt-image-2.webp') center/contain no-repeat;mix-blend-mode:multiply;pointer-events:none;user-select:none;z-index:1}
+.flower-top-left{left:-12px;top:-12px;transform:scaleY(-1)}
+.flower-top-right{right:-12px;top:-12px;transform:rotate(180deg)}
+.flower-bottom-left{left:-12px;bottom:-12px}
+.flower-bottom-right{right:-12px;bottom:-12px;transform:scaleX(-1)}
+.hero{background:#fae9ee;overflow:hidden}
+.hero::before{opacity:.28}
+.hero::after{background:radial-gradient(ellipse at 50% 44%,#fffdfb 4%,#fff9f8e8 37%,#f8e4ea8c 70%,transparent)}
+.hero .princess-flowers{width:clamp(260px,39vw,590px)}
+.hero .flower-top-left,.hero .flower-top-right{width:clamp(200px,27vw,390px);top:-26px}
+.hero .flower-bottom-left{left:-48px;bottom:-20px}
+.hero .flower-bottom-right{right:-48px;bottom:-20px}
+.hero-inner{position:relative;z-index:2;padding-block:120px 115px}
+.hero h1{margin-top:22px;text-shadow:0 2px 0 #fff,0 10px 25px #943e6014}
+.hero .eyebrow{margin-top:23px}
+.hero-scroll{margin-top:47px}
+.princess-frame{position:absolute;inset:37px 38px;border:1px solid #bd9fa580;border-radius:180px 180px 18px 18px;box-shadow:inset 0 0 0 6px #fffdfb60,inset 0 0 0 7px #c7a9b254;pointer-events:none;z-index:0}
+.princess-frame::before{content:'';position:absolute;inset:13px;border:1px solid #cda9b766;border-radius:170px 170px 11px 11px}
+.princess-frame::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,#fff 1.5px,#d0bbc255 2px,transparent 3px) left center/7px 10px repeat-y,radial-gradient(circle,#fff 1.5px,#d0bbc255 2px,transparent 3px) right center/7px 10px repeat-y;opacity:.85}
+.princess-corner{position:absolute;width:88px;height:88px;fill:none;stroke:#aa8b96;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
+.princess-corner:nth-child(1){left:8px;top:8px}
+.princess-corner:nth-child(2){right:8px;top:8px;transform:scaleX(-1)}
+.princess-corner:nth-child(3){left:8px;bottom:8px;transform:scaleY(-1)}
+.princess-corner:nth-child(4){right:8px;bottom:8px;transform:rotate(180deg)}
+.princess-tiara{display:flex;justify-content:center;align-items:center;gap:17px;margin:0 auto;color:#b495a3}
+.princess-tiara svg,.section-crown,.portrait-crown{width:84px;height:53px;fill:#fffdf7;stroke:#ad8599;stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 5px #943e6019)}
+.princess-tiara span{width:49px;height:1px;background:linear-gradient(90deg,transparent,#bc9daa)}
+.princess-tiara span:last-child{transform:scaleX(-1)}
+.section-crown{width:56px;height:36px;margin:0 auto 18px}
+.content-section{overflow:clip;background-image:radial-gradient(ellipse at 50% 30%,#fffefa90,transparent 75%)}
+.content-section>.section-inner,.rsvp-section>.section-inner{position:relative;z-index:2}
+.content-section p.eyebrow,.rsvp-section p.eyebrow{font:10px/1.7 VidelSans,sans-serif;letter-spacing:.23em;text-transform:uppercase}
+.content-section:not(.venue-section)>.section-inner::before,.content-section:not(.venue-section)>.section-inner::after{width:63px;height:63px;border-color:#bfa5b469;box-shadow:0 0 0 5px #fffdfb70}
+.content-section:not(.venue-section)>.section-inner::before{left:-16px;top:-16px;border-radius:30px 0 0 0}
+.content-section:not(.venue-section)>.section-inner::after{right:-16px;bottom:-16px;border-radius:0 0 30px 0}
+.family-section,.details-section{padding-block:120px 145px}
+.quote-section{padding-block:90px 170px}
+.quote-section .princess-flowers{width:clamp(170px,23vw,320px)}
+.date-section{padding-block:100px 145px}
+.venue-section{padding-bottom:170px}
+.venue-photo{border-color:#b79aaa;box-shadow:0 0 0 5px #fff9f850,0 0 0 6px #bda4b066,0 20px 50px #94426314}
+.princess-portrait-frame{position:relative;width:min(100%,410px);margin:52px auto 64px;padding:11px;border:1px solid #bba5b6;border-radius:220px 220px 22px 22px;box-shadow:0 0 0 5px #fff9f8,0 0 0 6px #dac4cd,0 22px 70px #943e6017;background:linear-gradient(135deg,#fffbfa,#f1dce5,#fffdfb)}
+.princess-portrait-frame::before{content:'';position:absolute;inset:4px;border:3px dotted #fffaf8;border-radius:inherit;pointer-events:none}
+.princess-portrait-frame .portrait-film{width:100%;border-radius:205px 205px 15px 15px;box-shadow:none}
+.portrait-crown{position:absolute;left:50%;top:-47px;transform:translateX(-50%);z-index:3;background:#fff9f8;border-radius:50%;padding:6px;width:88px;height:62px}
+.princess-portrait-frame .princess-flowers{width:260px;bottom:-38px;z-index:3}
+.princess-portrait-frame .flower-bottom-left{left:-72px}
+.princess-portrait-frame .flower-bottom-right{right:-72px}
+.portrait-section{padding-bottom:90px;background-color:#fff9f8}
+.portrait-caption{position:relative;z-index:4}
+.rsvp-section{overflow:clip;background:linear-gradient(145deg,#f8e4ec,#fff9f8 50%,#f5dbe6);color:var(--ink);padding-block:95px 160px}
+.rsvp-section::before{border-color:#bd93a878;inset:24px;z-index:0;border-radius:75px 75px 8px 8px;box-shadow:0 0 0 6px #fff9f870,0 0 0 7px #c3a2b34d}
+.rsvp-section .section-title{color:var(--rose)}
+.rsvp-section .eyebrow{color:var(--muted)}
+.rsvp-section .butterfly{color:#b57894}
+.rsvp-section .btn{background:var(--rose);border-color:var(--rose);color:#fff9f8}
+.rsvp-section .btn:hover{background:#79314e}
+.rsvp-section a:focus-visible{outline-color:var(--rose)}
+.rsvp-section .princess-flowers{width:clamp(230px,30vw,420px)}
+.trivia-section{padding-top:120px;background-color:#fdf1f5}
+#videl-trivia>.section-inner{max-width:680px}
+.trivia-section .princess-flowers{width:clamp(160px,22vw,270px)}
+#videl-trivia .trivia-card{border-color:#c9a9b9;box-shadow:0 0 0 5px #fff9f8a8,0 0 0 6px #d7bdc866,0 20px 50px #943e6010}
+.closing{background:linear-gradient(#fff9f8,#f9e4eb);border-top:1px solid #d8b3c24d}
+.princess-sparkles{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.princess-sparkles i{position:absolute;width:5px;height:5px;background:#fff;box-shadow:0 0 12px 4px #fffaf3;border-radius:50%;animation:princess-glimmer 4.8s ease-in-out infinite}
+.princess-sparkles i:nth-child(1){left:20%;top:28%}
+.princess-sparkles i:nth-child(2){left:77%;top:33%;animation-delay:-1.8s}
+.princess-sparkles i:nth-child(3){left:32%;top:17%;animation-delay:-3.2s}
+.princess-sparkles i:nth-child(4){left:66%;top:67%;animation-delay:-.7s}
+.princess-sparkles i:nth-child(5){left:13%;top:59%;animation-delay:-2.5s}
+.princess-sparkles i:nth-child(6){left:86%;top:75%;animation-delay:-4s}
+@keyframes princess-glimmer{0%,100%{opacity:.2;transform:scale(.6)}45%{opacity:.9;transform:scale(1.1)}65%{opacity:.35;transform:scale(.8)}}
+html[data-videl-motion-paused="true"] .princess-sparkles i,body.locked .princess-sparkles i{animation-play-state:paused}
+@media(max-width:540px){
+  .hero-inner{padding:126px 29px 128px}
+  .hero h1{font-size:126px}
+  .hero .princess-flowers{width:258px}
+  .hero .flower-top-left,.hero .flower-top-right{width:188px;top:-18px}
+  .hero .flower-bottom-left{left:-40px;bottom:-9px}
+  .hero .flower-bottom-right{right:-40px;bottom:-9px}
+  .princess-frame{inset:30px 21px;border-radius:145px 145px 15px 15px}
+  .princess-frame::before{inset:9px;border-radius:135px 135px 8px 8px}
+  .princess-corner{width:60px;height:60px}
+  .princess-tiara svg{width:76px;height:48px}
+  .hero .eyebrow{font-size:9px;letter-spacing:.2em}
+  .hero-scroll{margin-top:37px}
+  .content-section .princess-flowers{width:150px}
+  .family-section,.details-section{padding-block:96px 123px}
+  .quote-section{padding-block:76px 135px}
+  .date-section{padding-block:85px 115px}
+  .venue-section{padding-bottom:133px}
+  .princess-portrait-frame{width:min(100% - 16px,350px);margin-top:47px;margin-bottom:62px;padding:8px}
+  .princess-portrait-frame .princess-flowers{width:181px;bottom:-27px}
+  .princess-portrait-frame .flower-bottom-left{left:-45px}
+  .princess-portrait-frame .flower-bottom-right{right:-45px}
+  .portrait-section{padding-block:78px 80px}
+  .portrait-section .section-title{font-size:45px;line-height:1.4}
+  .rsvp-section{padding:82px 29px 140px}
+  .rsvp-section .princess-flowers{width:185px}
+  .rsvp-section::before{inset:19px 17px}
+  .trivia-section{padding-top:126px}
+  .trivia-section .princess-flowers{width:140px}
+  #videl-trivia .trivia-card{padding:29px 19px}
+}
+@media(max-width:350px){.hero h1{font-size:110px}.hero-inner{padding-inline:25px}.hero .flower-top-left,.hero .flower-top-right{width:166px}.hero .princess-flowers{width:224px}.princess-frame{inset-inline:15px}.princess-portrait-frame .princess-flowers{width:164px}.portrait-section .section-title{font-size:40px}}
+@media(prefers-reduced-motion:reduce){.princess-sparkles i{animation:none;opacity:.45}}
