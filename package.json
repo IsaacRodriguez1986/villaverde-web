@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:verified",
+    "build:verified": "node scripts/check-invitations.mjs && next build && node scripts/check-invitations.mjs --built",
+    "check:invitations": "node scripts/check-invitations.mjs",
+    "test:invitations": "node --test tests/invitation-publication.test.mjs",
     "start": "next start"
   },
   "dependencies": {
