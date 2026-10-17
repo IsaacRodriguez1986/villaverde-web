@@ -795,13 +795,21 @@ export default function Home() {
   const [activeMenu, setActiveMenu] = useState("entradas");
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-  const [testiPlaying, setTestiPlaying] = useState(false);
-  const [testiLoading, setTestiLoading] = useState(false);
+  const [testiPlaying, setTestiPlaying] = useState<[boolean, boolean]>([
+    false,
+    false,
+  ]);
+  const [testiLoading, setTestiLoading] = useState<[boolean, boolean]>([
+    false,
+    false,
+  ]);
   const [testiHydrated, setTestiHydrated] = useState(false);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
-  const testiVideoRef = useRef<HTMLVideoElement>(null);
-  const testiPlayBtnRef = useRef<HTMLButtonElement>(null);
+  const testiVideoRef0 = useRef<HTMLVideoElement>(null);
+  const testiPlayBtnRef0 = useRef<HTMLButtonElement>(null);
+  const testiVideoRef1 = useRef<HTMLVideoElement>(null);
+  const testiPlayBtnRef1 = useRef<HTMLButtonElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
   const [tourSceneId, setTourSceneId] = useState(tour360Scenes[0].id);
   const [tourReady, setTourReady] = useState(false);
@@ -893,46 +901,71 @@ export default function Home() {
     }
   };
 
-  /* El testimonio arranca con un boton propio en vez de los controles nativos: la barra
+  /* Cada testimonio arranca con un boton propio en vez de los controles nativos: la barra
    * negra le tapaba el 15% inferior a la caratula y la unica forma de darle play era una
    * flecha diminuta en la esquina. Los controles nativos aparecen recien empezado el video. */
-  const playTestiVideo = () => {
-    const video = testiVideoRef.current;
-    if (!video || testiLoading) return;
-    setTestiLoading(true);
+  const getTestiRefs = (idx: 0 | 1) => ({
+    video: (idx === 0 ? testiVideoRef0 : testiVideoRef1).current,
+    btn: (idx === 0 ? testiPlayBtnRef0 : testiPlayBtnRef1).current,
+    otherVideo: (idx === 0 ? testiVideoRef1 : testiVideoRef0).current,
+  });
+
+  const playTestiVideo = (idx: 0 | 1) => {
+    const { video, otherVideo } = getTestiRefs(idx);
+    if (!video || testiLoading[idx]) return;
+    if (otherVideo && !otherVideo.paused) {
+      otherVideo.pause();
+    }
+    setTestiLoading((prev) =>
+      idx === 0 ? [true, prev[1]] : [prev[0], true],
+    );
     video.play().catch((err: unknown) => {
-      setTestiLoading(false);
+      setTestiLoading((prev) =>
+        idx === 0 ? [false, prev[1]] : [prev[0], false],
+      );
       // Un AbortError no es un fallo de arranque: es una reproduccion que empezo y algo
       // interrumpio (un segundo toque, un pause). Revertir ahi apagaria controles legitimos.
       if (err instanceof DOMException && err.name === "AbortError") return;
-      setTestiPlaying(false);
+      setTestiPlaying((prev) =>
+        idx === 0 ? [false, prev[1]] : [prev[0], false],
+      );
     });
   };
 
-  const handleTestiPlaying = () => {
+  const handleTestiPlaying = (idx: 0 | 1) => {
+    const { video, btn, otherVideo } = getTestiRefs(idx);
+    if (otherVideo && !otherVideo.paused) {
+      otherVideo.pause();
+    }
     /* El foco se traslada ANTES de ocultar el boton. Si React le aplica inert mientras
      * lo tiene, el navegador bloquea el atributo y avisa: "Blocked aria-hidden on an
      * element because its descendant retained focus". El efecto de rescate de mas abajo
      * corre despues del pintado, o sea demasiado tarde para evitar esa ventana. */
-    if (document.activeElement === testiPlayBtnRef.current) {
-      testiVideoRef.current?.focus({ preventScroll: true });
+    if (document.activeElement === btn) {
+      video?.focus({ preventScroll: true });
     }
-    setTestiLoading(false);
-    setTestiPlaying(true);
+    setTestiLoading((prev) =>
+      idx === 0 ? [false, prev[1]] : [prev[0], false],
+    );
+    setTestiPlaying((prev) =>
+      idx === 0 ? [true, prev[1]] : [prev[0], true],
+    );
   };
 
-  const handleTestiEnded = () => {
-    const video = testiVideoRef.current;
+  const handleTestiEnded = (idx: 0 | 1) => {
+    const { video, btn } = getTestiRefs(idx);
     const teniaFoco = document.activeElement === video;
-    setTestiPlaying(false);
-    setTestiLoading(false);
+    setTestiPlaying((prev) =>
+      idx === 0 ? [false, prev[1]] : [prev[0], false],
+    );
+    setTestiLoading((prev) =>
+      idx === 0 ? [false, prev[1]] : [prev[0], false],
+    );
     // load() repinta la caratula; sin el, el video queda congelado en el ultimo fotograma
     // y el boton reaparece sobre una imagen detenida en vez de sobre el poster.
     video?.load();
     if (teniaFoco) {
-      requestAnimationFrame(() =>
-        testiPlayBtnRef.current?.focus({ preventScroll: true }),
-      );
+      requestAnimationFrame(() => btn?.focus({ preventScroll: true }));
     }
   };
 
@@ -945,11 +978,14 @@ export default function Home() {
    * que acaba de volverse enfocable al recibir los controles. Sin esto el foco caia a
    * <body> y el siguiente Tab reiniciaba el recorrido desde el inicio de la pagina. */
   useEffect(() => {
-    if (!testiPlaying) return;
-    const activo = document.activeElement;
-    if (activo === document.body || activo === testiPlayBtnRef.current) {
-      testiVideoRef.current?.focus({ preventScroll: true });
-    }
+    ([0, 1] as const).forEach((idx) => {
+      if (!testiPlaying[idx]) return;
+      const { video, btn } = getTestiRefs(idx);
+      const activo = document.activeElement;
+      if (activo === document.body || activo === btn) {
+        video?.focus({ preventScroll: true });
+      }
+    });
   }, [testiPlaying]);
 
   useEffect(() => {
@@ -2321,62 +2357,113 @@ export default function Home() {
             Lo que dicen nuestras familias
           </h2>
 
-          {/* Testimonio REAL en video (14s, grabado en el salón la noche de la fiesta).
+          {/* Testimonios REALES en video (grabados en el salón la noche de la fiesta).
               preload="none" + poster: no baja un solo byte del video hasta que alguien le da play,
               así no le cuesta nada al tiempo de carga de la página. */}
-          <div className="testi-video reveal">
-            <div className="testi-video-frame">
-              <video
-                ref={testiVideoRef}
-                className="testi-video-player"
-                src="/testimonio-xv.mp4"
-                poster="/testimonio-xv-poster.jpg"
-                controls={!testiHydrated || testiPlaying}
-                playsInline
-                preload="none"
-                aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
-                onPlaying={handleTestiPlaying}
-                onEnded={handleTestiEnded}
-              />
-              <button
-                ref={testiPlayBtnRef}
-                type="button"
-                className={`testi-video-play${testiPlaying ? " oculto" : ""}`}
-                onClick={playTestiVideo}
-                aria-label="Reproducir el testimonio en video (14 segundos)"
-                aria-busy={testiLoading}
-                inert={testiPlaying}
-                tabIndex={testiPlaying ? -1 : 0}
-              >
-                <svg
-                  width="30"
-                  height="30"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
+          <div className="testi-videos-grid reveal">
+            <div className="testi-video">
+              <div className="testi-video-frame">
+                <video
+                  ref={testiVideoRef0}
+                  className="testi-video-player"
+                  src="/testimonio-xv.mp4"
+                  poster="/testimonio-xv-poster.jpg"
+                  controls={!testiHydrated || testiPlaying[0]}
+                  playsInline
+                  preload="none"
+                  aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
+                  onPlaying={() => handleTestiPlaying(0)}
+                  onEnded={() => handleTestiEnded(0)}
+                />
+                <button
+                  ref={testiPlayBtnRef0}
+                  type="button"
+                  className={`testi-video-play${testiPlaying[0] ? " oculto" : ""}`}
+                  onClick={() => playTestiVideo(0)}
+                  aria-label="Reproducir el testimonio de la quinceañera en video (14 segundos)"
+                  aria-busy={testiLoading[0]}
+                  inert={testiPlaying[0]}
+                  tabIndex={testiPlaying[0] ? -1 : 0}
                 >
-                  <path d="M8 5.5v13l11-6.5z" />
-                </svg>
-              </button>
-            </div>
-            <div className="testi-video-caption">
-              <div className="testi-video-label">
-                &quot;Mi fiesta en Villaverde&quot;
+                  <svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5.5v13l11-6.5z" />
+                  </svg>
+                </button>
               </div>
-              <p>
-                Una de nuestras quinceañeras, contándolo con sus palabras la
-                misma noche de su fiesta. Sin guion y sin edición.
-              </p>
-              <div className="testi-event">XV Años · agosto 2026</div>
+              <div className="testi-video-caption">
+                <div className="testi-video-label">
+                  &quot;Mi fiesta en Villaverde&quot;
+                </div>
+                <p>
+                  Una de nuestras quinceañeras, contándolo con sus palabras la
+                  misma noche de su fiesta. Sin guion y sin edición.
+                </p>
+                <div className="testi-event">XV Años · agosto 2026</div>
+              </div>
+            </div>
+
+            <div className="testi-video">
+              <div className="testi-video-frame">
+                <video
+                  ref={testiVideoRef1}
+                  className="testi-video-player"
+                  src="/testimonio-familia.mp4"
+                  poster="/testimonio-familia-poster.jpg"
+                  controls={!testiHydrated || testiPlaying[1]}
+                  playsInline
+                  preload="none"
+                  aria-label="Testimonio en video de familiares e invitados en Salón Villaverde (32 segundos)"
+                  onPlaying={() => handleTestiPlaying(1)}
+                  onEnded={() => handleTestiEnded(1)}
+                />
+                <button
+                  ref={testiPlayBtnRef1}
+                  type="button"
+                  className={`testi-video-play${testiPlaying[1] ? " oculto" : ""}`}
+                  onClick={() => playTestiVideo(1)}
+                  aria-label="Reproducir el testimonio de los familiares en video (32 segundos)"
+                  aria-busy={testiLoading[1]}
+                  inert={testiPlaying[1]}
+                  tabIndex={testiPlaying[1] ? -1 : 0}
+                >
+                  <svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5.5v13l11-6.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div className="testi-video-caption">
+                <div className="testi-video-label">
+                  &quot;Recomendable al 100%&quot;
+                </div>
+                <p>
+                  Familiares e invitados compartiendo cómo vivieron la fiesta y
+                  el ambiente del salón al terminar el evento.
+                </p>
+                <div className="testi-event">XV Años · agosto 2026</div>
+              </div>
             </div>
           </div>
 
           <details className="testi-transcript reveal">
-            <summary>Descripción del testimonio</summary>
+            <summary>Descripción de los testimonios</summary>
             <p>
-              Una quinceañera comparte, durante su evento, que celebró su fiesta
-              en Villaverde. El video conserva su voz y el ambiente original del
-              salón.
+              En el primer video, una quinceañera comparte durante su
+              celebración que festejó sus XV años en Villaverde. En el segundo,
+              familiares e invitados recomiendan el salón al 100% al cierre de
+              la fiesta. Ambos videos conservan las voces y el ambiente original
+              del salón.
             </p>
           </details>
         </div>

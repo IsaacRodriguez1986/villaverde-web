@@ -1497,15 +1497,19 @@ button {
   right: 0;
 }
 
-/* Testimonio en video — el único real; va arriba del carrusel de texto. El video es vertical
-   (se grabó con celular), así que la tarjeta lo acomoda al lado del texto en escritorio y lo
-   centra en móvil, sin deformarlo. */
-.testi-video {
-  max-width: 720px;
-  margin: 0 auto 32px;
+/* Testimonios en video — grabados en celular (9:16), acomodados uno al lado del otro en
+   escritorio y apilados en tablet/móvil sin deformar la proporción vertical. */
+.testi-videos-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  margin: 0 auto 32px;
+  align-items: stretch;
+}
+.testi-video {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 20px;
   align-items: center;
   background: white;
   border: 1px solid var(--gris);
@@ -1592,7 +1596,7 @@ button {
   margin-bottom: 10px;
 }
 .testi-transcript {
-  max-width: 540px;
+  max-width: 640px;
   margin: 18px auto 0;
   border-top: 1px solid var(--gris);
   color: var(--gris-text);
@@ -1610,6 +1614,15 @@ button {
 .testi-transcript p {
   padding: 0 16px 16px;
   line-height: 1.65;
+}
+@media (max-width: 960px) {
+  .testi-videos-grid {
+    grid-template-columns: 1fr;
+    max-width: 680px;
+  }
+  .testi-video {
+    grid-template-columns: 210px 1fr;
+  }
 }
 @media (max-width: 640px) {
   .testi-video {
