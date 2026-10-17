@@ -133,6 +133,17 @@ const nextConfig: NextConfig = {
         destination: "/boda-angel-isis/:path*",
         permanent: false,
       },
+      // Panel de moderacion del Muro QR.
+      {
+        source: "/panel",
+        destination: "https://muro-villaverde.vercel.app/panel",
+        permanent: false,
+      },
+      {
+        source: "/panel/:path*",
+        destination: "https://muro-villaverde.vercel.app/panel/:path*",
+        permanent: false,
+      },
     ];
   },
   async rewrites() {
@@ -148,6 +159,24 @@ const nextConfig: NextConfig = {
       {
         source: "/informes",
         destination: "/informes/index.html",
+      },
+      // Muro de fotos QR (muro-villaverde): subida de invitados, pantalla del
+      // salon, galeria post-evento y endpoints del muro bajo el dominio oficial.
+      {
+        source: "/e/:path*",
+        destination: "https://muro-villaverde.vercel.app/e/:path*",
+      },
+      {
+        source: "/pantalla/:path*",
+        destination: "https://muro-villaverde.vercel.app/pantalla/:path*",
+      },
+      {
+        source: "/galeria/:path*",
+        destination: "https://muro-villaverde.vercel.app/galeria/:path*",
+      },
+      {
+        source: "/api/muro/:path*",
+        destination: "https://muro-villaverde.vercel.app/api/muro/:path*",
       },
       // Invitaciones de clientes: una sola lista arriba genera rewrite y
       // cabeceras. Agregar una nueva es añadir su slug a INVITACIONES.
