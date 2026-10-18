@@ -2413,12 +2413,12 @@ export default function Home() {
                 <video
                   ref={testiVideoRef1}
                   className="testi-video-player"
-                  src="/testimonio-familia.mp4"
-                  poster="/testimonio-familia-poster.jpg"
+                  src="/testimonio-vivian.mp4"
+                  poster="/testimonio-vivian-poster.jpg"
                   controls={!testiHydrated || testiPlaying[1]}
                   playsInline
                   preload="none"
-                  aria-label="Testimonio en video de familiares e invitados en Salón Villaverde (32 segundos)"
+                  aria-label="Testimonio en video de los XV años de Vivian en Salón Villaverde (39 segundos)"
                   onPlaying={() => handleTestiPlaying(1)}
                   onEnded={() => handleTestiEnded(1)}
                 />
@@ -2427,7 +2427,7 @@ export default function Home() {
                   type="button"
                   className={`testi-video-play${testiPlaying[1] ? " oculto" : ""}`}
                   onClick={() => playTestiVideo(1)}
-                  aria-label="Reproducir el testimonio de los familiares en video (32 segundos)"
+                  aria-label="Reproducir el testimonio de Vivian en video (39 segundos)"
                   aria-busy={testiLoading[1]}
                   inert={testiPlaying[1]}
                   tabIndex={testiPlaying[1] ? -1 : 0}
@@ -2445,13 +2445,13 @@ export default function Home() {
               </div>
               <div className="testi-video-caption">
                 <div className="testi-video-label">
-                  &quot;Recomendable al 100%&quot;
+                  &quot;Las instalaciones están perfectas&quot;
                 </div>
                 <p>
-                  Familiares e invitados compartiendo cómo vivieron la fiesta y
-                  el ambiente del salón al terminar el evento.
+                  Vivian nos cuenta por qué eligió Villaverde para sus XV años:
+                  las escaleras, la decoración, el baile y toda la organización.
                 </p>
-                <div className="testi-event">XV Años · agosto 2026</div>
+                <div className="testi-event">XV Años de Vivian</div>
               </div>
             </div>
           </div>
@@ -2459,11 +2459,11 @@ export default function Home() {
           <details className="testi-transcript reveal">
             <summary>Descripción de los testimonios</summary>
             <p>
-              En el primer video, una quinceañera comparte durante su
-              celebración que festejó sus XV años en Villaverde. En el segundo,
-              familiares e invitados recomiendan el salón al 100% al cierre de
-              la fiesta. Ambos videos conservan las voces y el ambiente original
-              del salón.
+              Dos quinceañeras comparten, al terminar su celebración, su
+              experiencia festejando sus XV años en Salón Villaverde: las
+              instalaciones, las escaleras, la decoración, el baile y la
+              organización del evento. Ambos videos conservan sus voces y el
+              ambiente real del salón.
             </p>
           </details>
         </div>
