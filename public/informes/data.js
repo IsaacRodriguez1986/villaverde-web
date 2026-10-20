@@ -70,14 +70,11 @@ VV.PAQUETES = [
     priceMain: 680, priceFrom: null, minPax: 200,
     priceNote: 'Desde 200 invitados', priceNote2: null,
     cortesias: 'Todas',
+    /* Solo lo propio de Esmeralda: TODAS las cortesías se le agregan abajo, desde
+       VV.CORTESIAS (la misma lista de la que eligen Premium y Diamante). */
     incluye: [
-      'Show de robot', 'Grupo versátil 9 integrantes',
-      'Cóctel de bienvenida', 'Cabina foto 360 (1 hora)',
-      'Cantante durante la cena', 'LED en cada mesa',
-      'Cascada de flores en escalera', 'Arco de flores',
-      'Inflable o trampolín', 'Cabezones',
-      'Video remembranza', 'Máquina de burbujas',
-      'Taxi dancer', 'Batucada con globos',
+      'Grupo versátil 9 integrantes', 'Cóctel de bienvenida',
+      'Cabina foto 360 (1 hora)',
     ],
     hereda: 'Diamante',
   },
@@ -145,19 +142,19 @@ VV.ITEM_INFO = {
   'Mantelería color a elegir':      { icon: 'sparkle',d: 'Elige el color de mantelería que combine con tu tema. Mira cómo cambia por completo el ambiente de tu mesa.', go: 'manteleria' },
   'Chilaquiles de madrugada':       { icon: 'soup',   d: 'La torna fiesta: chilaquiles calientitos a la madrugada para revivir a todos y cerrar la noche con broche de oro.' },
 
-  'Show de robot':                  { icon: 'robot',  d: 'Robot LED gigante que baila e interactúa con los invitados. Uno de los momentos más fotografiados y compartidos de la noche (sin pirotecnia).', go: 'cortesias', cort: 'robot' },
+  'Robot show':                     { icon: 'robot',  d: 'Robot LED gigante que baila e interactúa con los invitados. Uno de los momentos más fotografiados y compartidos de la noche (sin pirotecnia).', go: 'cortesias', cort: 'robot' },
   'Grupo versátil 9 integrantes':   { icon: 'mic',    d: 'Grupo versátil completo de 9 integrantes con sección de vientos. Sonido de gran evento que llena la pista toda la noche.', fotos: ['assets/trooncosis-grupo.jpg'], poster: true },
   'Cóctel de bienvenida':           { icon: 'drink',  d: 'Coctelería de bienvenida para recibir a tus invitados: 4 vitroleros de 10 L + 100 micheladas para 100 personas.', fotos: ['assets/coctel-bienvenida.jpg'] },
   'Cabina foto 360 (1 hora)':       { icon: 'camera', d: 'Cabina 360° por una hora: tus invitados se graban en video giratorio y se lo llevan al instante. Siempre es el éxito de la fiesta.' },
   'Cantante durante la cena':       { icon: 'mic',    d: 'Voz en vivo amenizando la cena con un ambiente elegante e íntimo mientras tus invitados disfrutan los tres tiempos.', go: 'cortesias', cort: 'cantante', video: VV.VIDEOS_CANTANTE, fotos: ['assets/cantante-real.jpg', 'assets/mariachi-cena.jpg'] },
-  'LED en cada mesa':               { icon: 'sparkle',d: 'Iluminación LED de color en cada mesa que hace brillar el salón y crea una atmósfera mágica de noche.', go: 'cortesias', cort: 'ledmesas' },
-  'Cascada de flores en escalera':  { icon: 'flower', d: 'Una cascada de flores decorando la escalera de entrada: el marco perfecto para la entrada del festejado y las fotos.', go: 'cortesias', cort: 'cascada', fotos: ['assets/cascada/01.jpg', 'assets/cascada/02.jpg', 'assets/cascada/03.jpg', 'assets/cascada/04.jpg'] },
+  'Iluminación LED en mesas':       { icon: 'sparkle',d: 'Iluminación LED de color en cada mesa que hace brillar el salón y crea una atmósfera mágica de noche.', go: 'cortesias', cort: 'ledmesas' },
+  'Cascada de flores':              { icon: 'flower', d: 'Una cascada de flores decorando la escalera de entrada: el marco perfecto para la entrada del festejado y las fotos.', go: 'cortesias', cort: 'cascada', fotos: ['assets/cascada/01.jpg', 'assets/cascada/02.jpg', 'assets/cascada/03.jpg', 'assets/cascada/04.jpg'] },
   'Arco de flores':                 { icon: 'arch',   d: 'Arco floral para la entrada o el área de fotos. Un punto focal hermoso que tus invitados no dejarán de fotografiar.', go: 'cortesias', cort: 'arco' },
-  'Inflable o trampolín':           { icon: 'jump',   d: 'Inflable o trampolín en el jardín para que los más jóvenes se diviertan sin parar mientras los adultos disfrutan.', go: 'cortesias', cort: 'inflable' },
-  'Cabezones':                      { icon: 'mask',   d: 'Cabezones bailarines: personajes gigantes que salen a la pista y arman la fiesta con los niños y los grandes.', go: 'cortesias', cort: 'cabezones' },
+  'Inflable / trampolín':           { icon: 'jump',   d: 'Inflable o trampolín en el jardín para que los más jóvenes se diviertan sin parar mientras los adultos disfrutan.', go: 'cortesias', cort: 'inflable' },
+  'Cabezones bailarines':           { icon: 'mask',   d: 'Cabezones bailarines: personajes gigantes que salen a la pista y arman la fiesta con los niños y los grandes.', go: 'cortesias', cort: 'cabezones' },
   'Video remembranza':              { icon: 'film',   d: 'Video con los recuerdos del festejado proyectado en la pantalla gigante. Un momento emotivo garantizado.', go: 'cortesias', cort: 'video' },
   'Máquina de burbujas':            { icon: 'bubble', d: 'Máquina de burbujas que llena el aire durante el vals y crea un ambiente de ensueño para las fotos.', go: 'cortesias', cort: 'burbujas', fotos: ['assets/burbujas-real.jpg', 'assets/burbujas-baile.jpg'] },
-  'Taxi dancer':                    { icon: 'dance',  d: 'Bailarines profesionales que se mezclan con los invitados y mantienen la pista llena toda la noche.', go: 'cortesias', cort: 'taxi' },
+  'Servicio de taxi dancer':        { icon: 'dance',  d: 'Bailarines profesionales que se mezclan con los invitados y mantienen la pista llena toda la noche.', go: 'cortesias', cort: 'taxi' },
 };
 
 /* ---------- INVITACIONES DE MUESTRA ----------
@@ -206,7 +203,7 @@ VV.MENU = {
   bebidas: ['Refresco ilimitado (2 sabores) y hielo', 'Descorche libre', 'Botella de 3/4 por mesa'],
 };
 
-/* ---------- CORTESÍAS A ELEGIR (reales, 12) ---------- */
+/* ---------- CORTESÍAS A ELEGIR (reales, 13) ---------- */
 VV.CORTESIAS = [
   { id: 'inflable', name: 'Inflable / trampolín', desc: 'En el jardín, diversión para los jóvenes.', icon: 'jump',   wow: 3,
     gallery: [
@@ -244,6 +241,19 @@ VV.CORTESIAS = [
   { id: 'ceremonia', name: 'Ceremonia religiosa',   desc: 'Altar montado dentro del salón.',         icon: 'arch',   wow: 4,
     gallery: ['assets/ceremonia-religiosa.jpg'] },
 ];
+
+/* "TODAS las cortesías" de un paquete son esta misma lista, no una copia a mano: la copia
+   de Esmeralda se había desincronizado (le faltaban chilaquiles, letras iluminadas y
+   ceremonia, y los nombres no coincidían con los que eligen Premium y Diamante).
+   Cada cortesía abre su ficha en "Paquetes"; la que no tiene texto propio en
+   VV.ITEM_INFO usa su `desc` y su galería. */
+VV.PAQUETES = VV.PAQUETES.map(p => p.cortesias === 'Todas'
+  ? { ...p, incluye: [...p.incluye, ...VV.CORTESIAS.map(c => c.name)] }
+  : p);
+VV.ITEM_INFO = {
+  ...Object.fromEntries(VV.CORTESIAS.map(c => [c.name, { icon: c.icon, d: c.desc, go: 'cortesias', cort: c.id }])),
+  ...VV.ITEM_INFO,
+};
 
 /* ---------- TEMÁTICAS QUE HEMOS AMBIENTADO (galería por temática) ----------
    Cada temática abre el visor GaleriaLightbox con SUS fotos y videos.
