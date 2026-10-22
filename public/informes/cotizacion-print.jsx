@@ -16,6 +16,7 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
   const fechaHoy = hoy.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
   const folio = 'VV-' + hoy.getFullYear().toString().slice(2) +
     String(hoy.getMonth() + 1).padStart(2, '0') + String(hoy.getDate()).padStart(2, '0');
+  const vig = VV.vigencia();
 
   const fechaEvento = localStorage.getItem('vv_fecha') || 'Por definir';
   const salonId = localStorage.getItem('vv_salon') || 'villaverde';
@@ -158,6 +159,10 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
           <div className="vv-ps__pay-note">
             Formas de pago: transferencia, tarjeta de débito o efectivo (no se acepta tarjeta de crédito) · Apartamos tu fecha tentativa 48 h sin compromiso.
           </div>
+          <div className="vv-ps__vig">
+            <div><b>Precio válido hasta el {vig.precio.larga}</b> · se respeta solo {VV.VIGENCIA.precioDias} días a partir de hoy.</div>
+            <div><b>Promoción de la pista LED hasta el {vig.pista.larga}</b> · válida solo {VV.VIGENCIA.pistaDiasHabiles} días hábiles.</div>
+          </div>
         </div>
       </section>
 
@@ -173,7 +178,7 @@ function CotizacionPrint({ pkg, guests, pp, cliente, evento }) {
             <b>WhatsApp {VV.CONTACTO.whats}</b> · {VV.CONTACTO.web} · {VV.CONTACTO.instagram}
           </div>
           <div className="vv-ps__legal">
-            {VV.CONTACTO.horario} · Precios sujetos a disponibilidad de fecha · Cotización válida 15 días naturales.
+            {VV.CONTACTO.horario} · Precios sujetos a disponibilidad de fecha.
           </div>
           <div className="vv-ps__signs">
             <div className="vv-ps__sign"><div className="vv-ps__signline"></div>Asesor Villaverde</div>

@@ -512,6 +512,35 @@ VV.priceFor = function (pkgId, guests) {
   return 680;
 };
 
+/* ---------- VIGENCIA DE LA COTIZACIÓN ----------
+   El precio cotizado se respeta 15 días naturales a partir de hoy y la promoción
+   de la pista LED, 8 días hábiles (lunes a viernes; hoy no cuenta). "Hoy" es el
+   día en CDMX aunque el equipo traiga otra zona horaria. Se calcula cada vez que
+   se muestra o se imprime la cotización: nunca queda una fecha fija en el código. */
+VV.VIGENCIA = { precioDias: 15, pistaDiasHabiles: 8 };
+
+VV.vigencia = function () {
+  var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var hoy = {};
+  new Intl.DateTimeFormat('en-US', { timeZone: 'America/Mexico_City', year: 'numeric', month: 'numeric', day: 'numeric' })
+    .formatToParts(new Date()).forEach(function (p) { hoy[p.type] = +p.value; });
+  // Fecha de hoy + n días naturales (en UTC para que el cambio de horario no mueva el día)
+  var masDias = function (n) { return new Date(Date.UTC(hoy.year, hoy.month - 1, hoy.day + n)); };
+  var nPista = 0;
+  for (var habiles = 0; habiles < VV.VIGENCIA.pistaDiasHabiles;) {
+    nPista++;
+    var dow = masDias(nPista).getUTCDay();
+    if (dow !== 0 && dow !== 6) habiles++;
+  }
+  var fecha = function (d) {
+    var corta = DIAS[d.getUTCDay()] + ' ' + d.getUTCDate() + ' de ' + MESES[d.getUTCMonth()];
+    return { corta: corta, larga: corta + ' de ' + d.getUTCFullYear() };
+  };
+  return { precio: fecha(masDias(VV.VIGENCIA.precioDias)), pista: fecha(masDias(nPista)) };
+};
+
 // Llaves de datos del cliente (se borran al iniciar una cotización nueva).
 // NO incluye config del asesor (tweaks de color/tipografía/guión).
 VV.CLIENT_KEYS = ['vv_step', 'vv_pkgview', 'vv_pkg', 'vv_guests', 'vv_cliente',

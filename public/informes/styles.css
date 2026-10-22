@@ -773,6 +773,19 @@ image-slot { cursor: zoom-in; }
 .vv-qpick b { font-size: 16px; }
 .vv-qpick small { font-size: 11px; color: var(--vv-muted); }
 
+/* — Vigencia de la cotización (precio 15 días · promo de la pista 8 días hábiles) — */
+.vv-vigencia { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 10px; }
+.vv-vigencia__item {
+  display: flex; gap: 11px; align-items: flex-start;
+  padding: 12px 14px; border-radius: 14px;
+  background: var(--vv-cream); border: 1px solid var(--vv-line);
+}
+.vv-vigencia__item--promo { border-color: var(--vv-gold-soft); background: linear-gradient(100deg, var(--vv-paper-2), var(--vv-cream)); }
+.vv-vigencia__ico { color: var(--vv-crimson); flex: none; margin-top: 1px; }
+.vv-vigencia__item--promo .vv-vigencia__ico { color: var(--vv-gold); }
+.vv-vigencia b { display: block; font-size: 13.5px; font-weight: 800; color: var(--vv-ink); line-height: 1.3; }
+.vv-vigencia small { display: block; font-size: 12px; color: var(--vv-muted); margin-top: 2px; }
+
 /* — Paquetes: pestañas + hoja por paquete — */
 .vv-pkgtab {
   position: relative; text-align: left; cursor: pointer;
@@ -884,6 +897,7 @@ image-slot { cursor: zoom-in; }
   font-weight: 800; color: var(--vv-muted);
 }
 .vv-field input {
+  min-width: 0; width: 100%;  /* sin esto los campos ensanchaban el cotizador y aplastaban la tarjeta del total */
   font-family: var(--vv-body); font-size: 15px; font-weight: 600; color: var(--vv-ink);
   background: var(--vv-paper); border: 1.5px solid var(--vv-line);
   border-radius: 12px; padding: 11px 14px; outline: none;
@@ -1223,6 +1237,14 @@ html { -webkit-tap-highlight-color: transparent; }
   .vv-ps__pay-tot { border-top: 1px dashed var(--vv-line-strong); padding-top: 6px; margin-top: 1px; }
   .vv-ps__pay-tot b { font-family: var(--vv-display); font-size: 14px; color: var(--vv-crimson); }
   .vv-ps__pay-note { font-size: 9px; color: var(--vv-muted); line-height: 1.5; margin-top: 7px; font-style: italic; }
+
+  /* Vigencia — precio 15 días y promo de la pista 8 días hábiles */
+  .vv-ps__vig {
+    margin-top: 9px; padding: 8px 12px; display: grid; gap: 4px; break-inside: avoid;
+    border: 1px solid var(--vv-gold-soft); border-left: 3px solid var(--vv-crimson); border-radius: 10px;
+    background: var(--vv-paper); font-size: 9.5px; line-height: 1.4; color: var(--vv-muted);
+  }
+  .vv-ps__vig b { color: var(--vv-crimson); font-weight: 800; }
 
   /* Prueba social */
   .vv-ps__trust {

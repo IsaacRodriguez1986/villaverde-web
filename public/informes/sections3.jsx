@@ -604,6 +604,29 @@ function ComparaTabla({ activeId, onPick }) {
 
 /* ---------------- 7 · COTIZADOR ---------------- */
 function ppFor(pkgId, guests) { return VV.priceFor(pkgId, guests); }   // fuente única: VV.priceFor (data.js)
+
+// Vigencia: el precio se respeta 15 días y la promo de la pista, 8 días hábiles (VV.vigencia, data.js)
+function VigenciaAvisos({ style }) {
+  const v = VV.vigencia();
+  return (
+    <div className="vv-vigencia" style={style}>
+      <div className="vv-vigencia__item">
+        <span className="vv-vigencia__ico"><Icon name="clock" size={18} /></span>
+        <div>
+          <b>Precio válido hasta el {v.precio.corta}</b>
+          <small>Se respeta solo {VV.VIGENCIA.precioDias} días a partir de hoy</small>
+        </div>
+      </div>
+      <div className="vv-vigencia__item vv-vigencia__item--promo">
+        <span className="vv-vigencia__ico"><Icon name="sparkle" size={18} /></span>
+        <div>
+          <b>Promoción de la pista LED hasta el {v.pista.corta}</b>
+          <small>Válida solo {VV.VIGENCIA.pistaDiasHabiles} días hábiles</small>
+        </div>
+      </div>
+    </div>
+  );
+}
 function SecCotizador() {
   // Mismo criterio que la barra de resumen: el paquete cotizado o, si aún no se cotiza, la pestaña que se estaba viendo.
   const [pkgId, setPkgId] = useState(() => localStorage.getItem('vv_pkg') || localStorage.getItem('vv_pkgview') || 'diamante');
@@ -716,6 +739,8 @@ function SecCotizador() {
                 <b><Money value={restante} /></b>
               </div>
             </div>
+
+            <VigenciaAvisos style={{ marginTop: 18 }} />
 
             <button className="vv-btn vv-btn--gold" style={{ width: '100%', justifyContent: 'center', marginTop: 22, fontSize: 15 }}
               onClick={() => window.print()}>
@@ -910,6 +935,8 @@ function SecCierre({ onGo }) {
     if (mantel) L.push('Mantelería: ' + mantel.name);
     L.push(`*Total: ${fmt(total)}* (todo incluido)`);
     L.push('Anticipo para apartar: $3,000');
+    // Solo la vigencia del precio: la pista LED nunca se menciona por WhatsApp (regla del negocio)
+    L.push(`Precio válido hasta el ${VV.vigencia().precio.larga} (${VV.VIGENCIA.precioDias} días a partir de hoy)`);
     if (favNames.length) L.push('Cortesías: ' + favNames.join(', '));
     if (menuLines.length) L.push('Menú: ' + menuLines.join(' · '));
     L.push('');
@@ -977,6 +1004,8 @@ function SecCierre({ onGo }) {
           </button>
         </div>
       </div>
+
+      <VigenciaAvisos style={{ maxWidth: 880, margin: '14px auto 0' }} />
 
       {/* Contacto */}
       <div style={{ maxWidth: 880, margin: '22px auto 0', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14 }}>
