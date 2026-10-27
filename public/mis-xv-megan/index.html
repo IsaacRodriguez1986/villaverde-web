@@ -1278,25 +1278,25 @@
       <div class="thanks-title">Gracias por acompañarnos</div>
     </div>
 
-    <!-- Confirmación de Asistencia (RSVP a 5571808883) -->
+    <!-- Evento finalizado: confirmaciones cerradas también sin JavaScript. -->
     <div class="rsvp-card">
       <span class="material-symbols-outlined deco-star is-blue" style="top: 6%; left: 6%; font-size: 16px; animation-delay: 1.3s;">auto_awesome</span>
       <span class="material-symbols-outlined deco-star" style="top: 10%; right: 5%; font-size: 14px; animation-delay: 2.8s;">auto_awesome</span>
       <div class="section-eyebrow">Confirmación de Asistencia</div>
       <h2 class="section-title">¿Nos acompañas a brillar?</h2>
-      <p style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--blue-pale); margin-top: 8px;">
-        Favor de confirmar tu asistencia antes del 30 de Septiembre de 2026.
+      <p id="rsvp-notice" role="status" style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--blue-pale); margin-top: 8px;">
+        Evento finalizado · Las confirmaciones de asistencia están cerradas.
       </p>
 
-      <form class="rsvp-form" id="rsvp-form" onsubmit="handleRSVPSubmit(event)">
+      <form class="rsvp-form" id="rsvp-form" aria-disabled="true" onsubmit="return handleRSVPSubmit(event)">
         <div class="form-group">
           <label for="rsvp-name">Nombre Completo</label>
-          <input type="text" id="rsvp-name" class="form-control" placeholder="Escribe tu nombre" required>
+          <input type="text" id="rsvp-name" class="form-control" placeholder="Escribe tu nombre" required disabled>
         </div>
 
         <div class="form-group">
           <label for="rsvp-status">¿Asistirás al evento?</label>
-          <select id="rsvp-status" class="form-control" required>
+          <select id="rsvp-status" class="form-control" required disabled>
             <option value="¡Sí, con mucho gusto ahí estaré para celebrar con Megan!">✨ ¡Sí, confirmo mi asistencia!</option>
             <option value="Lamentablemente no podré asistir, pero les deseo lo mejor.">💌 No podré asistir</option>
           </select>
@@ -1304,7 +1304,7 @@
 
         <div class="form-group">
           <label for="rsvp-guests">Número de pases / personas</label>
-          <select id="rsvp-guests" class="form-control" required>
+          <select id="rsvp-guests" class="form-control" required disabled>
             <option value="1">1 Persona</option>
             <option value="2">2 Personas</option>
             <option value="3">3 Personas</option>
@@ -1315,12 +1315,12 @@
 
         <div class="form-group">
           <label for="rsvp-message">Dedicatoria para Megan Paulette (opcional)</label>
-          <input type="text" id="rsvp-message" class="form-control" placeholder="Escribe un mensaje para la quinceañera...">
+          <input type="text" id="rsvp-message" class="form-control" placeholder="Escribe un mensaje para la quinceañera..." disabled>
         </div>
 
-        <button type="submit" class="btn-rsvp">
+        <button type="submit" class="btn-rsvp" disabled>
           <span class="material-symbols-outlined" style="font-size: 20px;">send</span>
-          Confirmar Asistencia por WhatsApp
+          Confirmaciones cerradas
         </button>
       </form>
     </div>
@@ -1332,6 +1332,13 @@
   </footer>
 
   <script>
+    // La muestra conserva el diseño; las confirmaciones permanecen cerradas en ambas vistas.
+    const MUESTRA = new URLSearchParams(location.search).get('muestra') === '1';
+    if (MUESTRA) {
+      document.getElementById('rsvp-notice').textContent =
+        'Vista de muestra · En tu invitación, aquí tus invitados confirman su asistencia';
+    }
+
     // -------------------------------------------------------------
     // CANVAS DE ESTRELLAS Y DESTELLOS CELESTIALES
     // -------------------------------------------------------------
@@ -1580,7 +1587,9 @@
     // -------------------------------------------------------------
     // COUNTDOWN TIMER (24 Octubre 2026 15:30:00)
     // -------------------------------------------------------------
-    const targetEventDate = new Date('2026-10-24T15:30:00-06:00').getTime();
+    const targetEventDate = MUESTRA
+      ? Date.now() + 45 * 864e5
+      : new Date('2026-10-24T15:30:00-06:00').getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -1609,24 +1618,11 @@
     updateCountdown();
 
     // -------------------------------------------------------------
-    // RSVP FORM DIRECTO A WHATSAPP (5571808883)
+    // El evento ya terminó: tampoco se permite enviar el formulario por código.
     // -------------------------------------------------------------
     function handleRSVPSubmit(e) {
       e.preventDefault();
-      const name = document.getElementById('rsvp-name').value.trim();
-      const status = document.getElementById('rsvp-status').value;
-      const guests = document.getElementById('rsvp-guests').value;
-      const message = document.getElementById('rsvp-message').value.trim();
-
-      const phone = '525571808883';
-      let text = `¡Hola! Confirmo mi asistencia para los XV Años de Megan Paulette ✨🌙\n\n`;
-      text += `👤 *Invitado(s):* ${name}\n`;
-      text += `💌 *Respuesta:* ${status}\n`;
-      text += `👥 *Pases / Personas:* ${guests}\n`;
-      if (message) text += `💬 *Dedicatoria para Megan:* "${message}"\n`;
-
-      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-      window.open(waUrl, '_blank');
+      return false;
     }
   </script>
 </body>

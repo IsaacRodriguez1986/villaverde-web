@@ -163,6 +163,7 @@ VV.ITEM_INFO = {
    confirmación (le llegaría a la familia o al organizador real) y mueve la cuenta regresiva
    a una fecha futura. Una invitación de un evento que todavía no pasa NO va aquí. */
 VV.INVITACIONES_MUESTRA = [
+  { id: 'mis-xv-megan', tipo: 'XV Años · Megan', nombre: 'Megan Paulette', src: '/mis-xv-megan/index.html?muestra=1' },
   { id: 'mis-xv-dayana', tipo: 'XV Años',         nombre: 'Dayana Yamile',             src: '/mis-xv-dayana/index.html?muestra=1' },
   { id: 'eldiabloviste', tipo: 'Fiesta temática', nombre: 'El Diablo viste a la moda', src: '/eldiabloviste/index.html?muestra=1' },
   { id: 'diadelmaestro', tipo: 'Día del Maestro', nombre: 'Delegación Sindical S114',  src: '/diadelmaestro/index.html?muestra=1' },
