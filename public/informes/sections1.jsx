@@ -181,6 +181,8 @@ function SecSalon() {
           } />
       )}
 
+      {sid === 'gardenia' && <GardeniaTour360 />}
+
       {sal.pano ? (
         sal.video && (
           <div key={sid} style={{ position: 'relative', marginBottom: 36 }}>
