@@ -1,0 +1,67 @@
+.section { scroll-margin-top: 90px; }
+.frame { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 300px; overflow: hidden; border: 1px solid #d8ddd5; border-radius: var(--radius-lg, 24px); background: #1f342a; box-shadow: var(--shadow-xl); }
+.viewer { width: 100%; height: 100%; position: absolute; inset: 0; outline-offset: -5px; }
+.viewer:focus-visible { outline: 3px solid #f2deaf; }
+.overlay { position: absolute; inset: 0; display: grid; place-items: center; padding: 30px; isolation: isolate; overflow: hidden; background: #1f342a; color: #fff8ec; text-align: center; }
+.preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.overlay:has(.preview)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(19, 37, 27, .7); }
+.overlayContent { max-width: 470px; }
+.overlayEyebrow { margin: 0 0 17px; color: #e0e8da; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.overlayContent h3 { margin: 0; font-family: var(--font-display-loaded, Georgia, serif); font-size: clamp(30px, 4vw, 48px); font-weight: 500; line-height: 1.1; }
+.overlayContent > p:not(.overlayEyebrow) { margin: 18px auto 0; max-width: 380px; color: #e3eadf; font-size: 14px; line-height: 1.65; }
+.overlayContent button { min-height: 48px; margin-top: 24px; padding: 12px 22px; border: 1px solid transparent; border-radius: 5px; background: #c92f70; color: #fffaf5; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.overlayContent button:hover { background: #a71f58; }
+.overlayContent button span { margin-left: 22px; font-size: 17px; }
+.overlayContent > a { display: block; width: fit-content; min-height: 44px; margin: 10px auto 0; padding: 12px 3px; color: #f4e2bc; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.overlayContent button:focus-visible, .overlayContent a:focus-visible { outline: 3px solid #f2deaf; outline-offset: 4px; }
+.loadingLine { display: block; width: 160px; height: 3px; margin: 26px auto 0; overflow: hidden; background: #687f6c; }
+.loadingLine::after { content: ""; display: block; width: 40%; height: 100%; background: #efe1c0; animation: loading 1.2s ease-in-out infinite alternate; }
+.status { min-height: 21px; margin-top: 14px; color: #57534e; font-size: 12px; line-height: 1.6; text-align: center; }
+.stepNavigation { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 14px; }
+.stepNavigation button { min-height: 44px; padding: 10px 17px; border: 1px solid #d8ddd5; border-radius: 5px; background: #fffdf8; color: #26372b; font: 600 12px var(--font-body-loaded, sans-serif); cursor: pointer; }
+.stepNavigation button:disabled { opacity: .4; cursor: default; }
+.stepNavigation button:hover:not(:disabled) { border-color: #047857; background: #f0f5ed; }
+.stepNavigation button:focus-visible { outline: 3px solid #047857; outline-offset: 3px; }
+.stepNavigation > span { color: #57534e; font-size: 11px; }
+.groups { display: grid; gap: 14px; margin-top: 18px; }
+.group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; }
+.groupLabel { min-width: 105px; color: #57534e; font-size: 11px; font-weight: 600; }
+.sceneButtons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.sceneButtons button { min-height: 44px; padding: 10px 18px; border: 1px solid #d8ddd5; border-radius: 50px; background: #fffdf8; color: #26372b; font-family: var(--font-body-loaded, sans-serif); font-size: 13px; font-weight: 600; cursor: pointer; }
+.sceneButtons button:hover:not(:disabled):not([aria-pressed="true"]) { border-color: #c92f70; color: #a71f58; }
+.sceneButtons button[aria-pressed="true"] { border-color: #c92f70; background: #c92f70; color: #fffaf5; }
+.sceneButtons button:disabled { opacity: .6; cursor: wait; }
+.sceneButtons button:focus-visible { outline: 3px solid #047857; outline-offset: 3px; }
+.noScript { margin-top: 18px; color: #57534e; font-size: 13px; line-height: 1.65; text-align: center; }
+.noScript a { color: #a71f58; text-decoration: underline; }
+.viewer :global(.pnlm-zoom-controls) { width: 44px; height: 88px; }
+.viewer :global(.pnlm-zoom-in), .viewer :global(.pnlm-zoom-out) { display: grid; place-items: center; background-image: none; }
+.viewer :global(.pnlm-zoom-in)::after { content: "+"; color: #26372b; font: 25px var(--font-body-loaded, sans-serif); line-height: 1; }
+.viewer :global(.pnlm-zoom-out)::after { content: "−"; color: #26372b; font: 25px var(--font-body-loaded, sans-serif); line-height: 1; }
+.viewer :global(.pnlm-fullscreen-toggle-button) { display: grid; place-items: center; width: 44px; height: 44px; background-image: none; }
+.viewer :global(.pnlm-fullscreen-toggle-button)::after { content: "⛶"; color: #26372b; font: 24px "Segoe UI Symbol", sans-serif; line-height: 1; }
+.viewer :global(.pnlm-fullscreen-toggle-button-active)::after { content: "×"; font-size: 28px; }
+.viewer :global(.pnlm-hotspot.pnlm-scene) { min-width: 44px; min-height: 44px; border-radius: 50%; background-image: none; background-color: rgba(255, 253, 247, .95); }
+.viewer :global(.pnlm-hotspot.pnlm-scene)::after { content: "↑"; display: grid; place-items: center; width: 44px; height: 44px; color: #047857; font: 24px var(--font-body-loaded, sans-serif); }
+@keyframes loading { from { transform: translateX(-10%); } to { transform: translateX(170%); } }
+
+@media (max-width: 600px) {
+  .frame { min-height: 340px; border-radius: 15px; }
+  .overlay { padding: 26px 22px; }
+  .overlayEyebrow { font-size: 8px; letter-spacing: .09em; }
+  .overlayContent h3 { font-size: 32px; }
+  .overlayContent > p:not(.overlayEyebrow) { font-size: 13px; }
+  .overlayContent button { font-size: 13px; }
+  .status { font-size: 11px; }
+  .stepNavigation { gap: 10px; }
+  .stepNavigation button { padding-inline: 11px; font-size: 11px; }
+  .stepNavigation > span { font-size: 10px; }
+  .group { display: block; }
+  .groupLabel { display: block; margin-bottom: 8px; text-align: center; }
+  .sceneButtons { gap: 7px; }
+  .sceneButtons button { flex: 1 1 calc(50% - 8px); padding-inline: 10px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingLine::after { animation: none; width: 100%; opacity: .6; }
+}

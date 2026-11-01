@@ -2,6 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { CinematicHero } from "@/features/landing/cinematic-hero";
+import { VenueExperience } from "@/features/landing/venue-experience";
+import { VenueTour360 } from "@/features/landing/venue-tour-360";
+import { Packages } from "@/features/landing/packages";
+import { WHATSAPP_DATE_URL, trackWhatsAppContact } from "@/features/landing/contact";
 
 /* ===== SVG ICON COMPONENTS ===== */
 
@@ -26,23 +31,6 @@ function IconCheck({ size = 16 }: { size?: number }) {
       strokeLinejoin="round"
     >
       <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function IconChevronDown({ size = 20 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 }
@@ -273,27 +261,6 @@ function IconShieldCheck({ size = 24 }: { size?: number }) {
     >
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <polyline points="9 12 11 14 15 10" />
-    </svg>
-  );
-}
-
-function IconSparkles({ size = 24 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-      <path d="M5 3v4" />
-      <path d="M19 17v4" />
-      <path d="M3 5h4" />
-      <path d="M17 19h4" />
     </svg>
   );
 }
@@ -764,34 +731,11 @@ const galleryImages = [
   },
 ];
 
-/* Recorrido virtual 360° — fotos panorámicas reales del jardín/entrada (17-sep-2026) */
-const tour360Scenes = [
-  {
-    id: "fachada",
-    name: "Fachada y jardín",
-    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-fachada.webp",
-  },
-  {
-    id: "entrada",
-    name: "Entrada y fuente",
-    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-entrada.webp",
-  },
-  {
-    id: "vista",
-    name: "Vista del jardín",
-    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-vista.webp",
-  },
-  {
-    id: "terraza",
-    name: "Terraza",
-    src: "https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/tour-360-terraza.webp",
-  },
-];
-
 /* ===== COMPONENT ===== */
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const [activeMenu, setActiveMenu] = useState("entradas");
   const [showSticky, setShowSticky] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
@@ -811,95 +755,9 @@ export default function Home() {
   const testiVideoRef1 = useRef<HTMLVideoElement>(null);
   const testiPlayBtnRef1 = useRef<HTMLButtonElement>(null);
   const lastGalleryFocusRef = useRef<HTMLElement | null>(null);
-  const [tourSceneId, setTourSceneId] = useState(tour360Scenes[0].id);
-  const [tourReady, setTourReady] = useState(false);
-  const tourSectionRef = useRef<HTMLElement>(null);
-  const tourViewerRef = useRef<any>(null);
-
   const menuTabs = ["entradas", "cremas", "pasta", "pollo", "cerdo", "guarn"];
-
-  useEffect(() => {
-    const section = tourSectionRef.current;
-    if (!section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setTourReady(true);
-        observer.disconnect();
-      },
-      { rootMargin: "400px 0px" },
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!tourReady) return;
-    let cancelled = false;
-    let script: HTMLScriptElement | null = null;
-
-    function initTour() {
-      if (cancelled || !(window as any).pannellum) return;
-      const scenes: Record<string, any> = {};
-      tour360Scenes.forEach((s) => {
-        scenes[s.id] = { type: "equirectangular", panorama: s.src, autoLoad: true };
-      });
-      tourViewerRef.current = (window as any).pannellum.viewer("tour360-viewer", {
-        default: { firstScene: tour360Scenes[0].id, sceneFadeDuration: 800, autoLoad: true },
-        scenes,
-        compass: false,
-        showZoomCtrl: true,
-        showFullscreenCtrl: true,
-      });
-    }
-
-    if ((window as any).pannellum) {
-      initTour();
-    } else {
-      if (!document.getElementById("pannellum-css")) {
-        const link = document.createElement("link");
-        link.id = "pannellum-css";
-        link.rel = "stylesheet";
-        link.href = "/vendor/pannellum/pannellum.min.css";
-        document.head.appendChild(link);
-      }
-      script = document.getElementById(
-        "pannellum-js",
-      ) as HTMLScriptElement | null;
-      if (!script) {
-        script = document.createElement("script");
-        script.id = "pannellum-js";
-        script.src = "/vendor/pannellum/pannellum.min.js";
-        document.body.appendChild(script);
-      }
-      script.addEventListener("load", initTour, { once: true });
-    }
-
-    return () => {
-      cancelled = true;
-      script?.removeEventListener("load", initTour);
-      if (tourViewerRef.current) {
-        tourViewerRef.current.destroy();
-        tourViewerRef.current = null;
-      }
-    };
-  }, [tourReady]);
-
-  const goToScene = (id: string) => {
-    setTourSceneId(id);
-    tourViewerRef.current?.loadScene(id);
-  };
-  const whatsappQuoteUrl =
-    "https://wa.me/529995485862?text=Hola%2C%20quiero%20cotizar%20un%20evento%20en%20Villaverde";
-
-  const trackWhatsAppClick = (placement: string) => {
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq("track", "Contact", {
-        content_name: "cotizacion_whatsapp",
-        content_category: placement,
-      });
-    }
-  };
+  const whatsappQuoteUrl = WHATSAPP_DATE_URL;
+  const trackWhatsAppClick = trackWhatsAppContact;
 
   /* Cada testimonio arranca con un boton propio en vez de los controles nativos: la barra
    * negra le tapaba el 15% inferior a la caratula y la unica forma de darle play era una
@@ -1000,7 +858,8 @@ export default function Home() {
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
     const handleScroll = () => {
-      setShowSticky(window.scrollY > window.innerHeight * 0.3);
+      const hero = document.getElementById("inicio");
+      setShowSticky((hero?.getBoundingClientRect().bottom ?? 1) < 80);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -1013,7 +872,9 @@ export default function Home() {
   useEffect(() => {
     if (!menuOpen) return;
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key !== "Escape") return;
+      setMenuOpen(false);
+      menuToggleRef.current?.focus({ preventScroll: true });
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
@@ -1087,18 +948,6 @@ export default function Home() {
       <a className="skip-link" href="#contenido-principal">
         Saltar al contenido principal
       </a>
-      {/* Promo Bar */}
-      <div className="promo-bar">
-        Nuevos Paquetes 2026 — Reserva con contrato y $3,000 de anticipo{" "}
-        <a
-          href="https://wa.me/529995485862?text=Quiero%20apartar%20mi%20fecha%202026%20en%20Villaverde"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CONSULTAR FECHA →
-        </a>
-      </div>
-
       {/* Nav */}
       <nav className="nav" aria-label="Navegación principal">
         <a href="#inicio" className="nav-logo">
@@ -1106,6 +955,7 @@ export default function Home() {
         </a>
         <button
           className="nav-toggle"
+          ref={menuToggleRef}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menú"
           aria-expanded={menuOpen}
@@ -1114,727 +964,154 @@ export default function Home() {
           {menuOpen ? <IconX size={24} /> : <IconMenu size={24} />}
         </button>
         <div id="navegacion-principal" className={`nav-links${menuOpen ? " open" : ""}`}>
-          <a href="#inicio" onClick={() => setMenuOpen(false)}>
-            Inicio
-          </a>
-          <a href="#paquetes" onClick={() => setMenuOpen(false)}>
-            Paquetes
-          </a>
-          <a href="#galeria" onClick={() => setMenuOpen(false)}>
-            Galería
-          </a>
-          <a href="#menu" onClick={() => setMenuOpen(false)}>
-            Menú
-          </a>
-          <a href="#extras" onClick={() => setMenuOpen(false)}>
-            Extras
-          </a>
-          <a href="#faq" onClick={() => setMenuOpen(false)}>
-            FAQ
-          </a>
-          <a href="#contacto" onClick={() => setMenuOpen(false)}>
-            Contacto
-          </a>
-          <a href="/eventus.html" onClick={() => setMenuOpen(false)}>
-            Eventus
-          </a>
+          <a href="#experiencia" onClick={() => setMenuOpen(false)}>El salón</a>
+          <a href="#paquetes" onClick={() => setMenuOpen(false)}>Paquetes</a>
+          <a href="#galeria" onClick={() => setMenuOpen(false)}>Galería</a>
+          <a href="#recorrido-360" onClick={() => setMenuOpen(false)}>Recorrido 360°</a>
+          <a href="#testimonios" onClick={() => setMenuOpen(false)}>Experiencias</a>
           <a
-            href="#formulario"
+            href={whatsappQuoteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-cta"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false);
+              trackWhatsAppClick("navegacion");
+            }}
           >
-            Cotizar Gratis
+            Consultar mi fecha
           </a>
         </div>
       </nav>
 
       <main id="contenido-principal">
 
-      {/* Hero */}
-      <section className="hero" id="inicio">
-        <Image
-          className="hero-bg"
-          src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/panoramica.webp"
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          loading="eager"
-          sizes="100vw"
-        />
-        <div className="hero-content">
-          <div className="hero-badge">Nuevos Paquetes 2026</div>
-          <h1>
-            Tu fiesta <strong className="accent-rosa">perfecta</strong> sin{" "}
-            <strong className="accent-verde">preocuparte por nada</strong>
-          </h1>
-          <p className="hero-sub">
-            Salón de Fiestas todo incluido en Chalco · Bodas, XV Años y
-            Graduaciones
-          </p>
-          <div className="hero-pills">
-            <span className="hero-pill">
-              <IconCheck size={14} /> Todo incluido
-            </span>
-            <span className="hero-pill">
-              <IconCheck size={14} /> Desde $420/persona
-            </span>
-            <span className="hero-pill">
-              <IconCheck size={14} /> Cortesías exclusivas
-            </span>
-          </div>
-          <div className="hero-btns">
-            <a
-              href={whatsappQuoteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-              onClick={() => trackWhatsAppClick("hero")}
-            >
-              <WhatsAppIcon size={18} /> Cotiza gratis en 30 seg
-            </a>
-            <a href="#paquetes" className="btn-outline">
-              Ver paquetes desde $420/persona <IconChevronDown size={16} />
-            </a>
-          </div>
-        </div>
-        <div className="hero-scroll">
-          Scroll
-          <IconChevronDown size={20} />
-        </div>
-      </section>
+      <CinematicHero onContact={trackWhatsAppClick} />
+      <VenueExperience />
 
-      {/* Proof Bar */}
-      <div className="proof reveal">
-        <div className="proof-item">
-          <div className="proof-num">500+</div>
-          <div className="proof-label">Eventos realizados</div>
-        </div>
-        <div className="proof-item">
-          <div className="proof-num">10+</div>
-          <div className="proof-label">Años de experiencia</div>
-        </div>
-        <div className="proof-item">
-          <div className="proof-num">450</div>
-          <div className="proof-label">Capacidad de invitados</div>
-        </div>
-        <div className="proof-item">
-          <div className="proof-num">3</div>
-          <div className="proof-label">Paquetes todo incluido</div>
-        </div>
-      </div>
-
-      <section className="package-finder" aria-labelledby="package-finder-title">
-        <div className="section-narrow">
-          <div className="package-finder-copy">
-            <span className="package-finder-kicker">Elige en 20 segundos</span>
-            <h2 id="package-finder-title">¿Qué quieres priorizar en tu fiesta?</h2>
-            <p>Ve directo al paquete que mejor encaja contigo. Después puedes confirmar disponibilidad por WhatsApp.</p>
-          </div>
-          <div className="package-finder-grid">
-            <a href="#paquete-premium" className="package-finder-card">
-              <strong>Cuidar el presupuesto</strong>
-              <span>Premium · desde $420 por persona</span>
-            </a>
-            <a href="#paquete-diamante" className="package-finder-card is-featured">
-              <strong>Más ambiente y espectáculo</strong>
-              <span>Diamante · grupo en vivo y pantalla LED</span>
-            </a>
-            <a href="#paquete-esmeralda" className="package-finder-card">
-              <strong>La experiencia más completa</strong>
-              <span>Esmeralda · 9 horas y producción premium</span>
-            </a>
-          </div>
-          <p className="package-finder-note">La cotización no reserva la fecha. Reserva con contrato y $3,000 de anticipo.</p>
-        </div>
-      </section>
-
-      {/* Eventos */}
-      <section className="section reveal">
-        <div className="section-narrow">
-          <h2 className="section-title">
-            Celebramos los momentos
-            <br />
-            más importantes de tu vida
-          </h2>
-          <div className="events-grid">
-            <a href="#paquetes" className="event-card">
-              <Image
-                src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/xv.webp"
-                alt="Fiesta de XV años en Salón de Fiestas Villaverde Chalco"
-                fill
-                sizes="(max-width: 960px) 100vw, 33vw"
-              />
-              <div className="event-overlay">
-                <h3>XV Años</h3>
-                <p>La fiesta que siempre soñaste</p>
-                <span className="ev-btn">
-                  Ver paquetes <IconChevronRight size={14} />
-                </span>
-              </div>
-            </a>
-            <a href="#paquetes" className="event-card">
-              <Image
-                src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/bodas.webp"
-                alt="Salón para bodas todo incluido en Chalco Estado de México"
-                fill
-                sizes="(max-width: 960px) 100vw, 33vw"
-              />
-              <div className="event-overlay">
-                <h3>Bodas</h3>
-                <p>El día más especial merece el lugar perfecto</p>
-                <span className="ev-btn">
-                  Ver paquetes <IconChevronRight size={14} />
-                </span>
-              </div>
-            </a>
-            <a href="#paquetes" className="event-card">
-              <Image
-                src="https://gfbixkddumsqlfrfbsmp.supabase.co/storage/v1/object/public/landing/graduacion.webp"
-                alt="Fiesta de graduación en salón de fiestas Villaverde Chalco"
-                fill
-                sizes="(max-width: 960px) 100vw, 33vw"
-              />
-              <div className="event-overlay">
-                <h3>Graduaciones</h3>
-                <p>Celebra tu logro a lo grande</p>
-                <span className="ev-btn">
-                  Ver paquetes <IconChevronRight size={14} />
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Paquetes */}
-      <section className="section bg-crema" id="paquetes">
-        <div className="section-narrow">
-          <h2 className="section-title reveal">Elige tu paquete ideal</h2>
-          <p className="section-sub reveal">
-            Tres niveles diseñados para que tu fiesta sea exactamente como la
-            soñaste. Sin costos ocultos, sin sorpresas.
-          </p>
-          <div className="pkg-grid">
-            {/* Premium */}
-            <div className="pkg pkg-premium reveal" id="paquete-premium">
-              <div className="pkg-head">
-                <div className="pkg-icon">
-                  <IconSparkles size={28} />
-                </div>
-                <h3 className="pkg-name">Premium</h3>
-                <div className="pkg-tag">La mejor relación valor-precio</div>
-              </div>
-              <div className="pkg-prices single">
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 150 inv.</div>
-                  <div className="pkg-price-num">$420</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-              </div>
-              <div className="pkg-body">
-                <h4>Incluye</h4>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  7 horas totales: 6 de evento + 30min recepción + 30min desalojo
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cena formal de 3 tiempos (crema + plato fuerte + guarnición)
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Refresco ilimitado (2 sabores) y hielo todo el evento
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Descorche libre — trae tus bebidas sin cargo
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Botella ¾ por mesa incluida
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Mesas redondas + sillas Tiffany vestidas (colores básicos)
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Meseros con capitán + personal de recepción
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  DJ todo el evento + Maestro de Ceremonias
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Iluminación inteligente tipo antro
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Batucada con globos
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  2 camerinos privados (XV/novios + chambelanes)
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Invitación digital animada de regalo
-                </div>
-                <div className="pkg-cort">
-                  <IconGift size={16} /> 1 cortesía a elegir de nuestra lista
-                  exclusiva
-                </div>
-              </div>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20PREMIUM"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pkg-btn"
-              >
-                Consultar fecha — Premium
-              </a>
-            </div>
-
-            {/* Diamante */}
-            <div className="pkg pkg-diamante reveal" id="paquete-diamante">
-              <div className="pkg-head">
-                <div className="pkg-badge">Más Popular</div>
-                <div className="pkg-icon">
-                  <IconDiamond size={28} />
-                </div>
-                <h3 className="pkg-name">Diamante</h3>
-                <div className="pkg-tag">El paquete estrella de Villaverde</div>
-              </div>
-              <div className="pkg-prices single">
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 170 inv.</div>
-                  <div className="pkg-price-num">$530</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-              </div>
-              <div className="pkg-body">
-                <h4>Todo lo del Premium más</h4>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  8 horas totales: 7 de evento + 30min recepción + 30min desalojo
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Grupo versátil en vivo (5 integrantes)
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cabina profesional para DJ con iluminación
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Pantalla gigante LED
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Descargas de CO2 espectaculares
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Chilaquiles de madrugada
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Colores de mantelería a elegir
-                </div>
-                <div className="pkg-cort">
-                  <IconGift size={16} />
-                  <IconGift size={16} /> 2 cortesías a elegir de nuestra lista
-                  exclusiva
-                </div>
-              </div>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20DIAMANTE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pkg-btn"
-              >
-                Consultar fecha — Diamante
-              </a>
-            </div>
-
-            {/* Esmeralda */}
-            <div className="pkg pkg-esmeralda reveal" id="paquete-esmeralda">
-              <div className="pkg-head">
-                <div className="pkg-badge">La joya de la corona</div>
-                <div className="pkg-icon">
-                  <IconSparkles size={28} />
-                </div>
-                <h3 className="pkg-name">Esmeralda</h3>
-                <div className="pkg-tag">La fiesta perfecta sin límites</div>
-              </div>
-              <div className="pkg-prices single">
-                <div className="pkg-price-box">
-                  <div className="pkg-price-label">Desde 200 inv.</div>
-                  <div className="pkg-price-num">$680</div>
-                  <div className="pkg-price-unit">por persona</div>
-                </div>
-              </div>
-              <div className="pkg-body">
-                <h4>Todo lo del Diamante más</h4>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  9 horas totales: 8 de evento + 30min recepción + 30min desalojo
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Grupo versátil 9 integrantes
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cabina foto 360 (1 hora)
-                </div>
-                <div className="pkg-feat hi">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Show de robot
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cóctel de bienvenida
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cantante durante la cena
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cascada flores en escalera
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Inflable o trampolín
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Video remembranza
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Taxi dancer
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  LED en cada mesa
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Arco de flores
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Cabezones
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Máquina de burbujas
-                </div>
-                <div className="pkg-feat">
-                  <span className="ck">
-                    <IconCheck size={10} />
-                  </span>{" "}
-                  Batucada con globos
-                </div>
-                <div className="pkg-cort">
-                  <IconGift size={16} /> Paquete todo incluido
-                </div>
-              </div>
-              <a
-                href="https://wa.me/529995485862?text=Hola%2C%20quiero%20apartar%20mi%20fecha%20con%20el%20Paquete%20ESMERALDA"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pkg-btn"
-              >
-                Consultar fecha — Esmeralda
-              </a>
-            </div>
-          </div>
-
-          {/* Tabla Comparativa */}
-          <div className="compare-section reveal">
-            <h3
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "28px",
-                fontWeight: 700,
-                textAlign: "center",
-                marginBottom: "24px",
-              }}
-            >
-              Comparativa rápida
-            </h3>
-            <table className="compare-table">
-              <thead>
-                <tr>
-                  <th>Característica</th>
-                  <th>Premium</th>
-                  <th>Diamante</th>
-                  <th>Esmeralda</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Horas totales</td>
-                  <td>7h</td>
-                  <td>8h</td>
-                  <td>9h</td>
-                </tr>
-                <tr>
-                  <td>Precio desde</td>
-                  <td>$420/pp</td>
-                  <td>$530/pp</td>
-                  <td>$680/pp</td>
-                </tr>
-                <tr>
-                  <td>Invitados (mínimo)</td>
-                  <td>150</td>
-                  <td>170</td>
-                  <td>200</td>
-                </tr>
-                <tr>
-                  <td>Descorche libre</td>
-                  <td className="compare-check">Incluido</td>
-                  <td className="compare-check">Incluido</td>
-                  <td className="compare-check">Incluido</td>
-                </tr>
-                <tr>
-                  <td>Grupo en vivo</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-check">5 int.</td>
-                  <td className="compare-check">9 int.</td>
-                </tr>
-                <tr>
-                  <td>Pantalla LED</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-check">Incluida</td>
-                  <td className="compare-check">Incluida</td>
-                </tr>
-                <tr>
-                  <td>Show de robot</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-check">Incluido</td>
-                </tr>
-                <tr>
-                  <td>Cabina 360</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-check">1 hora</td>
-                </tr>
-                <tr>
-                  <td>Chilaquiles</td>
-                  <td className="compare-x">—</td>
-                  <td className="compare-check">Incluidos</td>
-                  <td className="compare-check">Incluidos</td>
-                </tr>
-                <tr>
-                  <td>Cortesías</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>Todas</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="pkg-note reveal">
-            Premium desde 150 invitados · Diamante desde 170 · Esmeralda desde 200
-            <br />
-            <strong>Reserva con contrato y $3,000 de anticipo</strong>
-          </div>
-        </div>
-      </section>
-
-      {/* Cortesías */}
-      <section className="section">
+      {/* Testimonios con Avatares */}
+      {/* id="testimonios": el botón del correo 3 de la secuencia apunta a /#testimonios. */}
+      <section className="section bg-gris" id="testimonios">
         <div className="section-narrow">
           <h2 className="section-title reveal">
-            Personaliza tu evento con nuestras cortesías
+            Lo que dicen nuestras familias
           </h2>
-          <p className="section-sub reveal">
-            Opciones para personalizar tu celebración según el paquete elegido.
-            Tú decides cómo hacer tu fiesta única.
-          </p>
-          <div className="cort-explain reveal">
-            <div className="cort-explain-item">
-              <div className="ce-num" style={{ color: "var(--rosa)" }}>
-                1
+
+          {/* Testimonios REALES en video (grabados en el salón la noche de la fiesta).
+              preload="none" + poster: no baja un solo byte del video hasta que alguien le da play,
+              así no le cuesta nada al tiempo de carga de la página. */}
+          <div className="testi-videos-grid reveal">
+            <div className="testi-video">
+              <div className="testi-video-frame">
+                <video
+                  ref={testiVideoRef0}
+                  className="testi-video-player"
+                  src="/testimonio-xv.mp4"
+                  poster="/testimonio-xv-poster.jpg"
+                  controls={!testiHydrated || testiPlaying[0]}
+                  playsInline
+                  preload="none"
+                  aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
+                  onPlaying={() => handleTestiPlaying(0)}
+                  onEnded={() => handleTestiEnded(0)}
+                />
+                <button
+                  ref={testiPlayBtnRef0}
+                  type="button"
+                  hidden={!testiHydrated}
+                  className={`testi-video-play${testiPlaying[0] ? " oculto" : ""}`}
+                  onClick={() => playTestiVideo(0)}
+                  aria-label="Reproducir el testimonio de la quinceañera en video (14 segundos)"
+                  aria-busy={testiLoading[0]}
+                  inert={testiPlaying[0]}
+                  tabIndex={testiPlaying[0] ? -1 : 0}
+                >
+                  <svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5.5v13l11-6.5z" />
+                  </svg>
+                </button>
               </div>
-              <div className="ce-label">
-                cortesía a elegir
-                <br />
-                <strong style={{ color: "var(--rosa)" }}>Premium</strong>
+              <div className="testi-video-caption">
+                <div className="testi-video-label">
+                  &quot;Mi fiesta en Villaverde&quot;
+                </div>
+                <p>
+                  Una de nuestras quinceañeras, contándolo con sus palabras la
+                  misma noche de su fiesta. Sin guion y sin edición.
+                </p>
+                <div className="testi-event">XV Años · agosto 2026</div>
               </div>
             </div>
-            <div className="cort-explain-item">
-              <div className="ce-num" style={{ color: "var(--gold)" }}>
-                2
+
+            <div className="testi-video">
+              <div className="testi-video-frame">
+                <video
+                  ref={testiVideoRef1}
+                  className="testi-video-player"
+                  src="/testimonio-vivian.mp4"
+                  poster="/testimonio-vivian-poster.jpg"
+                  controls={!testiHydrated || testiPlaying[1]}
+                  playsInline
+                  preload="none"
+                  aria-label="Testimonio en video de los XV años de Vivian en Salón Villaverde (39 segundos)"
+                  onPlaying={() => handleTestiPlaying(1)}
+                  onEnded={() => handleTestiEnded(1)}
+                />
+                <button
+                  ref={testiPlayBtnRef1}
+                  type="button"
+                  hidden={!testiHydrated}
+                  className={`testi-video-play${testiPlaying[1] ? " oculto" : ""}`}
+                  onClick={() => playTestiVideo(1)}
+                  aria-label="Reproducir el testimonio de Vivian en video (39 segundos)"
+                  aria-busy={testiLoading[1]}
+                  inert={testiPlaying[1]}
+                  tabIndex={testiPlaying[1] ? -1 : 0}
+                >
+                  <svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 5.5v13l11-6.5z" />
+                  </svg>
+                </button>
               </div>
-              <div className="ce-label">
-                cortesías a elegir
-                <br />
-                <strong style={{ color: "var(--gold)" }}>Diamante</strong>
-              </div>
-            </div>
-            <div className="cort-explain-item">
-              <div className="ce-num" style={{ color: "var(--esmeralda)" }}>
-                ∞
-              </div>
-              <div className="ce-label">
-                todas incluidas
-                <br />
-                <strong style={{ color: "var(--esmeralda)" }}>Esmeralda</strong>
+              <div className="testi-video-caption">
+                <div className="testi-video-label">
+                  &quot;Las instalaciones están perfectas&quot;
+                </div>
+                <p>
+                  Vivian nos cuenta por qué eligió Villaverde para sus XV años:
+                  las escaleras, la decoración, el baile y toda la organización.
+                </p>
+                <div className="testi-event">XV Años de Vivian</div>
               </div>
             </div>
           </div>
-          <div className="cort-grid reveal">
-            <div className="cort-item">
-              <span className="ci">
-                <IconFerrisWheel size={20} />
-              </span>{" "}
-              Inflable / trampolín en jardín
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconLightbulb size={20} />
-              </span>{" "}
-              Iluminación LED en mesas
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconMic size={20} />
-              </span>{" "}
-              Cantante durante la cena
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconVideo size={20} />
-              </span>{" "}
-              Video remembranza
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconFlower size={20} />
-              </span>{" "}
-              Cascada flores en escalera
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconMusic size={20} />
-              </span>{" "}
-              Servicio de taxi dancer
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconUtensils size={20} />
-              </span>{" "}
-              Torna fiesta de chilaquiles
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconFlower size={20} />
-              </span>{" "}
-              Arco de flores
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconPartyPopper size={20} />
-              </span>{" "}
-              Cabezones bailarines
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconDroplets size={20} />
-              </span>{" "}
-              Máquina de burbujas
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconBot size={20} />
-              </span>{" "}
-              Robot show (sin pirotecnia)
-            </div>
-            <div className="cort-item">
-              <span className="ci">
-                <IconType size={20} />
-              </span>{" "}
-              Letras iluminadas
-            </div>
-          </div>
+
+          <details className="testi-transcript reveal">
+            <summary>Descripción de los testimonios</summary>
+            <p>
+              Dos quinceañeras comparten, al terminar su celebración, su
+              experiencia festejando sus XV años en Salón Villaverde: las
+              instalaciones, las escaleras, la decoración, el baile y la
+              organización del evento. Ambos videos conservan sus voces y el
+              ambiente real del salón.
+            </p>
+          </details>
         </div>
       </section>
+
+      <Packages onContact={trackWhatsAppClick} />
 
       {/* Galería con Lightbox */}
       <section className="section bg-gris" id="galeria">
@@ -1881,37 +1158,14 @@ export default function Home() {
             ))}
           </div>
           <div className="gallery-cta reveal">
-            <a href="#formulario" className="btn-primary">
-              Cotiza tu evento gratis <IconChevronRight size={16} />
+            <a href={whatsappQuoteUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" onClick={() => trackWhatsAppClick("galeria")}>
+              Consultar mi fecha <IconChevronRight size={16} />
             </a>
           </div>
         </div>
       </section>
 
-      <section ref={tourSectionRef} className="section" id="recorrido-360">
-        <div className="section-narrow">
-          <h2 className="section-title reveal">Recorrido virtual 360°</h2>
-          <p className="section-sub reveal">
-            Arrastra para mirar alrededor — como si ya estuvieras aquí
-          </p>
-          <div className="tour360-frame reveal">
-            <div id="tour360-viewer" className="tour360-viewer" />
-          </div>
-          <div className="tour360-scenes reveal">
-            {tour360Scenes.map((s) => (
-              <button
-                key={s.id}
-                className={`tour360-scene-btn ${tourSceneId === s.id ? "is-active" : ""}`}
-                onClick={() => goToScene(s.id)}
-                aria-pressed={tourSceneId === s.id}
-                disabled={!tourReady}
-              >
-                {s.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <VenueTour360 />
 
       {/* Lightbox */}
       {lightboxIdx !== null && (
@@ -2032,6 +1286,125 @@ export default function Home() {
                 Todo incluido desde el primer momento. Nada de &quot;extras
                 ocultos&quot; que inflan la cuenta al final.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cortesías */}
+      <section className="section">
+        <div className="section-narrow">
+          <h2 className="section-title reveal">
+            Personaliza tu evento con nuestras cortesías
+          </h2>
+          <p className="section-sub reveal">
+            Opciones para personalizar tu celebración según el paquete elegido.
+            Tú decides cómo hacer tu fiesta única.
+          </p>
+          <div className="cort-explain reveal">
+            <div className="cort-explain-item">
+              <div className="ce-num" style={{ color: "var(--rosa)" }}>
+                1
+              </div>
+              <div className="ce-label">
+                cortesía a elegir
+                <br />
+                <strong style={{ color: "var(--rosa)" }}>Premium</strong>
+              </div>
+            </div>
+            <div className="cort-explain-item">
+              <div className="ce-num" style={{ color: "var(--gold)" }}>
+                2
+              </div>
+              <div className="ce-label">
+                cortesías a elegir
+                <br />
+                <strong style={{ color: "var(--gold)" }}>Diamante</strong>
+              </div>
+            </div>
+            <div className="cort-explain-item">
+              <div className="ce-num" style={{ color: "var(--esmeralda)" }}>
+                ∞
+              </div>
+              <div className="ce-label">
+                todas incluidas
+                <br />
+                <strong style={{ color: "var(--esmeralda)" }}>Esmeralda</strong>
+              </div>
+            </div>
+          </div>
+          <div className="cort-grid reveal">
+            <div className="cort-item">
+              <span className="ci">
+                <IconFerrisWheel size={20} />
+              </span>{" "}
+              Inflable / trampolín en jardín
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconLightbulb size={20} />
+              </span>{" "}
+              Iluminación LED en mesas
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconMic size={20} />
+              </span>{" "}
+              Cantante durante la cena
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconVideo size={20} />
+              </span>{" "}
+              Video remembranza
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconFlower size={20} />
+              </span>{" "}
+              Cascada flores en escalera
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconMusic size={20} />
+              </span>{" "}
+              Servicio de taxi dancer
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconUtensils size={20} />
+              </span>{" "}
+              Torna fiesta de chilaquiles
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconFlower size={20} />
+              </span>{" "}
+              Arco de flores
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconPartyPopper size={20} />
+              </span>{" "}
+              Cabezones bailarines
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconDroplets size={20} />
+              </span>{" "}
+              Máquina de burbujas
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconBot size={20} />
+              </span>{" "}
+              Robot show (sin pirotecnia)
+            </div>
+            <div className="cort-item">
+              <span className="ci">
+                <IconType size={20} />
+              </span>{" "}
+              Letras iluminadas
             </div>
           </div>
         </div>
@@ -2349,126 +1722,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonios con Avatares */}
-      {/* id="testimonios": el botón del correo 3 de la secuencia apunta a /#testimonios. */}
-      <section className="section bg-gris" id="testimonios">
-        <div className="section-narrow">
-          <h2 className="section-title reveal">
-            Lo que dicen nuestras familias
-          </h2>
-
-          {/* Testimonios REALES en video (grabados en el salón la noche de la fiesta).
-              preload="none" + poster: no baja un solo byte del video hasta que alguien le da play,
-              así no le cuesta nada al tiempo de carga de la página. */}
-          <div className="testi-videos-grid reveal">
-            <div className="testi-video">
-              <div className="testi-video-frame">
-                <video
-                  ref={testiVideoRef0}
-                  className="testi-video-player"
-                  src="/testimonio-xv.mp4"
-                  poster="/testimonio-xv-poster.jpg"
-                  controls={!testiHydrated || testiPlaying[0]}
-                  playsInline
-                  preload="none"
-                  aria-label="Testimonio en video de una quinceañera en Salón Villaverde (14 segundos)"
-                  onPlaying={() => handleTestiPlaying(0)}
-                  onEnded={() => handleTestiEnded(0)}
-                />
-                <button
-                  ref={testiPlayBtnRef0}
-                  type="button"
-                  className={`testi-video-play${testiPlaying[0] ? " oculto" : ""}`}
-                  onClick={() => playTestiVideo(0)}
-                  aria-label="Reproducir el testimonio de la quinceañera en video (14 segundos)"
-                  aria-busy={testiLoading[0]}
-                  inert={testiPlaying[0]}
-                  tabIndex={testiPlaying[0] ? -1 : 0}
-                >
-                  <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M8 5.5v13l11-6.5z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="testi-video-caption">
-                <div className="testi-video-label">
-                  &quot;Mi fiesta en Villaverde&quot;
-                </div>
-                <p>
-                  Una de nuestras quinceañeras, contándolo con sus palabras la
-                  misma noche de su fiesta. Sin guion y sin edición.
-                </p>
-                <div className="testi-event">XV Años · agosto 2026</div>
-              </div>
-            </div>
-
-            <div className="testi-video">
-              <div className="testi-video-frame">
-                <video
-                  ref={testiVideoRef1}
-                  className="testi-video-player"
-                  src="/testimonio-vivian.mp4"
-                  poster="/testimonio-vivian-poster.jpg"
-                  controls={!testiHydrated || testiPlaying[1]}
-                  playsInline
-                  preload="none"
-                  aria-label="Testimonio en video de los XV años de Vivian en Salón Villaverde (39 segundos)"
-                  onPlaying={() => handleTestiPlaying(1)}
-                  onEnded={() => handleTestiEnded(1)}
-                />
-                <button
-                  ref={testiPlayBtnRef1}
-                  type="button"
-                  className={`testi-video-play${testiPlaying[1] ? " oculto" : ""}`}
-                  onClick={() => playTestiVideo(1)}
-                  aria-label="Reproducir el testimonio de Vivian en video (39 segundos)"
-                  aria-busy={testiLoading[1]}
-                  inert={testiPlaying[1]}
-                  tabIndex={testiPlaying[1] ? -1 : 0}
-                >
-                  <svg
-                    width="30"
-                    height="30"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M8 5.5v13l11-6.5z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="testi-video-caption">
-                <div className="testi-video-label">
-                  &quot;Las instalaciones están perfectas&quot;
-                </div>
-                <p>
-                  Vivian nos cuenta por qué eligió Villaverde para sus XV años:
-                  las escaleras, la decoración, el baile y toda la organización.
-                </p>
-                <div className="testi-event">XV Años de Vivian</div>
-              </div>
-            </div>
-          </div>
-
-          <details className="testi-transcript reveal">
-            <summary>Descripción de los testimonios</summary>
-            <p>
-              Dos quinceañeras comparten, al terminar su celebración, su
-              experiencia festejando sus XV años en Salón Villaverde: las
-              instalaciones, las escaleras, la decoración, el baile y la
-              organización del evento. Ambos videos conservan sus voces y el
-              ambiente real del salón.
-            </p>
-          </details>
-        </div>
-      </section>
-
       {/* Instagram */}
       <section className="section">
         <div className="section-narrow">
@@ -2659,8 +1912,8 @@ export default function Home() {
         <div className="section-narrow">
           <div className="wa-conversion reveal">
             <div className="wa-conversion-copy">
-              <span className="wa-conversion-kicker">Respuesta inmediata</span>
-              <h2>Tu cotización empieza con un mensaje</h2>
+              <span className="wa-conversion-kicker">Hablemos de tu celebración</span>
+              <h2>Todo empieza con tu fecha.</h2>
               <p>
                 Abre WhatsApp y nuestro asistente te ayuda a revisar paquetes,
                 disponibilidad y opciones para tu evento.
@@ -2688,7 +1941,7 @@ export default function Home() {
                 className="btn-wa-big"
                 onClick={() => trackWhatsAppClick("landing_cotizacion")}
               >
-                <WhatsAppIcon size={24} /> Cotizar por WhatsApp
+                <WhatsAppIcon size={24} /> Consultar mi fecha
               </a>
               <span>Sin formularios · conversación privada</span>
             </div>
@@ -2705,8 +1958,8 @@ export default function Home() {
             de tus sueños?
           </h2>
           <p className="cta-sub">
-            Las fechas de fin de semana se agotan rápido — agenda tu visita sin
-            compromiso.
+            Cuéntanos cuándo quieres celebrar. Consulta disponibilidad y agenda
+            una visita al salón sin compromiso.
           </p>
           <div className="cta-anticipo">
             Reserva con contrato y $3,000 de anticipo
@@ -2718,7 +1971,7 @@ export default function Home() {
             className="btn-wa-big"
             onClick={() => trackWhatsAppClick("cta_final")}
           >
-            <WhatsAppIcon size={24} /> Cotiza gratis ahora
+            <WhatsAppIcon size={24} /> Consultar mi fecha
           </a>
           <div
             className="cta-contact"
@@ -2772,15 +2025,18 @@ export default function Home() {
             <a href="#inicio">Inicio</a>
             <a href="#paquetes">Paquetes</a>
             <a href="#galeria">Galería</a>
+            <a href="#recorrido-360">Recorrido 360°</a>
             <a href="#menu">Menú</a>
             <a href="#extras">Extras</a>
             <a href="#contacto">Contacto</a>
+            <a href="/eventus.html">Eventus</a>
           </div>
           <div>
             <h2>Síguenos</h2>
             <div className="footer-social">
               <a
-                href="https://wa.me/529995485862"
+                href={whatsappQuoteUrl}
+                onClick={() => trackWhatsAppClick("footer")}
                 target="_blank"
                 rel="noopener noreferrer"
                 title="WhatsApp"
@@ -2820,11 +2076,12 @@ export default function Home() {
 
       {/* WhatsApp Float */}
       <a
-        href="https://wa.me/529995485862?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20paquetes%20para%20mi%20evento"
+        href={whatsappQuoteUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="wa-float"
-        aria-label="Contactar por WhatsApp"
+        aria-label="Consultar mi fecha por WhatsApp"
+        onClick={() => trackWhatsAppClick("flotante")}
       >
         <WhatsAppIcon size={34} />
       </a>
@@ -2834,8 +2091,8 @@ export default function Home() {
         <div className="sticky-cta">
           <div className="sticky-cta-inner">
             <div className="sticky-cta-text">
-              <strong>Paquetes desde $420/persona</strong>
-              Consulta disponibilidad
+              <strong>Desde $420 por persona</strong>
+              Mínimo 150 invitados
             </div>
             <a
               href={whatsappQuoteUrl}
@@ -2844,7 +2101,7 @@ export default function Home() {
               className="sticky-cta-btn"
               onClick={() => trackWhatsAppClick("sticky_mobile")}
             >
-              <WhatsAppIcon size={18} /> Cotizar
+              <WhatsAppIcon size={18} /> Consultar fecha
             </a>
           </div>
         </div>

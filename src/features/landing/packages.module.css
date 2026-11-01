@@ -1,0 +1,396 @@
+.section {
+  padding: clamp(64px, 8vw, 112px) 24px;
+  background: #f8f5ef;
+  color: #1c1917;
+  font-family: var(--font-body-loaded, "DM Sans"), system-ui, sans-serif;
+  scroll-margin-top: 88px;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  max-width: 660px;
+  margin-bottom: 44px;
+}
+
+.eyebrow,
+.cardLabel {
+  margin: 0 0 12px;
+  color: #745e3a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.sectionHeader h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display-loaded, "Cormorant Garamond"), Georgia, serif;
+  font-size: clamp(38px, 5.4vw, 64px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.sectionHeader > p:last-child {
+  max-width: 520px;
+  margin: 0;
+  color: #57534e;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.card {
+  min-width: 0;
+  padding: 30px 26px 18px;
+  border: 1px solid #dcd6cb;
+  border-radius: 18px;
+  background: #fffdfa;
+  scroll-margin-top: 96px;
+}
+
+.featured {
+  border-color: #9b825b;
+  background: #f3ecdf;
+  box-shadow: 0 8px 26px #4938220a;
+}
+
+.cardHeader {
+  padding-bottom: 22px;
+  border-bottom: 1px solid #ded7cb;
+}
+
+.cardLabel {
+  min-height: 18px;
+  margin-bottom: 14px;
+  font-size: 10px;
+}
+
+.packageName {
+  margin: 0 0 8px;
+  font-family: var(--font-display-loaded, "Cormorant Garamond"), Georgia, serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.025em;
+}
+
+.description {
+  min-height: 66px;
+  margin: 0 0 24px;
+  color: #57534e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+
+.price > span:first-child {
+  font-size: clamp(38px, 4vw, 48px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceUnit {
+  color: #57534e;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.minimum {
+  margin: 10px 0 22px;
+  color: #3d3933;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.duration {
+  display: grid;
+  gap: 5px;
+}
+
+.duration strong {
+  color: #047857;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.duration span {
+  min-height: 38px;
+  color: #57534e;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.highlights {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 160px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #3d3933;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.highlights svg {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex: 0 0 18px;
+  color: #047857;
+}
+
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid #a71f58;
+  border-radius: 8px;
+  color: #a71f58;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.featured .contact {
+  border-color: #c92f70;
+  background: #c92f70;
+  color: #fff;
+}
+
+.contact:hover {
+  background: #a71f58;
+  color: #fff;
+}
+
+.details {
+  margin-top: 10px;
+}
+
+.details summary,
+.comparison summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  color: #3d3933;
+  cursor: pointer;
+  list-style: none;
+}
+
+.details summary {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.details summary::-webkit-details-marker,
+.comparison summary::-webkit-details-marker {
+  display: none;
+}
+
+.details summary svg,
+.comparison summary svg {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  transition: transform 180ms ease;
+}
+
+.details[open] > summary svg,
+.comparison[open] > summary svg {
+  transform: rotate(180deg);
+}
+
+.fullFeatures {
+  display: grid;
+  gap: 10px;
+  margin: 6px 0 14px;
+  padding-left: 18px;
+  color: #57534e;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.fullFeatures li::marker {
+  color: #047857;
+}
+
+.conditions {
+  margin: 26px auto 34px;
+  color: #57534e;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.conditions p {
+  margin: 4px 0;
+}
+
+.conditions strong {
+  color: #3d3933;
+  font-weight: 600;
+}
+
+.comparison {
+  border-top: 1px solid #dcd6cb;
+  border-bottom: 1px solid #dcd6cb;
+}
+
+.comparison summary {
+  min-height: 72px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.tableHint {
+  margin: 0 0 14px;
+  color: #57534e;
+  font-size: 12px;
+}
+
+.tableScroll {
+  max-width: 100%;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.tableScroll table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.tableScroll caption {
+  margin-bottom: 16px;
+  color: #57534e;
+  font-size: 12px;
+  text-align: left;
+}
+
+.tableScroll th,
+.tableScroll td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #ded7cb;
+}
+
+.tableScroll thead th {
+  background: #eee8dd;
+  font-weight: 600;
+}
+
+.tableScroll tbody th {
+  font-weight: 500;
+}
+
+.tableScroll td {
+  color: #57534e;
+}
+
+.section :is(a, summary, [tabindex]):focus-visible {
+  outline: 3px solid #a71f58;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    gap: 14px;
+  }
+
+  .card {
+    padding: 24px 18px 14px;
+  }
+
+  .description {
+    min-height: 88px;
+  }
+
+  .highlights {
+    min-height: 188px;
+  }
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .sectionHeader {
+    margin-bottom: 30px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    padding: 28px 24px 16px;
+  }
+
+  .description,
+  .duration span,
+  .highlights {
+    min-height: 0;
+  }
+
+  .description {
+    margin-bottom: 22px;
+  }
+
+  .highlights {
+    margin: 22px 0;
+  }
+
+  .contact,
+  .details summary {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact,
+  .details summary svg,
+  .comparison summary svg {
+    transition: none;
+  }
+}

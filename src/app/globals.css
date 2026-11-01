@@ -1,17 +1,17 @@
 :root {
-  --rosa: #db2777;
+  --rosa: #c92f70;
   --rosa-light: #f472b6;
-  --rosa-dark: #9d174d;
+  --rosa-dark: #a71f58;
   --rosa-glow: rgba(219, 39, 119, 0.15);
   --verde: #25d366;
   --verde-dark: #1da851;
   --negro: #0a0a0a;
-  --blanco: #ffffff;
-  --crema: #fdf2f8;
-  --gris-bg: #f9fafb;
+  --blanco: #fffdf9;
+  --crema: #f8f2e9;
+  --gris-bg: #f2f0e9;
   --gris: #e5e7eb;
-  --gris-text: #6b7280;
-  --texto: #111827;
+  --gris-text: #57534e;
+  --texto: #1c1917;
   --gold: #ca8a04;
   /* Dorado para TEXTO sobre fondo claro: #ca8a04 da 2.94:1 y WCAG pide 3:1 minimo
      para objetos graficos. Este llega a ~4.9:1 y se sigue viendo dorado. El --gold
@@ -1938,9 +1938,8 @@ button {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
+  transform: none;
 }
 .reveal.visible {
   opacity: 1;

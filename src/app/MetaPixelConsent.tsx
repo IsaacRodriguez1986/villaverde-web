@@ -2,21 +2,22 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
-
-type Consent = "accepted" | "rejected" | null;
-
-const STORAGE_KEY = "villaverde_analytics_consent";
+import {
+  getAnalyticsConsent,
+  saveAnalyticsConsent,
+  type AnalyticsConsent,
+  type AnalyticsConsentChoice,
+} from "@/features/landing/analytics-consent";
 
 export default function MetaPixelConsent() {
-  const [consent, setConsent] = useState<Consent | undefined>(undefined);
+  const [consent, setConsent] = useState<AnalyticsConsent>(null);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    setConsent(saved === "accepted" || saved === "rejected" ? saved : null);
+    setConsent(getAnalyticsConsent());
   }, []);
 
-  const choose = (value: Exclude<Consent, null>) => {
-    window.localStorage.setItem(STORAGE_KEY, value);
+  const choose = (value: AnalyticsConsentChoice) => {
+    saveAnalyticsConsent(value);
     setConsent(value);
   };
 

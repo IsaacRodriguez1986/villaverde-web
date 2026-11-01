@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
+import "@/features/landing/landing-refinements.css";
 import MetaPixelConsent from "./MetaPixelConsent";
+import { PrivacyPreferenceBootstrap } from "@/features/landing/privacy-preference";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -72,8 +74,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
       <head>
+        <PrivacyPreferenceBootstrap />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -266,9 +269,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${displayFont.variable} ${bodyFont.variable}`}>
-        {children}
+      <body>
         <MetaPixelConsent />
+        {children}
       </body>
     </html>
   );
