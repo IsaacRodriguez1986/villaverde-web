@@ -1,5 +1,7 @@
+import { ANALYTICS_CONSENT_STORAGE_KEY } from "./analytics-consent";
+
 const PREFERENCE_SCRIPT = `try {
-  const choice = localStorage.getItem('villaverde_analytics_consent');
+  const choice = localStorage.getItem(${JSON.stringify(ANALYTICS_CONSENT_STORAGE_KEY)});
   if (choice === 'accepted' || choice === 'rejected') {
     document.documentElement.dataset.analyticsChoice = choice;
   }

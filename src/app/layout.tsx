@@ -4,6 +4,7 @@ import "./globals.css";
 import "@/features/landing/landing-refinements.css";
 import MetaPixelConsent from "./MetaPixelConsent";
 import { PrivacyPreferenceBootstrap } from "@/features/landing/privacy-preference";
+import { WhatsAppAttributionProvider } from "@/features/landing/whatsapp-attribution";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -270,8 +271,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <MetaPixelConsent />
-        {children}
+        <WhatsAppAttributionProvider>
+          <MetaPixelConsent />
+          {children}
+        </WhatsAppAttributionProvider>
       </body>
     </html>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import { AttributedWhatsAppLink } from "./whatsapp-attribution";
+
 import { COMPARISON_ROWS, PACKAGES, type PackagePlan } from "./package-data";
 import styles from "./packages.module.css";
 
@@ -67,7 +69,7 @@ function PackageDetails({ plan }: { plan: PackagePlan }) {
 function PackageContact({ plan, onContact }: PackageCardProps) {
   const message = `Hola, quiero consultar disponibilidad de fecha con el Paquete ${plan.name.toUpperCase()} de Villaverde.`;
   return (
-    <a
+    <AttributedWhatsAppLink
       className={styles.contact}
       href={`https://wa.me/529995485862?text=${encodeURIComponent(message)}`}
       target="_blank"
@@ -76,7 +78,7 @@ function PackageContact({ plan, onContact }: PackageCardProps) {
     >
       Consultar fecha — {plan.name}
       <span aria-hidden="true">↗</span>
-    </a>
+    </AttributedWhatsAppLink>
   );
 }
 

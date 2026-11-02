@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import {
   getAnalyticsConsent,
   saveAnalyticsConsent,
+  ANALYTICS_CONSENT_EVENT,
   type AnalyticsConsent,
   type AnalyticsConsentChoice,
 } from "@/features/landing/analytics-consent";
@@ -13,7 +14,21 @@ export default function MetaPixelConsent() {
   const [consent, setConsent] = useState<AnalyticsConsent>(null);
 
   useEffect(() => {
-    setConsent(getAnalyticsConsent());
+    const sync = (event?: Event) => {
+      const choice = getAnalyticsConsent(event instanceof StorageEvent ? event : undefined);
+      setConsent(choice);
+      if (choice) document.documentElement.dataset.analyticsChoice = choice;
+      else delete document.documentElement.dataset.analyticsChoice;
+    };
+    sync();
+    window.addEventListener("storage", sync);
+    window.addEventListener(ANALYTICS_CONSENT_EVENT, sync);
+    window.addEventListener("pageshow", sync);
+    return () => {
+      window.removeEventListener("storage", sync);
+      window.removeEventListener(ANALYTICS_CONSENT_EVENT, sync);
+      window.removeEventListener("pageshow", sync);
+    };
   }, []);
 
   const choose = (value: AnalyticsConsentChoice) => {
@@ -42,7 +57,7 @@ export default function MetaPixelConsent() {
       {consent === null && (
         <aside className="privacy-choice" aria-label="Preferencias de privacidad">
           <p>
-            Usamos Meta Pixel para medir qué anuncios generan consultas. Puedes
+            Usamos Meta Pixel y una referencia en WhatsApp para medir qué anuncios generan consultas. Puedes
             aceptar esa medición o continuar sin ella.
           </p>
           <div className="privacy-choice-actions">

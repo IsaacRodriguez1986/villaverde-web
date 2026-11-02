@@ -1,5 +1,7 @@
 "use client";
 
+import { AttributedWhatsAppLink } from "@/features/landing/whatsapp-attribution";
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { CinematicHero } from "@/features/landing/cinematic-hero";
@@ -969,7 +971,7 @@ export default function Home() {
           <a href="#galeria" onClick={() => setMenuOpen(false)}>Galería</a>
           <a href="#recorrido-360" onClick={() => setMenuOpen(false)}>Recorrido 360°</a>
           <a href="#testimonios" onClick={() => setMenuOpen(false)}>Experiencias</a>
-          <a
+          <AttributedWhatsAppLink
             href={whatsappQuoteUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -980,7 +982,7 @@ export default function Home() {
             }}
           >
             Consultar mi fecha
-          </a>
+          </AttributedWhatsAppLink>
         </div>
       </nav>
 
@@ -1158,9 +1160,9 @@ export default function Home() {
             ))}
           </div>
           <div className="gallery-cta reveal">
-            <a href={whatsappQuoteUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" onClick={() => trackWhatsAppClick("galeria")}>
+            <AttributedWhatsAppLink href={whatsappQuoteUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" onClick={() => trackWhatsAppClick("galeria")}>
               Consultar mi fecha <IconChevronRight size={16} />
-            </a>
+            </AttributedWhatsAppLink>
           </div>
         </div>
       </section>
@@ -1934,7 +1936,7 @@ export default function Home() {
               </ul>
             </div>
             <div className="wa-conversion-action">
-              <a
+              <AttributedWhatsAppLink
                 href={whatsappQuoteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1942,7 +1944,7 @@ export default function Home() {
                 onClick={() => trackWhatsAppClick("landing_cotizacion")}
               >
                 <WhatsAppIcon size={24} /> Consultar mi fecha
-              </a>
+              </AttributedWhatsAppLink>
               <span>Sin formularios · conversación privada</span>
             </div>
           </div>
@@ -1964,7 +1966,7 @@ export default function Home() {
           <div className="cta-anticipo">
             Reserva con contrato y $3,000 de anticipo
           </div>
-          <a
+          <AttributedWhatsAppLink
             href={whatsappQuoteUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -1972,7 +1974,7 @@ export default function Home() {
             onClick={() => trackWhatsAppClick("cta_final")}
           >
             <WhatsAppIcon size={24} /> Consultar mi fecha
-          </a>
+          </AttributedWhatsAppLink>
           <div
             className="cta-contact"
             style={{
@@ -2034,7 +2036,7 @@ export default function Home() {
           <div>
             <h2>Síguenos</h2>
             <div className="footer-social">
-              <a
+              <AttributedWhatsAppLink
                 href={whatsappQuoteUrl}
                 onClick={() => trackWhatsAppClick("footer")}
                 target="_blank"
@@ -2043,7 +2045,7 @@ export default function Home() {
                 aria-label="WhatsApp"
               >
                 <WhatsAppIcon size={18} />
-              </a>
+              </AttributedWhatsAppLink>
               <a
                 href="https://www.instagram.com/salon.villaverde/"
                 target="_blank"
@@ -2075,7 +2077,7 @@ export default function Home() {
       </footer>
 
       {/* WhatsApp Float */}
-      <a
+      <AttributedWhatsAppLink
         href={whatsappQuoteUrl}
         target="_blank"
         rel="noopener noreferrer"
@@ -2084,7 +2086,7 @@ export default function Home() {
         onClick={() => trackWhatsAppClick("flotante")}
       >
         <WhatsAppIcon size={34} />
-      </a>
+      </AttributedWhatsAppLink>
 
       {/* Sticky CTA Móvil */}
       {showSticky && (
@@ -2094,7 +2096,7 @@ export default function Home() {
               <strong>Desde $420 por persona</strong>
               Mínimo 150 invitados
             </div>
-            <a
+            <AttributedWhatsAppLink
               href={whatsappQuoteUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -2102,7 +2104,7 @@ export default function Home() {
               onClick={() => trackWhatsAppClick("sticky_mobile")}
             >
               <WhatsAppIcon size={18} /> Consultar fecha
-            </a>
+            </AttributedWhatsAppLink>
           </div>
         </div>
       )}

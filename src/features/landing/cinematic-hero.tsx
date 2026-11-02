@@ -1,5 +1,7 @@
 "use client";
 
+import { AttributedWhatsAppLink } from "./whatsapp-attribution";
+
 import Image from "next/image";
 import { WHATSAPP_DATE_URL } from "./contact";
 import styles from "./cinematic-hero.module.css";
@@ -35,7 +37,7 @@ function HeroPhoto() {
 function HeroActions({ onContact }: CinematicHeroProps) {
   return (
     <div className={styles.actions}>
-      <a
+      <AttributedWhatsAppLink
         className={styles.primary}
         href={WHATSAPP_DATE_URL}
         target="_blank"
@@ -44,7 +46,7 @@ function HeroActions({ onContact }: CinematicHeroProps) {
       >
         <WhatsAppMark /> Consultar mi fecha
         <span aria-hidden="true">↗</span>
-      </a>
+      </AttributedWhatsAppLink>
       <a className={styles.secondary} href="#paquetes">
         Ver paquetes <span aria-hidden="true">↓</span>
       </a>
