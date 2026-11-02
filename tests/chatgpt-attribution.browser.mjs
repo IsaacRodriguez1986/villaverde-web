@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { setTimeout as delay } from 'node:timers/promises';
-import { chromium } from '../../villaverde-attribution/crm/node_modules/playwright/index.mjs';
+import { pathToFileURL } from 'node:url';
+
+// Same loader as guest-pass.browser.mjs: the web has no Playwright dependency of its own.
+const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE));
 
 const BASE = new URL(process.env.BASE_URL || 'http://127.0.0.1:3210');
 assert.equal(BASE.hostname, '127.0.0.1', 'this suite may only use the isolated loopback server');
