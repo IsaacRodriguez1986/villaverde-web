@@ -46,7 +46,7 @@
 @keyframes loading { from { transform: translateX(-10%); } to { transform: translateX(170%); } }
 
 @media (max-width: 600px) {
-  .frame { min-height: 340px; border-radius: 15px; }
+  .frame { aspect-ratio: auto; height: 340px; min-height: 0; border-radius: 15px; }
   .overlay { padding: 26px 22px; }
   .overlayEyebrow { font-size: 8px; letter-spacing: .09em; }
   .overlayContent h3 { font-size: 32px; }
