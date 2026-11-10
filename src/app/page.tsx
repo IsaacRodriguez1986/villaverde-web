@@ -1654,6 +1654,7 @@ export default function Home() {
                 icon: <IconClock size={28} />,
                 name: "Hora Extra",
                 price: "$6,000",
+                detail: "contratada 3 días antes · $8,000 durante el evento",
               },
             ].map((extra) => (
               <div key={extra.name} className="extra-card">

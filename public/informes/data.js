@@ -322,6 +322,13 @@ VV.TEMATICAS = [
 
 /* ---------- COMPLEMENTA TU EVENTO ---------- */
 VV.COMPLEMENTOS = ['Pista LED', 'Pantalla LED gigante', 'Video remembranza', '1 hora extra', 'Cabezones', 'Burbujas', 'Ceremonia', 'Cabina foto 360°', 'Letras gigantes', 'Torna fiesta'];
+/* Hora extra: dos precios según cuándo se contrata (Isaac, 10-nov-2026). Mismo texto que la
+   cláusula del contrato (bot-villaverde/captura/documento.js) y el prompt del bot. */
+VV.HORA_EXTRA = {
+  incluye: 'DJ, refrescos y meseros',
+  anticipada: { precio: '$6,000', cuando: 'contratada a más tardar 3 días antes del evento' },
+  enEvento: { precio: '$8,000', cuando: 'contratada después de ese plazo o durante el evento' },
+};
 VV.MUSICA = ['Mariachi', 'Banda', 'Grupo 5 o 9 integrantes', 'Trío', 'Norteño', 'Cantante'];
 VV.COCTEL = '100 personas — 4 vitroleros de 10 L + 100 micheladas';
 

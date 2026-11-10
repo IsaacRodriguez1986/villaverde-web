@@ -286,6 +286,16 @@ function SecCortesias() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 18 }}>
           {VV.COMPLEMENTOS.map((x, i) => <span key={i} className="vv-chip">{x}</span>)}
         </div>
+        <div className="vv-card" style={{ padding: '16px 22px', marginBottom: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+            <span style={{ color: 'var(--vv-crimson)' }}><Icon name="clock" size={20} /></span>
+            <div style={{ fontWeight: 800, fontSize: 15 }}>Hora extra <span style={{ fontWeight: 500, color: 'var(--vv-muted)' }}>· incluye {VV.HORA_EXTRA.incluye}</span></div>
+          </div>
+          <div style={{ fontSize: 13.5, lineHeight: 1.6 }}>
+            <div><b style={{ color: 'var(--vv-emerald)' }}>{VV.HORA_EXTRA.anticipada.precio}</b> por hora, {VV.HORA_EXTRA.anticipada.cuando}.</div>
+            <div style={{ color: 'var(--vv-muted)' }}><b>{VV.HORA_EXTRA.enEvento.precio}</b> por hora, {VV.HORA_EXTRA.enEvento.cuando}.</div>
+          </div>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 14 }}>
           <div className="vv-card" style={{ padding: '18px 22px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
