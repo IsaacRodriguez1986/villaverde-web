@@ -292,8 +292,8 @@ function SecCortesias() {
             <div style={{ fontWeight: 800, fontSize: 15 }}>Hora extra <span style={{ fontWeight: 500, color: 'var(--vv-muted)' }}>· incluye {VV.HORA_EXTRA.incluye}</span></div>
           </div>
           <div style={{ fontSize: 13.5, lineHeight: 1.6 }}>
-            <div><b style={{ color: 'var(--vv-emerald)' }}>{VV.HORA_EXTRA.anticipada.precio}</b> por hora, {VV.HORA_EXTRA.anticipada.cuando}.</div>
-            <div style={{ color: 'var(--vv-muted)' }}><b>{VV.HORA_EXTRA.enEvento.precio}</b> por hora, {VV.HORA_EXTRA.enEvento.cuando}.</div>
+            <div><b style={{ color: 'var(--vv-emerald)' }}>{VV.HORA_EXTRA.anticipada.precio}</b> {VV.HORA_EXTRA.anticipada.cuando}.</div>
+            <div style={{ color: 'var(--vv-muted)' }}><b>{VV.HORA_EXTRA.enEvento.precio}</b> {VV.HORA_EXTRA.enEvento.cuando}.</div>
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 14 }}>
