@@ -6,6 +6,7 @@ import MetaPixelConsent from "./MetaPixelConsent";
 import { PrivacyPreferenceBootstrap } from "@/features/landing/privacy-preference";
 import { WhatsAppAttributionProvider } from "@/features/landing/whatsapp-attribution";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const displayFont = Cormorant_Garamond({
   subsets: ["latin"],
@@ -277,6 +278,7 @@ export default function RootLayout({
           {children}
         </WhatsAppAttributionProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
