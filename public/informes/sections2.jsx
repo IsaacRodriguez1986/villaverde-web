@@ -314,6 +314,41 @@ function SecCortesias() {
             <div style={{ fontSize: 13.5, color: 'var(--vv-muted)', lineHeight: 1.5 }}>{VV.COCTEL}</div>
           </div>
         </div>
+        <div
+          role="group"
+          aria-label="Opciones destacadas para tu evento"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: 16,
+            marginTop: 18,
+          }}
+        >
+          <figure className="vv-card" style={{ flex: "1 1 270px", minWidth: 0, maxWidth: 450, margin: 0, padding: 10 }}>
+            <img
+              src="assets/cartel-cascada-flores.png"
+              width={1122}
+              height={1402}
+              alt="Cascada de flores en la escalera del Salón Villaverde. Cotiza tu montaje."
+              loading="lazy"
+              decoding="async"
+              style={{ display: "block", width: "100%", height: "auto", borderRadius: 8 }}
+            />
+          </figure>
+          <figure className="vv-card" style={{ flex: "1 1 270px", minWidth: 0, maxWidth: 450, margin: 0, padding: 10 }}>
+            <img
+              src="assets/cartel-banda-de-viento.png"
+              width={941}
+              height={1672}
+              alt="Banda de viento: $8,000 MXN por un turno de 45 minutos con seis integrantes"
+              loading="lazy"
+              decoding="async"
+              style={{ display: "block", width: "100%", height: "auto", borderRadius: 8 }}
+            />
+          </figure>
+        </div>
       </div>
     </div>
   );
