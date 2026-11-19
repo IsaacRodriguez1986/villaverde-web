@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Salon de Fiestas Villaverde//Invitacion digital//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:mis-xv-yarelia-20261205@salondefiestasvillaverde.com
+DTSTAMP:20261119T170000Z
+DTSTART:20261205T230000Z
+DTEND:20261206T070000Z
+SUMMARY:XV Años de Yarelia Amairani
+LOCATION:Parroquia San Marcos Evangelista\, Calle Nacional Mz 30\, San M
+ arcos Huixtoco\, C.P. 56643\, Chalco de Díaz de Covarrubias\, Estado
+  de México
+DESCRIPTION:5:00 PM misa en la Parroquia San Marcos Evangelista · 6:30 P
+ M recepción en el Salón de Fiestas Villaverde (Carretera México-Cuau
+ tla Km 35.5\, Col. Santa Cruz Amalinalco\, Chalco). Invitación: https:
+ //www.salondefiestasvillaverde.com/mis-xv-yarelia
+URL:https://www.salondefiestasvillaverde.com/mis-xv-yarelia
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Mañana son los XV Años de Yarelia Amairani
+END:VALARM
+END:VEVENT
+END:VCALENDAR

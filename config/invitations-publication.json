@@ -264,6 +264,39 @@
       "apiRoutes": []
     },
     {
+      "slug": "mis-xv-yarelia",
+      "files": [
+        "assets/hero.webp",
+        "assets/hero@2x.webp",
+        "assets/historia-ayer.webp",
+        "assets/historia-ayer@2x.webp",
+        "assets/historia-hoy.webp",
+        "assets/lugar.webp",
+        "assets/lugar@2x.webp",
+        "assets/mis-xv-yarelia.ics",
+        "assets/moonlight.mp3",
+        "assets/og-sobre.jpg",
+        "assets/orn-arco.webp",
+        "assets/orn-cenefa.webp",
+        "assets/orn-clara.webp",
+        "assets/orn-corona.webp",
+        "assets/orn-divisor.webp",
+        "assets/orn-esquina-b.webp",
+        "assets/orn-esquina-c.webp",
+        "assets/orn-ramita.webp",
+        "assets/orn-vertical.webp",
+        "assets/portada-abierta.webp",
+        "assets/portada.webp",
+        "assets/retrato-hoy.webp",
+        "assets/retrato-hoy@2x.webp",
+        "assets/retrato-vino.webp",
+        "assets/retrato-vino@2x.webp",
+        "assets/sobre-abre.mp4",
+        "index.html"
+      ],
+      "apiRoutes": []
+    },
+    {
       "slug": "eldiabloviste",
       "files": [
         "assets/bg-music.mp3",
