@@ -46,7 +46,7 @@ function references(text) {
   return [...new Set(values)].filter(value => RESOURCE.test(value) && !value.includes('${'));
 }
 
-/** Offline publication contract. It never contacts APIs or writes participant data. */
+/** Publication contract. Only Vercel build checks the configured invitation photo host. */
 export async function validateInvitations({ root, config, manifest, built = false }) {
   const errors = [];
   const invitations = manifest?.invitations;
@@ -54,6 +54,23 @@ export async function validateInvitations({ root, config, manifest, built = fals
       !Array.isArray(manifest.excludedPublicDirectories) || !Array.isArray(manifest.redirects)) {
     return { errors: ['Registro de invitaciones inválido o vacío.'], invitations: 0, files: 0 };
   }
+  // Require the exact configured, unconditional photo route instead of a Git file.
+  // All other invitation assets retain the existing local-file requirement.
+  const hostedPhotos = new Map();
+  const mediaPrefix = 'https://villaverde-invitacion-media.vercel.app/r/';
+  const photoBase = '/mis-xv-yarelia/fotos/';
+  const configured = flattenRewrites(await config.rewrites());
+  for (const rule of configured) {
+    if (!unconditional(rule) || !rule.source.startsWith(photoBase) ||
+        !rule.destination?.startsWith(mediaPrefix)) continue;
+    const file = rule.source.slice(photoBase.length);
+    const [key, name, extra] = rule.destination.slice(mediaPrefix.length).split('/');
+    if (/^[a-z][a-z0-9-]*(?:@2x)?\.webp$/.test(file) &&
+        /^[a-f0-9]{32}$/.test(key) && file === name && extra === undefined) {
+      hostedPhotos.set(rule.source, rule.destination);
+    }
+  }
+  const referencedHostedPhotos = new Set();
   const publicRoot = resolve(root, 'public');
   const slugs = new Set();
   let files = 0;
@@ -93,6 +110,10 @@ export async function validateInvitations({ root, config, manifest, built = fals
         let url;
         try { url = new URL(reference, extname(file) === '.css' ? fileURL : documentBase); } catch { continue; }
         if (!['https:', 'http:'].includes(url.protocol) || !SITE.has(url.hostname)) continue;
+        if (invitation.slug === 'mis-xv-yarelia' && hostedPhotos.has(url.pathname)) {
+          referencedHostedPhotos.add(url.pathname);
+          continue;
+        }
         let local;
         try { local = resolve(publicRoot, '.' + decodeURIComponent(url.pathname)); } catch { continue; }
         if (!inside(publicRoot, local) || !await nonempty(local)) {
@@ -113,6 +134,13 @@ export async function validateInvitations({ root, config, manifest, built = fals
 
   const checkRules = (rewrites, headers, redirects, label) => {
     const rules = flattenRewrites(rewrites);
+    for (const route of referencedHostedPhotos) {
+      const first = rules.find(rule => matches(rule, route));
+      if (!first || !unconditional(first) || first.source !== route ||
+          first.destination !== hostedPhotos.get(route) || redirects.some(rule => matches(rule, route))) {
+        errors.push(`${label}: falta la ruta verificada de foto ${route}.`);
+      }
+    }
     for (const invitation of invitations.filter(invitation => slugs.has(invitation.slug))) {
       const route = '/' + invitation.slug;
       if (!rules.some(rule => rule.source === route && rule.destination === route + '/index.html' && unconditional(rule))) errors.push(`${label}: falta la ruta pública ${route}.`);
@@ -139,6 +167,18 @@ export async function validateInvitations({ root, config, manifest, built = fals
   try {
     checkRules(await config.rewrites(), await config.headers(), await config.redirects?.() || [], 'Configuración');
   } catch (error) { errors.push('No se pudo comprobar next.config: ' + error.message); }
+  if (!built && process.env.VERCEL === '1') {
+    const results = await Promise.all([...referencedHostedPhotos].map(async route => {
+      try {
+        const response = await fetch(hostedPhotos.get(route), {
+          method: 'HEAD', redirect: 'error', signal: AbortSignal.timeout(10000),
+        });
+        return response.ok && response.headers.get('content-type')?.startsWith('image/webp') &&
+          response.headers.get('x-robots-tag')?.toLowerCase().includes('noindex') ? null : route;
+      } catch { return route; }
+    }));
+    for (const route of results.filter(Boolean)) errors.push(`La foto alojada no está disponible como WebP no indexable: ${route}.`);
+  }
   if (built) {
     try {
       const output = JSON.parse(await readFile(resolve(root, '.next/routes-manifest.json'), 'utf8'));

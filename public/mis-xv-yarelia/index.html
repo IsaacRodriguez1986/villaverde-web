@@ -1190,6 +1190,8 @@ body.is-gated{ overflow:hidden; }
   gap:clamp(14px,4vw,32px); max-width:640px; margin:var(--eb-s4) auto 0;
 }
 .eb-story__item{ margin:0; }
+.eb-story__item--collage .eb-story__frame img,
+.eb-story__frame--recuerdo img{ aspect-ratio:auto; object-fit:contain; border-radius:var(--eb-r); }
 .eb-story__item--hoy{ margin-top:clamp(28px,9vw,64px); }
 /* Radio horizontal 50% + vertical 34% del alto (foto 2:3) = medio círculo arriba */
 .eb-story__frame{
@@ -1583,11 +1585,11 @@ body.is-gated{ overflow:hidden; }
     <img class="eb-crest__arc" src="/mis-xv-yarelia/assets/orn-arco.webp"
          width="900" height="443" alt="" loading="lazy" decoding="async">
     <div class="eb-crest__shield">
-      <img src="/mis-xv-yarelia/assets/retrato-hoy.webp"
-           srcset="/mis-xv-yarelia/assets/retrato-hoy.webp 310w, /mis-xv-yarelia/assets/retrato-hoy@2x.webp 620w"
+      <img src="/mis-xv-yarelia/fotos/retrato-hoy.webp"
+           srcset="/mis-xv-yarelia/fotos/retrato-hoy.webp 310w, /mis-xv-yarelia/fotos/retrato-hoy@2x.webp 620w"
            sizes="(max-width:447px) calc(76vw - 18px), 322px"
-           width="310" height="413"
-           alt="Retrato de Yarelia Amairani sosteniendo un ramo de rosas"
+           width="310" height="551"
+           alt="Retrato con vestido color vino y un arreglo de regalo"
            loading="lazy" decoding="async">
     </div>
     <p class="eb-crest__label">Quinceañera</p>
@@ -1667,13 +1669,13 @@ body.is-gated{ overflow:hidden; }
     <h2 class="eb-script-title" id="story-h">Ayer y hoy</h2>
 
     <div class="eb-story__grid">
-      <figure class="eb-story__item">
+      <figure class="eb-story__item eb-story__item--collage">
         <div class="eb-story__frame">
-          <img src="/mis-xv-yarelia/assets/historia-ayer.webp"
-               srcset="/mis-xv-yarelia/assets/historia-ayer.webp 270w, /mis-xv-yarelia/assets/historia-ayer@2x.webp 540w"
+          <img src="/mis-xv-yarelia/fotos/historia-ayer.webp"
+               srcset="/mis-xv-yarelia/fotos/historia-ayer.webp 270w, /mis-xv-yarelia/fotos/historia-ayer@2x.webp 540w"
                sizes="(max-width:680px) 44vw, 300px"
-               width="270" height="360"
-               alt="Yarelia de niña, con un vestido de flores rosas y zapatitos negros"
+               width="270" height="405"
+               alt="Collage de recuerdos de la infancia"
                loading="lazy" decoding="async">
         </div>
         <figcaption class="eb-story__cap">
@@ -1684,20 +1686,26 @@ body.is-gated{ overflow:hidden; }
 
       <figure class="eb-story__item eb-story__item--hoy">
         <div class="eb-story__frame">
-          <!-- Sin srcset a proposito: el recorte que separa a Yarelia del
-               resto de la escena da 300 px de ancho y nada mas. Un
-               descriptor @2x de 600w seria mentirle al navegador, que
-               elige justo por ese numero. -->
-          <img src="/mis-xv-yarelia/assets/historia-hoy.webp"
+          <img src="/mis-xv-yarelia/fotos/historia-hoy.webp"
                sizes="(max-width:680px) 44vw, 300px"
-               width="300" height="400"
-               alt="Yarelia Amairani con un vestido azul largo, en una fiesta"
+               width="300" height="533"
+               alt="Retrato con vestido color vino al aire libre"
                loading="lazy" decoding="async">
         </div>
         <figcaption class="eb-story__cap">
           <span class="eb-story__when">Hoy</span>
           <span class="eb-story__text">celebro mis XV años</span>
         </figcaption>
+      </figure>
+      <figure class="eb-story__item">
+        <div class="eb-story__frame eb-story__frame--recuerdo">
+          <img src="/mis-xv-yarelia/fotos/recuerdo-jardin.webp" width="660" height="495" alt="Dos niñas jugando en el patio" loading="lazy" decoding="async">
+        </div>
+      </figure>
+      <figure class="eb-story__item">
+        <div class="eb-story__frame eb-story__frame--recuerdo">
+          <img src="/mis-xv-yarelia/fotos/recuerdo-hamaca.webp" width="660" height="371" alt="Recuerdo de infancia en una hamaca" loading="lazy" decoding="async">
+        </div>
       </figure>
     </div>
   </div>
@@ -1796,12 +1804,12 @@ body.is-gated{ overflow:hidden; }
              Descriptores w = ancho REAL del archivo (verificado con ffprobe).
              sizes sale de la geometría: .eb-frame es min(320px,78vw) con 24px
              de padding por lado -> 272px de contenido como máximo. -->
-        <img src="/mis-xv-yarelia/assets/retrato-vino.webp"
-             srcset="/mis-xv-yarelia/assets/retrato-vino.webp 300w,
-                     /mis-xv-yarelia/assets/retrato-vino@2x.webp 600w"
+        <img src="/mis-xv-yarelia/fotos/retrato-vino.webp"
+             srcset="/mis-xv-yarelia/fotos/retrato-vino.webp 300w,
+                     /mis-xv-yarelia/fotos/retrato-vino@2x.webp 600w"
              sizes="(max-width:480px) calc(78vw - 48px), 272px"
-             width="300" height="400"
-             alt="Yarelia con un vestido vino de tul, sosteniendo un arreglo de regalo"
+             width="300" height="533"
+             alt="Recuerdo en el jardín con ropa rosa"
              loading="lazy" decoding="async">
       </div>
     </div>

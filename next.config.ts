@@ -148,7 +148,28 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    // Solo los retratos de esta invitación van al alojamiento de fotos.
+    // La ruta de origen se configura en Vercel, no en el repositorio.
+    const yareliaMedia = process.env.YARELIA_MEDIA_ORIGIN;
+    const mediaBase = "https://villaverde-invitacion-media.vercel.app/r/";
+    const yareliaPhotos = [
+      "retrato-hoy.webp",
+      "retrato-hoy@2x.webp",
+      "historia-ayer.webp",
+      "historia-ayer@2x.webp",
+      "historia-hoy.webp",
+      "retrato-vino.webp",
+      "retrato-vino@2x.webp",
+      "recuerdo-jardin.webp",
+      "recuerdo-hamaca.webp",
+    ];
     return [
+      ...(yareliaMedia?.startsWith(mediaBase) && /^[a-f0-9]{32}$/.test(yareliaMedia.slice(mediaBase.length))
+        ? yareliaPhotos.map((file) => ({
+            source: `/mis-xv-yarelia/fotos/${file}`,
+            destination: `${yareliaMedia}/${file}`,
+          }))
+        : []),
       {
         source: "/eventus",
         destination: "/eventus.html",
