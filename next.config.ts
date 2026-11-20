@@ -15,6 +15,7 @@ const INVITACIONES = [
   "boda-angel-isis",
   "mis-xv-karla",
   "mis-xv-yarelia",
+  "mis-xv-johana",
   // Eventos ya pasados que se enseñan como muestra dentro de /informes.
   "eldiabloviste",
   "diadelmaestro",

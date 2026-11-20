@@ -297,6 +297,33 @@
       "apiRoutes": []
     },
     {
+      "slug": "mis-xv-johana",
+      "files": [
+        "assets/daylight.mp3",
+        "assets/hero.webp",
+        "assets/hero@2x.webp",
+        "assets/lugar.webp",
+        "assets/lugar@2x.webp",
+        "assets/mis-xv-johana.ics",
+        "assets/og-sobre.jpg",
+        "assets/orn-divisor.webp",
+        "assets/portada-abierta.webp",
+        "assets/portada.webp",
+        "assets/rec-bebe.webp",
+        "assets/rec-familia.webp",
+        "assets/rec-familia@2x.webp",
+        "assets/rec-infancia.webp",
+        "assets/rec-infancia@2x.webp",
+        "assets/rec-noche.webp",
+        "assets/rec-noche@2x.webp",
+        "assets/retrato-hoy.webp",
+        "assets/retrato-hoy@2x.webp",
+        "assets/sobre-abre.mp4",
+        "index.html"
+      ],
+      "apiRoutes": []
+    },
+    {
       "slug": "eldiabloviste",
       "files": [
         "assets/bg-music.mp3",

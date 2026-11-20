@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Salon de Fiestas Villaverde//Invitaciones//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:mis-xv-johana-2027-01-09@salondefiestasvillaverde.com
+DTSTAMP:20261120T200000Z
+DTSTART:20270110T000000Z
+DTEND:20270110T080000Z
+SUMMARY:XV Anos de Johana Noemi
+DESCRIPTION:Recepcion a las 6:00 PM en el Salon de Fiestas Villaverde (Carre
+ tera Mexico-Cuautla Km 35.5\, Chalco). La hora de la misa en la Capilla del
+  Senor de la Misericordia se confirmara proximamente. Invitacion: https://w
+ ww.salondefiestasvillaverde.com/mis-xv-johana
+LOCATION:Salon de Fiestas Villaverde\, Carretera Mexico-Cuautla Km 35.5\, Co
+ l. Santa Cruz Amalinalco\, C.P. 56609\, Chalco\, Estado de Mexico
+END:VEVENT
+END:VCALENDAR

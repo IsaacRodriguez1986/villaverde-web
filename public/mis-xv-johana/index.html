@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>XV Años de Johana Noemí — 9 de Enero, 2027</title>
+<meta name="description" content="Acompáñame a celebrar mis XV Años. Sábado 9 de enero de 2027, Chalco, Estado de México.">
+
+<!-- Privacidad: lleva nombre, dirección y teléfono de un cliente real, y vive
+     en el dominio público del salón. El noindex se refuerza con el header
+     X-Robots-Tag que aplica next.config.ts sobre /mis-xv-johana. -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#fdf6f1">
+<!-- La pieza es crema y rosa: NO tiene version oscura ni la quiere.
+     Sin declararlo, el "tema oscuro automatico" de Chrome en Android
+     se cree con permiso de invertirla, y la invitacion se abre casi
+     negra en el telefono de un invitado que lleve el modo puesto.
+     Es el canal por el que se reparte: WhatsApp -> Chrome Android. -->
+<meta name="color-scheme" content="light">
+
+<link rel="canonical" href="https://www.salondefiestasvillaverde.com/mis-xv-johana">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="XV Años de Johana Noemí">
+<meta property="og:description" content="Acompáñame a celebrar mis XV Años — Sábado 9 de Enero, 2027">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://www.salondefiestasvillaverde.com/mis-xv-johana">
+<!-- URL absoluta obligatoria: el crawler de WhatsApp/Facebook no resuelve
+     rutas relativas de forma confiable y el preview se quedaría sin imagen. -->
+<meta property="og:image" content="https://www.salondefiestasvillaverde.com/mis-xv-johana/assets/og-sobre.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Papel de algodón color crema rodeado de rosas empolvadas y listón dorado: XV Años de Johana Noemí, sábado 9 de enero de 2027">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Marca el documento como "JS vivo". Sin esto nada se oculta jamás:
+     si el script falla, la invitación se lee completa igual. -->
+<script>document.documentElement.className += ' js';</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+/* ============================================================
+   ETHEREAL BLOOM — tokens
+   Nombrados por ROL, nunca por valor: cambiar la paleta no debe
+   volver mentirosos los nombres. Ver docs/ui-design/ETHEREAL-BLOOM.md
+   ============================================================ */
+:root{
+  /* Superficies — crema cálida y rosa empolvado. Son FONDO, nunca texto.
+     Ratios recalculados para esta paleta: los de la base eran nudes
+     cálidos (#fff8f3) y ya no valen aquí. */
+  --eb-surface:            #fdf6f1;
+  --eb-surface-low:        #fbeae4;
+  --eb-surface-container:  #f8e0d8;
+  --eb-surface-high:       #f3d6cc;
+  --eb-surface-variant:    #eecabe;
+  --eb-surface-dim:        #e3b8aa;
+  --eb-surface-lowest:     #ffffff;
+
+  /* Texto */
+  --eb-on-surface:         #241a1d;   /* 15.82:1 sobre surface */
+  --eb-on-surface-variant: #4f4245;   /*  8.93:1 */
+
+  /* Líneas. outline NUNCA como color de texto (4.21:1, insuficiente). */
+  --eb-outline:            #7d6f71;
+  --eb-outline-variant:    #e5cabf;   /* 1.42:1 — solo decoración */
+
+  /* Rosewood — el color que manda en toda la pieza */
+  --eb-primary:            #71384d;   /* 8.26:1 sobre surface */
+  --eb-on-primary:         #ffffff;   /* 8.84:1 sobre primary */
+  --eb-primary-container:  #f6dadf;
+  --eb-primary-fixed:      #f8e2e5;
+
+  /* Oro viejo. secondary es el legible (5.26:1); secondary-container es decorativo. */
+  --eb-secondary:           #8a5e34;
+  --eb-secondary-container: #e8bd7f;
+
+  --eb-tertiary-container: #e7e1d8;
+  --eb-error:              #ba1a1a;
+
+  /* Canales RGB: única forma de que los alfas se recalculen solos
+     al cambiar la paleta. color-mix() no llega a Androids viejos. */
+  --eb-secondary-rgb: 138 94 52;
+  --eb-sakura-rgb:    246 218 223;   /* rosa empolvado, el mismo de primary-container */
+  --eb-shadow-rgb:    90 56 66;      /* sombra teñida de rosewood, no de nuez */
+
+  --eb-hairline: rgb(var(--eb-secondary-rgb) / .42);
+
+  /* Tipografía */
+  --eb-font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --eb-font-body:    'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Solo para el nombre de Johana. Nunca en texto corrido: a menos de
+     ~28px la caligrafía deja de leerse. */
+  --eb-font-script:  'Great Vibes', 'Snell Roundhand', cursive;
+  /* Great Vibes tiene astas altas y rabos profundos: con line-height
+     cerca de 1 la caja de línea queda MÁS CORTA que la letra y la
+     recorta (y con background-clip:text recorta además el degradado).
+     Estas dos variables se aplican a TODOS los textos caligráficos
+     en una sola regla al final de la hoja. */
+  --eb-script-lh:    1.32;
+  --eb-script-pad:   .14em 0 .26em;
+
+  --eb-display-lg:  clamp(2.25rem, 7.5vw, 3rem);
+  --eb-headline-md: clamp(1.625rem, 4.5vw, 2rem);
+  --eb-headline-sm: clamp(1.375rem, 3.5vw, 1.5rem);
+  --eb-body-lg:     1.125rem;
+  --eb-body-md:     1rem;
+  --eb-label:       .75rem;          /* 12px — piso absoluto de tamaño */
+
+  /* El nombre del hero excede display-lg a propósito. Único caso. */
+  --eb-hero-name:   clamp(3.4rem, 15vw, 6rem);
+
+  /* Forma */
+  --eb-r-sm:.25rem; --eb-r:.5rem; --eb-r-md:.75rem;
+  --eb-r-lg:1rem;   --eb-r-xl:1.5rem; --eb-r-full:9999px;
+
+  /* Espacio — unidad 8px */
+  --eb-s1:8px;  --eb-s2:16px; --eb-s3:24px; --eb-s4:32px;
+  --eb-s5:40px; --eb-s6:48px; --eb-s8:64px;
+  --eb-container:1200px;
+  --eb-gutter:24px;
+  --eb-section-gap: clamp(56px, 9vw, 80px);
+
+  /* Elevación: capas tonales y hairlines, nunca sombras densas */
+  --eb-elev:        0 4px 20px rgb(var(--eb-shadow-rgb) / .05);
+  --eb-elev-raised: 0 8px 28px rgb(var(--eb-shadow-rgb) / .07);
+
+  /* Movimiento — "pétalo cayendo" */
+  --eb-ease:     cubic-bezier(.22,1,.36,1);
+  --eb-dur-fast: 180ms;
+  --eb-dur:      320ms;
+}
+@media(max-width:600px){ :root{ --eb-gutter:20px; } }
+
+/* Pareja del <meta name="color-scheme">: fija el esquema tambien por CSS,
+   que es lo que miran los navegadores para decidir si auto-oscurecen. */
+:root{ color-scheme: light; }
+
+html{ scroll-behavior:smooth; scroll-padding-top:76px; -webkit-text-size-adjust:100%; }
+
+body{
+  font-family:var(--eb-font-body);
+  font-size:var(--eb-body-md);
+  line-height:1.6;
+  color:var(--eb-on-surface);
+  background:var(--eb-surface);
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ max-width:100%; display:block; }
+
+:focus-visible{
+  outline:2px solid var(--eb-secondary);
+  outline-offset:2px;
+  border-radius:var(--eb-r-sm);
+}
+
+/* El atributo hidden pierde contra cualquier display del CSS: funciona solo
+   por el display:none del navegador. Sin esta regla, #banco-btn (que es
+   .eb-btn, display:inline-flex) se publicaria visible aunque el JS lo
+   marque hidden. */
+[hidden]{ display:none !important; }
+
+.eb-wrap{ width:100%; max-width:var(--eb-container); margin:0 auto; padding:0 var(--eb-gutter); }
+
+.eb-skip{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--eb-surface-lowest); color:var(--eb-on-surface);
+  padding:12px 20px; border:1px solid var(--eb-secondary);
+  border-radius:0 0 var(--eb-r) 0; font-size:var(--eb-label); font-weight:600;
+}
+.eb-skip:focus{ left:0; }
+
+/* ---------- Utilidades tipográficas ---------- */
+.eb-label{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+
+.eb-eyebrow{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-secondary);
+  display:flex; align-items:center; justify-content:center; gap:var(--eb-s2);
+}
+.eb-eyebrow::before, .eb-eyebrow::after{
+  content:''; height:1px; width:clamp(18px,6vw,48px); background:var(--eb-hairline);
+}
+
+.eb-title{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-md); line-height:1.25;
+  color:var(--eb-on-surface); margin-top:var(--eb-s2);
+}
+
+section{ position:relative; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.eb-nav{
+  position:sticky; top:0; z-index:60;
+  background:rgb(253 246 241 / .82);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--eb-dur), background var(--eb-dur);
+}
+.eb-nav.is-stuck{ border-bottom-color:var(--eb-hairline); }
+.eb-nav__inner{
+  max-width:var(--eb-container); margin:0 auto;
+  padding:10px var(--eb-gutter);
+  display:flex; align-items:center; justify-content:space-between; gap:var(--eb-s2);
+}
+.eb-nav__logo{
+  font-family:var(--eb-font-script); font-weight:400; font-size:1.7rem;
+  color:var(--eb-primary); text-decoration:none; white-space:nowrap;
+  display:flex; align-items:center; min-height:44px;
+}
+.eb-nav__links{ display:flex; gap:var(--eb-s4); list-style:none; }
+.eb-nav__links a{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+  text-decoration:none; position:relative;
+  display:flex; align-items:center; min-height:44px;
+  transition:color var(--eb-dur-fast);
+}
+.eb-nav__links a::after{
+  content:''; position:absolute; left:0; bottom:12px; height:1px; width:0;
+  background:var(--eb-secondary); transition:width var(--eb-dur) var(--eb-ease);
+}
+.eb-nav__links a:hover{ color:var(--eb-on-surface); }
+.eb-nav__links a:hover::after{ width:100%; }
+@media(max-width:820px){ .eb-nav__links{ display:none; } }
+
+/* ============================================================
+   BOTONES
+   El primario NECESITA el borde dorado: primary-container sobre
+   surface da 1.24:1 y sin borde el botón no se percibe como forma.
+   ============================================================ */
+.eb-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--eb-s1);
+  min-height:44px; padding:12px var(--eb-s3);
+  border-radius:var(--eb-r-full); border:1px solid transparent;
+  font-family:var(--eb-font-display); font-weight:600; font-size:.9rem;
+  letter-spacing:.01em; text-decoration:none; cursor:pointer;
+  background:none; color:inherit;
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur), color var(--eb-dur);
+}
+.eb-btn:hover{ transform:scale(1.02); }
+.eb-btn svg{ width:15px; height:15px; flex-shrink:0; }
+
+.eb-btn--primary{
+  background:var(--eb-primary-container);
+  color:var(--eb-on-surface);
+  border-color:var(--eb-secondary);
+}
+.eb-btn--primary:hover{ background:var(--eb-primary-fixed); }
+
+.eb-btn--ghost{
+  background:transparent;
+  color:var(--eb-primary);
+  border-color:var(--eb-secondary);
+}
+.eb-btn--ghost:hover{ background:var(--eb-surface-container); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+/* Capa media: patrón Sakura al 12%. La opacidad va DENTRO del SVG
+   (fill-opacity) para no crear un contexto de apilamiento. */
+.eb-veil{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='190' height='190' viewBox='0 0 190 190'%3E%3Cg fill='%23e594ab' fill-opacity='0.12'%3E%3Cpath d='M46 22c-4-5-5-11-1-14 3-2 6 1 6 5 1-4 4-6 7-4 3 2 2 9-2 13 5-2 10-1 10 3s-5 5-10 3c4 4 5 9 2 11-3 2-6-1-7-6-1 5-4 8-7 6-3-2-2-7 2-11-5 2-10 1-10-3s5-5 10-3z'/%3E%3Cpath d='M139 118c-4-5-5-11-1-14 3-2 6 1 6 5 1-4 4-6 7-4 3 2 2 9-2 13 5-2 10-1 10 3s-5 5-10 3c4 4 5 9 2 11-3 2-6-1-7-6-1 5-4 8-7 6-3-2-2-7 2-11-5 2-10 1-10-3s5-5 10-3z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:190px 190px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 38%, #000 28%, transparent 76%);
+          mask-image:radial-gradient(ellipse at 50% 38%, #000 28%, transparent 76%);
+}
+
+/* ---------- Marco de retrato con esquinas doradas ---------- */
+.eb-frame{
+  position:relative; width:min(320px, 78vw);
+  margin:clamp(32px,5vw,48px) auto 0;
+  padding:var(--eb-s3);
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-outline-variant);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+}
+/* Segundo filete, dentro del primero: el "doble marco" de papelería fina */
+.eb-frame::after{
+  content:''; position:absolute; inset:5px; pointer-events:none;
+  border:1px solid var(--eb-hairline);
+  border-radius:calc(var(--eb-r-lg) - 4px);
+}
+.eb-frame__media{
+  position:relative;
+  border-radius:var(--eb-r); overflow:hidden;
+  background:linear-gradient(160deg, var(--eb-primary-container), var(--eb-surface-variant));
+}
+.eb-frame__media img,
+.eb-frame__media video{ width:100%; height:auto; display:block; }
+/* Un destello de satín cruza la foto UNA vez, cuando se abre el sobre */
+.eb-frame__media::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(105deg, transparent 35%, rgb(255 255 255 / .45) 50%, transparent 65%);
+  transform:translateX(-120%);
+}
+.eb-rv.is-on .eb-frame__media::after{ animation:ebSheen 1.6s var(--eb-ease) .6s both; }
+@keyframes ebSheen{ to{ transform:translateX(120%); } }
+
+
+/* Esquinas: dos bordes por span. Cero SVG, cero riesgo al exportar. */
+.eb-frame__corner{ position:absolute; width:26px; height:26px; pointer-events:none; }
+.eb-frame__corner--tl{ top:8px;  left:8px;  border-top:1px solid var(--eb-secondary); border-left:1px solid var(--eb-secondary);  border-radius:var(--eb-r-md) 0 0 0; }
+.eb-frame__corner--tr{ top:8px;  right:8px; border-top:1px solid var(--eb-secondary); border-right:1px solid var(--eb-secondary); border-radius:0 var(--eb-r-md) 0 0; }
+.eb-frame__corner--bl{ bottom:8px; left:8px; border-bottom:1px solid var(--eb-secondary); border-left:1px solid var(--eb-secondary);  border-radius:0 0 0 var(--eb-r-md); }
+.eb-frame__corner--br{ bottom:8px; right:8px;border-bottom:1px solid var(--eb-secondary); border-right:1px solid var(--eb-secondary); border-radius:0 0 var(--eb-r-md) 0; }
+
+/* Racimos de sakura sobre el marco */
+.eb-frame__bloom{ position:absolute; width:104px; pointer-events:none; z-index:3; }
+.eb-frame__bloom svg{ width:100%; height:auto; }
+.eb-frame__bloom--tl{ top:-34px; left:-34px; }
+.eb-frame__bloom--br{ bottom:-34px; right:-34px; transform:rotate(180deg); }
+@media(max-width:480px){
+  .eb-frame__bloom{ width:78px; }
+  .eb-frame__bloom--tl{ top:-24px; left:-20px; }
+  .eb-frame__bloom--br{ bottom:-24px; right:-20px; }
+}
+
+/* ---------- Pétalos ---------- */
+.eb-petals{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+.eb-petal{ position:absolute; top:-8vh; animation:ebFall linear infinite; opacity:0; }
+.eb-petal svg{ width:100%; height:100%; }
+@keyframes ebFall{
+  0%  { transform:translate3d(0,-8vh,0) rotate(0) scale(.85); opacity:0; }
+  12% { opacity:.85; }
+  35% { transform:translate3d(24px,32vh,0) rotate(190deg) scale(1); }
+  68% { transform:translate3d(-18px,66vh,0) rotate(410deg) scale(.94); }
+  88% { opacity:.5; }
+  100%{ transform:translate3d(14px,112vh,0) rotate(720deg) scale(.7); opacity:0; }
+}
+
+/* ============================================================
+   PORTADA DE ENTRADA
+   El navegador exige un gesto del visitante antes de permitir audio
+   con sonido. En vez de pelear contra esa regla, se convierte ese
+   gesto en la portada: al tocar, musica y video arrancan garantizado.
+   Sin JS no aparece, para no bloquear el contenido nunca.
+   ============================================================ */
+.eb-gate{
+  position:fixed; inset:0; z-index:200;
+  display:none;
+  background:var(--eb-surface);
+  overflow:hidden;
+}
+.js .eb-gate{ display:block; }
+.eb-gate.is-gone{
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .8s var(--eb-ease), visibility .8s;
+}
+body.is-gated{ overflow:hidden; }
+
+.eb-gate__name{
+  display:block;
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(3rem,13vw,4.8rem);
+  /* Great Vibes necesita aire: con line-height cerca de 1 la caja de
+     línea es más corta que la letra y le corta astas y rabos. */
+  line-height:var(--eb-script-lh); padding:var(--eb-script-pad);
+  letter-spacing:0; color:var(--eb-primary); margin:var(--eb-s1) 0;
+}
+.eb-gate__date{ display:block; margin-bottom:var(--eb-s4); }
+
+/* ---------- La escena del sobre ----------
+   Tres capas a pantalla completa, todas con el MISMO encuadre porque
+   salen del mismo archivo: el fotograma 0 del video (quieta), el video
+   (Seedance) y el último fotograma (estado final). Que el póster sea
+   literalmente el primer cuadro del video es lo que evita el salto al
+   arrancar la reproducción.
+   El video NO se precarga: su medio mega entra dentro del gesto del
+   dedo, igual que la música, para no pesar en la primera pintura. */
+.eb-gate__scene{ position:absolute; inset:0; }
+.eb-gate__scene > *{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover; object-position:center 42%;
+}
+.eb-gate__film, .eb-gate__end{ opacity:0; transition:opacity .5s var(--eb-ease); }
+.eb-gate.is-playing .eb-gate__film{ opacity:1; }
+/* Respaldo: si el video no puede reproducirse (bloqueado, error de red,
+   códec), se funde la foto final y la coreografía sigue igual. */
+.eb-gate.no-film.is-opening .eb-gate__end{ opacity:1; }
+
+/* Velo degradado: la foto es muy clara arriba y el texto no se sostiene
+   encima sin él. Más denso abajo, donde va el nombre. */
+.eb-gate__shade{
+  position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg,
+    rgb(253 246 241 / .55) 0%,
+    rgb(253 246 241 / .10) 34%,
+    rgb(253 246 241 / .62) 72%,
+    rgb(253 246 241 / .94) 100%);
+}
+
+/* Destello dorado: cubre el corte entre el video y el contenido. */
+.eb-gate__flash{
+  position:absolute; inset:0; pointer-events:none; opacity:0;
+  background:radial-gradient(ellipse at 50% 46%,
+    rgb(255 246 214 / .95) 0%, rgb(254 214 91 / .55) 34%, transparent 72%);
+  transition:opacity .7s var(--eb-ease);
+}
+.eb-gate.is-flash .eb-gate__flash{ opacity:1; }
+
+/* El botón ES toda la portada: un solo blanco de toque, imposible de
+   fallar con el pulgar, y un foco visible para quien tabula. */
+.eb-gate__btn{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+  gap:0; text-align:center;
+  padding:var(--eb-gutter) var(--eb-gutter) clamp(44px, 11vh, 96px);
+  border:0; background:none; cursor:pointer; color:inherit;
+  font:inherit;
+  transition:opacity .45s var(--eb-ease);
+}
+.eb-gate__btn:focus-visible{ outline:3px solid var(--eb-secondary); outline-offset:-10px; }
+.eb-gate.is-opening .eb-gate__btn{ opacity:0; pointer-events:none; }
+
+.eb-gate__pill{
+  display:inline-flex; align-items:center; gap:9px;
+  padding:11px 22px; border-radius:var(--eb-r-full);
+  background:rgb(255 255 255 / .82);
+  border:1px solid var(--eb-hairline);
+  box-shadow:0 6px 20px rgb(var(--eb-shadow-rgb) / .12);
+  font-family:var(--eb-font-body); font-size:var(--eb-label);
+  font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--eb-primary);
+}
+.eb-gate__pill::after{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--eb-secondary);
+  animation:ebGatePulse 1.8s ease-in-out infinite;
+}
+/* Nombre propio y único: @keyframes NO tiene ámbito, y un nombre
+   repetido deja que la última definición mande sobre todos sus usuarios
+   (un sobre salió disparado fuera de pantalla por compartir "bbFloat"). */
+@keyframes ebGatePulse{ 0%,100%{ opacity:.25; transform:scale(.8);} 50%{ opacity:1; transform:scale(1.15);} }
+
+/* ============================================================
+   REPRODUCTOR DE MÚSICA
+   preload="none": los 4 MB solo se descargan si alguien toca play,
+   así la página abre igual de rápido para quien no la escucha.
+   ============================================================ */
+.eb-music{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+
+.eb-music__title{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-headline-sm); color:var(--eb-on-surface);
+  margin-top:var(--eb-s2);
+}
+.eb-music__artist{ margin-top:6px; }
+
+.eb-player{
+  display:none;                       /* sin JS manda el control nativo */
+  max-width:340px; margin:var(--eb-s4) auto 0;
+  flex-direction:column; align-items:center; gap:var(--eb-s2);
+}
+.js .eb-player{ display:flex; }
+
+.eb-player__btn{
+  width:56px; height:56px; border-radius:var(--eb-r-full);
+  display:flex; align-items:center; justify-content:center;
+  background:var(--eb-primary-container);
+  border:1px solid var(--eb-secondary);   /* sin borde no se percibe: 1.24:1 */
+  color:var(--eb-on-surface); cursor:pointer;
+  transition:transform var(--eb-dur) var(--eb-ease), background var(--eb-dur);
+}
+.eb-player__btn:hover{ transform:scale(1.04); background:var(--eb-primary-fixed); }
+.eb-player__btn svg{ width:20px; height:20px; }
+.eb-player__btn svg.ico-play{ margin-left:3px; }  /* centra ópticamente el triángulo */
+
+.eb-player__bar{
+  display:flex; align-items:center; gap:var(--eb-s2);
+  width:100%;
+}
+.eb-player__time{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.06em;
+  color:var(--eb-on-surface-variant); font-variant-numeric:tabular-nums;
+  min-width:38px;
+}
+.eb-player__time--end{ text-align:right; }
+
+/* Barra de progreso: input range real, para que funcione con teclado */
+.eb-player__seek{
+  -webkit-appearance:none; appearance:none;
+  flex:1 1 auto; min-width:0; height:20px;
+  background:transparent; cursor:pointer; margin:0;
+  --pct:0%;
+}
+.eb-player__seek::-webkit-slider-runnable-track{
+  height:2px; border-radius:2px;
+  background:linear-gradient(90deg, var(--eb-secondary) var(--pct), var(--eb-outline-variant) var(--pct));
+}
+.eb-player__seek::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:12px; height:12px; margin-top:-5px;
+  border-radius:50%; border:none; background:var(--eb-secondary);
+}
+.eb-player__seek::-moz-range-track{
+  height:2px; border-radius:2px; background:var(--eb-outline-variant);
+}
+.eb-player__seek::-moz-range-progress{
+  height:2px; border-radius:2px; background:var(--eb-secondary);
+}
+.eb-player__seek::-moz-range-thumb{
+  width:12px; height:12px; border:none; border-radius:50%; background:var(--eb-secondary);
+}
+.eb-player__seek:focus-visible{ outline:2px solid var(--eb-secondary); outline-offset:4px; }
+
+/* Control nativo: única vía si el JS no corre */
+.eb-audio-native{ width:min(340px,86vw); margin:var(--eb-s4) auto 0; }
+.js .eb-audio-native{ display:none; }
+
+/* ============================================================
+   DIVISOR FLORAL
+   Con capas tonales casi idénticas (surface vs container = 1.10:1),
+   los divisores no son adorno: son la separación entre secciones.
+   ============================================================ */
+.eb-divider{
+  display:block; width:min(300px,74vw); margin:0 auto;
+  padding:var(--eb-section-gap) 0 0;
+}
+.eb-divider svg{ width:100%; height:auto; }
+.eb-float{ animation:ebFloat 5s ease-in-out infinite; }
+@keyframes ebFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+/* ============================================================
+   CUENTA REGRESIVA — sin cajas, hairlines doradas
+   ============================================================ */
+.eb-countdown{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-cd{
+  display:flex; justify-content:center; align-items:stretch;
+  margin-top:var(--eb-s3);
+}
+.eb-cd__cell{
+  flex:1 1 0; min-width:0;              /* min-width:0 = no desborda a 320px */
+  padding:0 clamp(6px,2.5vw,20px);
+  position:relative;
+}
+.eb-cd__cell + .eb-cd__cell::before{
+  content:':'; position:absolute; left:0; top:0; transform:translateX(-50%);
+  font-family:var(--eb-font-display); font-weight:400; line-height:1;
+  font-size:clamp(1.9rem,7vw,3rem); color:var(--eb-rose-large);
+}
+.eb-cd__num{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:clamp(1.9rem,7vw,3rem); line-height:1;
+  color:var(--eb-rose-large); font-variant-numeric:tabular-nums;
+}
+.eb-cd__unit{ margin-top:var(--eb-s1); font-size:var(--eb-label); font-weight:600;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--eb-on-surface-variant); }
+
+/* Clase, no estilo inline: un inline no se puede apagar con reduced-motion */
+.eb-cd__num--tick{ animation:ebTick 260ms var(--eb-ease); }
+@keyframes ebTick{ 0%{ transform:scale(1);} 45%{ transform:scale(1.09);} 100%{ transform:scale(1);} }
+
+.eb-cd__done{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-md); color:var(--eb-primary); padding:var(--eb-s3) 0;
+}
+
+/* ============================================================
+   FAMILIA
+   ============================================================ */
+.eb-family{ padding:var(--eb-section-gap) 0 0; }
+.eb-family__card{
+  max-width:720px; margin:0 auto; position:relative;
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-hairline);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+  padding:clamp(36px,6vw,var(--eb-s8)) clamp(24px,5vw,56px);
+  text-align:center;
+}
+.eb-family__card::before{
+  content:''; position:absolute; inset:7px; pointer-events:none;
+  border:1px solid var(--eb-outline-variant);
+  border-radius:calc(var(--eb-r-lg) - 4px);
+}
+.eb-quote{
+  font-family:var(--eb-font-display); font-weight:500; font-style:italic;
+  font-size:clamp(1.1rem,3vw,1.375rem); line-height:1.7;
+  color:var(--eb-on-surface); max-width:460px; margin:0 auto;
+}
+.eb-family__grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:var(--eb-s4);
+  margin-top:clamp(32px,5vw,var(--eb-s5));
+  padding-top:clamp(28px,4vw,var(--eb-s4));
+  border-top:1px solid var(--eb-outline-variant);
+}
+.eb-family__role{ color:var(--eb-secondary); margin-bottom:var(--eb-s1); }
+.eb-family__name{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-body-lg); line-height:1.45; color:var(--eb-on-surface);
+}
+@media(max-width:520px){ .eb-family__grid{ grid-template-columns:1fr; gap:var(--eb-s3); } }
+
+/* ============================================================
+   DETALLES — 3 tarjetas
+   ============================================================ */
+.eb-details{ padding:var(--eb-section-gap) 0 0; }
+.eb-cards{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--eb-s3);
+  margin-top:clamp(36px,5vw,var(--eb-s5)); align-items:stretch;
+}
+.eb-card{
+  position:relative;
+  display:flex; flex-direction:column; text-align:center;
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-outline-variant);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+  padding:clamp(28px,3.4vw,var(--eb-s5)) clamp(20px,2.6vw,var(--eb-s3));
+  transition:transform var(--eb-dur) var(--eb-ease);
+}
+.eb-card:hover{ transform:scale(1.02); }
+.eb-card::before, .eb-card::after{
+  content:''; position:absolute; width:22px; height:22px; pointer-events:none;
+  border:0 solid var(--eb-secondary);
+}
+.eb-card::before{ top:8px; left:8px;  border-top-width:1px; border-left-width:1px;  border-top-left-radius:var(--eb-r-md); }
+.eb-card::after { bottom:8px; right:8px; border-bottom-width:1px; border-right-width:1px; border-bottom-right-radius:var(--eb-r-md); }
+.eb-card--feature{
+  border-color:var(--eb-secondary);
+  background:linear-gradient(170deg, var(--eb-surface-lowest), var(--eb-surface-low));
+  box-shadow:var(--eb-elev-raised);
+}
+.eb-card__ico{
+  width:44px; height:44px; margin:0 auto var(--eb-s2);
+  border-radius:var(--eb-r-full);
+  background:var(--eb-surface-container);
+  border:1px solid var(--eb-hairline);
+  display:flex; align-items:center; justify-content:center; color:var(--eb-primary);
+}
+.eb-card--feature .eb-card__ico{ background:var(--eb-primary-container); }
+.eb-card__ico svg{ width:19px; height:19px; }
+
+.eb-card__name{
+  font-family:var(--eb-font-script); font-weight:400; line-height:1.1;
+  font-size:clamp(2.3rem,8vw,2.7rem); color:var(--eb-rose-large); margin-bottom:var(--eb-s2);
+}
+.eb-card__hour{
+  font-family:var(--eb-font-display); font-weight:600; font-size:var(--eb-body-lg);
+  color:var(--eb-primary); margin-bottom:var(--eb-s2);
+}
+.eb-card__venue{
+  font-family:var(--eb-font-display); font-weight:600; font-size:.9rem;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--eb-on-surface); margin-bottom:var(--eb-s1);
+}
+.eb-card__addr{
+  font-size:.875rem; line-height:1.7; color:var(--eb-on-surface-variant);
+  margin-bottom:var(--eb-s3);
+}
+.eb-card__dress{
+  font-family:var(--eb-font-display); font-weight:600; font-size:var(--eb-body-lg);
+  color:var(--eb-primary); margin-bottom:var(--eb-s2);
+}
+.eb-card__note{ font-size:.875rem; line-height:1.65; color:var(--eb-on-surface-variant); }
+.eb-card__note strong{ color:var(--eb-on-surface); font-weight:600; }
+.eb-card__spacer{ flex:1 1 auto; min-height:var(--eb-s2); }
+.eb-card .eb-btn{ align-self:center; }
+
+@media(max-width:860px){
+  .eb-cards{ grid-template-columns:1fr; max-width:420px; margin-left:auto; margin-right:auto; }
+}
+
+/* ============================================================
+   ITINERARIO — arco rosa (idea de la referencia "Camila")
+   El radio vertical se fija en px para que el arco sea medio círculo
+   y no una elipse aplastada cuando la tarjeta es alta.
+   ============================================================ */
+.eb-itinerary{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-arch{
+  position:relative; width:min(420px,100%); margin:0 auto;
+  padding:clamp(76px,19vw,96px) clamp(18px,5vw,32px) var(--eb-s6);
+  color:#fff;
+  background:
+    radial-gradient(ellipse 70% 38% at 50% 0%, rgb(255 255 255 / .10), transparent 70%),
+    var(--eb-arch);
+  border-radius:50% 50% var(--eb-r-xl) var(--eb-r-xl) / min(46vw,210px) min(46vw,210px) var(--eb-r-xl) var(--eb-r-xl);
+  box-shadow:var(--eb-elev-raised);
+}
+.eb-arch::before{
+  content:''; position:absolute; inset:8px; pointer-events:none;
+  border:1px solid rgb(255 255 255 / .38); border-radius:inherit;
+}
+.eb-arch__kicker{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:rgb(255 255 255 / .92);
+}
+.eb-arch__title{
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(2.8rem,11vw,3.6rem); line-height:1.1; color:#fff;
+}
+.eb-steps{ list-style:none; position:relative; margin:var(--eb-s4) auto 0; max-width:340px; }
+.eb-steps::before{
+  content:''; position:absolute; left:50%; top:22px; bottom:22px; width:1px;
+  background:rgb(255 255 255 / .45); transform:translateX(-50%);
+}
+.eb-step{ display:grid; grid-template-columns:1fr 44px 1fr; align-items:center; gap:var(--eb-s2); }
+.eb-step + .eb-step{ margin-top:var(--eb-s3); }
+.eb-step__ico{
+  grid-column:2; grid-row:1; position:relative; z-index:1;
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--eb-arch); border:1px solid rgb(255 255 255 / .6);
+}
+.eb-step__ico svg{ width:20px; height:20px; }
+/* Alterna lados, como la referencia: impares a la derecha, pares a la izquierda */
+.eb-step__text{
+  grid-column:3; grid-row:1; text-align:left;
+  display:flex; flex-direction:column; align-items:flex-start; gap:2px;
+}
+.eb-step:nth-child(even) .eb-step__text{ grid-column:1; text-align:right; align-items:flex-end; }
+.eb-step__name{
+  font-family:var(--eb-font-display); font-weight:600; font-size:.92rem;
+  letter-spacing:.12em; text-transform:uppercase;
+}
+.eb-step__time{ font-size:.88rem; font-weight:500; letter-spacing:.04em; color:rgb(255 255 255 / .94); }
+.eb-step__time--tbd{ font-size:var(--eb-label); letter-spacing:.08em; font-style:italic; }
+
+/* ============================================================
+   LLUVIA DE SOBRES
+   <details> nativo: se despliega sin una linea de JavaScript, y trae
+   gratis el teclado y el soporte de lectores de pantalla.
+   Discreta a proposito: pedir dinero merece el tono mas bajo.
+   ============================================================ */
+.eb-giftwrap{ padding:var(--eb-section-gap) 0 0; }
+
+.eb-gift{
+  max-width:560px; margin:0 auto;
+  background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-hairline);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+  overflow:hidden;
+}
+
+.eb-gift__head{
+  display:flex; align-items:center; gap:var(--eb-s2);
+  padding:var(--eb-s3) clamp(18px,3vw,var(--eb-s4));
+  min-height:64px; cursor:pointer;
+  list-style:none;                      /* quita el triangulo por defecto */
+  transition:background var(--eb-dur);
+}
+.eb-gift__head::-webkit-details-marker{ display:none; }
+.eb-gift__head:hover{ background:var(--eb-surface); }
+.eb-gift__head:focus-visible{ outline:2px solid var(--eb-secondary); outline-offset:-2px; }
+
+.eb-gift__ico{
+  width:42px; height:42px; flex-shrink:0;
+  border-radius:var(--eb-r-full);
+  background:var(--eb-surface-container);
+  border:1px solid var(--eb-hairline);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--eb-primary);
+}
+.eb-gift__ico svg{ width:19px; height:19px; }
+
+.eb-gift__label{ flex:1 1 auto; min-width:0; text-align:left; }
+.eb-gift__kicker{
+  display:block;
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-secondary);
+}
+.eb-gift__title{
+  display:block; margin-top:2px;
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-headline-sm); line-height:1.2; color:var(--eb-on-surface);
+}
+
+.eb-gift__chev{
+  flex-shrink:0; width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--eb-secondary);
+  transition:transform var(--eb-dur) var(--eb-ease);
+}
+.eb-gift__chev svg{ width:16px; height:16px; }
+.eb-gift[open] .eb-gift__chev{ transform:rotate(180deg); }
+
+.eb-gift__body{
+  padding:0 clamp(18px,3vw,var(--eb-s4)) var(--eb-s4);
+  border-top:1px solid var(--eb-outline-variant);
+  margin-top:0; padding-top:var(--eb-s3);
+}
+.eb-gift[open] .eb-gift__body{ animation:ebGiftIn .42s var(--eb-ease) both; }
+@keyframes ebGiftIn{
+  from{ opacity:0; transform:translateY(-6px); }
+  to  { opacity:1; transform:none; }
+}
+
+/* Cuerpo en Plus Jakarta Sans: Playfair es una serif de titular y en un
+   parrafo largo pesa demasiado. El sistema pide la sans para cuerpo. */
+.eb-gift__text{
+  font-family:var(--eb-font-body); font-weight:400;
+  font-size:var(--eb-body-md); line-height:1.75;
+  color:var(--eb-on-surface-variant);
+}
+.eb-gift__text + .eb-gift__text{ margin-top:var(--eb-s2); }
+.eb-gift__text strong{ color:var(--eb-on-surface); font-weight:600; }
+
+.eb-gift__amount{
+  display:flex; align-items:baseline; gap:8px;
+  margin-top:var(--eb-s3); padding-top:var(--eb-s2);
+  border-top:1px solid var(--eb-outline-variant);
+}
+.eb-gift__amount dt{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+.eb-gift__amount dd{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:var(--eb-body-lg); color:var(--eb-on-surface);
+}
+
+/* ---------- Guardar la fecha (Google Calendar / .ics) ---------- */
+.eb-cal{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:var(--eb-s2); margin-top:var(--eb-s3);
+}
+.eb-cal__label{ margin-top:clamp(32px,5vw,var(--eb-s5)); color:var(--eb-secondary); }
+
+/* ============================================================
+   EL LUGAR — banda fotografica a ancho completo
+
+   Nada de width:100vw + margin-left:calc(50% - 50vw): eso suma el ancho
+   de la barra de desplazamiento y rompe la prueba de "cero scroll
+   horizontal". <main> ya es de ancho completo; basta con salir de .eb-wrap.
+   ============================================================ */
+.eb-place{ position:relative; margin-top:var(--eb-section-gap); }
+.eb-place__media{
+  position:relative; overflow:hidden;
+  height:clamp(300px, 48vh, 440px);
+}
+.eb-place__media img{
+  width:100%; height:100%; object-fit:cover; object-position:50% 46%;
+}
+/* Dos capas. La lineal va mas densa arriba y abajo y deja ver la foto al
+   centro. Pero el texto cae justo en ese centro: medido sobre la foto real,
+   el dorado del eyebrow quedaba en 3.05:1 (AA pide 4.5:1). La elipse es el
+   soporte del texto — angosta, para que apenas se note sobre la fotografia. */
+.eb-place__veil{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 82% 26% at 50% 50%,
+      rgb(253 246 241 / .82) 0%,
+      rgb(253 246 241 / .60) 52%,
+      rgb(253 246 241 / 0) 100%),
+    linear-gradient(180deg,
+      rgb(253 246 241 / .92) 0%,
+      rgb(253 246 241 / .22) 34%,
+      rgb(253 246 241 / .26) 62%,
+      rgb(253 246 241 / .95) 100%);
+}
+.eb-place__copy{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:0 var(--eb-gutter);
+}
+.eb-place__title{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:clamp(1.5rem,6vw,2.25rem); line-height:1.25;
+  color:var(--eb-on-surface); margin-top:var(--eb-s1);
+}
+
+/* ---------- Datos bancarios ---------- */
+.eb-gift__actions{
+  display:flex; flex-direction:column; align-items:center;
+  gap:var(--eb-s2); margin-top:var(--eb-s3);
+}
+.eb-banco{
+  margin-top:var(--eb-s3); padding:var(--eb-s3);
+  border:1px dashed var(--eb-secondary); border-radius:var(--eb-r-md);
+  background:var(--eb-surface-low); text-align:center;
+}
+.eb-banco__row{ font-size:.95rem; color:var(--eb-on-surface-variant); }
+.eb-banco__row strong{ color:var(--eb-on-surface); font-weight:600; font-size:1.05rem; }
+/* El numero en --eb-primary (6.17:1). NUNCA en --eb-secondary-container:
+   ese token es decorativo y no alcanza contraste como color de texto. */
+.eb-banco__num{
+  font-family:var(--eb-font-display); font-weight:600;
+  font-size:clamp(1.05rem,4.6vw,1.35rem); letter-spacing:.08em;
+  color:var(--eb-primary); margin:var(--eb-s2) 0; font-variant-numeric:tabular-nums;
+}
+.eb-banco__ok{
+  display:block; min-height:1.4em; margin-top:var(--eb-s1);
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-secondary);
+}
+.eb-banco__nojs{ margin-top:var(--eb-s3); color:var(--eb-on-surface-variant); font-style:italic; }
+@media(max-width:360px){ .eb-banco__num{ letter-spacing:.04em; } }
+
+/* ============================================================
+   RSVP
+   ============================================================ */
+.eb-rsvp{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-rsvp__copy{
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:var(--eb-body-lg); line-height:1.75; color:var(--eb-on-surface-variant);
+  max-width:440px; margin:var(--eb-s3) auto 0;
+}
+.eb-rsvp__copy strong{ color:var(--eb-on-surface); font-weight:600; }
+
+.eb-form{
+  max-width:400px; margin:clamp(32px,5vw,var(--eb-s5)) auto 0;
+  display:flex; flex-direction:column; gap:var(--eb-s3); text-align:left;
+}
+.eb-field label{ display:block; margin-bottom:var(--eb-s1); }
+
+/* Solo borde inferior. En reposo va en --eb-outline (4.27:1) y no en
+   outline-variant (1.62:1): es el único indicador del control. */
+.eb-field input, .eb-field select{
+  width:100%; padding:12px 4px;
+  font-family:var(--eb-font-body); font-size:var(--eb-body-md);
+  color:var(--eb-on-surface);
+  background:var(--eb-surface-container);
+  border:0; border-bottom:1px solid var(--eb-outline);
+  border-radius:var(--eb-r-sm) var(--eb-r-sm) 0 0;
+  transition:border-color var(--eb-dur-fast), border-width var(--eb-dur-fast);
+  -webkit-appearance:none; appearance:none;
+}
+.eb-field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f4445' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 8px center; background-size:16px;
+  padding-right:34px;
+}
+.eb-field input:focus, .eb-field select:focus{
+  border-bottom-width:2px; border-bottom-color:var(--eb-secondary);
+  outline:2px solid var(--eb-secondary); outline-offset:2px;
+}
+.eb-field input::placeholder{ color:var(--eb-outline); }
+
+.eb-form__error{
+  font-size:.875rem; color:var(--eb-error); min-height:1.25rem;
+}
+.eb-form__submit{ align-self:center; padding:14px var(--eb-s5); }
+
+.eb-rsvp__direct{
+  margin-top:var(--eb-s3); font-size:.875rem; color:var(--eb-on-surface-variant);
+}
+.eb-rsvp__direct a{ color:var(--eb-primary); font-weight:600; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.eb-footer{
+  margin-top:var(--eb-section-gap);
+  padding:clamp(44px,6vw,var(--eb-s8)) 0 var(--eb-s4);
+  text-align:center;
+  background:var(--eb-surface-container);
+  border-top:1px solid var(--eb-hairline);
+}
+.eb-footer__name{
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(2.4rem,9vw,3.2rem); line-height:1.15; color:var(--eb-primary);
+}
+.eb-footer__links{
+  display:flex; justify-content:center; gap:var(--eb-s3);
+  list-style:none; margin:var(--eb-s3) 0; flex-wrap:wrap;
+}
+.eb-footer__links a{
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant); text-decoration:none;
+  display:inline-flex; align-items:center; min-height:44px; padding:0 var(--eb-s1);
+}
+.eb-footer__links a:hover{ color:var(--eb-primary); }
+.eb-footer__fine{ font-size:.875rem; color:var(--eb-on-surface-variant); }
+
+/* ============================================================
+   ROSA DE ACUARELA — tokens añadidos con la referencia "Camila"
+   ============================================================ */
+:root{
+  --eb-rose:       #8d4159;   /* texto rosa: 6.47:1 sobre surface */
+  --eb-rose-large: #a85a74;   /* SOLO texto de 24px o más: 4.48:1 */
+  --eb-arch:       #71384d;   /* fondo del arco y botones: blanco encima 8.84:1 */
+}
+
+.eb-sr{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+.eb-script-title{
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(2.6rem,10vw,3.4rem); line-height:1.15;
+  color:var(--eb-rose-large); text-align:center;
+}
+
+/* ============================================================
+   PORTADA a sangre
+   ============================================================ */
+.eb-cover{
+  position:relative; overflow:hidden; text-align:center;
+  height:clamp(560px, 92vh, 900px);
+  background:var(--eb-surface-container);
+}
+@supports (height:1svh){ .eb-cover{ height:clamp(560px, 92svh, 900px); } }
+/* La portada es una hoja de papel de algodon CLARA con las rosas en el
+   borde, no un saten oscuro: por eso el nombre va en rosewood y no en
+   blanco, y el velo es crema en vez de malva. Texto blanco sobre este
+   papel seria ilegible, y oscurecerlo con un velo para poder usarlo
+   taparia justo lo bonito de la foto.
+   El bloque se centra en vertical: la hoja tiene las rosas arriba y
+   abajo y el hueco crema al medio, que es donde el nombre se sostiene. */
+.eb-cover{ display:flex; align-items:center; justify-content:center; }
+.eb-cover__media, .eb-cover__media img{ position:absolute; inset:0; width:100%; height:100%; }
+.eb-cover__media img{ object-fit:cover; object-position:50% 50%; }
+.eb-cover__media::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(180deg, rgb(253 246 241 / .34) 0%, rgb(253 246 241 / 0) 34%),
+    linear-gradient(0deg, var(--eb-surface) 0%, rgb(253 246 241 / .85) 8%, rgb(253 246 241 / 0) 26%);
+}
+.eb-cover .eb-petals{ z-index:2; }
+.eb-cover__copy{
+  position:relative; z-index:3; color:var(--eb-primary);
+  padding:0 var(--eb-gutter) clamp(40px, 9vh, 90px);
+}
+.eb-cover__name{
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(3.6rem, 17vw, 6.6rem); line-height:1.05;
+  /* Halo crema, no sombra oscura: despega la caligrafia del papel sin
+     ensuciarlo. */
+  text-shadow:0 1px 0 rgb(255 250 243 / .92), 0 3px 22px rgb(255 248 240 / .85);
+}
+.eb-cover__kicker{
+  margin-top:var(--eb-s1);
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:.9rem; letter-spacing:.32em; text-transform:uppercase;
+  color:var(--eb-secondary);
+  text-shadow:0 1px 0 rgb(255 250 243 / .9);
+}
+/* El texto entra cuando se abre el sobre. Se amarra a body.is-gated (lo
+   pone el JS del sobre): si ese JS no corre, el texto nunca se esconde. */
+.eb-cover__copy > *{ transition:opacity 1s var(--eb-ease), transform 1s var(--eb-ease); }
+.eb-cover__kicker{ transition-delay:.25s; }
+.is-gated .eb-cover__copy > *{ opacity:0; transform:translateY(14px); }
+
+/* ---------- Moño de acuarela como divisor ---------- */
+.eb-bowdiv{ display:block; width:min(300px,64vw); margin:var(--eb-section-gap) auto 0; }
+.eb-bowdiv img{ width:100%; height:auto; }
+.eb-bowdiv--cover{ position:relative; z-index:3; width:min(340px,72vw); margin-top:clamp(-120px,-18vw,-64px); }
+.eb-bowdiv--arch{ position:relative; z-index:2; width:min(190px,46vw); margin-top:-40px; }
+
+/* ---------- Frase ---------- */
+.eb-intro{ padding:var(--eb-s3) 0 0; text-align:center; }
+.eb-intro__quote{
+  font-family:var(--eb-font-display); font-style:italic; font-weight:500;
+  font-size:clamp(1.05rem,3.2vw,1.25rem); line-height:1.75;
+  color:var(--eb-on-surface-variant); max-width:34ch; margin:0 auto;
+}
+
+/* ---------- Retrato XV ---------- */
+.eb-crest{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-crest__name{
+  font-family:var(--eb-font-script); font-weight:400;
+  font-size:clamp(3rem,13vw,4.4rem); line-height:1.1; color:var(--eb-rose-large);
+}
+.eb-crest__surname{
+  margin-top:4px; font-size:var(--eb-label); font-weight:600; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+.eb-crest__shield{
+  position:relative; width:min(340px,76vw); margin:var(--eb-s3) auto 0;
+  padding:var(--eb-s1); border:1px solid var(--eb-hairline);
+  background:var(--eb-primary-container); border-radius:var(--eb-r-md);
+}
+.eb-crest__shield img{ width:100%; height:auto; border-radius:var(--eb-r-sm); }
+.eb-crest__label{
+  margin-top:var(--eb-s2);
+  font-family:var(--eb-font-display); font-weight:500;
+  font-size:clamp(1.2rem,4.6vw,1.5rem); letter-spacing:.2em; text-transform:uppercase;
+  color:var(--eb-rose);
+}
+
+/* ---------- Controles extra del reproductor ---------- */
+.eb-player__controls{ display:flex; align-items:center; justify-content:center; gap:var(--eb-s4); }
+.eb-player__mini{
+  width:44px; height:44px; border-radius:50%; border:0; background:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--eb-outline);                 /* 4.27:1: el mínimo para un ícono es 3:1 */
+  transition:color var(--eb-dur-fast), background var(--eb-dur-fast);
+}
+.eb-player__mini:hover{ background:var(--eb-surface-container); color:var(--eb-on-surface); }
+.eb-player__mini svg{ width:18px; height:18px; }
+.eb-player__mini[aria-pressed="true"]{ color:var(--eb-rose); }
+
+/* ---------- Esquinas de flores ---------- */
+.eb-corner{
+  position:absolute; pointer-events:none; z-index:0;
+  width:clamp(110px,30vw,150px); height:auto;
+}
+/* Solo 4px de sangrado, no 12: estos adornos llegan hasta el borde de
+   su propio recuadro, asi que cada pixel que sale de la tarjeta es flor
+   recortada contra el overflow:hidden. */
+.eb-corner--tr{ top:-4px; right:-4px; }
+/* La ramita es más chica a propósito: va en las tarjetas que ya tienen
+   mucho texto (misa, vestimenta) y una esquina grande las ahogaría. */
+.eb-corner--sm{ width:clamp(76px,20vw,104px); }
+.eb-corner--tl{ top:-4px; left:-4px; transform:scaleX(-1); }
+.eb-corner--bl{ bottom:-4px; left:-4px; transform:scaleY(-1); }
+
+/* ============================================================
+   ADORNOS FLORALES
+   Todos son PNG/WebP con alfa recortados al contenido, puestos con
+   position:absolute sobre contenedores con overflow:hidden. Ninguno
+   recibe el puntero ni entra en el flujo, así que no pueden provocar
+   desborde horizontal; aun así se esconden en pantallas muy angostas,
+   donde solo robarían aire al texto.
+   ============================================================ */
+/* max-width:none NO es cosmético: la hoja trae un img{max-width:100%}
+   global y estos adornos cuelgan de contenedores más angostos que
+   ellos. Sin esto el ancho se recorta al del padre mientras la altura
+   se queda en la del atributo height, y el adorno sale estirado en una
+   tira vertical — que es justo lo que le pasó a la corona del día. */
+.eb-orn{
+  position:absolute; pointer-events:none; z-index:0;
+  height:auto; max-width:none;
+}
+
+/* Arco que corona el retrato de Quinceañera. */
+.eb-crest__arc{
+  display:block; width:min(400px,86vw); height:auto;
+  margin:var(--eb-s3) auto calc(var(--eb-s3) * -1.1);
+  position:relative; z-index:1; pointer-events:none;
+}
+
+/* Corona abierta alrededor del número del día. */
+.eb-datebar__day{ position:relative; }
+.eb-datebar__wreath{
+  position:absolute; left:50%; top:52%;
+  /* El span del día mide ~31px: sin max-width:none el global
+     img{max-width:100%} aplasta la corona a ese ancho. */
+  width:138px; height:auto; max-width:none;
+  transform:translate(-50%,-50%);
+  pointer-events:none; z-index:0; opacity:.92;
+}
+/* El número va por encima de la corona, nunca detrás. */
+.eb-datebar__day{ z-index:1; }
+
+/* Guirnaldas a los lados de la cuenta regresiva. */
+.eb-countdown{ position:relative; overflow:hidden; }
+.eb-countdown .eb-orn{ width:clamp(54px,13vw,86px); top:14%; opacity:.9; }
+.eb-countdown .eb-orn--izq{ left:-10px; }
+/* scaleX(-1) espeja la guirnalda para que las dos "miren" hacia dentro. */
+.eb-countdown .eb-orn--der{ right:-10px; transform:scaleX(-1); }
+
+/* Guirnaldas claras dentro del arco vino del itinerario. */
+.eb-arch{ position:relative; overflow:hidden; }
+.eb-arch .eb-orn{ width:clamp(50px,13vw,78px); top:30%; opacity:.85; }
+.eb-arch .eb-orn--izq{ left:4px; }
+.eb-arch .eb-orn--der{ right:4px; transform:scaleX(-1); }
+
+/* Cenefa de flores sueltas al pie de la confirmación. */
+.eb-rsvp{ position:relative; overflow:hidden; }
+.eb-orn-cenefa{
+  display:block; width:min(560px,96vw); height:auto;
+  margin:var(--eb-s5) auto 0; opacity:.92;
+}
+
+/* 340px y no 400: un iPhone normal mide 390 y ahí las guirnaldas SÍ
+   deben verse — es la pantalla en la que se va a ver esta invitación.
+   Solo desaparecen en las pantallas de verdad angostas. */
+@media(max-width:340px){
+  .eb-countdown .eb-orn, .eb-arch .eb-orn{ display:none; }
+  .eb-datebar__wreath{ width:116px; }
+}
+
+/* ---------- Familia ---------- */
+.eb-family__card{ overflow:hidden; }
+.eb-family__card > *:not(.eb-corner){ position:relative; z-index:1; }
+.eb-family__lead, .eb-family__close{
+  font-family:var(--eb-font-display); font-weight:500; font-size:.95rem;
+  letter-spacing:.14em; text-transform:uppercase; line-height:1.6;
+  color:var(--eb-on-surface); max-width:26ch; margin:0 auto;
+}
+.eb-family__close{ margin-top:clamp(28px,4vw,var(--eb-s4)); }
+/* Las flores de la esquina ocupan ~110px: el texto arranca debajo de ellas
+   y se equilibra para no dejar una "A" huérfana en la última línea. */
+.eb-family__card{ padding-top:clamp(72px,16vw,88px); }
+.eb-family__lead, .eb-family__close, .eb-intro__quote{ text-wrap:balance; }
+.eb-family__close span{
+  display:block; margin-top:4px; letter-spacing:.12em;
+  font-size:clamp(1.5rem,6vw,2rem); color:var(--eb-rose);
+}
+
+/* ---------- Mi historia: ayer y hoy ----------
+   Dos arcos como el del itinerario. La foto de hoy baja un poco: la
+   composición escalonada se lee como "antes → después". */
+.eb-story{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-story__grid{
+  display:grid; grid-template-columns:1fr 1fr; align-items:start;
+  gap:clamp(14px,4vw,32px); max-width:640px; margin:var(--eb-s4) auto 0;
+}
+.eb-story__item{ margin:0; }
+.eb-story__item--hoy{ margin-top:clamp(28px,9vw,64px); }
+/* Radio horizontal 50% + vertical 34% del alto (foto 2:3) = medio círculo arriba */
+.eb-story__frame{
+  padding:6px; background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-hairline);
+  border-radius:50% 50% var(--eb-r-md) var(--eb-r-md) / 33% 33% var(--eb-r-md) var(--eb-r-md);
+  box-shadow:var(--eb-elev-raised);
+}
+.eb-story__frame img{
+  display:block; width:100%; height:auto; aspect-ratio:2/3; object-fit:cover;
+  border-radius:50% 50% var(--eb-r) var(--eb-r) / 34% 34% var(--eb-r) var(--eb-r);
+}
+.eb-story__item--hoy img{ object-position:center top; }
+.eb-story__cap{ margin-top:var(--eb-s2); }
+.eb-story__when{
+  display:block; font-family:var(--eb-font-script); font-weight:400; line-height:1.1;
+  font-size:clamp(2rem,7.5vw,2.6rem); color:var(--eb-rose-large);
+}
+.eb-story__text{
+  display:block; margin-top:2px; text-wrap:balance;
+  font-family:var(--eb-font-display); font-style:italic; line-height:1.5;
+  font-size:clamp(.9rem,3.3vw,1.05rem); color:var(--eb-on-surface-variant);
+}
+.js .eb-rv .eb-story__item{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .8s var(--eb-ease), transform .8s var(--eb-ease);
+}
+.js .eb-rv.is-on .eb-story__item{ opacity:1; transform:none; }
+.js .eb-rv.is-on .eb-story__item--hoy{ transition-delay:.2s; }
+
+/* ---------- La fecha + calendario ---------- */
+.eb-date{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-datebar{ max-width:360px; margin:0 auto; }
+.eb-datebar__month{
+  font-family:var(--eb-font-display); font-weight:500; font-size:1rem;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--eb-rose);
+}
+.eb-datebar__row{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  gap:var(--eb-s2); margin-top:var(--eb-s1);
+}
+.eb-datebar__side{
+  padding:8px 0;
+  border-top:1px solid var(--eb-hairline); border-bottom:1px solid var(--eb-hairline);
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+.eb-datebar__day{
+  font-family:var(--eb-font-script); line-height:1; padding:0 6px;
+  font-size:clamp(4rem,18vw,5.2rem); color:var(--eb-rose-large);
+}
+.eb-date .eb-script-title{ margin-top:var(--eb-s5); }
+.eb-month__caption{
+  margin-top:2px; font-family:var(--eb-font-display); font-size:1.05rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--eb-rose);
+}
+.eb-month{
+  width:min(100%,380px); margin:var(--eb-s3) auto 0;
+  border-collapse:collapse; table-layout:fixed; font-variant-numeric:tabular-nums;
+}
+.eb-month th{
+  padding:0 0 10px; font-size:.68rem; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+.eb-month abbr{ text-decoration:none; }
+.eb-month td{ position:relative; height:42px; font-family:var(--eb-font-display); font-size:.95rem; color:var(--eb-on-surface); }
+.eb-month .is-day strong{ position:relative; z-index:1; font-weight:700; color:var(--eb-rose); }
+.eb-month__heart{
+  position:absolute; left:50%; top:50%; width:46px; height:43px;
+  transform:translate(-50%,-47%); overflow:visible;
+}
+.eb-month__heart path{
+  fill:rgb(250 218 221 / .75); stroke:var(--eb-rose); stroke-width:1.8;
+  stroke-dasharray:1; stroke-dashoffset:0;
+  transition:stroke-dashoffset 1.6s var(--eb-ease) .4s;
+}
+/* El corazón se dibuja al entrar en pantalla; sin JS ya está dibujado */
+.js .eb-rv:not(.is-on) .eb-month__heart path{ stroke-dashoffset:1; }
+
+/* ---------- Foto del salón ---------- */
+.eb-photo{ padding:var(--eb-section-gap) 0 0; }
+.eb-photo .eb-frame{ margin-top:0; }
+
+/* ---------- Detalles: cuándo partido en fecha | hora ---------- */
+.eb-card > *:not(.eb-corner){ position:relative; z-index:1; }
+.eb-card--feature{ overflow:hidden; }
+.eb-when{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  width:100%; max-width:240px; margin:0 auto var(--eb-s3);
+}
+.eb-when::before{
+  content:''; grid-column:2; grid-row:1;
+  width:1px; height:34px; margin:0 var(--eb-s2); background:var(--eb-hairline);
+}
+.eb-when__date, .eb-when__hour{
+  grid-row:1; font-family:var(--eb-font-display); font-weight:500;
+  font-size:1.15rem; letter-spacing:.06em; text-transform:uppercase; color:var(--eb-on-surface);
+}
+.eb-when__date{ grid-column:1; text-align:right; }
+.eb-when__hour{ grid-column:3; text-align:left; }
+
+.eb-btn--pill{
+  background:var(--eb-arch); color:#fff; border-color:transparent;
+  font-family:var(--eb-font-body); font-weight:600; font-size:.82rem; letter-spacing:.06em;
+}
+.eb-btn--pill:hover{ background:#572c3e; }
+
+/* ============================================================
+   REVEAL — solo cuando el JS está vivo
+   ============================================================ */
+.js .eb-rv{
+  opacity:0; transform:translateY(28px);
+  transition:opacity .8s var(--eb-ease), transform .8s var(--eb-ease);
+}
+.js .eb-rv.is-on{ opacity:1; transform:none; }
+
+/* Entrada escalonada dentro de las secciones con varias piezas */
+.js .eb-rv .eb-card, .js .eb-rv .eb-step{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .7s var(--eb-ease), transform .7s var(--eb-ease);
+}
+.js .eb-rv.is-on .eb-card, .js .eb-rv.is-on .eb-step{ opacity:1; transform:none; }
+.js .eb-rv.is-on .eb-card:nth-child(2), .js .eb-rv.is-on .eb-step:nth-child(2){ transition-delay:.12s; }
+.js .eb-rv.is-on .eb-card:nth-child(3), .js .eb-rv.is-on .eb-step:nth-child(3){ transition-delay:.24s; }
+.js .eb-rv.is-on .eb-step:nth-child(4){ transition-delay:.36s; }
+.js .eb-rv.is-on .eb-step:nth-child(5){ transition-delay:.48s; }
+.js .eb-rv.is-on .eb-step:nth-child(6){ transition-delay:.60s; }
+/* El hover de la tarjeta no debe heredar el retraso de entrada */
+.js .eb-rv.is-on .eb-card:hover{ transition-delay:0s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(min-width:861px){
+  .eb-cd{ max-width:640px; margin-left:auto; margin-right:auto; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   OJO: .eb-frame__bloom--br depende de rotate(180deg). Apagar la
+   animación sin reponer el transform lo dejaría al derecho.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .eb-petals{ display:none; }
+  .js .eb-rv{ opacity:1; transform:none; transition:none; }
+  .js .eb-rv .eb-card, .js .eb-rv .eb-step, .js .eb-rv .eb-story__item{ opacity:1; transform:none; transition:none; }
+  /* La portada no reproduce el video: el JS lo salta y va directo al
+     contenido. Aquí solo se apagan los movimientos que quedan. */
+  .eb-gate__btn, .eb-gate__film, .eb-gate__end, .eb-gate__flash{ transition:none; }
+  .eb-gate__pill::after{ animation:none; opacity:1; }
+  .eb-rv.is-on .eb-frame__media::after{ animation:none; }
+  .eb-cover__copy > *, .eb-month__heart path{ transition:none; }
+  .js .eb-rv:not(.is-on) .eb-month__heart path{ stroke-dashoffset:0; }
+  .eb-float, .eb-cd__num--tick{ animation:none; }
+  .eb-gift[open] .eb-gift__body{ animation:none; }
+  .eb-gift__chev{ transition:none; }
+  .eb-btn:hover, .eb-card:hover{ transform:none; }
+  .eb-frame__bloom--br{ transform:rotate(180deg); }
+}
+
+
+/* ============================================================
+   MIS RECUERDOS — mosaico de cuatro fotos
+
+   Tres retratos pequeños arriba y la foto familiar, apaisada, abajo.
+
+   La fila de tres se topa en 520px A PROPÓSITO, no por estética: la
+   foto de Johana de bebé mide 300x400 y es la ÚNICA del lote sin
+   versión grande. A 520px de reja, cada celda pinta ~165px, así que
+   esos 300px reales son casi exactamente su @2x. Si la reja creciera
+   —o si esa foto ocupara la celda ancha— estaríamos sirviendo una
+   imagen por debajo de la densidad de la pantalla, que es justo lo
+   que se vio borroso en la invitación anterior.
+   ============================================================ */
+.eb-mem{ padding:var(--eb-section-gap) 0 0; text-align:center; }
+.eb-mem__intro{
+  font-family:var(--eb-font-display); font-size:var(--eb-body-lg);
+  color:var(--eb-on-surface-variant); max-width:34ch;
+  margin:var(--eb-s2) auto 0; text-wrap:balance;
+}
+.eb-mem__row{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(10px,3vw,16px);
+  max-width:520px; margin:var(--eb-s4) auto 0;
+}
+/* .eb-mem__item va ANTES que .eb-mem__wide a proposito: las dos reglas
+   son de una sola clase, asi que la ultima gana. Al reves, el margin:0
+   de __item mataba el "auto" de __wide y la foto familiar se publicaba
+   pegada a la izquierda en escritorio. */
+.eb-mem__item{ margin:0; }
+.eb-mem__wide{ max-width:520px; margin:clamp(12px,3vw,16px) auto 0; }
+
+/* El marco recorta con overflow:hidden, así que la foto lleva su
+   proporción propia dentro de una caja de relación fija: sin esto
+   una de las tres (3:4, 3:4 y 0.715) desalinearía la fila. */
+.eb-mem__frame{
+  padding:5px; background:var(--eb-surface-lowest);
+  border:1px solid var(--eb-hairline);
+  border-radius:var(--eb-r-lg);
+  box-shadow:var(--eb-elev);
+}
+.eb-mem__frame img{
+  width:100%; height:auto; aspect-ratio:3 / 4; object-fit:cover;
+  border-radius:calc(var(--eb-r-lg) - 4px); display:block;
+}
+.eb-mem__wide .eb-mem__frame img{ aspect-ratio:4 / 3; }
+.eb-mem__cap{
+  display:block; margin-top:var(--eb-s1);
+  font-size:var(--eb-label); font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--eb-on-surface-variant);
+}
+/* "Una noche especial" parte en dos lineas donde las otras dos ocupan
+   una: sin este piso, la fila de tres queda de alturas distintas y la
+   foto familiar sube pegada a la celda mas corta. */
+.eb-mem__row .eb-mem__cap{ min-height:2.6em; }
+@media(max-width:360px){
+  .eb-mem__cap{ letter-spacing:.05em; font-size:.7rem; }
+}
+
+/* ============================================================
+   HORA POR CONFIRMAR
+   La misa todavía no tiene hora. El aviso se publica a propósito —
+   la capilla y la fecha SÍ están confirmadas y el invitado las
+   necesita— pero en cursiva y en el gris de apoyo, para que se lea
+   como "falta este dato" y no como un dato más.
+   ============================================================ */
+.eb-when__hour--tbd{
+  font-size:.82rem; letter-spacing:.07em; font-style:italic;
+  text-transform:none; color:var(--eb-on-surface-variant);
+}
+
+/* ============================================================
+   AIRE PARA LA CALIGRAFÍA
+   Va al FINAL a propósito: misma especificidad que las reglas de
+   arriba, así que gana por orden y no hace falta tocar las doce.
+   Sin esto, Great Vibes se recorta en todos los títulos.
+   ============================================================ */
+.eb-nav__logo,
+.eb-gate__name,
+.eb-card__name,
+.eb-arch__title,
+.eb-footer__name,
+.eb-script-title,
+.eb-cover__name,
+.eb-crest__name,
+.eb-story__when,
+.eb-mem__when,
+.eb-datebar__day{
+  line-height:var(--eb-script-lh);
+  padding:var(--eb-script-pad);
+}
+/* El logo de la barra vive en una fila de 60px: ahí el aire se da por
+   los lados del bloque, no estirando la caja de línea. */
+.eb-nav__logo{ padding:0; line-height:1.38; }
+
+/* (La regla [hidden]{display:none !important} ya vive arriba, en las
+   bases. No se repite aquí: una sola fuente para esa verdad.) */
+
+/* ============================================================
+   PRINT — la gente imprime invitaciones
+   ============================================================ */
+@media print{
+  .eb-nav, .eb-petals, .eb-veil, .eb-divider, .eb-form, .eb-footer__links,
+  .eb-place, .eb-cal, .eb-bowdiv, .eb-corner, .eb-cover__media, .eb-player{ display:none !important; }
+  /* Sin fondos impresos, el blanco sobre foto/arco desaparecería */
+  .eb-cover{ height:auto; padding-bottom:24px; }
+  .eb-cover__copy, .eb-cover__copy *{ color:var(--eb-primary) !important; text-shadow:none !important; opacity:1 !important; transform:none !important; }
+  .eb-arch{ background:none !important; box-shadow:none; border:1px solid var(--eb-outline-variant); }
+  .eb-arch, .eb-arch *{ color:var(--eb-on-surface) !important; }
+  .eb-step__ico{ background:none; border-color:var(--eb-outline-variant); }
+  :root{ --eb-surface:#fff; --eb-surface-lowest:#fff; --eb-surface-container:#fff; }
+  body{ background:#fff; }
+  .js .eb-rv, .js .eb-rv .eb-card, .js .eb-rv .eb-step, .js .eb-rv .eb-story__item{ opacity:1; transform:none; }
+  .eb-card, .eb-family__card{ box-shadow:none; break-inside:avoid; }
+  a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.7em; word-break:break-all; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="eb-skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ==================== PORTADA DE ENTRADA ==================== -->
+<div class="eb-gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name">
+  <div class="eb-gate__scene" aria-hidden="true">
+    <!-- Primer fotograma del propio video: al arrancar no hay salto. -->
+    <img class="eb-gate__still" src="/mis-xv-johana/assets/portada.webp"
+         width="648" height="1152" alt="" fetchpriority="high" decoding="async">
+    <!-- src vacío a propósito: se asigna DENTRO del click, igual que la
+         música, para que el medio mega no pese en la primera pintura. -->
+    <video class="eb-gate__film" id="gate-film"
+           width="648" height="1152"
+           muted playsinline preload="none" disableremoteplayback></video>
+    <img class="eb-gate__end" src="/mis-xv-johana/assets/portada-abierta.webp"
+         width="648" height="1152" alt="" loading="lazy" decoding="async">
+  </div>
+  <div class="eb-gate__shade" aria-hidden="true"></div>
+  <div class="eb-gate__flash" aria-hidden="true"></div>
+
+  <button type="button" class="eb-gate__btn" id="gate-btn"
+          aria-label="Abrir la invitación. Empieza a sonar la música.">
+    <span class="eb-eyebrow">Mis Quince Años</span>
+    <span class="eb-gate__name" id="gate-name">Johana Noemí</span>
+    <span class="eb-label eb-gate__date">9 &middot; Enero &middot; 2027</span>
+    <span class="eb-gate__pill" aria-hidden="true">Toca para abrir &middot; con música</span>
+  </button>
+</div>
+
+
+<!-- ============================================================
+     DEFINICIONES FLORALES
+
+     Solo los dos pétalos de la lluvia y sus dos degradados: esta
+     invitación lleva álbum de recuerdos en vez del retrato enmarcado,
+     que era quien usaba los racimos, las hojas y la rama dorada.
+
+     REGLA QUE NO SE PUEDE ROMPER: aquí solo van PATHS PUROS.
+     Nunca un <use> dentro de otro <symbol> o <g> referenciado — ese
+     anidamiento hace que los pétalos desaparezcan al exportar o
+     convertir el documento.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="ebPetal" cx="50%" cy="88%" r="82%">
+      <stop offset="0%"   stop-color="#fffdfc"/>
+      <stop offset="52%"  stop-color="#fadadd"/>
+      <stop offset="100%" stop-color="#e594ab"/>
+    </radialGradient>
+    <radialGradient id="ebPetalPale" cx="50%" cy="88%" r="82%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="58%"  stop-color="#fbdbde"/>
+      <stop offset="100%" stop-color="#e5d8ca"/>
+    </radialGradient>
+
+    <!-- Los dos petalos de la lluvia. El JS los instancia por id, por eso
+         no aparecen como href= en ninguna parte del HTML. -->
+    <g id="ebPt">
+      <path d="M0-13C6-8 8 2 0 13-8 2-6-8 0-13Z" fill="url(#ebPetal)"/>
+      <path d="M0-11C2-5 2 4 0 10" stroke="#e594ab" stroke-width=".7" fill="none" opacity=".5"/>
+    </g>
+    <g id="ebPtPale">
+      <path d="M0-13C6-8 8 2 0 13-8 2-6-8 0-13Z" fill="url(#ebPetalPale)"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="eb-nav" id="nav" aria-label="Navegación principal">
+  <div class="eb-nav__inner">
+    <a class="eb-nav__logo" href="#inicio">Johana Noemí</a>
+    <ul class="eb-nav__links">
+      <li><a href="#recuerdos">Recuerdos</a></li>
+      <li><a href="#detalles">Detalles</a></li>
+      <li><a href="#itinerario">Itinerario</a></li>
+    </ul>
+    <a class="eb-btn eb-btn--primary" href="#confirmar">Asistiré</a>
+  </div>
+</nav>
+
+<main id="contenido">
+
+<!-- ==================== PORTADA ====================
+     Papel de algodón color crema con rosas empolvadas, listón dorado y
+     nube de gypsophila. Viene del propio proyecto que armó Isaac; el
+     retrato de Johana va debajo, en la sección siguiente.
+     ================================================= -->
+<header class="eb-cover" id="inicio">
+  <div class="eb-cover__media">
+    <!-- Descriptores w = ancho REAL de cada archivo (no aproximados):
+         el navegador elige con ese número y mentirle es servir de más. -->
+    <img src="/mis-xv-johana/assets/hero.webp"
+         srcset="/mis-xv-johana/assets/hero.webp 512w,
+                 /mis-xv-johana/assets/hero@2x.webp 1024w"
+         sizes="100vw"
+         width="512" height="768"
+         alt="Hoja de papel de algodón color crema con el borde deshilachado, rodeada de rosas empolvadas, ramitas de gypsophila dorada y un listón de organza"
+         fetchpriority="high" decoding="async">
+  </div>
+  <div class="eb-petals" id="petals" aria-hidden="true"></div>
+  <div class="eb-cover__copy">
+    <h1 class="eb-cover__name">Johana Noemí</h1>
+    <p class="eb-cover__kicker">Mis XV Años</p>
+  </div>
+</header>
+
+<div class="eb-bowdiv eb-bowdiv--cover" aria-hidden="true">
+  <img src="/mis-xv-johana/assets/orn-divisor.webp"
+       srcset="/mis-xv-johana/assets/orn-divisor.webp 630w"
+       sizes="(max-width:480px) 76vw, 330px"
+       width="630" height="151" alt="" decoding="async">
+</div>
+
+
+<!-- ==================== FRASE ====================
+     La segunda línea es la frase que venía en el proyecto de Johana,
+     literal. La primera es de acompañamiento.
+     ================================================ -->
+<section class="eb-intro eb-rv" aria-label="Mensaje de Johana">
+  <div class="eb-wrap">
+    <p class="eb-intro__quote">
+      &ldquo;Hay días que se sueñan durante años y se recuerdan toda la vida.
+      Me encantaría que me acompañaras a celebrar mis quince años.&rdquo;
+    </p>
+  </div>
+</section>
+
+
+<!-- ==================== RETRATO XV ==================== -->
+<section class="eb-crest eb-rv" aria-labelledby="crest-name">
+  <div class="eb-wrap">
+    <p class="eb-crest__name" id="crest-name">Johana Noemí</p>
+    <p class="eb-crest__surname">Pahuamba Salinas</p>
+    <div class="eb-crest__shield">
+      <img src="/mis-xv-johana/assets/retrato-hoy.webp"
+           srcset="/mis-xv-johana/assets/retrato-hoy.webp 310w,
+                   /mis-xv-johana/assets/retrato-hoy@2x.webp 620w"
+           sizes="(max-width:447px) calc(76vw - 18px), 322px"
+           width="310" height="414"
+           alt="Retrato de Johana Noemí sosteniendo un ramo de rosas"
+           loading="lazy" decoding="async">
+    </div>
+    <p class="eb-crest__label">Quinceañera</p>
+  </div>
+</section>
+
+
+<!-- ==================== MÚSICA ==================== -->
+<section class="eb-music eb-rv" id="musica" aria-labelledby="music-h">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow" id="music-h">Dale play</p>
+    <p class="eb-music__title">Daylight</p>
+
+    <!-- Sin JS este control nativo es la única forma de reproducir. -->
+    <audio id="audio" class="eb-audio-native" src="/mis-xv-johana/assets/daylight.mp3"
+           preload="none" loop controls></audio>
+
+    <div class="eb-player" id="player">
+      <div class="eb-player__bar">
+        <span class="eb-player__time" id="pl-cur">0:00</span>
+        <input type="range" class="eb-player__seek" id="pl-seek"
+               min="0" max="202" step="1" value="0"
+               aria-label="Avanzar en la canción">
+        <span class="eb-player__time eb-player__time--end" id="pl-dur">3:22</span>
+      </div>
+      <!-- Solo controles que HACEN algo: nada de aleatorio/siguiente
+           decorativos que el invitado toca y no responden. -->
+      <div class="eb-player__controls">
+        <button type="button" class="eb-player__mini" id="pl-restart" aria-label="Volver al inicio de la canción">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 5v14"/><path d="M19 5.5v13L9 12z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="eb-player__btn" id="pl-btn" aria-label="Reproducir la canción">
+          <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button type="button" class="eb-player__mini" id="pl-loop" aria-pressed="true" aria-label="Repetir la canción">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== MIS RECUERDOS ====================
+     Las cuatro fotos que dio la familia. No llevan adorno SVG encima:
+     ya traen su propia escena y superponerles filigranas las aplana.
+
+     La de bebé va primera y en celda chica: mide 300x400 de origen y
+     es la única del lote sin versión grande. A ~165px pintados sus
+     300px son su @2x real; en una celda mayor se vería suave.
+     ======================================================== -->
+<section class="eb-mem eb-rv" id="recuerdos" aria-labelledby="mem-h">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Álbum</p>
+    <h2 class="eb-script-title" id="mem-h">Mis recuerdos</h2>
+    <p class="eb-mem__intro">De mis primeros recuerdos a este nuevo capítulo.</p>
+
+    <div class="eb-mem__row">
+      <figure class="eb-mem__item">
+        <div class="eb-mem__frame">
+          <!-- Sin srcset a propósito: el archivo da 300px de ancho y nada
+               más. Un descriptor @2x de 600w sería mentirle al navegador,
+               que elige justo por ese número. -->
+          <img src="/mis-xv-johana/assets/rec-bebe.webp"
+               sizes="(max-width:560px) calc(33vw - 20px), 165px"
+               width="300" height="400"
+               alt="Johana de bebé, en brazos de su mamá, con un vestido azul"
+               loading="lazy" decoding="async">
+        </div>
+        <figcaption class="eb-mem__cap">De pequeña</figcaption>
+      </figure>
+
+      <figure class="eb-mem__item">
+        <div class="eb-mem__frame">
+          <img src="/mis-xv-johana/assets/rec-infancia.webp"
+               srcset="/mis-xv-johana/assets/rec-infancia.webp 270w,
+                       /mis-xv-johana/assets/rec-infancia@2x.webp 540w"
+               sizes="(max-width:560px) calc(33vw - 20px), 165px"
+               width="270" height="360"
+               alt="Johana de niña, con un vestido estampado de flores rosas y zapatitos negros"
+               loading="lazy" decoding="async">
+        </div>
+        <figcaption class="eb-mem__cap">De niña</figcaption>
+      </figure>
+
+      <figure class="eb-mem__item">
+        <div class="eb-mem__frame">
+          <img src="/mis-xv-johana/assets/rec-noche.webp"
+               srcset="/mis-xv-johana/assets/rec-noche.webp 270w,
+                       /mis-xv-johana/assets/rec-noche@2x.webp 540w"
+               sizes="(max-width:560px) calc(33vw - 20px), 165px"
+               width="270" height="378"
+               alt="Johana con un vestido azul largo, cargando a un bebé en una fiesta"
+               loading="lazy" decoding="async">
+        </div>
+        <figcaption class="eb-mem__cap">Una noche especial</figcaption>
+      </figure>
+    </div>
+
+    <figure class="eb-mem__item eb-mem__wide">
+      <div class="eb-mem__frame">
+        <img src="/mis-xv-johana/assets/rec-familia.webp"
+             srcset="/mis-xv-johana/assets/rec-familia.webp 510w,
+                     /mis-xv-johana/assets/rec-familia@2x.webp 1020w"
+             sizes="(max-width:560px) calc(100vw - 40px), 520px"
+             width="510" height="382"
+             alt="Johana con su familia en una plaza iluminada con luces de Navidad"
+             loading="lazy" decoding="async">
+      </div>
+      <figcaption class="eb-mem__cap">En familia</figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<!-- ==================== LA FECHA ====================
+     Enero de 2027 empieza en VIERNES (verificado con calendar.py).
+     Semana de lunes a domingo, como se lee en México: la primera fila
+     arranca con cuatro huecos y el 9 cae en sábado, sexta columna,
+     en la segunda fila.
+     ================================================== -->
+<section class="eb-date eb-rv" id="fecha" aria-labelledby="date-h">
+  <div class="eb-wrap">
+    <div class="eb-datebar" aria-hidden="true">
+      <p class="eb-datebar__month">Enero</p>
+      <div class="eb-datebar__row">
+        <span class="eb-datebar__side">Sábado</span>
+        <span class="eb-datebar__day">9</span>
+        <span class="eb-datebar__side">2027</span>
+      </div>
+    </div>
+    <p class="eb-sr">Sábado 9 de enero de 2027</p>
+
+    <h2 class="eb-script-title" id="date-h">El gran día</h2>
+    <p class="eb-month__caption">Enero 2027</p>
+
+    <table class="eb-month" aria-describedby="date-h">
+      <thead>
+        <tr>
+          <th scope="col"><abbr title="Lunes">Lun</abbr></th>
+          <th scope="col"><abbr title="Martes">Mar</abbr></th>
+          <th scope="col"><abbr title="Miércoles">Mié</abbr></th>
+          <th scope="col"><abbr title="Jueves">Jue</abbr></th>
+          <th scope="col"><abbr title="Viernes">Vie</abbr></th>
+          <th scope="col"><abbr title="Sábado">Sáb</abbr></th>
+          <th scope="col"><abbr title="Domingo">Dom</abbr></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td>
+            <td class="is-day"><strong>9</strong><span class="eb-sr"> — el día de la fiesta</span>
+              <svg class="eb-month__heart" viewBox="0 0 60 56" aria-hidden="true" focusable="false"><path pathLength="1" d="M30 51C14 40 4 31 4 19 4 10 11 4 19 4c5 0 9 3 11 7 2-4 6-7 11-7 8 0 15 6 15 15 0 12-10 21-26 32z"/></svg>
+            </td><td>10</td></tr>
+        <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
+        <tr><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td></tr>
+        <tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ==================== DETALLES ==================== -->
+<section class="eb-details eb-rv" id="detalles">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Todo lo que necesitas saber</p>
+    <h2 class="eb-title" style="text-align:center">Los Detalles</h2>
+
+    <div class="eb-cards">
+      <!-- MISA
+           La hora todavía no está definida. El aviso se publica a
+           propósito: la capilla y el día SÍ están confirmados y el
+           invitado los necesita para organizarse. En cuanto llegue la
+           hora, se cambia aquí y en EVENTO.misa.hora, abajo. -->
+      <article class="eb-card">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4"/><path d="M12 8v4"/></svg>
+        </div>
+        <h3 class="eb-card__name">Misa</h3>
+        <p class="eb-when"><span class="eb-when__date">9 Ene</span><span class="eb-when__hour eb-when__hour--tbd" id="misa-hora">Hora por confirmar</span></p>
+        <p class="eb-card__venue">Capilla del Señor de la Misericordia</p>
+        <p class="eb-card__addr">
+          Calle Fresno<br>
+          Colonia Alcanfores<br>
+          Chalco, Estado de México
+        </p>
+        <div class="eb-card__spacer"></div>
+        <!-- Búsqueda por texto y no un enlace por CID: la ficha exacta
+             de esta capilla no se pudo verificar en Maps contra la
+             dirección de arriba, y apuntar a la ficha equivocada mandaría
+             a los invitados a otra iglesia. -->
+        <a class="eb-btn eb-btn--pill" href="https://www.google.com/maps/search/?api=1&amp;query=Capilla%20del%20Se%C3%B1or%20de%20la%20Misericordia%2C%20Calle%20Fresno%2C%20Alcanfores%2C%20Chalco%2C%20Estado%20de%20M%C3%A9xico" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Buscar en Maps
+        </a>
+      </article>
+
+      <!-- RECEPCIÓN -->
+      <article class="eb-card eb-card--feature">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M7 10.6V19"/><path d="M4.5 19h5"/><path d="M14 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M17 10.6V19"/><path d="M14.5 19h5"/></svg>
+        </div>
+        <h3 class="eb-card__name">Recepción</h3>
+        <p class="eb-when"><span class="eb-when__date">9 Ene</span><span class="eb-when__hour" id="recepcion-hora">6:00 PM</span></p>
+        <p class="eb-card__venue">Salón de Fiestas Villaverde</p>
+        <p class="eb-card__addr">
+          Carretera México-Cuautla, Km 35.5<br>
+          Col. Santa Cruz Amalinalco, C.P. 56609<br>
+          Chalco, Estado de México
+        </p>
+        <div class="eb-card__spacer"></div>
+        <a class="eb-btn eb-btn--pill" href="https://maps.app.goo.gl/WiNBbqdBas4L6RDt6" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Ver ubicación
+        </a>
+      </article>
+
+      <!-- VESTIMENTA -->
+      <article class="eb-card">
+        <div class="eb-card__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3l3 3 3-3"/><path d="M9 3L5.5 5.2a2 2 0 00-.9 2.2L6 13v8h12v-8l1.4-5.6a2 2 0 00-.9-2.2L15 3"/></svg>
+        </div>
+        <h3 class="eb-card__name">Vestimenta</h3>
+        <p class="eb-card__dress">Elegante</p>
+        <p class="eb-card__note">
+          Con mucho cariño les pedimos reservar el <strong>rosa</strong> y el
+          <strong>dorado</strong>, que están destinados a la Quinceañera.
+        </p>
+        <div class="eb-card__spacer"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== ITINERARIO ==================== -->
+<section class="eb-itinerary eb-rv" id="itinerario">
+  <div class="eb-wrap">
+    <div class="eb-arch">
+      <p class="eb-arch__kicker">El recorrido del día</p>
+      <h2 class="eb-arch__title">Itinerario</h2>
+
+      <ol class="eb-steps">
+        <li class="eb-step">
+          <span class="eb-step__text"><span class="eb-step__name">Misa</span><span class="eb-step__time eb-step__time--tbd" id="itinerario-misa">Hora por confirmar</span></span>
+          <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4"/><path d="M12 8v4"/></svg></span>
+        </li>
+        <li class="eb-step">
+          <span class="eb-step__text"><span class="eb-step__name">Recepción</span><span class="eb-step__time">6:00 PM</span></span>
+          <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M7 10.6V19"/><path d="M4.5 19h5"/><path d="M14 3h6l-.6 5.2a2.4 2.4 0 0 1-4.8 0z"/><path d="M17 10.6V19"/><path d="M14.5 19h5"/></svg></span>
+        </li>
+        <li class="eb-step">
+          <span class="eb-step__text"><span class="eb-step__name">Cena</span></span>
+          <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12.5" cy="12" r="5.5"/><circle cx="12.5" cy="12" r="3"/><path d="M3 4v4.5a1.5 1.5 0 0 0 3 0V4"/><path d="M4.5 10v10"/><path d="M21 4c-1.4 1.4-2 3.8-2 6.5h2V20"/></svg></span>
+        </li>
+        <li class="eb-step">
+          <span class="eb-step__text"><span class="eb-step__name">Vals</span></span>
+          <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 18.5h17"/><path d="M4.5 18.5 3 9.5l4.8 3.6L12 5.5l4.2 7.6L21 9.5l-1.5 9"/><circle cx="12" cy="4" r="1"/><circle cx="3" cy="8.2" r=".8"/><circle cx="21" cy="8.2" r=".8"/></svg></span>
+        </li>
+        <li class="eb-step">
+          <span class="eb-step__text"><span class="eb-step__name">Fiesta</span></span>
+          <span class="eb-step__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+        </li>
+      </ol>
+    </div>
+    <div class="eb-bowdiv eb-bowdiv--arch" aria-hidden="true">
+      <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="151" alt="" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SOLO FALTAN ====================
+     Adorno: la fecha completa ya vive arriba como texto fijo.
+     La cuenta se ancla a la RECEPCIÓN (6:00 PM), que es la hora
+     confirmada; en cuanto se sepa la de la misa, el ancla se mueve.
+     ===================================================== -->
+<section class="eb-countdown eb-rv" aria-labelledby="cd-h">
+  <div class="eb-wrap">
+    <h2 class="eb-script-title" id="cd-h">Solo faltan</h2>
+    <div class="eb-cd" id="cd">
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-d">&mdash;</div><div class="eb-cd__unit">Días</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-h2">&mdash;</div><div class="eb-cd__unit">Horas</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-m">&mdash;</div><div class="eb-cd__unit">Minutos</div></div>
+      <div class="eb-cd__cell"><div class="eb-cd__num" id="cd-s">&mdash;</div><div class="eb-cd__unit">Segundos</div></div>
+    </div>
+
+    <p class="eb-label eb-cal__label">Guarda la fecha</p>
+    <div class="eb-cal">
+      <a class="eb-btn eb-btn--ghost" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=XV+A%C3%B1os+de+Johana+Noem%C3%AD&amp;dates=20270110T000000Z%2F20270110T080000Z&amp;details=6%3A00+PM+recepci%C3%B3n+en+el+Sal%C3%B3n+de+Fiestas+Villaverde+%28Carretera+M%C3%A9xico-Cuautla+Km+35.5%2C+Chalco%29.+La+hora+de+la+misa+en+la+Capilla+del+Se%C3%B1or+de+la+Misericordia+se+confirmar%C3%A1+pr%C3%B3ximamente.+Invitaci%C3%B3n%3A+https%3A%2F%2Fwww.salondefiestasvillaverde.com%2Fmis-xv-johana&amp;location=Sal%C3%B3n+de+Fiestas+Villaverde%2C+Carretera+M%C3%A9xico-Cuautla+Km+35.5%2C+Col.+Santa+Cruz+Amalinalco%2C+C.P.+56609%2C+Chalco%2C+Estado+de+M%C3%A9xico&amp;ctz=America%2FMexico_City" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        Google Calendar
+      </a>
+      <a class="eb-btn eb-btn--ghost" href="/mis-xv-johana/assets/mis-xv-johana.ics" download="mis-xv-johana.ics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M12 13v5M9.5 15.5 12 18l2.5-2.5"/></svg>
+        Apple / Outlook
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== EL LUGAR ====================
+     Una sola fotografia del salon. El nombre "Villaverde" aparece UNA
+     vez en toda la pagina, en la tarjeta de Recepcion, que es donde el
+     invitado lo necesita para llegar.
+     ================================================================ -->
+<section class="eb-place eb-rv" aria-labelledby="place-h">
+  <div class="eb-place__media">
+    <img src="/mis-xv-johana/assets/lugar.webp"
+         srcset="/mis-xv-johana/assets/lugar.webp 800w,
+                 /mis-xv-johana/assets/lugar@2x.webp 1267w"
+         sizes="100vw"
+         width="800" height="600"
+         alt="Fachada del salón de fiestas, iluminada al atardecer"
+         loading="lazy" decoding="async">
+    <div class="eb-place__veil" aria-hidden="true"></div>
+    <div class="eb-place__copy">
+      <p class="eb-eyebrow" id="place-h">Donde nos vemos</p>
+      <p class="eb-place__title">Te espero aquí</p>
+    </div>
+  </div>
+</section>
+
+
+<div class="eb-bowdiv" aria-hidden="true">
+  <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="151" alt="" loading="lazy" decoding="async">
+</div>
+
+
+<!-- ==================== CONFIRMAR ==================== -->
+<section class="eb-rsvp eb-rv" id="confirmar">
+  <div class="eb-wrap">
+    <p class="eb-eyebrow">Confirmación</p>
+    <h2 class="eb-title">Te espero con ilusión</h2>
+    <p class="eb-rsvp__copy">
+      Tu presencia hará de este día un recuerdo inolvidable.
+      Confirma tu asistencia antes del <strong>26 de diciembre</strong> para preparar cada detalle.
+    </p>
+
+    <form class="eb-form" id="rsvp" novalidate>
+      <div class="eb-field">
+        <label class="eb-label" for="f-nombre">Tu nombre</label>
+        <input type="text" id="f-nombre" name="nombre" placeholder="Nombre y apellido"
+               autocomplete="name" required aria-describedby="f-error">
+      </div>
+
+      <div class="eb-field">
+        <label class="eb-label" for="f-pases">Número de personas</label>
+        <select id="f-pases" name="pases">
+          <option>1 persona</option>
+          <option>2 personas</option>
+          <option>3 personas</option>
+          <option>4 personas</option>
+          <option>5 personas</option>
+          <option>6 o más personas</option>
+        </select>
+      </div>
+
+      <div class="eb-field">
+        <label class="eb-label" for="f-asiste">¿Nos acompañas?</label>
+        <select id="f-asiste" name="asiste">
+          <option value="si">Sí, ahí estaré</option>
+          <option value="no">Lamento no poder asistir</option>
+        </select>
+      </div>
+
+      <p class="eb-form__error" id="f-error" role="alert"></p>
+
+      <button type="submit" class="eb-btn eb-btn--primary eb-form__submit">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 00-8.6 15.05L2 22l5.07-1.33A10 10 0 1012 2z"/></svg>
+        Confirmar Asistencia
+      </button>
+    </form>
+
+    <!-- Dos rutas sin JS, siempre presentes: WhatsApp para quien lo usa
+         y la llamada para quien no. Nunca dependen del formulario. -->
+    <p class="eb-rsvp__direct">
+      O escríbenos directo por
+      <a href="https://wa.me/525614947760?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20los%20XV%20A%C3%B1os%20de%20Johana%20Noem%C3%AD%20el%209%20de%20enero%20de%202027." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      o llama al <a href="tel:+525614947760">56&nbsp;1494&nbsp;7760</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="eb-footer">
+  <div class="eb-wrap">
+    <p class="eb-footer__name">Johana Noemí</p>
+    <ul class="eb-footer__links">
+      <li><a href="#recuerdos">Recuerdos</a></li>
+      <li><a href="#detalles">Detalles</a></li>
+      <li><a href="#confirmar">Asistir</a></li>
+    </ul>
+    <p class="eb-footer__fine">9 de Enero de 2027 &middot; Chalco, Estado de México</p>
+  </div>
+</footer>
+
+
+<script>
+'use strict';
+
+/* ============================================================
+   DATOS DEL EVENTO
+   Unico punto de edicion para lo dinamico. Los nombres, sedes y horas
+   viven en el HTML: el scraper de WhatsApp no ejecuta JS y sin JS la
+   invitacion debe leerse completa. Lo de aqui es para la cuenta
+   regresiva y el WhatsApp.
+   ============================================================ */
+var EVENTO = {
+  /* Ancla de la cuenta regresiva = la RECEPCION, porque es la hora que
+     esta confirmada. La misa todavia no tiene hora; cuando la familia
+     la de, se pone en EVENTO.misa.hora, se cambia el texto de los dos
+     nodos del HTML (#misa-hora y #itinerario-misa), se les quita la
+     clase --tbd y este iso se mueve a la hora de la misa.
+     Offset -06:00 EXPLICITO: el centro de Mexico no usa horario de
+     verano desde 2022, asi que la cuenta marca lo mismo desde
+     cualquier pais.
+     El 9 de enero de 2027 cae en SABADO (verificado con calendar.py). */
+  iso:        '2027-01-09T18:00:00-06:00',
+  fechaLarga: 'Sábado 9 de Enero de 2027',
+
+  /* Copia de las horas que ya estan en el HTML, solo para avisar en
+     consola si alguien edita una y no la otra. misa.hora en null
+     significa "sin confirmar" y desactiva ese chequeo. */
+  misa:       { hora: null },
+  recepcion:  { hora: '6:00 PM' },
+
+  /* Lada de pais + numero, solo digitos. Sin el 52, wa.me falla en silencio. */
+  telefono:   '525614947760'
+};
+
+var EVENT_TS   = new Date(EVENTO.iso).getTime();
+var RSVP_PHONE = EVENTO.telefono;
+
+/* Chequeo de deriva: el HTML manda, esto solo avisa por consola. */
+(function () {
+  var mh = document.getElementById('misa-hora');
+  var rh = document.getElementById('recepcion-hora');
+  if (mh && EVENTO.misa.hora && mh.textContent.trim() !== EVENTO.misa.hora) {
+    console.warn('EVENTO.misa.hora no coincide con el HTML');
+  }
+  if (mh && !EVENTO.misa.hora && !mh.classList.contains('eb-when__hour--tbd')) {
+    console.warn('La misa sigue sin hora pero el HTML ya no la marca como pendiente');
+  }
+  if (rh && rh.textContent.trim() !== EVENTO.recepcion.hora) {
+    console.warn('EVENTO.recepcion.hora no coincide con el HTML');
+  }
+})();
+
+/* ---------- PORTADA DE ENTRADA ----------
+   El click del boton es una interaccion real del usuario, asi que dentro
+   de su manejador el navegador SI permite reproducir con sonido. Ese es
+   todo el truco: no se saltan las reglas de autoplay, se cumplen. */
+(function () {
+  var gate = document.getElementById('gate');
+  var btn  = document.getElementById('gate-btn');
+  var film = document.getElementById('gate-film');
+  if (!gate || !btn) return;
+
+  var FILM = '/mis-xv-johana/assets/sobre-abre.mp4';
+
+  document.body.classList.add('is-gated');
+  btn.focus({ preventScroll: true, focusVisible: false });
+
+  btn.addEventListener('click', function () {
+    var audio  = document.getElementById('audio');
+    var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ===== REGLA QUE NO SE NEGOCIA =====
+       La musica arranca DENTRO del manejador del click, en la PRIMERA
+       linea, antes de tocar el video o cualquier animacion. El permiso
+       de autoplay solo vale mientras dura el gesto: si se espera a que
+       acabe la coreografia, la ventana ya se cerro y el sonido no sale
+       (iOS es el mas estricto). */
+    if (audio) {
+      audio.muted = false;
+      audio.currentTime = 0;
+      audio.play().catch(function () {});
+    }
+
+    /* El video tambien se carga aqui dentro, por el mismo motivo y para
+       que su medio mega no pese en la primera pintura. Va en silencio,
+       asi que no compite con la cancion. Si no puede reproducirse se
+       marca no-film y el respaldo CSS funde la foto final. */
+    var dura = 1200;                        // sin video: solo el destello
+    if (film && !quieto) {
+      film.muted = true;
+      film.src = FILM;
+      film.addEventListener('error', function () { gate.classList.add('no-film'); }, { once: true });
+      var p = film.play();
+      if (p && p.then) {
+        p.then(function () { gate.classList.add('is-playing'); },
+               function () { gate.classList.add('no-film'); });
+      } else {
+        gate.classList.add('is-playing');
+      }
+      /* El clip dura 6.04s y el sobre queda abierto hacia el 5.4s.
+         3700ms deja ver la apertura sin que el invitado espere de mas. */
+      dura = 3700;
+    }
+
+    gate.classList.add('is-opening');
+    btn.disabled = true;
+
+    if (quieto) {                           // sin movimiento: directo al contenido
+      cerrar(0);
+      return;
+    }
+
+    setTimeout(function () { gate.classList.add('is-flash'); }, dura - 700);
+    setTimeout(function () { cerrar(900); }, dura);
+
+    function cerrar(espera) {
+      gate.classList.add('is-gone');
+      document.body.classList.remove('is-gated');
+      document.body.classList.add('is-opened');
+      /* Se retira del arbol para que no atrape el foco al tabular, y se
+         suelta el video para que no siga decodificando a espaldas. */
+      setTimeout(function () {
+        gate.hidden = true;
+        if (film) { try { film.pause(); film.removeAttribute('src'); film.load(); } catch (e) {} }
+      }, espera);
+    }
+  }, { once: true });
+})();
+
+/* ---------- NAVBAR ---------- */
+(function () {
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('is-stuck', window.scrollY > 10); }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+/* ---------- CUENTA REGRESIVA ---------- */
+(function () {
+  var box = document.getElementById('cd');
+  var el  = { d:document.getElementById('cd-d'), h:document.getElementById('cd-h2'),
+              m:document.getElementById('cd-m'), s:document.getElementById('cd-s') };
+  var prev = {}, timer;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function tick(){
+    var diff = EVENT_TS - Date.now();
+
+    if (diff <= 0) {
+      box.innerHTML = '<p class="eb-cd__done">¡Hoy es el gran día!</p>';
+      clearInterval(timer);
+      return;
+    }
+
+    var v = {
+      d: String(Math.floor(diff / 86400000)),
+      h: pad(Math.floor(diff % 86400000 / 3600000)),
+      m: pad(Math.floor(diff % 3600000 / 60000)),
+      s: pad(Math.floor(diff % 60000 / 1000))
+    };
+
+    /* Diffing por llave: sin esto se repintan 4 nodos por segundo. */
+    Object.keys(v).forEach(function (k) {
+      if (prev[k] === v[k]) return;
+      prev[k] = v[k];
+      el[k].textContent = v[k];
+      el[k].classList.remove('eb-cd__num--tick');
+      void el[k].offsetWidth;                    /* reinicia la animación */
+      el[k].classList.add('eb-cd__num--tick');
+    });
+  }
+
+  tick();
+  timer = setInterval(tick, 1000);
+})();
+
+/* ---------- CONFIRMACIÓN POR WHATSAPP ---------- */
+(function () {
+  var form  = document.getElementById('rsvp');
+  var name  = document.getElementById('f-nombre');
+  var seats = document.getElementById('f-pases');
+  var going = document.getElementById('f-asiste');
+  var err   = document.getElementById('f-error');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var n = name.value.trim();
+    if (n.length < 3) {
+      err.textContent = 'Por favor escribe tu nombre completo.';
+      name.focus();
+      return;
+    }
+    err.textContent = '';
+
+    var msg = going.value === 'si'
+      ? '¡Hola! Soy ' + n + '. Confirmo mi asistencia a los XV Años de Johana Noemí el 9 de enero de 2027. Asistimos: ' + seats.value + '.'
+      : '¡Hola! Soy ' + n + '. Lamento mucho no poder acompañarlos en los XV Años de Johana Noemí el 9 de enero de 2027. ¡Muchas felicidades!';
+
+    window.open('https://wa.me/' + RSVP_PHONE + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  });
+})();
+
+/* ---------- REPRODUCTOR DE MÚSICA ---------- */
+(function () {
+  var audio = document.getElementById('audio');
+  var btn   = document.getElementById('pl-btn');
+  var seek  = document.getElementById('pl-seek');
+  var cur   = document.getElementById('pl-cur');
+  var dur   = document.getElementById('pl-dur');
+  var box   = document.getElementById('musica');
+  if (!audio || !btn || !seek) return;
+
+  var ICO_PLAY  = '<svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var ICO_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+
+  // El control nativo solo existía por si el JS no corría.
+  audio.removeAttribute('controls');
+
+  // Si el mp3 no carga, la sección entera desaparece en vez de dejar
+  // un reproductor muerto.
+  audio.addEventListener('error', function () { if (box) box.hidden = true; }, { once: true });
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+
+  function paint() {
+    var total = audio.duration;
+    if (!isFinite(total) || total <= 0) total = Number(seek.max) || 202;
+    seek.style.setProperty('--pct', (audio.currentTime / total * 100) + '%');
+  }
+
+  audio.addEventListener('loadedmetadata', function () {
+    if (isFinite(audio.duration)) {
+      seek.max = Math.floor(audio.duration);
+      dur.textContent = fmt(audio.duration);
+    }
+    paint();
+  });
+
+  audio.addEventListener('timeupdate', function () {
+    if (seek.dataset.dragging === '1') return;   // no pelear con el dedo del usuario
+    seek.value = Math.floor(audio.currentTime);
+    cur.textContent = fmt(audio.currentTime);
+    paint();
+  });
+
+  function sync() {
+    btn.innerHTML = audio.paused ? ICO_PLAY : ICO_PAUSE;
+    btn.setAttribute('aria-label', audio.paused ? 'Reproducir la canción' : 'Pausar la canción');
+  }
+  audio.addEventListener('play',  sync);
+  audio.addEventListener('pause', sync);
+
+  btn.addEventListener('click', function () {
+    if (audio.paused) { audio.play().catch(function () {}); }
+    else              { audio.pause(); }
+  });
+
+  var restart = document.getElementById('pl-restart');
+  var loopBtn = document.getElementById('pl-loop');
+  if (restart) restart.addEventListener('click', function () {
+    audio.currentTime = 0;
+    seek.value = 0; cur.textContent = fmt(0); paint();
+  });
+  if (loopBtn) loopBtn.addEventListener('click', function () {
+    audio.loop = !audio.loop;
+    loopBtn.setAttribute('aria-pressed', audio.loop ? 'true' : 'false');
+  });
+
+  ['pointerdown', 'keydown'].forEach(function (e) {
+    seek.addEventListener(e, function () { seek.dataset.dragging = '1'; });
+  });
+  seek.addEventListener('input', function () {
+    cur.textContent = fmt(Number(seek.value));
+    var total = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : Number(seek.max);
+    seek.style.setProperty('--pct', (Number(seek.value) / total * 100) + '%');
+  });
+  seek.addEventListener('change', function () {
+    audio.currentTime = Number(seek.value);
+    seek.dataset.dragging = '0';
+  });
+
+  sync();
+  paint();
+})();
+
+/* ---------- REVEAL ---------- */
+(function () {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.eb-rv').forEach(function (el) { el.classList.add('is-on'); });
+    return;
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-on');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold:.1, rootMargin:'0px 0px -50px 0px' });
+
+  document.querySelectorAll('.eb-rv').forEach(function (el) { obs.observe(el); });
+})();
+
+/* ---------- LLUVIA DE PÉTALOS ---------- */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (navigator.connection && navigator.connection.saveData) return;
+
+  var field = document.getElementById('petals');
+  var count = window.innerWidth < 600 ? 10 : 18;
+
+  for (var i = 0; i < count; i++) {
+    var el = document.createElement('div');
+    var size = 9 + Math.random() * 12;
+
+    el.className = 'eb-petal';
+    el.style.left = (Math.random() * 100) + '%';
+    el.style.width = size + 'px';
+    el.style.height = (size * 1.45) + 'px';
+    el.style.animationDuration = (9 + Math.random() * 9) + 's';
+    el.style.animationDelay = (Math.random() * 12) + 's';
+    el.innerHTML = '<svg viewBox="-10 -14 20 28" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+                   '<use href="#' + (Math.random() > .45 ? 'ebPt' : 'ebPtPale') + '"/></svg>';
+
+    field.appendChild(el);
+  }
+})();
+</script>
+
+</body>
+</html>
