@@ -225,7 +225,7 @@ function SecCortesias() {
         <button className="vv-tlink" onClick={() => { localStorage.setItem('vv_step', '4'); location.reload(); }} style={{ marginLeft: 'auto', fontSize: 12.5, fontWeight: 800, color: pkg.accent, cursor: 'pointer', background: 'none', border: 'none', display: 'inline-flex', alignItems: 'center', gap: 4, whiteSpace: 'nowrap' }}>Cambiar paquete <Icon name="right" size={14} stroke={2.4} /></button>
       </div>
 
-      <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginTop: 10 }}>
+      <div className="vv-grid--4 vv-grid--m2 vv-cortesias" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginTop: 10 }}>
         {VV.CORTESIAS.map(c => {
           const on = fav.has(c.id);
           const vids = VV.videosDe(c, (c.gallery && c.gallery[0]) || undefined);
@@ -328,7 +328,7 @@ function SecCortesias() {
         >
           <figure className="vv-card" style={{ flex: "1 1 270px", minWidth: 0, maxWidth: 450, margin: 0, padding: 10 }}>
             <img
-              src="assets/cartel-cascada-flores.png"
+              src="assets/cartel-cascada-flores.jpg"
               width={1122}
               height={1402}
               alt="Cascada de flores en la escalera del Salón Villaverde. Cotiza tu montaje."
@@ -339,7 +339,7 @@ function SecCortesias() {
           </figure>
           <figure className="vv-card" style={{ flex: "1 1 270px", minWidth: 0, maxWidth: 450, margin: 0, padding: 10 }}>
             <img
-              src="assets/cartel-banda-de-viento.png"
+              src="assets/cartel-banda-de-viento.jpg"
               width={941}
               height={1672}
               alt="Banda de viento: $8,000 MXN por un turno de 45 minutos con seis integrantes"
@@ -358,9 +358,12 @@ function SecCortesias() {
 function SecTestimonios() {
   return (
     <div className="vv-section">
-      <p className="vv-eyebrow">Lo que dicen las familias</p>
+      <p className="vv-eyebrow">Por qué elegir Villaverde</p>
       <h1 className="vv-h1">Confianza <em>ganada</em></h1>
-      <p className="vv-lead">No solo es lo que te decimos. Mira lo que viven las familias que ya celebraron en Villaverde.</p>
+      <p className="vv-lead">No solo es lo que te decimos. Mira cómo se viven las fiestas de las familias que ya celebraron en Villaverde.</p>
+
+      {/* Fotos reales de eventos */}
+      {VV.FOTOS_EVENTOS && <FotoTira fotos={VV.FOTOS_EVENTOS} className="vv-tira--3 vv-tira--alta" />}
 
       {/* ¿Por qué elegirnos? */}
       <div className="vv-grid--3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, marginBottom: 30 }}>
@@ -375,7 +378,7 @@ function SecTestimonios() {
         ))}
       </div>
 
-      <div className="vv-grid--3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginBottom: 30 }}>
+      {VV.TESTIMONIOS.length > 0 && <div className="vv-grid--3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginBottom: 30 }}>
         {VV.TESTIMONIOS.map((t, i) => (
           <div key={i} className="vv-card vv-tile" style={{ padding: '26px 24px', display: 'flex', flexDirection: 'column' }}>
             <div style={{ fontFamily: 'var(--vv-display)', fontSize: 60, lineHeight: .6, color: 'var(--vv-line-strong)', height: 30 }}>&ldquo;</div>
@@ -387,7 +390,7 @@ function SecTestimonios() {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
 
       <div className="vv-statbar" style={{ background: 'linear-gradient(100deg, #2A1018, #1A0A10)', borderRadius: 'var(--vv-radius-lg)', padding: '30px 36px', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20 }}>
         {VV.STATS.map((s, i) => (

@@ -170,7 +170,7 @@ function GuionDock({ stepId, stepTitle, open, onToggle }) {
           <span className="vv-dock__title">Guión · <b>{stepTitle}</b></span>
         </div>
         <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--vv-gold-soft)', fontWeight: 700 }}>
-          {open ? 'Ocultar' : 'Ver argumentos de venta'}
+          <span className="vv-dock__cta">{open ? 'Ocultar' : 'Ver argumentos de venta'}</span>
           <Icon name="chevron" size={20} className="vv-dock__chev" />
         </span>
       </div>
@@ -331,4 +331,33 @@ function PhotoSlot({ id, src, shape = 'rect', radius, placeholder = 'Arrastra un
   );
 }
 
-Object.assign(window, { Icon, Stars, CountUp, useTween, Money, Rail, GuionDock, Lightbox, PhotoSlot });
+/* ---------------- FOTO BANDA (foto real ancha con pie; toca para ampliar) ---------------- */
+function FotoBanda({ src, alt, titulo, sub, pos = 'center', className, style }) {
+  return (
+    <figure className={'vv-banda vv-zoomable ' + (className || '')} style={style}>
+      <img src={src} alt={alt || titulo || ''} loading="lazy" decoding="async" style={{ objectPosition: pos }} />
+      {(titulo || sub) && (
+        <figcaption className="vv-banda__cap">
+          {titulo && <div className="vv-banda__t">{titulo}</div>}
+          {sub && <div className="vv-banda__s">{sub}</div>}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+/* ---------------- FOTO TIRA (fila de fotos reales; cada una se amplía) ---------------- */
+function FotoTira({ fotos, className }) {
+  return (
+    <div className={'vv-tira ' + (className || '')}>
+      {fotos.map((f, i) => (
+        <figure key={i} className="vv-tira__item vv-zoomable">
+          <img src={f.src} alt={f.alt} loading="lazy" decoding="async" style={f.pos ? { objectPosition: f.pos } : undefined} />
+          {f.label && <figcaption>{f.label}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+Object.assign(window, { Icon, Stars, CountUp, useTween, Money, Rail, GuionDock, Lightbox, PhotoSlot, FotoBanda, FotoTira });

@@ -12,7 +12,7 @@ VV.STEPS = [
   { id: 'paquetes',    n: 5,  title: 'Paquetes',       sub: 'Todo incluido' },
   { id: 'cortesias',   n: 6,  title: 'Cortesías',      sub: 'Según tu paquete' },
   { id: 'cotizador',   n: 7,  title: 'Cotizador',      sub: 'Tu inversión' },
-  { id: 'testimonios', n: 8,  title: 'Testimonios',    sub: 'Confianza' },
+  { id: 'testimonios', n: 8,  title: 'Confianza',      sub: 'Por qué elegirnos' },
   { id: 'fechas',      n: 9,  title: 'Disponibilidad', sub: 'Aparta tu fecha' },
   { id: 'cierre',      n: 10, title: 'Cierre',         sub: 'Sí, ¡vamos!' },
 ];
@@ -92,7 +92,40 @@ VV.VIDEOS_CANTANTE = [
    no tours del inmueble como sal.video). Agregar más aquí conforme lleguen. */
 VV.VIDEOS_SALON = [
   { id: 'vals', name: 'El vals', desc: 'Un momento inolvidable bajo la iluminación inteligente', video: 'assets/iluminacion-vals.mp4', poster: 'assets/iluminacion-vals-poster.jpg' },
+  { id: 'salon-lleno', name: 'El salón lleno', desc: 'La fiesta vista desde el balcón', video: 'assets/eventos/salon-lleno-balcon.mp4', poster: 'assets/eventos/salon-lleno-balcon-poster.jpg' },
+  { id: 'pista-llena', name: 'La pista llena', desc: 'Todos bailando sobre la pista LED', video: 'assets/eventos/pista-llena.mp4', poster: 'assets/eventos/pista-llena-poster.jpg' },
+  { id: 'hora-loca', name: 'La hora loca', desc: 'Globos, luces y pista LED', video: 'assets/eventos/hora-loca.mp4', poster: 'assets/eventos/hora-loca-poster.jpg' },
 ];
+
+/* Fotos reales del Salón Villaverde montado (paso "El Salón"). Se amplían al tocarlas. */
+VV.FOTOS_VILLAVERDE = [
+  { src: 'assets/salon/villaverde-01.jpg', alt: 'Salón Villaverde montado: mesas, candil de cristal, techo entelado y pista', label: 'Techo entelado y candil' },
+  { src: 'assets/salon/villaverde-02.jpg', alt: 'Salón Villaverde: escalera iluminada y escenario', label: 'Escalera y escenario' },
+  { src: 'assets/salon/villaverde-03.jpg', alt: 'Salón Villaverde montado en rosa con luz lila', label: 'Montaje en rosa' },
+  { src: 'assets/salon/villaverde-04.jpg', alt: 'Salón Villaverde montado en guinda con ventanales', label: 'Montaje en guinda' },
+];
+
+/* Videos propios del Salón Gardenia (además del recorrido horizontal sal.video). */
+VV.VIDEOS_GARDENIA = [
+  { id: 'pista-led', name: 'Gardenia con pista LED', video: 'assets/gardenia-pista-led.mp4', poster: 'assets/gardenia-pista-led-poster.jpg' },
+  { id: 'recorrido', name: 'Recorrido por Gardenia', video: 'assets/gardenia-recorrido.mp4', poster: 'assets/gardenia-recorrido-poster.jpg' },
+];
+
+/* Detalles reales de montaje (paso "Mantelería"). */
+VV.FOTOS_MANTELERIA = [
+  { src: 'assets/manteleria/detalle-01.jpg', alt: 'Plato base dorado y servilleta sobre mantel blanco', label: 'Plato base dorado' },
+  { src: 'assets/manteleria/detalle-02.jpg', alt: 'Mesa principal con mantelería guinda y arreglo floral', label: 'Mesa principal en guinda' },
+  { src: 'assets/manteleria/detalle-03.jpg', alt: 'Mesa principal en azul rey con lirios blancos', label: 'Azul rey con lirios' },
+  { src: 'assets/manteleria/detalle-04.jpg', alt: 'Arreglo floral de la mesa principal', label: 'Arreglo de mesa principal' },
+  { src: 'assets/manteleria/detalle-05.jpg', alt: 'Centro de mesa alto con rosas frente al vitral del salón', label: 'Centro de mesa alto' },
+];
+
+/* Foto de cabecera de cada paquete (paso "Paquetes"). */
+VV.FOTO_PAQUETE = {
+  premium:   { src: 'assets/salon/villaverde-04.jpg', alt: 'Salón montado para una cena de gala', pos: 'center 62%' },
+  diamante:  { src: 'assets/salon/villaverde-03.jpg', alt: 'Salón montado con mantelería a color', pos: 'center 58%' },
+  esmeralda: { src: 'assets/eventos/pista-llena.jpg', alt: 'Pista LED llena durante una fiesta', pos: 'center 28%' },
+};
 
 /* Recorrido virtual 360° del paso "El Salón" (mismas fotos que la landing,
    copiadas localmente porque informes no depende de Supabase — ver
@@ -212,6 +245,10 @@ VV.CORTESIAS = [
       'assets/inflables/06-promo.jpg',
     ] },
   { id: 'ledmesas', name: 'Iluminación LED en mesas', desc: 'Cada mesa con luz de color.',          icon: 'sparkle',wow: 4,
+    video: [
+      { src: 'assets/mesas-led-video1.mp4', poster: 'assets/mesas-led-video1-poster.jpg' },
+      { src: 'assets/mesas-led-video2.mp4', poster: 'assets/mesas-led-video2-poster.jpg' },
+    ],
     gallery: ['assets/mesas-led-rosa.jpg', 'assets/mesas-led-azul.jpg'] },
   { id: 'cantante', name: 'Cantante durante la cena', desc: 'Voz en vivo mientras cenan.',          icon: 'mic',    wow: 4,
     video: VV.VIDEOS_CANTANTE,
@@ -237,7 +274,7 @@ VV.CORTESIAS = [
       'assets/letras/11.jpg','assets/letras/12.jpg',
       'assets/letras/13.jpg','assets/letras/14.jpg','assets/letras/15.jpg',
       'assets/letras/16.jpg','assets/letras/17.jpg','assets/letras/18.jpg',
-      'assets/letras/19.jpg',
+      'assets/letras/19.jpg', 'assets/letras/20.jpg',
     ] },
   { id: 'ceremonia', name: 'Ceremonia religiosa',   desc: 'Altar montado dentro del salón.',         icon: 'arch',   wow: 4,
     gallery: ['assets/ceremonia-religiosa.jpg'] },
@@ -391,11 +428,18 @@ VV.OCUPADAS = [
   { date: '2027-12-04', tipo: 'XV Años' },
 ];
 
-/* ---------- TESTIMONIOS (ejemplo) ---------- */
-VV.TESTIMONIOS = [
-  { name: 'Familia Hernández', event: 'XV de Valentina', stars: 5, text: 'El salón se veía de revista. La cabina 360 fue el éxito de la noche y el servicio impecable. ¡Sin un solo costo escondido!' },
-  { name: 'Mariana & Diego', event: 'Boda', stars: 5, text: 'Buscábamos elegancia y Villaverde la superó. La mantelería en azul rey quedó exactamente como la vimos en la cotización.' },
-  { name: 'Familia Robles', event: 'XV de Sofía', stars: 5, text: 'Lo mejor fue la tranquilidad: todo incluido, todo cumplido. Los chilaquiles de madrugada cerraron la fiesta perfecta.' },
+/* ---------- TESTIMONIOS ----------
+   Solo testimonios REALES y verificables (DESIGN.md: no publicar reseñas que no puedan
+   comprobarse). Los tres de ejemplo que había aquí se quitaron el 21-nov-2026; quedan en
+   el historial de git. Con la lista vacía, el paso muestra fotos reales de eventos.
+   Formato: { name: 'Familia …', event: 'XV de …', stars: 5, text: '…' } */
+VV.TESTIMONIOS = [];
+
+/* Fotos reales de eventos para el paso de confianza. */
+VV.FOTOS_EVENTOS = [
+  { src: 'assets/eventos/pista-llena.jpg', alt: 'Invitados bailando en la pista LED', label: 'La pista, llena' },
+  { src: 'assets/letras/20.jpg', alt: 'Letras gigantes iluminadas, pantalla LED y pista', label: 'Letras gigantes y pantalla LED' },
+  { src: 'assets/salon/villaverde-02.jpg', alt: 'Salón montado con escalera iluminada', label: 'Listo para recibirlos' },
 ];
 
 VV.STATS = [
@@ -457,7 +501,7 @@ VV.GUION = {
   },
   cotizador: {
     obj: 'Construir el número JUNTO al cliente para que sea “suyo”.',
-    say: '«Vamos a armar tu números. ¿Cuántos invitados calculas? …Mira, esto incluye absolutamente todo lo que ya vimos.»',
+    say: '«Vamos a armar tus números. ¿Cuántos invitados calculas? …Mira, esto incluye absolutamente todo lo que ya vimos.»',
     tips: ['Mueve el número de invitados con el cliente viendo.', 'Muestra el precio por persona vs. el total con todo incluido.', 'Compara: contratar por separado costaría mucho más.'],
     obj_handling: [
       { q: '“¿Hay descuento?”', a: 'Apartando hoy te garantizo el precio 2026 y tu fecha. Después sube por temporada.' },
@@ -465,8 +509,8 @@ VV.GUION = {
   },
   testimonios: {
     obj: 'Reducir el riesgo percibido con prueba social.',
-    say: '«No solo es lo que yo te digo… mira lo que dicen las familias que ya celebraron aquí.»',
-    tips: ['Menciona +800 eventos y +12 años.', 'Refuerza “sin costos ocultos” con testimonios reales.'],
+    say: '«No solo es lo que yo te digo… mira cómo se viven las fiestas aquí, con el salón lleno.»',
+    tips: ['Menciona +800 eventos y +12 años.', 'Enseña las fotos reales: pista llena, letras gigantes y salón montado.', 'Refuerza “sin costos ocultos”; si tienes un testimonio real a la mano, cuéntalo.'],
     obj_handling: [
       { q: '“Necesito pensarlo.”', a: 'Claro. Mientras lo piensan, ¿checamos si tu fecha sigue disponible?' },
     ],

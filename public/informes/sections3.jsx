@@ -460,8 +460,13 @@ function SecPaquetes({ onGo }) {
         border: '1px solid var(--vv-line)', borderRadius: 'var(--vv-radius-lg)', overflow: 'hidden',
         background: 'var(--vv-cream)', boxShadow: 'var(--vv-shadow-md)',
       }}>
+        {/* Foto real del paquete */}
+        {VV.FOTO_PAQUETE && VV.FOTO_PAQUETE[p.id] && (
+          <FotoBanda src={VV.FOTO_PAQUETE[p.id].src} alt={VV.FOTO_PAQUETE[p.id].alt} pos={VV.FOTO_PAQUETE[p.id].pos}
+            className="vv-banda--pkg" />
+        )}
         {/* Cabecera */}
-        <div style={{
+        <div className="vv-pkghead" style={{
           display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20,
           padding: '24px 28px', borderBottom: '1px solid var(--vv-line)', background: 'var(--vv-paper-2)',
         }}>
@@ -508,7 +513,7 @@ function SecPaquetes({ onGo }) {
             {parent ? 'Lo nuevo de este paquete' : 'Todo lo que incluye'} · toca un elemento para ver el detalle
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+          <div className="vv-pkgitems" style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
             {p.incluye.map((x, i) => {
               const info = VV.ITEM_INFO[x] || {};
               return (
@@ -753,6 +758,11 @@ function SecCotizador() {
         </div>
       </div>
 
+      <FotoBanda src="assets/salon/villaverde-panoramica.jpg" className="vv-banda--pano"
+        alt="Panorámica del Salón Villaverde montado"
+        titulo="Todo esto ya está en tu número" sub="Salón, montaje, cena, música y servicio · sin costos ocultos"
+        style={{ marginTop: 26 }} />
+
       <CotizacionPrint pkg={pkg} guests={guests} pp={pp} cliente={cliente} evento={evento} />
     </div>
   );
@@ -900,6 +910,11 @@ function SecFechas() {
           })()}
         </div>
       </div>
+
+      <FotoBanda src="assets/fachada-dia-ancha.jpg" className="vv-banda--media"
+        alt="Fachada y jardín del Salón Villaverde de día" pos="center 40%"
+        titulo="Aquí los esperamos" sub={VV.CONTACTO.lugar + ' · ' + VV.CONTACTO.horario}
+        style={{ marginTop: 26 }} />
     </div>
   );
 }
@@ -953,6 +968,9 @@ function SecCierre({ onGo }) {
 
   return (
     <div className="vv-section vv-cierre">
+      <FotoBanda src="assets/letras/20.jpg" className="vv-banda--media"
+        alt="Salón con letras gigantes iluminadas, pantalla LED y pista" pos="center 45%"
+        style={{ maxWidth: 880, margin: '0 auto 26px' }} />
       <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto' }}>
         <div className="vv-flourish"><Icon name="diamond" size={20} /></div>
         <p className="vv-eyebrow" style={{ justifyContent: 'center' }}>El momento es ahora</p>

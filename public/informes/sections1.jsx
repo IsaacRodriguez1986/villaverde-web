@@ -23,7 +23,7 @@ function SecBienvenida({ onNext }) {
             </button>
             <span className="vv-chip"><Icon name="clock" size={15} /> ~10 minutos</span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, borderTop: '1px solid var(--vv-line)', paddingTop: 24 }}>
+          <div className="vv-hero-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, borderTop: '1px solid var(--vv-line)', paddingTop: 24 }}>
             {VV.STATS.map((s, i) => (
               <div key={i}>
                 <div style={{ fontFamily: 'var(--vv-display)', fontWeight: 700, fontSize: 34, color: 'var(--vv-crimson)', lineHeight: 1 }}><CountUp value={s.n} /></div>
@@ -32,8 +32,8 @@ function SecBienvenida({ onNext }) {
             ))}
           </div>
         </div>
-        <div style={{ position: 'relative' }}>
-          <PhotoSlot id="foto-hero" src="assets/salon-villaverde-exterior.jpg"
+        <div className="vv-hero-photo" style={{ position: 'relative' }}>
+          <PhotoSlot id="foto-hero" src="assets/fachada-dia.jpg"
             style={{
               borderRadius: '160px 160px 22px 22px', overflow: 'hidden',
               border: '6px solid var(--vv-cream)', boxShadow: 'var(--vv-shadow-lg)', aspectRatio: '4/5',
@@ -136,7 +136,7 @@ function SecSalon() {
           Temáticas que hemos <em>ambientado</em>
         </h2>
         <p className="vv-lead" style={{ marginBottom: 16 }}>Fiestas reales que hemos montado. Toca una para ver sus fotos y videos.</p>
-        <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+        <div className="vv-grid--4 vv-grid--m2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
           {(VV.TEMATICAS || []).map(tm => {
             const cover = tm.cover || (tm.gallery && tm.gallery.length ? tm.gallery[0] : null);
             const vids = VV.videosDe(tm, cover || undefined);
@@ -183,6 +183,20 @@ function SecSalon() {
 
       {sid === 'gardenia' && <GardeniaTour360 />}
 
+      {/* ---- FOTOS REALES DEL SALÓN VILLAVERDE ---- */}
+      {sid === 'villaverde' && VV.FOTOS_VILLAVERDE && (
+        <div style={{ margin: '0 0 30px' }}>
+          <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+            Así luce <em>por dentro</em>
+          </h2>
+          <p className="vv-lead" style={{ marginBottom: 16 }}>Fotos reales del salón montado. Toca una para verla en grande.</p>
+          <FotoBanda src="assets/salon/villaverde-panoramica.jpg" className="vv-banda--pano"
+            alt="Panorámica del Salón Villaverde montado: mesa principal, pantalla, mesas y escalera"
+            titulo="Salón Villaverde" sub="Vista panorámica · montaje real" style={{ marginBottom: 14 }} />
+          <FotoTira fotos={VV.FOTOS_VILLAVERDE} className="vv-tira--4" />
+        </div>
+      )}
+
       {sal.pano ? (
         sal.video && (
           <div key={sid} style={{ position: 'relative', marginBottom: 36 }}>
@@ -193,7 +207,7 @@ function SecSalon() {
           </div>
         )
       ) : (
-        <div key={sid} style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 300px) 1fr', gap: 18, marginBottom: 36, alignItems: 'start' }}>
+        <div key={sid} className="vv-salonmedia" style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 300px) 1fr', gap: 18, marginBottom: 36, alignItems: 'start' }}>
           {/* Video del salón (vertical) */}
           <div style={{ position: 'relative' }}>
             <video src={sal.video} controls playsInline preload="none" poster={sal.poster}
@@ -206,6 +220,29 @@ function SecSalon() {
         </div>
       )}
 
+      {/* ---- MÁS VIDEOS DEL SALÓN GARDENIA ---- */}
+      {sid === 'gardenia' && VV.VIDEOS_GARDENIA && VV.VIDEOS_GARDENIA.length > 0 && (
+        <div style={{ margin: '0 0 36px' }}>
+          <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+            Gardenia <em>en video</em>
+          </h2>
+          <p className="vv-lead" style={{ marginBottom: 16 }}>El gran salón montado y con la pista LED encendida. Toca uno para verlo.</p>
+          <div className="vv-grid--4 vv-grid--m2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+            {VV.VIDEOS_GARDENIA.map(v => (
+              <button key={v.id}
+                onClick={() => setVidOpen([{ video: v.video, poster: v.poster }])}
+                className="vv-tema" aria-label={`Ver video · ${v.name}`}>
+                <span className="vv-tema__cover" style={{ backgroundImage: `url(${v.poster})` }}>
+                  <span className="vv-tema__grad"></span>
+                  <span className="vv-tema__count"><Icon name="play" size={13} /> video</span>
+                </span>
+                <span className="vv-tema__name">{v.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ---- VIDEOS REALES DE NUESTROS EVENTOS ---- */}
       {vidOpen && <GaleriaLightbox media={vidOpen} onClose={() => setVidOpen(null)} />}
       {VV.VIDEOS_SALON && VV.VIDEOS_SALON.length > 0 && (
@@ -214,7 +251,7 @@ function SecSalon() {
             Videos reales de <em>nuestros eventos</em>
           </h2>
           <p className="vv-lead" style={{ marginBottom: 16 }}>Momentos que hemos vivido aquí. Toca uno para verlo.</p>
-          <div className="vv-grid--4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+          <div className="vv-grid--4 vv-grid--m2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
             {VV.VIDEOS_SALON.map(v => (
               <button key={v.id}
                 onClick={() => setVidOpen([{ video: v.video, poster: v.poster }])}
@@ -413,7 +450,16 @@ function SecManteleria() {
         </div>
       </div>
 
-
+      {/* Detalles reales de montaje */}
+      {VV.FOTOS_MANTELERIA && (
+        <div style={{ marginTop: 34 }}>
+          <h2 style={{ fontFamily: 'var(--vv-display)', fontSize: 24, fontWeight: 600, margin: '0 0 2px' }}>
+            Detalles que <em>visten la mesa</em>
+          </h2>
+          <p className="vv-lead" style={{ marginBottom: 16 }}>Montajes reales en Villaverde: plato base, arreglos y mesa principal. Toca una foto para ampliarla.</p>
+          <FotoTira fotos={VV.FOTOS_MANTELERIA} className="vv-tira--5" />
+        </div>
+      )}
     </div>
   );
 }

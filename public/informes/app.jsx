@@ -69,7 +69,7 @@ function App() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.target.tagName === 'INPUT') return;
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
       // Con un visor/modal abierto, sus propias flechas mandan: no mover el paso de fondo
       if (document.querySelector('.vv-gallery-in, .vv-lightbox, .vv-imodal')) return;
       if (e.key === 'ArrowRight') go(idx + 1);
@@ -102,7 +102,12 @@ function App() {
       <div className="vv-main">
         <div className="vv-topbar">
           <div className="vv-topbar__crumb" role="status" aria-live="polite">
-            Paso {cur.n} / {steps.length} <span style={{ opacity: .4 }}>·</span> <b>{cur.title}</b>
+            <span className="vv-crumb__paso">Paso </span>{cur.n} / {steps.length} <span style={{ opacity: .4 }}>·</span> <b>{cur.title}</b>
+            <span className="vv-crumb__chev" aria-hidden="true"><Icon name="chevron" size={14} /></span>
+            {/* En celular no hay rail: tocar el nombre del paso abre la lista nativa para saltar a cualquiera */}
+            <select className="vv-crumb__jump" aria-label="Ir a un paso" value={idx} onChange={(e) => go(+e.target.value)}>
+              {steps.map((s, i) => <option key={s.id} value={i}>{s.n}. {s.title}</option>)}
+            </select>
           </div>
 
           {showResumen && (
