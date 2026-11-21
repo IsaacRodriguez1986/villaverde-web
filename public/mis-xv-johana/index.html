@@ -628,6 +628,9 @@ body.is-gated{ overflow:hidden; }
   transition:transform var(--eb-dur) var(--eb-ease);
 }
 .eb-card:hover{ transform:scale(1.02); }
+/* Los adornos de esquina cuelgan 4px fuera del recuadro: sin esto asoman
+   por fuera del borde redondeado y se ve el pico blanco sobre la crema. */
+.eb-card{ overflow:hidden; }
 .eb-card::before, .eb-card::after{
   content:''; position:absolute; width:22px; height:22px; pointer-events:none;
   border:0 solid var(--eb-secondary);
@@ -1144,11 +1147,15 @@ body.is-gated{ overflow:hidden; }
 .eb-datebar__day{ position:relative; }
 .eb-datebar__wreath{
   position:absolute; left:50%; top:52%;
+  /* NEGATIVO, no 0: un hijo posicionado en z-index 0 pinta por encima del
+     texto en linea de su padre, y la corona taparia el numero. Esta corona
+     no tiene centro transparente — GPT Image no devuelve alfa. */
+  z-index:-1;
   /* El span del día mide ~31px: sin max-width:none el global
      img{max-width:100%} aplasta la corona a ese ancho. */
   width:138px; height:auto; max-width:none;
   transform:translate(-50%,-50%);
-  pointer-events:none; z-index:0; opacity:.92;
+  pointer-events:none; opacity:.92;
 }
 /* El número va por encima de la corona, nunca detrás. */
 .eb-datebar__day{ z-index:1; }
@@ -1599,7 +1606,7 @@ body.is-gated{ overflow:hidden; }
   <img src="/mis-xv-johana/assets/orn-divisor.webp"
        srcset="/mis-xv-johana/assets/orn-divisor.webp 630w"
        sizes="(max-width:480px) 76vw, 330px"
-       width="630" height="151" alt="" decoding="async">
+       width="630" height="167" alt="" decoding="async">
 </div>
 
 
@@ -1622,6 +1629,8 @@ body.is-gated{ overflow:hidden; }
   <div class="eb-wrap">
     <p class="eb-crest__name" id="crest-name">Johana Noemí</p>
     <p class="eb-crest__surname">Pahuamba Salinas</p>
+    <img class="eb-crest__arc" src="/mis-xv-johana/assets/orn-arco.webp"
+         width="900" height="493" alt="" loading="lazy" decoding="async">
     <div class="eb-crest__shield">
       <img src="/mis-xv-johana/assets/retrato-hoy.webp"
            srcset="/mis-xv-johana/assets/retrato-hoy.webp 310w,
@@ -1756,7 +1765,7 @@ body.is-gated{ overflow:hidden; }
       <p class="eb-datebar__month">Enero</p>
       <div class="eb-datebar__row">
         <span class="eb-datebar__side">Sábado</span>
-        <span class="eb-datebar__day">9</span>
+        <span class="eb-datebar__day">9<img class="eb-datebar__wreath" src="/mis-xv-johana/assets/orn-corona.webp" width="640" height="603" alt="" loading="lazy" decoding="async"></span>
         <span class="eb-datebar__side">2027</span>
       </div>
     </div>
@@ -1808,6 +1817,8 @@ body.is-gated{ overflow:hidden; }
         <div class="eb-card__ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M10 10h4"/><path d="M12 8v4"/></svg>
         </div>
+        <img class="eb-corner eb-corner--tr" src="/mis-xv-johana/assets/orn-esquina.webp"
+             width="460" height="468" alt="" loading="lazy" decoding="async">
         <h3 class="eb-card__name">Misa</h3>
         <p class="eb-when"><span class="eb-when__date">9 Ene</span><span class="eb-when__hour eb-when__hour--tbd" id="misa-hora">Hora por confirmar</span></p>
         <p class="eb-card__venue">Capilla del Señor de la Misericordia</p>
@@ -1852,6 +1863,8 @@ body.is-gated{ overflow:hidden; }
         <div class="eb-card__ico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3l3 3 3-3"/><path d="M9 3L5.5 5.2a2 2 0 00-.9 2.2L6 13v8h12v-8l1.4-5.6a2 2 0 00-.9-2.2L15 3"/></svg>
         </div>
+        <img class="eb-corner eb-corner--sm eb-corner--tl" src="/mis-xv-johana/assets/orn-ramita.webp"
+             width="360" height="452" alt="" loading="lazy" decoding="async">
         <h3 class="eb-card__name">Vestimenta</h3>
         <p class="eb-card__dress">Elegante</p>
         <p class="eb-card__note">
@@ -1869,6 +1882,14 @@ body.is-gated{ overflow:hidden; }
 <section class="eb-itinerary eb-rv" id="itinerario">
   <div class="eb-wrap">
     <div class="eb-arch">
+      <!-- Estas dos van sobre el vino del arco, no sobre la crema de la
+           pagina: su archivo trae el fondo #71384d exacto, por eso no se
+           ve el recuadro. Si alguna vez se mueven fuera del arco, hay que
+           regenerarlas sobre el fondo nuevo. -->
+      <img class="eb-orn eb-orn--izq" src="/mis-xv-johana/assets/orn-clara.webp"
+           width="200" height="558" alt="" loading="lazy" decoding="async">
+      <img class="eb-orn eb-orn--der" src="/mis-xv-johana/assets/orn-clara.webp"
+           width="200" height="558" alt="" loading="lazy" decoding="async">
       <p class="eb-arch__kicker">El recorrido del día</p>
       <h2 class="eb-arch__title">Itinerario</h2>
 
@@ -1895,9 +1916,6 @@ body.is-gated{ overflow:hidden; }
         </li>
       </ol>
     </div>
-    <div class="eb-bowdiv eb-bowdiv--arch" aria-hidden="true">
-      <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="151" alt="" loading="lazy" decoding="async">
-    </div>
   </div>
 </section>
 
@@ -1908,6 +1926,10 @@ body.is-gated{ overflow:hidden; }
      confirmada; en cuanto se sepa la de la misa, el ancla se mueve.
      ===================================================== -->
 <section class="eb-countdown eb-rv" aria-labelledby="cd-h">
+  <img class="eb-orn eb-orn--izq" src="/mis-xv-johana/assets/orn-vertical.webp"
+       width="200" height="629" alt="" loading="lazy" decoding="async">
+  <img class="eb-orn eb-orn--der" src="/mis-xv-johana/assets/orn-vertical.webp"
+       width="200" height="629" alt="" loading="lazy" decoding="async">
   <div class="eb-wrap">
     <h2 class="eb-script-title" id="cd-h">Solo faltan</h2>
     <div class="eb-cd" id="cd">
@@ -1956,7 +1978,7 @@ body.is-gated{ overflow:hidden; }
 
 
 <div class="eb-bowdiv" aria-hidden="true">
-  <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="151" alt="" loading="lazy" decoding="async">
+  <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="167" alt="" loading="lazy" decoding="async">
 </div>
 
 
@@ -2012,6 +2034,9 @@ body.is-gated{ overflow:hidden; }
       <a href="https://wa.me/525614947760?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20los%20XV%20A%C3%B1os%20de%20Johana%20Noem%C3%AD%20el%209%20de%20enero%20de%202027." target="_blank" rel="noopener noreferrer">WhatsApp</a>
       o llama al <a href="tel:+525614947760">56&nbsp;1494&nbsp;7760</a>
     </p>
+
+    <img class="eb-orn-cenefa" src="/mis-xv-johana/assets/orn-cenefa.webp"
+         width="1000" height="298" alt="" loading="lazy" decoding="async">
   </div>
 </section>
 
@@ -2346,7 +2371,7 @@ var RSVP_PHONE = EVENTO.telefono;
   if (navigator.connection && navigator.connection.saveData) return;
 
   var field = document.getElementById('petals');
-  var count = window.innerWidth < 600 ? 10 : 18;
+  var count = window.innerWidth < 600 ? 16 : 28;
 
   for (var i = 0; i < count; i++) {
     var el = document.createElement('div');
