@@ -1602,11 +1602,18 @@ body.is-gated{ overflow:hidden; }
   </div>
 </header>
 
+<!-- Este divisor MONTA SOBRE LA FOTO de portada (margin-top negativo), asi que
+     tiene que ser el que lleva alfa de verdad. El de GPT Image no lo lleva
+     — GPT Image no devuelve canal alfa — y su rectangulo crema se recorta
+     sobre la foto como una caja clara. Tampoco se puede recortar a posteriori:
+     la rosa color crema es del mismo color que el fondo, asi que cualquier
+     colorkey la vuelve semitransparente a ella. El rico va donde el fondo es
+     crema plano: orn-divisor-crema.webp, mas abajo. No los intercambies. -->
 <div class="eb-bowdiv eb-bowdiv--cover" aria-hidden="true">
   <img src="/mis-xv-johana/assets/orn-divisor.webp"
        srcset="/mis-xv-johana/assets/orn-divisor.webp 630w"
        sizes="(max-width:480px) 76vw, 330px"
-       width="630" height="167" alt="" decoding="async">
+       width="630" height="151" alt="" decoding="async">
 </div>
 
 
@@ -1977,8 +1984,11 @@ body.is-gated{ overflow:hidden; }
 </section>
 
 
+<!-- Aqui el fondo es crema plano, asi que si cabe el divisor rico de GPT
+     Image, que es opaco. Su fondo esta corregido al crema exacto: el escalon
+     contra la pagina es de 1/255, invisible. -->
 <div class="eb-bowdiv" aria-hidden="true">
-  <img src="/mis-xv-johana/assets/orn-divisor.webp" srcset="/mis-xv-johana/assets/orn-divisor.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="167" alt="" loading="lazy" decoding="async">
+  <img src="/mis-xv-johana/assets/orn-divisor-crema.webp" srcset="/mis-xv-johana/assets/orn-divisor-crema.webp 630w" sizes="(max-width:480px) 70vw, 300px" width="630" height="167" alt="" loading="lazy" decoding="async">
 </div>
 
 
